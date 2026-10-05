@@ -116,7 +116,7 @@ def test_label_inversion_and_conflict_exclusion(self):
 
 **Interfaces:** `freeze_splits(dataset: DatasetBundle, output_dir: Path, seed: int = 42) -> SplitBundle`; `load_splits(dataset: DatasetBundle, output_dir: Path) -> SplitBundle`.
 
-- [ ] Write reproducibility, no-overlap, tampering and infeasible-group tests:
+- [x] Write reproducibility, no-overlap, tampering and infeasible-group tests:
 
 ```python
 def test_group_isolation_and_infeasibility(self):
@@ -125,9 +125,9 @@ def test_group_isolation_and_infeasibility(self):
     with self.assertRaises(DatasetError): freeze_splits(self.single_domain, self.empty_output)
 ```
 
-- [ ] Run `test_url_ml_splits.py`; expect missing split functionality failure.
-- [ ] Implement deterministic seeded group allocation targeting row/class proportions 70/10/10/10, keeping whole domain/equivalent-URL groups. Persist row-ID assignments, source/derived/PSL hashes, counts and largest groups; require both labels in every partition. Refuse overwrite; loading rejects altered IDs/hashes or overlaps. If allocation fails, emit a diagnostic instead of falling back to random rows.
-- [ ] Add `split` CLI command and freeze the real audited source. Rerun tests; inspect group sizes/class counts before modelling. Commit the implementation and aggregate split summary, not row assignments.
+- [x] Run `test_url_ml_splits.py`; expect missing split functionality failure.
+- [x] Implement deterministic seeded group allocation targeting row/class proportions 70/10/10/10, keeping whole domain/equivalent-URL groups. Persist row-ID assignments, source/derived/PSL hashes, counts and largest groups; require both labels in every partition. Refuse overwrite; loading rejects altered IDs/hashes or overlaps. If allocation fails, emit a diagnostic instead of falling back to random rows.
+- [x] Add `split` CLI command and freeze the real audited source. Rerun tests; inspect group sizes/class counts before modelling. Commit the implementation and aggregate split summary, not row assignments.
 
 ### Task 4: Shared features and bounded CPU baselines
 

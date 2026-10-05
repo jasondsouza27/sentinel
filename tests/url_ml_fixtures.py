@@ -16,3 +16,20 @@ def fixture_psl(directory: Path) -> Path:
         "// ===END PRIVATE DOMAINS===\n", encoding="utf-8",
     )
     return path
+
+
+def sample_dataset(groups=80, rows_per_group=2, parser=None):
+    from sentinel.url_ml.contracts import DatasetBundle, UrlRow
+    import hashlib
+    rows=[]
+    for group in range(groups):
+        for n in range(rows_per_group):
+            label=n%2
+            host=f"fixture{group}.com"
+            url=f"https://{host}/" + (f"login-verify-{n}?Token=Bank" if label else f"article-{n}")
+            parsed=parser.normalize(url) if parser else None
+            rows.append(UrlRow(f"case-{group}-{n}",url,url,label,
+                               parsed.domain_group if parsed else "domain:"+host,"synthetic"))
+    manifest={"schema":"url-dataset-v1","source_sha256":"a"*64,"psl_sha256":parser.psl_sha256 if parser else "b"*64,
+              "files":{"rows.jsonl":hashlib.sha256(str(rows).encode()).hexdigest()},"included_rows":len(rows)}
+    return DatasetBundle(tuple(rows),manifest)

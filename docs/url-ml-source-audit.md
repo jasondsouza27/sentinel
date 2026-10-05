@@ -15,4 +15,13 @@ The [official Public Suffix List](https://publicsuffix.org/list/) snapshot inclu
 | suffix.dat | `e0fe072d26b0536525badea237953ff451c9f8e64c9d02c6daa81a4491d2fc66` |
 | derived rows | `593c39ddb0d0c8825c1a0b06987659f3dfdb0ddba6d6e11c4cec00d1570a508e` |
 
-The frozen split, comparison and calibration results will be documented after their own evaluation gates.
+Seed-42 whole-domain allocation is frozen at 70/10/10/10. Both classes appear in every partition; all row IDs and domains are isolated. Largest retained domain group: 3079 rows. Assignments are private; the table reports only aggregate counts.
+
+| Partition | Rows | Phishing | Legitimate | Groups |
+|---|---:|---:|---:|---:|
+| calibration | 23534 | 10049 | 13485 | 19729 |
+| test | 23534 | 10049 | 13485 | 19729 |
+| train | 164741 | 70346 | 94395 | 138106 |
+| validation | 23534 | 10049 | 13485 | 19729 |
+
+Comparison and calibration results will be published after their own evaluation gates.
