@@ -1,0 +1,18 @@
+# URL source audit
+
+Audited on 2026-10-05 for Sentinel's first trained URL-string subsystem.
+
+[PhiUSIIL, Prasad and Chandra (2024), UCI dataset 967](https://archive.ics.uci.edu/dataset/967/phiusiil%2Bphishing%2Burl%2Bdataset) is licensed CC BY 4.0. Source label 0 means phishing and 1 means legitimate; Sentinel reverses these explicitly. Only the URL column is used to derive features; webpage and population features are discarded. Source labels are historical benchmark annotations, not current verification of sites.
+
+The acquired CSV contains **235,795** records, matching UCI's advertised count. After canonical duplicate removal and strict URL support checks, **235,343** remain: **100,493 phishing** and **134,850 legitimate**, across **197,293** domain groups. Exclusions: **439 duplicates**, **8 oversized/empty URLs**, **5 invalid hosts**, **0 conflicting-label rows**.
+
+The [official Public Suffix List](https://publicsuffix.org/list/) snapshot includes private domains and is reused offline under MPL 2.0. The original acquisition, audit rows and private exclusion references stay in ignored local storage. No source URLs or tokens are published. Nothing from this URL-only audit is admitted into the paired-message intake.
+
+| File | SHA-256 |
+|---|---|
+| source.csv | `a236549cd369cd80bd478ff8e1779cbf44c58d5c3f79f7a51a1adbed7d06d1c6` |
+| source.zip | `0a639fd03aea6308c5b1c10c92aa23c2ce1505447a9137271865cd0badc9a59a` |
+| suffix.dat | `e0fe072d26b0536525badea237953ff451c9f8e64c9d02c6daa81a4491d2fc66` |
+| derived rows | `593c39ddb0d0c8825c1a0b06987659f3dfdb0ddba6d6e11c4cec00d1570a508e` |
+
+The frozen split, comparison and calibration results will be documented after their own evaluation gates.

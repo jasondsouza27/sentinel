@@ -96,7 +96,7 @@ def test_invalid_port_is_unsupported(self):
 
 **Interfaces:** `fetch_sources(root: Path) -> dict`; `import_phiusiil(csv_path: Path, parser: UrlParser, output_dir: Path) -> DatasetBundle`; `load_dataset(output_dir: Path, parser: UrlParser) -> DatasetBundle`; `cli.main(argv: list[str] | None = None) -> int`.
 
-- [ ] Write tests with tiny ZIP/CSV fixtures (including UTF-8 BOM), original labels `0`/`1`, ignored webpage columns, duplicate and conflicting equivalent URLs, invalid labels, malformed/oversized URLs, and overwrite refusal:
+- [x] Write tests with tiny ZIP/CSV fixtures (including UTF-8 BOM), original labels `0`/`1`, ignored webpage columns, duplicate and conflicting equivalent URLs, invalid labels, malformed/oversized URLs, and overwrite refusal:
 
 ```python
 def test_label_inversion_and_conflict_exclusion(self):
@@ -105,10 +105,10 @@ def test_label_inversion_and_conflict_exclusion(self):
     self.assertNotIn("Token=secret", json.dumps(self.bundle.manifest))
 ```
 
-- [ ] Run the source suite with the Task 1 discovery command pattern changed to `test_url_ml_source.py`; expect missing importer/behaviour failure.
-- [ ] Implement fixed-source acquisition: UCI `https://archive.ics.uci.edu/static/public/967/phiusiil+phishing+url+dataset.zip` and official PSL `https://publicsuffix.org/list/public_suffix_list.dat`. Stream to temporary files; require HTTPS/approved source hosts, finite timeouts, 64 MiB download and 128 MiB ZIP-member limits. Read only `PhiUSIIL_Phishing_URL_Dataset.csv`, never extract arbitrary archive paths. Refuse existing different outputs. Log retrieval time, SHA-256 and source terms; no arbitrary URL fetch argument.
-- [ ] Implement conversion with required `URL`/`label` columns and explicit label inversion. Deduplicate canonical URL/label pairs and exclude all equivalent-URL conflicts. Keep original URL/private exclusion references locally. `case_id` uses source/member hash plus one-based CSV record ordinal; manifest records counts, original/canonical labels, hashes and relative paths without raw values. Loading verifies hashes and parser version before accepting rows.
-- [ ] Add `fetch`/`audit` CLI commands; rerun tests, then acquire and audit the actual source into ignored storage. Record actual counts/exclusions/licences, including differences from the advertised size. Do not add rows to paired intake. Commit code, tests, config and counts-only documentation.
+- [x] Run the source suite with the Task 1 discovery command pattern changed to `test_url_ml_source.py`; expect missing importer/behaviour failure.
+- [x] Implement fixed-source acquisition: UCI `https://archive.ics.uci.edu/static/public/967/phiusiil+phishing+url+dataset.zip` and official PSL `https://publicsuffix.org/list/public_suffix_list.dat`. Stream to temporary files; require HTTPS/approved source hosts, finite timeouts, 64 MiB download and 128 MiB ZIP-member limits. Read only `PhiUSIIL_Phishing_URL_Dataset.csv`, never extract arbitrary archive paths. Refuse existing different outputs. Log retrieval time, SHA-256 and source terms; no arbitrary URL fetch argument.
+- [x] Implement conversion with required `URL`/`label` columns and explicit label inversion. Deduplicate canonical URL/label pairs and exclude all equivalent-URL conflicts. Keep original URL/private exclusion references locally. `case_id` uses source/member hash plus one-based CSV record ordinal; manifest records counts, original/canonical labels, hashes and relative paths without raw values. Loading verifies hashes and parser version before accepting rows.
+- [x] Add `fetch`/`audit` CLI commands; rerun tests, then acquire and audit the actual source into ignored storage. Record actual counts/exclusions/licences, including differences from the advertised size. Do not add rows to paired intake. Commit code, tests, config and counts-only documentation.
 
 ### Task 3: Frozen group-disjoint splits
 

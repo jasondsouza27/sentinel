@@ -1,0 +1,12 @@
+{
+  "schema": "url-ml-config-v1",
+  "seed": 42,
+  "max_fpr": 0.05,
+  "native_threads": 4,
+  "max_peak_bytes": 8589934592,
+  "pilot_max_rows": 2000,
+  "char_tfidf": {"max_features": 50000, "ngram_range": [3, 5], "C": [0.1, 1, 10], "class_weight": [null, "balanced"]},
+  "lexical_hgb": {"max_depth": [3, 5], "learning_rate": [0.05, 0.1], "max_iter": 200},
+  "calibration": {"min_rows": 100, "min_per_class": 20, "epsilon": 0.000001},
+  "bootstrap_replicates": 1000
+}
