@@ -27,3 +27,6 @@ data/curation/
 *.log
 .deck-build/
 .worktrees/
+.venv-ml/
+data/url-ml/
+models/url-ml/

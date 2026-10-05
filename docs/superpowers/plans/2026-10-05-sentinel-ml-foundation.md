@@ -73,10 +73,10 @@ Manifest schemas are `url-dataset-v1`, `url-splits-v1` and `url-artifact-v1`; fe
 
 **Interfaces:** `UrlParser(psl_path: Path)` exposes `psl_sha256: str` and `normalize(value: str) -> ParsedUrl`. Later tasks reuse this parser instance. Fixture helper `fixture_psl(directory: Path) -> Path` writes an attributed minimal synthetic suffix list including `com`, `org`, `de`, `co.uk` and private `github.io`.
 
-- [ ] Obtain a dedicated Python 3.11 runtime if missing; create `.venv-ml` with `py -3.11 -m venv .venv-ml`. This machine currently has only Python 3.13 registered; do not silently retarget the approved environment. Pin candidate Windows-wheel versions: NumPy 2.4.6, SciPy 1.17.1, scikit-learn 1.9.1, joblib 1.6.0, idna 3.20, tldextract 5.4.0, psutil 7.2.2. Install into this venv only, smoke-check imports/version, then record all resolved transitive pins in the lock file. If resolution fails, document a compatible pin correction before proceeding. Ignore `.venv-ml/`, `data/url-ml/`, `models/url-ml/`.
+- [x] Obtain a dedicated Python 3.11 runtime if missing; create `.venv-ml` with `py -3.11 -m venv .venv-ml`. This machine currently has only Python 3.13 registered; do not silently retarget the approved environment. Pin candidate Windows-wheel versions: NumPy 2.4.6, SciPy 1.17.1, scikit-learn 1.9.1, joblib 1.6.0, idna 3.20, tldextract 5.4.0, psutil 7.2.2. Install into this venv only, smoke-check imports/version, then record all resolved transitive pins in the lock file. If resolution fails, document a compatible pin correction before proceeding. Ignore `.venv-ml/`, `data/url-ml/`, `models/url-ml/`.
 
 The NumPy/SciPy candidates have Python 3.11 Windows wheels in official release metadata; installation is still unverified. [NumPy](https://pypi.org/project/numpy/2.4.6/), [SciPy](https://pypi.org/project/scipy/1.17.1/), [scikit-learn](https://pypi.org/project/scikit-learn/1.9.1/)
-- [ ] Write failing parser tests, including exact 2,048/2,049-character boundaries, preserving `/A?Token=X`, IDNA equivalence, invalid ports/brackets/controls and network-denied execution. Fixtures must supply the local PSL path:
+- [x] Write failing parser tests, including exact 2,048/2,049-character boundaries, preserving `/A?Token=X`, IDNA equivalence, invalid ports/brackets/controls and network-denied execution. Fixtures must supply the local PSL path:
 
 ```python
 def test_private_suffix_and_ipv6_groups(self):
@@ -86,9 +86,9 @@ def test_invalid_port_is_unsupported(self):
     with self.assertRaises(UnsupportedUrl): self.parser.normalize("https://example.org:99999/a")
 ```
 
-- [ ] Run `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_ml_urls.py -v`; expect failure for missing parser/behaviour.
-- [ ] Implement `UrlParser` and the records. Use explicit local `psl_path.as_uri()`, `fallback_to_snapshot=False`, private suffixes enabled and an isolated cache; never use the module-level auto-fetch extractor. Normalise scheme/host case, IDNA, trailing host dot and default ports; preserve user-info/path/query/fragment spelling. Reject embedded whitespace/controls, bad percent escapes, missing host and unsupported schemes. Unknown suffixes conservatively group by full normalised host and record `unknown_suffix`; localhost/private targets are parsed without requesting them. [tldextract local/private-suffix configuration](https://github.com/john-kurkowski/tldextract#how-to-use-a-custom-suffix-list)
-- [ ] Rerun the parser suite, expect all passing without network. ML tests import optional modules inside test setup and skip clearly outside the ML environment; the ML environment must have zero dependency skips. Commit this deliverable and its environment files.
+- [x] Run `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_ml_urls.py -v`; expect failure for missing parser/behaviour.
+- [x] Implement `UrlParser` and the records. Use explicit local `psl_path.as_uri()`, `fallback_to_snapshot=False`, private suffixes enabled and an isolated cache; never use the module-level auto-fetch extractor. Normalise scheme/host case, IDNA, trailing host dot and default ports; preserve user-info/path/query/fragment spelling. Reject embedded whitespace/controls, bad percent escapes, missing host and unsupported schemes. Unknown suffixes conservatively group by full normalised host and record `unknown_suffix`; localhost/private targets are parsed without requesting them. [tldextract local/private-suffix configuration](https://github.com/john-kurkowski/tldextract#how-to-use-a-custom-suffix-list)
+- [x] Rerun the parser suite, expect all passing without network. ML tests import optional modules inside test setup and skip clearly outside the ML environment; the ML environment must have zero dependency skips. Commit this deliverable and its environment files.
 
 ### Task 2: Audited PhiUSIIL import
 
