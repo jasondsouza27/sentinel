@@ -135,7 +135,7 @@ def test_group_isolation_and_infeasibility(self):
 
 **Interfaces:** `lexical_features(parsed: ParsedUrl) -> dict[str, float]`; `build_pipeline(branch: str, params: dict, parser: UrlParser) -> object`; `fit_pipeline(rows: tuple[UrlRow, ...], branch: str, params: dict, parser: UrlParser) -> object`; `raw_scores(model: object, urls: list[str]) -> np.ndarray`; `resource_pilot(splits: SplitBundle, config: dict, parser: UrlParser) -> dict`.
 
-- [ ] Write sparse-shape, train-only vocabulary, shared-transform and prediction-orientation tests:
+- [x] Write sparse-shape, train-only vocabulary, shared-transform and prediction-orientation tests:
 
 ```python
 def test_train_only_sparse_features(self):
@@ -145,10 +145,10 @@ def test_train_only_sparse_features(self):
     self.assertIn("Token", self.model.named_steps["tfidf"].vocabulary_)
 ```
 
-- [ ] Run both new suites; expect missing feature/model functionality failure.
-- [ ] Implement branch `char_tfidf`: a float32 character TF-IDF/logistic pipeline (`liblinear`, `max_iter=1000`), named steps `tfidf`/`classifier`, with `lowercase=False`, 3–5-grams and a 50,000-feature cap. Grid: `C=[0.1,1,10]`, `class_weight=[None,"balanced"]` (six configurations). Implement ordered lexical features: URL/host/path/query lengths; host-label/dot counts; digit/letter/punctuation ratios; hyphen/user-info/encoding counts; IP, punycode, unknown-suffix and HTTPS flags. No original dataset features enter a pipeline.
-- [ ] Implement branch `lexical_hgb`: lexical HistGradientBoosting, named steps `lexical`/`classifier` (`max_iter=200`, `max_depth=[3,5]`, `learning_rate=[0.05,0.1]`, `early_stopping=False`, `random_state=42`; four configurations). `raw_scores` explicitly chooses class `1` probability for both branches. Preserve parser/suffix state; fix feature ordering. Phase 0 rule baseline calls existing `analyze` with URL only and no feed/model, mapping any URL warning to flag `1` for benchmarking.
-- [ ] Implement the training-only pilot: fixed seed, whole selected training groups, target at most 2,000 rows, both labels required. Run candidate fits sequentially in fresh child processes to measure independent peak RAM/time; return only the fitted model and measurement record. Read Windows peak working-set memory via psutil's supported peak field; limit native threads to four. Record pilot IDs/hash locally and counts/config publicly. Rerun tests and pilot; if peak exceeds 8 GiB, adjust the declared feature budget before final selection and document it. Commit the independently usable model factories and pilot command.
+- [x] Run both new suites; expect missing feature/model functionality failure.
+- [x] Implement branch `char_tfidf`: a float32 character TF-IDF/logistic pipeline (`liblinear`, `max_iter=1000`), named steps `tfidf`/`classifier`, with `lowercase=False`, 3–5-grams and a 50,000-feature cap. Grid: `C=[0.1,1,10]`, `class_weight=[None,"balanced"]` (six configurations). Implement ordered lexical features: URL/host/path/query lengths; host-label/dot counts; digit/letter/punctuation ratios; hyphen/user-info/encoding counts; IP, punycode, unknown-suffix and HTTPS flags. No original dataset features enter a pipeline.
+- [x] Implement branch `lexical_hgb`: lexical HistGradientBoosting, named steps `lexical`/`classifier` (`max_iter=200`, `max_depth=[3,5]`, `learning_rate=[0.05,0.1]`, `early_stopping=False`, `random_state=42`; four configurations). `raw_scores` explicitly chooses class `1` probability for both branches. Preserve parser/suffix state; fix feature ordering. Phase 0 rule baseline calls existing `analyze` with URL only and no feed/model, mapping any URL warning to flag `1` for benchmarking.
+- [x] Implement the training-only pilot: fixed seed, whole selected training groups, target at most 2,000 rows, both labels required. Run candidate fits sequentially in fresh child processes to measure independent peak RAM/time; return only the fitted model and measurement record. Read Windows peak working-set memory via psutil's supported peak field; limit native threads to four. Record pilot IDs/hash locally and counts/config publicly. Rerun tests and pilot; if peak exceeds 8 GiB, adjust the declared feature budget before final selection and document it. Commit the independently usable model factories and pilot command.
 
 ### Task 5: Selection, calibration and grouped evaluation
 

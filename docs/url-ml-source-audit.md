@@ -25,3 +25,5 @@ Seed-42 whole-domain allocation is frozen at 70/10/10/10. Both classes appear in
 | validation | 23534 | 10049 | 13485 | 19729 |
 
 Comparison and calibration results will be published after their own evaluation gates.
+
+Training-only pilot: 2,000 rows from 1,810 whole training groups. Character TF-IDF peak working set 161030144 bytes, lexical HGB 143659008 bytes; each used four native threads and its own process. Both stayed below 8 GiB; the 50,000-character-feature cap remains unchanged. Full-data measurements still need to be recorded.
