@@ -1,5 +1,5 @@
 """Shared stdlib-only URL research and serving records."""
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 
 DATASET_SCHEMA = "url-dataset-v1"
 SPLIT_SCHEMA = "url-splits-v1"
@@ -51,6 +51,7 @@ class Selection:
     raw_threshold: float | None
     config: dict
     report: dict
+    branch_candidates: dict = field(default_factory=dict)
 
 @dataclass(frozen=True)
 class Calibration:

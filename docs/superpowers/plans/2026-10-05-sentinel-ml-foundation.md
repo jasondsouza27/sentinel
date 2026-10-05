@@ -176,7 +176,7 @@ def test_ties_and_reverse_calibration(self):
 
 **Interfaces:** `export_artifact(run: RunBundle, parser: UrlParser, output_dir: Path, version: str) -> dict`; `load_artifact(path: Path) -> RunBundle`; `UrlModelService(artifact_path: Path)` with `assess(url: str) -> UrlAssessment` and `health() -> dict`.
 
-- [ ] Write export/reload equivalence after deleting the original dataset/PSL, nonexistent/wrong-version/tampered dependency/PSL/weights tests, no-deserialisation-before-verification, unavailable/unsupported states, and calibration omission:
+- [x] Write export/reload equivalence after deleting the original dataset/PSL, nonexistent/wrong-version/tampered dependency/PSL/weights tests, no-deserialisation-before-verification, unavailable/unsupported states, and calibration omission:
 
 ```python
 def test_corrupt_artifact_never_deserializes(self):
@@ -186,10 +186,10 @@ def test_uncalibrated_probability_is_absent(self):
     self.assertNotIn("probability", self.uncalibrated_assessment.to_dict())
 ```
 
-- [ ] Run artifact/service suites; expect missing loader/adapter behaviour failure.
-- [ ] Implement new-directory-only atomic export: trusted `pipeline.joblib`, parser PSL snapshot, calibration/config/manifest JSON, checksums and model card. Record schema/feature/label/dependency versions, source/split hashes, seed, Git commit, thresholds, resources and limitations. Loader validates required metadata, safe relative file paths and all hashes/compatibility before joblib, then rebinds every feature parser to the verified artifact PSL. Accept only locally produced trusted artifacts. No upload endpoint. Artifact files are immutable; final evaluation/report card lives separately and references their hash.
-- [ ] Implement service lazy imports and explicit `complete`/`not_assessed`/`unavailable` states. Decisions are `phishing_flag`/`not_flagged`, never `safe`; optional probabilities describe source-benchmark calibration. Evidence uses actual structural observations, with verification action and missing reputation/history checks; no invented site behaviour or raw score. Missing dependencies/resources cannot stop the standard app.
-- [ ] Complete CLI persistence: `train` consumes train/validation/calibration only and exports a frozen research-candidate artifact; `evaluate` verifies manifests and evaluates all baselines on the same test, refuses accidental report overwrite; `predict` emits the assessment. Rerun owning tests, confirm model decisions survive export/reload and commit. Real final evaluation remains Task 8.
+- [x] Run artifact/service suites; expect missing loader/adapter behaviour failure.
+- [x] Implement new-directory-only atomic export: trusted `pipeline.joblib`, parser PSL snapshot, calibration/config/manifest JSON, checksums and model card. Record schema/feature/label/dependency versions, source/split hashes, seed, Git commit, thresholds, resources and limitations. Loader validates required metadata, safe relative file paths and all hashes/compatibility before joblib, then rebinds every feature parser to the verified artifact PSL. Accept only locally produced trusted artifacts. No upload endpoint. Artifact files are immutable; final evaluation/report card lives separately and references their hash.
+- [x] Implement service lazy imports and explicit `complete`/`not_assessed`/`unavailable` states. Decisions are `phishing_flag`/`not_flagged`, never `safe`; optional probabilities describe source-benchmark calibration. Evidence uses actual structural observations, with verification action and missing reputation/history checks; no invented site behaviour or raw score. Missing dependencies/resources cannot stop the standard app.
+- [x] Complete CLI persistence: `train` consumes train/validation/calibration only and exports a frozen research-candidate artifact; `evaluate` verifies manifests and evaluates all baselines on the same test, refuses accidental report overwrite; `predict` emits the assessment. Rerun owning tests, confirm model decisions survive export/reload and commit. Real final evaluation remains Task 8.
 
 ### Task 7: Opt-in Phase 0 API integration
 

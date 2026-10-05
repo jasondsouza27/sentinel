@@ -33,3 +33,14 @@ def sample_dataset(groups=80, rows_per_group=2, parser=None):
     manifest={"schema":"url-dataset-v1","source_sha256":"a"*64,"psl_sha256":parser.psl_sha256 if parser else "b"*64,
               "files":{"rows.jsonl":hashlib.sha256(str(rows).encode()).hexdigest()},"included_rows":len(rows)}
     return DatasetBundle(tuple(rows),manifest)
+
+
+def small_run(parser):
+    from sentinel.url_ml.contracts import Selection,Calibration,RunBundle
+    from sentinel.url_ml.training import fit_pipeline
+    rows=sample_dataset(groups=12,parser=parser).rows
+    model=fit_pipeline(rows,"char_tfidf",{"C":1},parser)
+    selection=Selection(model,"char_tfidf",.5,{"C":1},{"bootstrap_replicates":20,"configurations":[]})
+    cal=Calibration("unavailable",None,None,None,{"reason":"synthetic_fixture"})
+    return RunBundle(selection,cal,{"source_sha256":"a"*64,"psl_sha256":parser.psl_sha256,"derived_sha256":"c"*64,
+                                   "dataset_manifest_sha256":"d"*64,"split_manifest_sha256":"e"*64,"seed":42,"training_config":{}})
