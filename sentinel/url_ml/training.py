@@ -139,3 +139,48 @@ def resource_pilot(splits,config,parser):
     return {"schema":"url-pilot-v1","rows":len(rows),"group_count":len({r.domain_group for r in rows}),
             "case_ids":ids,"ids_sha256":hashlib.sha256(json.dumps(ids,separators=(",",":")).encode()).hexdigest(),
             "measurements":measurements,"native_threads":config["native_threads"],"max_peak_bytes":config["max_peak_bytes"]}
+
+
+def select_model(splits,config,parser):
+    import numpy as np
+    from .metrics import choose_threshold,point_metrics
+    from .contracts import Selection
+    train=splits.partitions["train"]; validation=splits.partitions["validation"]
+    labels=np.array([r.label for r in validation]); urls=[r.url for r in validation]
+    records=[]; best=None; best_rank=None; branch_models={}
+    for index,(branch,params) in enumerate(candidate_grid(config)):
+        model,record=fit_candidate(train,branch,params,parser,config["native_threads"],config["max_peak_bytes"])
+        record={**record,"configuration_index":index}
+        if model is not None and record["status"]=="ok":
+            scores=raw_scores(model,urls); threshold=choose_threshold(labels,scores,config["max_fpr"])
+            metrics=point_metrics(labels,scores,threshold)
+            record.update({"raw_threshold":threshold,"validation":metrics})
+            rank=(metrics["recall"] or 0,metrics["precision"] or 0,-index)
+            candidate=(model,threshold,params,record,rank)
+            if branch not in branch_models or rank>branch_models[branch][-1]: branch_models[branch]=candidate
+            if best_rank is None or rank>best_rank: best=(model,branch,threshold,params,index); best_rank=rank
+        records.append(record)
+        print(json.dumps({"training_progress":{"configuration":index+1,"branch":branch,"status":record["status"],
+                                              "peak_bytes":record.get("peak_bytes"),"fit_seconds":record.get("fit_seconds")}}),flush=True)
+    if best is None: raise DatasetError("all_candidates_failed")
+    model,branch,threshold,params,index=best
+    # Keep the best fitted candidate per branch for the frozen final comparison.
+    # No retraining and no test/calibration inputs are read here.
+    report={"configurations":records,"selected_configuration":index,"max_fpr":config["max_fpr"],
+            "bootstrap_replicates":config["bootstrap_replicates"],"selection_partitions":["train","validation"],
+            "rule_validation":point_metrics(labels,np.array(rule_predictions(validation),dtype=float),.5)}
+    selection=Selection(model,branch,threshold,params,report)
+    selection.branch_candidates=branch_models
+    return selection
+
+def train_run(splits,config,parser):
+    import numpy as np
+    from .calibration import fit_calibration
+    from .contracts import RunBundle
+    from .splits import manifest_hash
+    selection=select_model(splits,config,parser)
+    rows=splits.partitions["calibration"]
+    calibration=fit_calibration(np.array([r.label for r in rows]),raw_scores(selection.model,[r.url for r in rows]),selection.raw_threshold)
+    provenance={**splits.manifest["provenance"],"split_manifest_sha256":manifest_hash(splits.manifest),"seed":config["seed"],
+                "training_config":config,"calibration_ids_sha256":hashlib.sha256(json.dumps([r.case_id for r in rows]).encode()).hexdigest()}
+    return RunBundle(selection,calibration,provenance)
