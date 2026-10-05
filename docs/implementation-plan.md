@@ -1,6 +1,6 @@
 # Sentinel Phase 0 implementation plan
 
-This is the historical prototype plan. The user subsequently selected a year-long scope with balanced ML research and application development. See the proposed [year-long design](superpowers/specs/2026-10-05-sentinel-year-long-design.md) and [first ML subsystem specification](superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md); those drafts do not mean the new components are implemented.
+This is the historical prototype plan. The user subsequently approved a year-long scope with balanced ML research and application development. See the [year-long design](superpowers/specs/2026-10-05-sentinel-year-long-design.md), [first ML subsystem specification](superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md) and [first implementation plan awaiting review](superpowers/plans/2026-10-05-sentinel-ml-foundation.md); approval of the design does not mean the new components are implemented.
 
 This plan implements the user-approved general safety assistant. The workspace was empty at the start, so the project uses Python's standard library for the API, storage, analysis, training, and evaluation. A static web client and a Chrome extension share the API.
 

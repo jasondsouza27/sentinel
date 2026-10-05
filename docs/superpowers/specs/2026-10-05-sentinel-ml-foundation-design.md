@@ -1,6 +1,6 @@
 # Sentinel subproject A: ML foundation and URL detector
 
-Date: 2026-10-05. Status: **draft for written review**. Parent: [year-long design](2026-10-05-sentinel-year-long-design.md). This specification defines the first buildable subsystem; it is not an implementation plan or a claim that a model has been trained.
+Date: 2026-10-05. Status: **approved by the user on 2026-10-05**. Parent: [year-long design](2026-10-05-sentinel-year-long-design.md). This specification defines the first buildable subsystem; it is not an implementation plan or a claim that a model has been trained.
 
 ## Outcome and boundary
 
@@ -82,4 +82,4 @@ Tests should focus on these boundary and leakage cases. Synthetic fixtures estab
 
 ## Next handoff
 
-After written approval, prepare the implementation plan for this subsystem only. It will turn these requirements into concrete files, commands and verification tasks. The overall research/application scope remains in the parent design; unresolved paired-data availability does not block this standalone first milestone.
+The user approved this specification. The [implementation plan for this subsystem](../plans/2026-10-05-sentinel-ml-foundation.md) now turns these requirements into concrete files, commands and verification tasks, awaiting plan review and execution-method selection. The overall research/application scope remains in the parent design; unresolved paired-data availability does not block this standalone first milestone.

@@ -1,6 +1,6 @@
 # Sentinel: year-long engineering major-project design
 
-Date: 2026-10-05. Status: **draft for written review**. The user selected a balanced emphasis on ML research and a usable application. The existing software is Phase 0; the components below are proposed work, not implemented capabilities or measured results.
+Date: 2026-10-05. Status: **approved by the user on 2026-10-05**. The user selected a balanced emphasis on ML research and a usable application, then approved this written specification. The existing software is Phase 0; the components below are proposed work, not implemented capabilities or measured results.
 
 ## Purpose and success
 
@@ -159,4 +159,4 @@ Out of initial scope: continuous scraping of all platforms, automatic blocking, 
 
 ## Written-review boundary
 
-Review this overall scope and the [first subproject specification](2026-10-05-sentinel-ml-foundation-design.md). Once approved, create a focused implementation plan for A, with concrete dataset audit, environment, experiment, artifact and verification tasks. Product code and dependencies remain unchanged at this design stage. Later subprojects need their own focused specifications as their data and integration constraints become known.
+The user approved this overall scope and the [first subproject specification](2026-10-05-sentinel-ml-foundation-design.md). The [focused implementation plan for A](../plans/2026-10-05-sentinel-ml-foundation.md) is now prepared for review and execution-method selection. Product code and dependencies remain unchanged at this planning stage. Later subprojects need their own focused specifications as their data and integration constraints become known.

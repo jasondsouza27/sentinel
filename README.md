@@ -4,7 +4,7 @@
 
 Sentinel is a local college-project prototype. A user submits a message, URL, conversation excerpt, or available profile facts. It returns separate fraud, harmful-content, and profile assessments, with observed evidence, unavailable checks, and an action to consider. The browser extension uses the same API as the web app. Analysis is not saved until the user chooses **Save case**.
 
-The project is being expanded into a **year-long engineering major project** with balanced ML research and application development. Review the [year-long design](docs/superpowers/specs/2026-10-05-sentinel-year-long-design.md) and the [first subsystem: ML foundation and URL detector](docs/superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md). These are proposed specifications awaiting written review; the runnable code below remains the Phase 0 prototype.
+The project is being expanded into a **year-long engineering major project** with balanced ML research and application development. The user approved the [year-long design](docs/superpowers/specs/2026-10-05-sentinel-year-long-design.md) and the [first subsystem: ML foundation and URL detector](docs/superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md). The [first implementation plan](docs/superpowers/plans/2026-10-05-sentinel-ml-foundation.md) awaits review and execution-method selection; the runnable code below remains the Phase 0 prototype.
 
 ## Run locally
 

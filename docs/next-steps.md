@@ -4,9 +4,9 @@ Updated on 2026-10-05. The active project folder on this computer is `C:\Users\J
 
 ## Current priority: year-long scope and first trained subsystem
 
-The user selected **balanced ML research and application development** for a year-long engineering major project. The [year-long design](superpowers/specs/2026-10-05-sentinel-year-long-design.md) defines the research question, architecture, deliverables, twelve-month milestones and evaluation gates. The [ML foundation and URL-detector specification](superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md) defines the first focused build. Both are drafts for written review; no new model or framework is implemented yet.
+The user selected **balanced ML research and application development** for a year-long engineering major project and approved both written specifications on 2026-10-05. The [year-long design](superpowers/specs/2026-10-05-sentinel-year-long-design.md) defines the research question, architecture, deliverables, twelve-month milestones and evaluation gates. The [ML foundation and URL-detector specification](superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md) defines the first focused build. The [first implementation plan](superpowers/plans/2026-10-05-sentinel-ml-foundation.md) now awaits review and execution-method selection; no new model or framework is implemented yet.
 
-After written approval, create a concrete implementation plan for the ML foundation and URL detector. That independent URL benchmark can proceed while the team obtains verified legitimate message–link pairs; it does not answer the combined-message research question. Keep the current app as Phase 0. The candidate-review and browser tasks below remain useful alongside this new priority.
+After plan approval, execute its eight tasks for the ML foundation and URL detector. That independent URL benchmark can proceed while the team obtains verified legitimate message–link pairs; it does not answer the combined-message research question. Keep the current app as Phase 0. The candidate-review and browser tasks below remain useful alongside this new priority.
 
 ## Ready now
 
