@@ -197,7 +197,7 @@ def test_uncalibrated_probability_is_absent(self):
 
 **Interfaces:** Append `url_model=None` to `analyze(payload, known_phishing=None, model=None, url_model=None)`; append `url_model_path=None` to `create_server(...)`; add `--url-model`/`SENTINEL_URL_MODEL_PATH` configuration. When configured, add top-level `url_assessment` and health `url_model` status; preserve all existing fields and legacy `--model` semantics.
 
-- [ ] Write integration tests proving the dependency-free subprocess starts, disabled responses retain existing shape, configured missing artifact returns unavailable, learned assessment does not alter harm/profile/rule levels, and analysis remains unsaved:
+- [x] Write integration tests proving the dependency-free subprocess starts, disabled responses retain existing shape, configured missing artifact returns unavailable, learned assessment does not alter harm/profile/rule levels, and analysis remains unsaved:
 
 ```python
 def test_optional_model_is_separate_and_unsaved(self):
@@ -206,9 +206,9 @@ def test_optional_model_is_separate_and_unsaved(self):
     self.assertEqual(self.saved_cases, [])
 ```
 
-- [ ] Run `test_url_ml_integration.py`; expect signature/configuration failure.
-- [ ] Implement one service per configured server with a nonblocking one-slot inference semaphore; a busy model returns unavailable/retry guidance rather than building an unbounded thread backlog. In this compatibility API assess only the explicitly submitted `url`; message-extracted links retain legacy rule behaviour and receive a limitation if no explicit URL was supplied. This avoids silently selecting a message link for the new single-URL model. Catch optional-module failures as unavailable; do not reinterpret NB JSON as the new artifact.
-- [ ] Rerun integration plus existing analysis/server/storage and web-client checks. Verify a temporary-case save/export/delete retains the configured model version; use a temporary DB, never the user's live case file. Document that current UI rendering is Phase 0 and the standalone/API result is this milestone's model interface. Commit the integration.
+- [x] Run `test_url_ml_integration.py`; expect signature/configuration failure.
+- [x] Implement one service per configured server with a nonblocking one-slot inference semaphore; a busy model returns unavailable/retry guidance rather than building an unbounded thread backlog. In this compatibility API assess only the explicitly submitted `url`; message-extracted links retain legacy rule behaviour and receive a limitation if no explicit URL was supplied. This avoids silently selecting a message link for the new single-URL model. Catch optional-module failures as unavailable; do not reinterpret NB JSON as the new artifact.
+- [x] Rerun integration plus existing analysis/server/storage and web-client checks. Verify a temporary-case save/export/delete retains the configured model version; use a temporary DB, never the user's live case file. Document that current UI rendering is Phase 0 and the standalone/API result is this milestone's model interface. Commit the integration.
 
 ### Task 8: Real-data benchmark and reproducible delivery
 

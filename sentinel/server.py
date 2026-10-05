@@ -37,12 +37,17 @@ def load_phishing_feed(path):
         }
 
 
-def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None, model_path=None):
+def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None, model_path=None, url_model_path=None):
     if host not in ("127.0.0.1", "localhost"):
         raise ValueError("Sentinel serves only on the local loopback address")
     store = CaseStore(db_path or ROOT / "data" / "cases.db")
     known_phishing = load_phishing_feed(phishing_path)
     model = json.loads(Path(model_path).read_text(encoding="utf-8")) if model_path else None
+
+    url_model = None
+    if url_model_path:
+        from .url_ml.service import UrlModelService
+        url_model = UrlModelService(Path(url_model_path))
 
     class Handler(BaseHTTPRequestHandler):
         server_version = "Sentinel/0.1"
@@ -118,8 +123,11 @@ def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None,
             path = urlsplit(self.path).path
             parts = self._parts()
             if path == "/api/health":
-                return self._json(HTTPStatus.OK, {"status": "ok", "reputation_loaded": known_phishing is not None,
-                                                  "research_model_loaded": model is not None})
+                health = {"status": "ok", "reputation_loaded": known_phishing is not None,
+                          "research_model_loaded": model is not None}
+                if url_model is not None:
+                    health["url_model"] = url_model.health()
+                return self._json(HTTPStatus.OK, health)
             if path == "/api/cases":
                 return self._json(HTTPStatus.OK, store.list_cases())
             if len(parts) in (3, 4) and parts[:2] == ["api", "cases"]:
@@ -145,11 +153,11 @@ def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None,
                 path = urlsplit(self.path).path
                 parts = self._parts()
                 if path == "/api/analyze":
-                    return self._json(HTTPStatus.OK, analyze(body, known_phishing, model))
+                    return self._json(HTTPStatus.OK, analyze(body, known_phishing, model, url_model))
                 if path == "/api/cases":
                     if not isinstance(body, dict) or not isinstance(body.get("input"), dict):
                         raise ValueError("Supply an input object")
-                    result = analyze(body["input"], known_phishing, model)
+                    result = analyze(body["input"], known_phishing, model, url_model)
                     return self._json(HTTPStatus.CREATED, store.save(body["input"], result))
                 if len(parts) == 4 and parts[:2] == ["api", "cases"] and parts[3] == "feedback":
                     if not isinstance(body, dict):
@@ -180,8 +188,9 @@ def main():
     parser.add_argument("--db", default=os.environ.get("SENTINEL_DB"))
     parser.add_argument("--phishing-feed", default=os.environ.get("SENTINEL_PHISHING_FEED"))
     parser.add_argument("--model", default=os.environ.get("SENTINEL_MODEL_PATH"))
+    parser.add_argument("--url-model", default=os.environ.get("SENTINEL_URL_MODEL_PATH"))
     args = parser.parse_args()
-    server = create_server(port=args.port, db_path=args.db, phishing_path=args.phishing_feed, model_path=args.model)
+    server = create_server(port=args.port, db_path=args.db, phishing_path=args.phishing_feed, model_path=args.model, url_model_path=args.url_model)
     print(f"Sentinel is running at http://127.0.0.1:{server.server_port}")
     try:
         server.serve_forever()

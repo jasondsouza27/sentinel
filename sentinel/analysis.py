@@ -85,7 +85,7 @@ def _profile_assessment(profile):
     return result
 
 
-def analyze(payload, known_phishing=None, model=None):
+def analyze(payload, known_phishing=None, model=None, url_model=None):
     """Assess submitted data without fetching URLs or scraping profiles."""
     if not isinstance(payload, dict):
         raise ValueError("Request must be a JSON object")
@@ -151,4 +151,7 @@ def analyze(payload, known_phishing=None, model=None):
         "uncertainty": "One text sample cannot establish a pattern of cyberbullying or the speaker's intent.",
         "action": "Review the surrounding conversation and preserve evidence before reporting abuse." if abuse else "Review the full context before drawing conclusions.",
     }
-    return {"fraud": fraud, "harmful_content": harmful, "profile": _profile_assessment(profile)}
+    result = {"fraud": fraud, "harmful_content": harmful, "profile": _profile_assessment(profile)}
+    if url_model is not None:
+        result["url_assessment"] = url_model.assess(supplied_url).to_dict()
+    return result
