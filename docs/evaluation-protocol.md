@@ -1,4 +1,6 @@
-# Sentinel evaluation protocol
+# Sentinel Phase 0 evaluation protocol
+
+This document describes the existing prototype baseline and collection tooling, including its two-way train/test split. The proposed [year-long design](superpowers/specs/2026-10-05-sentinel-year-long-design.md) specifies separate training, validation, calibration and test partitions for the expanded research programme. That protocol and the [first ML subsystem](superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md) await written review and implementation; the current tools have not silently changed.
 
 ## Research question
 

@@ -4,6 +4,8 @@
 
 Sentinel is a local college-project prototype. A user submits a message, URL, conversation excerpt, or available profile facts. It returns separate fraud, harmful-content, and profile assessments, with observed evidence, unavailable checks, and an action to consider. The browser extension uses the same API as the web app. Analysis is not saved until the user chooses **Save case**.
 
+The project is being expanded into a **year-long engineering major project** with balanced ML research and application development. Review the [year-long design](docs/superpowers/specs/2026-10-05-sentinel-year-long-design.md) and the [first subsystem: ML foundation and URL detector](docs/superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md). These are proposed specifications awaiting written review; the runnable code below remains the Phase 0 prototype.
+
 ## Run locally
 
 Requires Python 3.10 or newer. No Python packages or cloud account are needed for the prototype.
@@ -85,4 +87,4 @@ The next [local review batch](data/curation/legitimate_sms_candidates.csv) adds 
 - `tests/` — automated checks.
 - `docs/` — implementation and research guidance.
 
-The six-month research and pilot schedule remains to be carried out by the project team. The software and presentation provide a working starting point; no real-world performance or user-study result is claimed here.
+The proposed twelve-month schedule is in the year-long design. The original implementation plan and presentation describe Phase 0. Trained replacement modules, the paired phishing study, team investigation workflows and the user pilot remain to be carried out; no real-world performance or user-study result is claimed here.

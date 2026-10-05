@@ -2,6 +2,12 @@
 
 Updated on 2026-10-05. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
 
+## Current priority: year-long scope and first trained subsystem
+
+The user selected **balanced ML research and application development** for a year-long engineering major project. The [year-long design](superpowers/specs/2026-10-05-sentinel-year-long-design.md) defines the research question, architecture, deliverables, twelve-month milestones and evaluation gates. The [ML foundation and URL-detector specification](superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md) defines the first focused build. Both are drafts for written review; no new model or framework is implemented yet.
+
+After written approval, create a concrete implementation plan for the ML foundation and URL detector. That independent URL benchmark can proceed while the team obtains verified legitimate message–link pairs; it does not answer the combined-message research question. Keep the current app as Phase 0. The candidate-review and browser tasks below remain useful alongside this new priority.
+
 ## Ready now
 
 - The local app, shared API, Chrome extension, research baselines and collection workflow are implemented.
@@ -11,7 +17,7 @@ Updated on 2026-10-05. The active project folder on this computer is `C:\Users\J
 - Source and candidate hashes are recorded in the local audit files. Raw sources and candidate sheets stay local and ignored by Git.
 - `data/curation/intake.csv` remains empty. No final phishing evaluation or user pilot has been run.
 
-## Next research task: admit a verified batch for review
+## Parallel data task: admit a verified batch for review
 
 1. Open each candidate sheet as UTF-8 text, or import every spreadsheet column as Text. Follow the [source audit](real-dataset-source-audit.md) to locate its original record. Check the pairing, remove personal details or secrets, and confirm the source's reuse terms. Do not visit submitted destinations from the Sentinel server.
 2. Gather independent evidence for legitimate requests. A UCI ham label, a NUS contribution or a familiar domain alone is insufficient. The two sources supplied only 18 diverse candidates, so collect more verified pairs from a comparable channel and period. Record evidence privately under the team's control. Do not force uncertain cases into the legitimate class.
