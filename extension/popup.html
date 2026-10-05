@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentinel</title><link rel="stylesheet" href="popup.css"><script src="popup.js" defer></script></head>
+<body><main><header><div class="brand"><span>S</span><strong>Sentinel</strong></div><small>LOCAL SAFETY CHECK</small></header>
+  <p class="intro">Check selected text or a link before you act.</p>
+  <button id="selection" class="subtle" type="button">Use selected text</button>
+  <label for="message">Message or selected text</label><textarea id="message" rows="4" placeholder="Select text on a page or paste it here…"></textarea>
+  <label for="url">Link</label><input id="url" type="url" placeholder="https://example.com">
+  <div class="buttons"><button id="check" class="primary" type="button">Check with Sentinel →</button><button id="open" class="subtle" type="button">Open full app</button></div>
+  <p id="error" role="status"></p><section id="result" hidden><h2>Assessment</h2><div id="findings"></div><button id="save" type="button" class="subtle">Save case locally</button><p id="save-status" role="status"></p></section>
+  <footer>No content is saved unless you choose Save case.</footer></main></body></html>

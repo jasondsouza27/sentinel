@@ -1,0 +1,26 @@
+{
+  "source": "https://doi.org/10.6084/m9.figshare.25432108.v1",
+  "source_file": "source_assassin.csv",
+  "source_sha256": "3bfe8f8abff89f69a98456be50413c2fcb20a476141116dd84ee1507b980c00e",
+  "output_sha256": "7c3919d0d5487db5c381577d357996f6f5980b63e587ca8df466eebbb0a8f426",
+  "task": "exploratory email spam versus ham; not phishing evaluation",
+  "label_meaning": {
+    "0": "ham (non-spam)",
+    "1": "spam (not verified phishing)"
+  },
+  "pair_method": "single HTTP(S) or www link extracted from the same message",
+  "source_cases": 5809,
+  "paired_cases": 1912,
+  "class_counts": {
+    "0": 1546,
+    "1": 366
+  },
+  "domain_groups": 308,
+  "excluded": {
+    "multiple_links_in_message": 2439,
+    "no_link_in_message": 1159,
+    "message_too_long": 296,
+    "duplicate_message": 3
+  },
+  "max_message_chars": 8000
+}

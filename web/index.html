@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentinel — Safety assistant</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Sentinel home"><span class="brand-mark">S</span><span>Sentinel</span></a>
+      <nav><a href="#check">Check content</a><a href="#history">Saved cases</a><a href="#how">How it works</a></nav>
+      <span id="service-status" class="service-status">Checking local service…</span>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> YOUR DIGITAL SAFETY COMPANION</div>
+          <h1 id="hero-title">Pause before you <em>trust</em> the link.</h1>
+          <p>Check a suspicious message, website, or profile. Sentinel shows the warning signs it found, what it could not check, and a sensible next step.</p>
+          <a href="#check" class="hero-link">Start a check <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-ring art-ring-one"></div><div class="art-ring art-ring-two"></div><div class="art-ring art-ring-three"></div>
+          <div class="art-shield">S</div>
+          <div class="art-tag art-tag-top">LINK CHECK <span>●</span></div>
+          <div class="art-tag art-tag-bottom"><span>●</span> CONTEXT FIRST</div>
+        </div>
+      </section>
+
+      <div class="notice"><span class="notice-icon">i</span><span>Sentinel is an early research prototype. A low concern result does not prove something is safe. Verify unexpected requests through an official channel.</span></div>
+
+      <section id="check" class="workbench" aria-labelledby="check-title">
+        <div class="section-heading"><div><span class="section-kicker">01 / ASSESS</span><h2 id="check-title">Check something suspicious</h2></div><p>Share only information you are comfortable checking. Nothing is saved unless you choose Save case.</p></div>
+        <div class="work-grid">
+          <form id="check-form" class="panel input-panel">
+            <div class="panel-title"><span class="step-num">01</span><div><h3>What did you find?</h3><p>Enter any one field, or combine them for more context.</p></div></div>
+            <label for="message">Message or post <span>optional</span></label>
+            <textarea id="message" maxlength="10000" rows="5" placeholder="Paste the message or post here…"></textarea>
+            <div class="field-help">For example, a job offer, a direct message, or a social post.</div>
+            <label for="url">Website or link <span>optional</span></label>
+            <input id="url" type="url" maxlength="2048" placeholder="https://example.com/page">
+            <label for="conversation">Conversation context <span>optional</span></label>
+            <textarea id="conversation" maxlength="20000" rows="3" placeholder="Add surrounding messages when checking a possible insult or threat…"></textarea>
+            <details class="profile-details"><summary>Have profile details? Add them here</summary>
+              <div class="profile-fields">
+                <label for="username">Username</label><input id="username" maxlength="120" placeholder="@account">
+                <div class="two-columns"><div><label for="age">Account age (days)</label><input id="age" type="number" min="0" step="1" placeholder="e.g. 30"></div><div><label for="posts">Posts in 24 hours</label><input id="posts" type="number" min="0" step="1" placeholder="e.g. 8"></div></div>
+                <div class="two-columns"><div><label for="followers">Followers</label><input id="followers" type="number" min="0" step="1" placeholder="e.g. 150"></div><div><label for="following">Following</label><input id="following" type="number" min="0" step="1" placeholder="e.g. 300"></div></div>
+                <label for="website">Profile website</label><input id="website" type="url" maxlength="2048" placeholder="https://profile-site.example">
+                <label for="official">Official organisation domain, if known</label><input id="official" maxlength="255" placeholder="university.edu">
+              </div>
+            </details>
+            <div class="form-actions"><button class="primary-button" type="submit" id="check-button">Analyze content <span aria-hidden="true">→</span></button><button class="text-button" id="clear-button" type="button">Clear fields</button></div>
+            <p id="form-message" class="form-message" role="status"></p>
+          </form>
+
+          <section id="result-panel" class="panel result-panel" aria-live="polite" aria-label="Analysis result">
+            <div class="panel-title"><span class="step-num">02</span><div><h3>Your assessment</h3><p>Observed signals and what to do next.</p></div></div>
+            <div id="result-empty" class="result-empty"><div class="empty-icon">◎</div><h4>Your result will appear here</h4><p>Sentinel looks at each available piece of information separately, then shows where the evidence points.</p></div>
+            <div id="result-content" hidden></div>
+            <div id="result-actions" class="result-actions" hidden><button id="save-button" class="secondary-button" type="button">Save this case</button><span id="save-status" role="status"></span></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="history" class="history-section" aria-labelledby="history-title">
+        <div class="section-heading"><div><span class="section-kicker">02 / REVIEW</span><h2 id="history-title">Saved cases</h2></div><p>Only cases you save appear here. Feedback is stored locally and is not used for training automatically.</p></div>
+        <div class="panel history-panel"><div id="case-list" class="case-list"><p class="muted">Loading saved cases…</p></div></div>
+      </section>
+
+      <section id="how" class="how-section" aria-labelledby="how-title">
+        <div class="section-heading"><div><span class="section-kicker">03 / UNDERSTAND</span><h2 id="how-title">How Sentinel helps</h2></div></div>
+        <div class="how-grid"><div class="how-card"><span>01</span><h3>Spot the signals</h3><p>Checks wording, URL structure, known phishing records when configured, and profile facts you provide.</p></div><div class="how-card"><span>02</span><h3>Read the limits</h3><p>Shows missing checks and uncertainty. A single post cannot establish cyberbullying or prove an account is fake.</p></div><div class="how-card"><span>03</span><h3>Choose the next step</h3><p>Review the context and contact the sender through a known official channel before you pay or share a code.</p></div></div>
+      </section>
+    </main>
+    <footer><span>Sentinel · College major project prototype</span><span>Local-first · User-initiated · Evidence explained</span></footer>
+  </div>
+</body>
+</html>

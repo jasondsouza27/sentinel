@@ -1,0 +1,13 @@
+case_id,message,url,label,domain_group
+demo-01,Pay a registration fee now to secure this placement,https://placement-fee-01.example/pay,1,placement-fee-01.example
+demo-02,Your class timetable is available on the department page,https://department-02.example/timetable,0,department-02.example
+demo-03,Send your login code immediately to claim the prize,https://prize-code-03.example/verify,1,prize-code-03.example
+demo-04,The library will close at six this Friday,https://library-04.example/hours,0,library-04.example
+demo-05,Pay a processing fee for your scholarship offer,https://scholarship-fee-05.example/start,1,scholarship-fee-05.example
+demo-06,Review the campus sports schedule for next week,https://sports-06.example/schedule,0,sports-06.example
+demo-07,Confirm your password urgently to keep your account,https://account-confirm-07.example/login,1,account-confirm-07.example
+demo-08,Register for the free student workshop here,https://workshop-08.example/signup,0,workshop-08.example
+demo-09,Send money to receive your internship certificate,https://internship-certificate-09.example/pay,1,internship-certificate-09.example
+demo-10,Download the public semester calendar here,https://calendar-10.example/semester,0,calendar-10.example
+demo-11,Enter your OTP for a surprise reward,https://reward-11.example/code,1,reward-11.example
+demo-12,See the published exam room allocation,https://exam-12.example/rooms,0,exam-12.example
