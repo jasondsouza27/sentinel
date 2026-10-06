@@ -14,7 +14,7 @@ staged benign documentation links are falsely flagged. These scores do not estab
 live reliability. Read the [final model card](output/research/url-ml-v1/model-card.md)
 and [aggregate results](output/research/url-ml-v1/evaluation.json). Broad legitimate
 URL formats and independent source/temporal validation are the next data-quality gate.
-The standard launcher keeps the learned model disabled.
+The standard launcher keeps the learned model disabled. The [delivery record](docs/url-ml-delivery-record.md) documents the independent review, its three corrected findings, 78 passing Python tests and 12 web-client checks.
 
 ## Run locally
 

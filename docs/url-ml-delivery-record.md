@@ -4,6 +4,22 @@ Recorded on 2026-10-06. This is the first trained subsystem of the approved year
 Sentinel project. The measured url-v1 result is research-only because the source has
 severe legitimate-URL format confounding. The standard launcher keeps it disabled.
 
+
+Delivery verified: implementation commit `07960624dfdddc5cbd48d9faaa7a5a77214799b0`
+was fast-forwarded into `codex/sentinel` and pushed to the existing private repository
+[jasondsouza27/sentinel](https://github.com/jasondsouza27/sentinel). Remote SHA verification
+matched the implementation HEAD. The active Desktop project independently passed all
+78 Python tests and 12 web-client checks after integration. Its preserved real artifact
+served the optional API; the separate default stdlib-only API kept ML disabled. Neither
+smoke check saved cases or changed the running server.
+
+All 16 acquired/derived private research files and all 7 immutable artifact files were
+byte-hash verified in the active project. Its dedicated Python 3.11 environment and
+16 locked packages remain installed. After this verification, the temporary plan scratch
+directory, fully merged implementation worktree and merged feature branch were removed.
+The primary project and original case/curation data are preserved. The final code and
+aggregate reports are on GitHub; private source rows and binary artifacts stay local.
+
 One fresh independent reviewer examined commits 6f844e1..de68f8d against the approved
 specification and plan. The verdict was “With fixes”: no Critical findings, three
 Important findings and one Minor. Each Important finding was reproduced with failing

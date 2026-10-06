@@ -4,7 +4,7 @@ Updated on 2026-10-06. The active project folder on this computer is `C:\Users\J
 
 ## Current priority: broaden URL data before deployment
 
-The independent review findings were reproduced and fixed; the [delivery record](url-ml-delivery-record.md) documents all decisions and correction audits.
+The first ML milestone is integrated and pushed to the private GitHub repository. The independent review findings were reproduced and fixed; the [delivery record](url-ml-delivery-record.md) documents all decisions and correction audits.
 
 The first approved [ML foundation plan](superpowers/plans/2026-10-05-sentinel-ml-foundation.md) has produced an audited 235,343-URL dataset, domain-isolated frozen splits, two trained CPU branches, separate calibration, immutable artifacts, inference CLI and optional API. See the [reproduction workflow](url-ml-workflow.md) and [final model card](../output/research/url-ml-v1/model-card.md).
 
