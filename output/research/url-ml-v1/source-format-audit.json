@@ -1,0 +1,61 @@
+{
+  "label_format_counts": {
+    "0": {
+      "empty_path": 134850,
+      "https": 134850,
+      "other_path": 0,
+      "query_present": 0,
+      "rows": 134850,
+      "slash_only_path": 0,
+      "www_host": 134850
+    },
+    "1": {
+      "empty_path": 40513,
+      "https": 48865,
+      "other_path": 27261,
+      "query_present": 6068,
+      "rows": 100493,
+      "slash_only_path": 32719,
+      "www_host": 41715
+    }
+  },
+  "note": "Hand-selected smoke inputs are separate from the held-out benchmark and cause no model tuning.",
+  "staged_smoke": [
+    {
+      "decision": "phishing_flag",
+      "probability": 0.9804876448330367,
+      "staged_case": "reserved_no_slash",
+      "state": "complete"
+    },
+    {
+      "decision": "phishing_flag",
+      "probability": 0.999648966870101,
+      "staged_case": "reserved_with_slash",
+      "state": "complete"
+    },
+    {
+      "decision": "phishing_flag",
+      "probability": 0.045831029646460825,
+      "staged_case": "reserved_www",
+      "state": "complete"
+    },
+    {
+      "decision": "phishing_flag",
+      "probability": 0.9987853510166442,
+      "staged_case": "public_docs_root",
+      "state": "complete"
+    },
+    {
+      "decision": "phishing_flag",
+      "probability": 0.999658188733473,
+      "staged_case": "public_docs_path",
+      "state": "complete"
+    },
+    {
+      "decision": "not_flagged",
+      "probability": 0.0001360655309599269,
+      "staged_case": "university_root",
+      "state": "complete"
+    }
+  ]
+}

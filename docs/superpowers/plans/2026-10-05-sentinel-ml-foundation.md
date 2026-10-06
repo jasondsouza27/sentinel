@@ -8,7 +8,7 @@
 
 **Tech Stack:** CPython 3.11, NumPy/SciPy, scikit-learn, joblib, idna, tldextract, psutil, stdlib argparse/CSV/JSON and unittest. No PyTorch, dashboard rewrite or public deployment in this subsystem.
 
-**Spec:** [Approved ML foundation design](../specs/2026-10-05-sentinel-ml-foundation-design.md), with constraints from the [approved year-long design](../specs/2026-10-05-sentinel-year-long-design.md). Approved by the user on 2026-10-05; **this implementation plan awaits review and execution-method selection**.
+**Spec:** [Approved ML foundation design](../specs/2026-10-05-sentinel-ml-foundation-design.md), with constraints from the [approved year-long design](../specs/2026-10-05-sentinel-year-long-design.md). Approved by the user on 2026-10-05; **this implementation plan was approved for inline execution with one independent final review**.
 
 ## Global Constraints
 
@@ -216,9 +216,9 @@ def test_optional_model_is_separate_and_unsaved(self):
 
 **Interfaces:** The CLI below implements the previous tasks' contracts; this task verifies them end to end on acquired, audited data.
 
-- [ ] Write the reproduction guide with exact source attribution, hashes, prerequisite/runtime setup, lock installation, capabilities/label mapping and limitations. Preserve the actual acquisition snapshot for reproduction; never substitute a fresh PSL silently. Paths containing spaces are exercised by the CLI integration test. Document that this URL-string benchmark does not reproduce the source paper's full webpage-feature experiment or establish message–URL fusion benefit.
-- [ ] From a clean Python 3.11 venv, install the committed lock and run the complete Python suite and `node --test tests/web_client.test.mjs`. Expected: all applicable tests pass, no ML dependency skips. Demonstrate the original launcher without ML installed separately.
-- [ ] Run the real pipeline, one command at a time, from the active implementation checkout:
+- [x] Write the reproduction guide with exact source attribution, hashes, prerequisite/runtime setup, lock installation, capabilities/label mapping and limitations. Preserve the actual acquisition snapshot for reproduction; never substitute a fresh PSL silently. Paths containing spaces are exercised by the CLI integration test. Document that this URL-string benchmark does not reproduce the source paper's full webpage-feature experiment or establish message–URL fusion benefit.
+- [x] From a clean Python 3.11 venv, install the committed lock and run the complete Python suite and `node --test tests/web_client.test.mjs`. Expected: all applicable tests pass, no ML dependency skips. Demonstrate the original launcher without ML installed separately.
+- [x] Run the real pipeline, one command at a time, from the active implementation checkout:
 
 ```powershell
 .venv-ml\Scripts\python.exe -m sentinel.url_ml.cli fetch --root data/url-ml
@@ -232,7 +232,7 @@ def test_optional_model_is_separate_and_unsaved(self):
 
 `fetch` may reuse byte-verified existing acquisition; `audit`/`split` must refuse overwrite, so for already completed tasks verify/load their frozen outputs rather than rerun into the same directories. Training records peak RAM/time for every candidate. Final evaluation measures cold/warm single-URL latency and whole-domain intervals; no test-driven tuning or promised score.
 
-- [ ] Inspect counts, split isolation, failures, calibration reliability, resource targets and error categories. Publish an accurate final model card and aggregate report only after checking for raw tokens/paths; keep source rows, manifests and binary artifacts ignored. Reproduce assignments and predictions within `1e-6` score tolerance from the same supplied inputs/config. If full training or calibration fails, report that milestone incomplete and preserve diagnostics; a synthetic run is not a substitute.
+- [x] Inspect counts, split isolation, failures, calibration reliability, resource targets and error categories. Publish an accurate final model card and aggregate report only after checking for raw tokens/paths; keep source rows, manifests and binary artifacts ignored. Reproduce assignments and predictions within `1e-6` score tolerance from the same supplied inputs/config. If full training or calibration fails, report that milestone incomplete and preserve diagnostics; a synthetic run is not a substitute.
 - [ ] Run scoped final checks and `git diff --check`, commit deliverables, request the selected method's whole-branch review, then push after fixes and fresh relevant verification. Before archiving an implementation worktree, preserve needed ignored source/model artifacts in the active project with verified paths and no silent overwrite. Report measured results and remaining data/application tasks; do not claim the year-long project is complete.
 
 ## Self-review and handoff
@@ -241,4 +241,4 @@ Coverage: source/labels (Task 2), normalisation/PSL (1), grouped protocol (3), m
 
 Recommended execution: **Native**. These tasks share parser, split and artifact contracts; implementing them in one session reduces repeated context setup, followed by an independent whole-branch review. Subagent-driven execution is also available: a fresh implementer and reviewer per task, plus final review, with higher coordination cost.
 
-The human partner must review this written plan and choose the execution method before implementation begins.
+The human partner approved this plan and selected inline execution with one independent whole-branch review. Tasks 1-8 research deliverables are verified; final independent review, integration and push are the remaining branch gate.

@@ -4,7 +4,17 @@
 
 Sentinel is a local college-project prototype. A user submits a message, URL, conversation excerpt, or available profile facts. It returns separate fraud, harmful-content, and profile assessments, with observed evidence, unavailable checks, and an action to consider. The browser extension uses the same API as the web app. Analysis is not saved until the user chooses **Save case**.
 
-The project is being expanded into a **year-long engineering major project** with balanced ML research and application development. The user approved the [year-long design](docs/superpowers/specs/2026-10-05-sentinel-year-long-design.md) and the [first subsystem: ML foundation and URL detector](docs/superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md). The [first implementation plan](docs/superpowers/plans/2026-10-05-sentinel-ml-foundation.md) awaits review and execution-method selection; the runnable code below remains the Phase 0 prototype.
+The project is being expanded into a **year-long engineering major project** with balanced ML research and application development. The user approved the [year-long design](docs/superpowers/specs/2026-10-05-sentinel-year-long-design.md) and the [first subsystem: ML foundation and URL detector](docs/superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md). The approved [first implementation plan](docs/superpowers/plans/2026-10-05-sentinel-ml-foundation.md) delivers an independent URL ML subsystem: audited sources, domain-isolated splits, sparse/lexical CPU models, calibration, checked local artifacts and optional API inference. See the [URL ML reproduction guide](docs/url-ml-workflow.md) and [API contract](docs/url-ml-api.md). The existing web/extension interface remains Phase 0.
+
+
+The first actual URL-only benchmark is complete: **97.07% F1**, **99.80% recall** and
+**4.35% false-positive rate** on 23,534 domain-held-out URLs. **The url-v1 model remains
+research-only:** all legitimate source URLs are www HTTPS homepages with empty paths;
+staged benign documentation links are falsely flagged. These scores do not establish
+live reliability. Read the [final model card](output/research/url-ml-v1/model-card.md)
+and [aggregate results](output/research/url-ml-v1/evaluation.json). Broad legitimate
+URL formats and independent source/temporal validation are the next data-quality gate.
+The standard launcher keeps the learned model disabled.
 
 ## Run locally
 
@@ -87,4 +97,4 @@ The next [local review batch](data/curation/legitimate_sms_candidates.csv) adds 
 - `tests/` — automated checks.
 - `docs/` — implementation and research guidance.
 
-The proposed twelve-month schedule is in the year-long design. The original implementation plan and presentation describe Phase 0. Trained replacement modules, the paired phishing study, team investigation workflows and the user pilot remain to be carried out; no real-world performance or user-study result is claimed here.
+The proposed twelve-month schedule is in the year-long design. The original implementation plan and presentation describe Phase 0. Contextual harm/profile ML, the paired phishing study, team investigation workflows, dashboard expansion and the user pilot remain to be carried out; no real-world performance or user-study result is claimed here.

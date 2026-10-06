@@ -1,6 +1,8 @@
 # Optional URL model API
 
-Run the existing local app with its ML interpreter and a locally trusted artifact directory:
+**Research-only:** url-v1 failed staged benign documentation-link checks because legitimate source URLs cover only www HTTPS homepages with empty paths. Do not use its numerical output as live confidence. See the [final model card](../output/research/url-ml-v1/model-card.md). It remains disabled in the normal launcher.
+
+For research testing, run the existing local app with its ML interpreter and a locally trusted artifact directory:
 
 ```powershell
 .venv-ml\Scripts\python.exe -m sentinel.server --url-model models/url-ml/url-v1

@@ -1,0 +1,22 @@
+{
+  "artifact_manifest_sha256": "020db47e5103e0eb28194a793c5ddd37a8e4f0a161da2ffd45ae4b0899b59709",
+  "maximum_absolute_score_difference": 0.0,
+  "no_threshold_or_config_changes": true,
+  "repeated_fit": {
+    "branch": "char_tfidf",
+    "fit_seconds": 59.44565090001561,
+    "native_threads": 4,
+    "params": {
+      "C": 10,
+      "class_weight": null,
+      "max_features": 50000
+    },
+    "peak_bytes": 988663808,
+    "status": "ok",
+    "train_rows": 164741
+  },
+  "same_split_manifest": true,
+  "score_comparison_partition": "validation",
+  "tolerance": 1e-06,
+  "urls_compared": 500
+}
