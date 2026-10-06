@@ -7,6 +7,7 @@ from urllib.parse import urlsplit, urlunsplit
 from .contracts import ParsedUrl, UnsupportedUrl, MAX_URL_CHARS
 
 BAD_ESCAPE = re.compile(r"%(?![0-9a-fA-F]{2})")
+NUMERIC_HOST_END = re.compile(r"(?:[0-9]+|0x[0-9a-f]*)\Z", re.IGNORECASE)
 
 class UrlParser:
     def __init__(self, psl_path: Path):
@@ -63,15 +64,24 @@ class UrlParser:
                 raise
             raise UnsupportedUrl("url_authority") from None
         flags = []
+        # UTS46 maps Unicode digits and dot variants. Apply it before deciding
+        # whether this is an IP host, then remove the mapped terminal DNS dot.
+        if ":" not in host:
+            try:
+                host = idna.uts46_remap(host, std3_rules=True, transitional=False).rstrip(".")
+                host = idna.encode(host, std3_rules=True).decode("ascii").lower()
+            except idna.IDNAError:
+                raise UnsupportedUrl("url_host") from None
         try:
             address = ipaddress.ip_address(host)
         except ValueError:
-            try:
-                host = idna.encode(host, uts46=True, std3_rules=True).decode("ascii").lower()
-            except idna.IDNAError:
-                raise UnsupportedUrl("url_host") from None
-            if len(host) > 253:
+            if ":" in host or len(host) > 253:
                 raise UnsupportedUrl("url_host")
+            # Browsers treat numeric terminal labels as IPv4 candidates and
+            # accept legacy short/octal/hex forms. This strict offline parser
+            # rejects those forms rather than grouping them as separate domains.
+            if NUMERIC_HOST_END.fullmatch(host.rsplit(".", 1)[-1]):
+                raise UnsupportedUrl("url_ambiguous_ipv4")
             if any(label.startswith("xn--") for label in host.split(".")):
                 flags.append("punycode")
             suffix = self._extract(host)

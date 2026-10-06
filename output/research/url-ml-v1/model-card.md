@@ -46,3 +46,13 @@ The frozen split manifest reproduced exactly. An independent repeat of the selec
 ## Next gate
 
 Expand both labels with diverse legitimate paths, queries, schemes and host formats; include independently obtained source and temporal holdouts. Pre-register a new version and repeat evaluation before considering deployment. Do not repair this frozen benchmark by whitelisting staged examples. Genuine paired-message collection, contextual harm/profile models, investigation UI and the usability pilot remain separate future milestones.
+
+## Review corrections and preserved result
+
+The [parser correction audit](parser-correction-audit.json) found zero changes in
+235,795 source parsing outcomes and 235,343 frozen identities/groups. The
+[calibration audit](calibration-correction-audit.json) confirms that the frozen scores
+meet the added non-degeneracy guard. Fitted weights, splits, thresholds and the original
+artifact manifest remain unchanged. Future failed runs now preserve private diagnostics.
+The [delivery record](../../../docs/url-ml-delivery-record.md) records the final review.
+These reliability fixes do not establish live generalization or remove source confounding.

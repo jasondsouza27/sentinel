@@ -6,6 +6,7 @@ from .contracts import Calibration,DatasetError
 from .metrics import _arrays
 
 EPSILON=1e-6
+MIN_LOGIT_SPREAD=1e-8
 
 def logit(scores):
     clipped=np.clip(np.asarray(scores,dtype=float),EPSILON,1-EPSILON)
@@ -18,9 +19,17 @@ def fit_calibration(labels,scores,raw_threshold):
     if len(y)<100 or any(report["class_counts"][str(c)]<20 for c in (0,1)):
         report["reason"]="insufficient_calibration_support"
         return Calibration("unavailable",None,None,None,report)
+    logits=logit(s)
+    spread=float(np.ptp(logits))
+    report.update({"score_logit_range":spread,"min_logit_range":MIN_LOGIT_SPREAD})
+    # Tied or effectively tied predictors cannot identify a meaningful slope.
+    # A positive optimizer coefficient alone is not evidence of calibration.
+    if spread<=MIN_LOGIT_SPREAD:
+        report["reason"]="insufficient_score_variation"
+        return Calibration("unavailable",None,None,None,report)
     try:
         model=LogisticRegression(C=1e6,solver="lbfgs",max_iter=1000,random_state=42)
-        model.fit(logit(s).reshape(-1,1),y)
+        model.fit(logits.reshape(-1,1),y)
         slope=float(model.coef_[0,0]); intercept=float(model.intercept_[0])
         if not np.isfinite(slope) or not np.isfinite(intercept) or slope<=0:
             report["reason"]="nonpositive_or_invalid_slope"

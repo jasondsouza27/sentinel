@@ -75,8 +75,14 @@ def _fit_worker(connection,rows,branch,params,parser,native_threads):
                 "branch":branch,"params":params,"train_rows":len(rows)}
         connection.send((None if convergence else model,record))
     except Exception as error:
+        try:
+            info=psutil.Process().memory_info()
+            peak=getattr(info,"peak_rss",None) or getattr(info,"peak_wset",None)
+        except psutil.Error: peak=None
         connection.send((None,{"status":"fit_failed","error":getattr(error,"reason",type(error).__name__),
-                              "branch":branch,"params":params,"fit_seconds":time.perf_counter()-started}))
+                              "error_type":type(error).__name__,"error_message":str(error)[:2048],
+                              "branch":branch,"params":params,"fit_seconds":time.perf_counter()-started,
+                              "peak_bytes":peak,"native_threads":native_threads,"train_rows":len(rows),"pid":os.getpid()}))
     finally: connection.close()
 
 def fit_candidate(rows,branch,params,parser,native_threads=4,max_peak_bytes=8*1024**3):
@@ -92,7 +98,8 @@ def fit_candidate(rows,branch,params,parser,native_threads=4,max_peak_bytes=8*10
         for key,value in previous.items():
             if value is None: os.environ.pop(key,None)
             else: os.environ[key]=value
-    sending.close(); record=None; result=None
+    sending.close(); record=None; result=None; observed_peak=0
+    started=time.perf_counter()
     try:
         while True:
             if receiving.poll(.2):
@@ -102,13 +109,17 @@ def fit_candidate(rows,branch,params,parser,native_threads=4,max_peak_bytes=8*10
             if not process.is_alive():
                 record={"status":"worker_exited","branch":branch,"params":params,"exit_code":process.exitcode}; break
             try:
-                if psutil.Process(process.pid).memory_info().rss>max_peak_bytes:
+                rss=psutil.Process(process.pid).memory_info().rss
+                observed_peak=max(observed_peak,rss)
+                if rss>max_peak_bytes:
                     process.terminate(); record={"status":"memory_budget_exceeded","branch":branch,"params":params}; break
             except psutil.NoSuchProcess: pass
         process.join(timeout=5)
         if process.is_alive(): process.terminate(); process.join()
-        if record.get("peak_bytes",0)>max_peak_bytes:
+        if (record.get("peak_bytes") or 0)>max_peak_bytes:
             record["status"]="memory_budget_exceeded"; result=None
+        record.update({"observed_rss_peak_bytes":observed_peak,"parent_wall_seconds":time.perf_counter()-started,
+                       "native_threads":native_threads,"train_rows":len(rows),"max_peak_bytes":max_peak_bytes})
         return result,record
     finally:
         receiving.close()
@@ -128,17 +139,42 @@ def rule_predictions(rows):
     from sentinel.analysis import analyze
     return [int(bool(analyze({"url":r.url})["fraud"]["evidence"])) for r in rows]
 
+def _attempt_fit(rows,branch,params,parser,config):
+    context={"branch":branch,"params":params,"train_rows":len(rows),
+             "native_threads":config["native_threads"],"max_peak_bytes":config["max_peak_bytes"]}
+    started=time.perf_counter()
+    try:
+        model,record=fit_candidate(rows,branch,params,parser,config["native_threads"],config["max_peak_bytes"])
+        return model,{**context,**record}
+    except Exception as error:
+        # Spawn/serialization errors can occur before the worker sends a record.
+        return None,{**context,"status":"fit_failed","error":getattr(error,"reason",type(error).__name__),
+                     "error_type":type(error).__name__,"error_message":str(error)[:2048],
+                     "fit_seconds":time.perf_counter()-started,"peak_bytes":None}
+
+
+def _failure_context(splits,config):
+    from .splits import manifest_hash
+    return {"training_config":config,"split_provenance":splits.manifest.get("provenance",{}),
+            "split_manifest_sha256":manifest_hash(splits.manifest)}
+
+
 def resource_pilot(splits,config,parser):
     rows=pilot_rows(splits,config["pilot_max_rows"],config["seed"])
     ids=[r.case_id for r in rows]; measurements=[]
+    report={"schema":"url-pilot-v1","rows":len(rows),"group_count":len({r.domain_group for r in rows}),
+            "case_ids":ids,"ids_sha256":hashlib.sha256(json.dumps(ids,separators=(",",":")).encode()).hexdigest(),
+            "measurements":measurements,"native_threads":config["native_threads"],"max_peak_bytes":config["max_peak_bytes"],
+            **_failure_context(splits,config)}
     for branch in ("char_tfidf","lexical_hgb"):
         params=next(params for b,params in candidate_grid(config) if b==branch)
-        model,record=fit_candidate(rows,branch,params,parser,config["native_threads"],config["max_peak_bytes"])
+        model,record=_attempt_fit(rows,branch,params,parser,config)
         measurements.append(record)
-        if model is None: raise DatasetError("resource_pilot_failed_"+record["status"])
-    return {"schema":"url-pilot-v1","rows":len(rows),"group_count":len({r.domain_group for r in rows}),
-            "case_ids":ids,"ids_sha256":hashlib.sha256(json.dumps(ids,separators=(",",":")).encode()).hexdigest(),
-            "measurements":measurements,"native_threads":config["native_threads"],"max_peak_bytes":config["max_peak_bytes"]}
+        if model is None or record["status"]!="ok":
+            reason="resource_pilot_failed_"+record["status"]
+            report.update({"status":"failed","stage":"pilot","reason":reason})
+            raise DatasetError(reason,diagnostics=report)
+    return {**report,"status":"ok"}
 
 
 def select_model(splits,config,parser):
@@ -149,7 +185,7 @@ def select_model(splits,config,parser):
     labels=np.array([r.label for r in validation]); urls=[r.url for r in validation]
     records=[]; best=None; best_rank=None; branch_models={}
     for index,(branch,params) in enumerate(candidate_grid(config)):
-        model,record=fit_candidate(train,branch,params,parser,config["native_threads"],config["max_peak_bytes"])
+        model,record=_attempt_fit(train,branch,params,parser,config)
         record={**record,"configuration_index":index}
         if model is not None and record["status"]=="ok":
             scores=raw_scores(model,urls); threshold=choose_threshold(labels,scores,config["max_fpr"])
@@ -160,9 +196,13 @@ def select_model(splits,config,parser):
             if branch not in branch_models or rank>branch_models[branch][-1]: branch_models[branch]=candidate
             if best_rank is None or rank>best_rank: best=(model,branch,threshold,params,index); best_rank=rank
         records.append(record)
-        print(json.dumps({"training_progress":{"configuration":index+1,"branch":branch,"status":record["status"],
-                                              "peak_bytes":record.get("peak_bytes"),"fit_seconds":record.get("fit_seconds")}}),flush=True)
-    if best is None: raise DatasetError("all_candidates_failed")
+        progress={key:record.get(key) for key in ("branch","params","status","peak_bytes","fit_seconds",
+                                                  "native_threads","observed_rss_peak_bytes","error","error_message")}
+        print(json.dumps({"training_progress":{"configuration":index+1,**progress}}),flush=True)
+    if best is None:
+        raise DatasetError("all_candidates_failed",diagnostics={"schema":"url-training-failure-v1","stage":"selection",
+                           "status":"failed","reason":"all_candidates_failed","configurations":records,
+                           "train_rows":len(train),"validation_rows":len(validation),**_failure_context(splits,config)})
     model,branch,threshold,params,index=best
     # Keep the best fitted candidate per branch for the frozen final comparison.
     # No retraining and no test/calibration inputs are read here.

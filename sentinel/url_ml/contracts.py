@@ -13,8 +13,9 @@ class UnsupportedUrl(ValueError):
         super().__init__(reason)
 
 class DatasetError(ValueError):
-    def __init__(self, reason):
+    def __init__(self, reason, diagnostics=None):
         self.reason = reason
+        self.diagnostics = diagnostics
         super().__init__(reason)
 
 @dataclass(frozen=True)

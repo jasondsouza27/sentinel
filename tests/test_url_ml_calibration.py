@@ -20,6 +20,21 @@ class CalibrationTests(unittest.TestCase):
         self.assertIsNone(self.api.apply_calibration(reversed_cal,scores))
         self.assertEqual(reversed_cal.report["reason"],"nonpositive_or_invalid_slope")
 
+    def test_constant_imbalanced_scores_do_not_manufacture_confidence(self):
+        cal=self.api.fit_calibration([0]*180+[1]*20,[.1]*200,None)
+        self.assertEqual(cal.status,"unavailable")
+        self.assertEqual(cal.report["reason"],"insufficient_score_variation")
+        self.assertIsNone(cal.slope); self.assertIsNone(cal.intercept)
+        self.assertIsNone(self.api.apply_calibration(cal,[.1,.5,.9]))
+
+    def test_clipped_and_numerically_tied_logits_are_unavailable(self):
+        for scores in ([0]*100+[1e-8]*100,[1]*100+[1-1e-8]*100,[.1]*100+[.1+1e-12]*100):
+            with self.subTest(scores=scores[:1]):
+                cal=self.api.fit_calibration([0]*100+[1]*100,scores,.5)
+                self.assertEqual(cal.status,"unavailable")
+                self.assertEqual(cal.report["reason"],"insufficient_score_variation")
+                self.assertIsNone(cal.threshold)
+
     def test_minimum_support_clipping_and_no_threshold(self):
         import numpy as np
         tiny=self.api.fit_calibration(np.array([0,1]),np.array([0,1]),None)

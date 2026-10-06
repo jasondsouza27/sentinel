@@ -241,4 +241,4 @@ Coverage: source/labels (Task 2), normalisation/PSL (1), grouped protocol (3), m
 
 Recommended execution: **Native**. These tasks share parser, split and artifact contracts; implementing them in one session reduces repeated context setup, followed by an independent whole-branch review. Subagent-driven execution is also available: a fresh implementer and reviewer per task, plus final review, with higher coordination cost.
 
-The human partner approved this plan and selected inline execution with one independent whole-branch review. Tasks 1-8 research deliverables are verified; final independent review, integration and push are the remaining branch gate.
+The human partner approved this plan and selected inline execution with one independent whole-branch review. Tasks 1-8 research deliverables are verified; the independent review and its three Important regression fixes are complete, with 78 Python and 12 web-client checks passing. Active-project integration and push are the remaining delivery gate.

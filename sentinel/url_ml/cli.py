@@ -73,6 +73,18 @@ identity detection, contextual harassment detection or message-plus-URL fusion b
 A not-flagged URL does not establish safety. Probabilities refer to this benchmark.
 """
 
+def _save_failure(root,command,diagnostics):
+    from datetime import datetime,timezone
+    from uuid import uuid4
+    directory=Path(root) / "failed-runs"
+    directory.mkdir(parents=True,exist_ok=True)
+    stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    path=directory / f"{command}-{stamp}-{uuid4().hex}.json"
+    with path.open("x",encoding="utf-8") as f:
+        f.write(json.dumps(diagnostics,indent=2,sort_keys=True,allow_nan=False)+"\n")
+    return str(path.resolve())
+
+
 def main(argv=None):
     p=argparse.ArgumentParser(description="Sentinel URL-only research workflow")
     commands=p.add_subparsers(dest="command",required=True)
@@ -124,6 +136,12 @@ def main(argv=None):
         print(json.dumps(result,indent=2,sort_keys=True,allow_nan=False))
         return 0
     except (DatasetError,OSError,ImportError,ValueError,KeyError) as error:
-        print(json.dumps({"error":getattr(error,"reason",type(error).__name__)})); return 2
+        result={"error":getattr(error,"reason",type(error).__name__)}
+        diagnostics=getattr(error,"diagnostics",None)
+        if diagnostics is not None:
+            try: result["diagnostic_path"]=_save_failure(args.root,args.command,diagnostics)
+            except (OSError,ValueError) as save_error:
+                result.update({"diagnostic_error":type(save_error).__name__,"diagnostics":diagnostics})
+        print(json.dumps(result,allow_nan=False)); return 2
 
 if __name__=="__main__": raise SystemExit(main())

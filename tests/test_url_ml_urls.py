@@ -43,6 +43,28 @@ class UrlParserTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(self.UnsupportedUrl):
                 self.parser.normalize(value)
 
+    def test_unicode_host_mapping_precedes_ip_classification_and_is_idempotent(self):
+        for value, expected, group in (
+            ("http://\uff11\uff12\uff17\uff0e\uff10\uff0e\uff10\uff0e\uff11/", "http://127.0.0.1/", "ip:127.0.0.1"),
+            ("https://example.com\u3002/A?Token=X#Part", "https://example.com/A?Token=X#Part", "domain:example.com"),
+            ("https://example.com\uff0e/", "https://example.com/", "domain:example.com"),
+        ):
+            with self.subTest(value=value):
+                first=self.parser.normalize(value)
+                self.assertEqual(first.model_url,expected)
+                self.assertEqual(first.domain_group,group)
+                self.assertEqual(self.parser.normalize(first.model_url),first)
+
+    def test_browser_numeric_ipv4_aliases_are_unsupported(self):
+        for host in ("127.1", "0x7f000001", "2130706433", "0177.0.0.1", "127.00.0.1",
+                     "127.0x0.0.1", "127.0.1", "1", "4294967296", "a.123", "a.0x", "127.1."):
+            with self.subTest(host=host):
+                with self.assertRaises(self.UnsupportedUrl) as raised:
+                    self.parser.normalize("http://"+host+"/")
+                self.assertEqual(raised.exception.reason,"url_ambiguous_ipv4")
+        self.assertEqual(self.parser.normalize("http://127.0.0.1/").domain_group,"ip:127.0.0.1")
+        self.assertEqual(self.parser.normalize("https://123.example.com/").domain_group,"domain:example.com")
+
     def test_exact_size_boundary(self):
         prefix = "https://example.org/"
         value = prefix + "a" * (2048 - len(prefix))

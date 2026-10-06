@@ -4,6 +4,8 @@ Updated on 2026-10-06. The active project folder on this computer is `C:\Users\J
 
 ## Current priority: broaden URL data before deployment
 
+The independent review findings were reproduced and fixed; the [delivery record](url-ml-delivery-record.md) documents all decisions and correction audits.
+
 The first approved [ML foundation plan](superpowers/plans/2026-10-05-sentinel-ml-foundation.md) has produced an audited 235,343-URL dataset, domain-isolated frozen splits, two trained CPU branches, separate calibration, immutable artifacts, inference CLI and optional API. See the [reproduction workflow](url-ml-workflow.md) and [final model card](../output/research/url-ml-v1/model-card.md).
 
 The benchmark achieved 97.07% positive F1, but **url-v1 is research-only**. All legitimate source rows are HTTPS www homepages with empty paths and queries; ordinary benign documentation URLs are falsely flagged. This measured source-format confounding persists despite domain isolation. Next, acquire diverse legitimate paths/queries and non-www hosts alongside phishing examples, define a new frozen version and independent source/temporal holdout, and evaluate again before enabling learned live warnings. Do not tune or whitelist against the staged smoke cases or the final test.
@@ -13,7 +15,7 @@ The [approved year-long design](superpowers/specs/2026-10-05-sentinel-year-long-
 ## Ready now
 
 - The local app, shared API, Chrome extension, research baselines and collection workflow are implemented.
-- All 69 Python tests without ML dependency skips and 12 web-client checks passed in a fresh locked Python 3.11 environment on 2026-10-06. The original dependency-free server entry point also passed separately. The [web-app browser test record](web-app-smoke-test-2026-10-05.md) covers analysis, recovery, saving, reopening, feedback and layout. Chrome toolbar/context-menu checks, a confirmed report download and UI deletion remain pending.
+- All 78 Python tests without ML dependency skips and 12 web-client checks passed in a fresh locked Python 3.11 environment on 2026-10-06. The original dependency-free server entry point also passed separately. The [web-app browser test record](web-app-smoke-test-2026-10-05.md) covers analysis, recovery, saving, reopening, feedback and layout. Chrome toolbar/context-menu checks, a confirmed report download and UI deletion remain pending.
 - `data/curation/ncsu_candidates.csv` contains 100 unreviewed phishing candidates.
 - `data/curation/legitimate_sms_candidates.csv` contains 18 unreviewed potential legitimate SMS candidates from UCI and NUS.
 - Source and candidate hashes are recorded in the local audit files. Raw sources and candidate sheets stay local and ignored by Git.

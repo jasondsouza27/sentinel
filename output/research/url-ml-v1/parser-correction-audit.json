@@ -1,0 +1,20 @@
+{
+  "corrected_exclusions": {
+    "url_empty_or_too_long": 8,
+    "url_host": 5
+  },
+  "corrected_parser_source_sha256": "ea9795ac035844b2b4d240391e3d0f59b86fc4e935d74c996cc160906841172a",
+  "frozen_accepted_rows_checked": 235343,
+  "frozen_identity_or_group_changes": 0,
+  "legacy_exclusions": {
+    "url_empty_or_too_long": 8,
+    "url_host": 5
+  },
+  "parser_schema": "url-parser-v1",
+  "review_base": "de68f8d",
+  "rows_sha256": "593c39ddb0d0c8825c1a0b06987659f3dfdb0ddba6d6e11c4cec00d1570a508e",
+  "schema": "url-parser-correction-audit-v1",
+  "source_outcome_changes": {},
+  "source_rows_checked": 235795,
+  "source_sha256": "a236549cd369cd80bd478ff8e1779cbf44c58d5c3f79f7a51a1adbed7d06d1c6"
+}

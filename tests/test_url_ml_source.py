@@ -48,6 +48,21 @@ class SourceTests(unittest.TestCase):
         self.assertEqual(bundle, self.source.load_dataset(out, self.parser))
         with self.assertRaises(self.Error): self.source.import_phiusiil(p, self.parser, out)
 
+    def test_unicode_alias_conflicts_and_ambiguous_ip_exclusions(self):
+        p=self.csv([
+            ["http://127.0.0.1/",0,0],
+            ["http://\uff11\uff12\uff17\uff0e\uff10\uff0e\uff10\uff0e\uff11/",1,0],
+            ["https://example.com/A",0,0],
+            ["https://example.com\u3002/A",1,0],
+            ["http://127.1/",0,0],
+            ["http://0x7f000001/",1,0],
+            ["https://good.org/",1,0]])
+        bundle=self.source.import_phiusiil(p,self.parser,self.root / "aliases")
+        self.assertEqual(len(bundle.rows),1)
+        self.assertEqual(bundle.rows[0].url,"https://good.org/")
+        self.assertEqual(bundle.manifest["excluded"]["conflicting_label"],4)
+        self.assertEqual(bundle.manifest["excluded"]["url_ambiguous_ipv4"],2)
+
     def test_missing_columns_and_empty_supported_data_refused(self):
         with self.assertRaises(self.Error):
             self.source.import_phiusiil(self.csv([[1]], ("Other",)), self.parser, self.root / "bad")

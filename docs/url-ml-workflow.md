@@ -50,7 +50,9 @@ experiment use a new root and artifact version rather than editing frozen files.
 Canonicalisation preserves path/query/fragment spelling, normalises scheme/host/IDNA
 and default ports, and rejects invalid or over-2,048-character inputs. Private suffixes
 are enabled. Unknown suffixes group conservatively by full host; IP addresses group by
-normalised address. Duplicates and all conflicting labels are audited. Domain groups
+normalised address. Unicode host mapping precedes IP classification. Ambiguous short,
+octal or hexadecimal IPv4 spellings are unsupported; browsers can interpret them as
+IP addresses ([WHATWG host parsing](https://url.spec.whatwg.org/#host-parsing)). Duplicates and all conflicting labels are audited. Domain groups
 are frozen together into train/validation/calibration/test at 70/10/10/10 with seed 42.
 No random-row fallback is permitted.
 
@@ -72,8 +74,8 @@ random validation. Vocabulary, preprocessing and fits see only training inputs.
 Validation chooses maximum recall subject to FPR <=5%, then precision and config order.
 Unique tied scores are handled together, including an all-negative decision. The chosen
 fit is never retrained on validation/calibration. Separate calibration fits a sigmoid
-on clipped score logits; at least 100 rows/20 per class and a finite positive slope are
-required. These guards do not prove reliability. Decisions keep the raw validation
+on clipped score logits; at least 100 rows/20 per class, a clipped-logit range greater
+than `1e-8`, and a finite positive slope are required. These guards do not prove reliability. Decisions keep the raw validation
 threshold, while probability is omitted if calibration is unavailable.
 
 Final evaluation references the frozen artifact hash and compares the selected fit,
@@ -83,6 +85,14 @@ positive/macro F1, average precision (PR area), FPR, Brier, 10-bin ECE/reliabili
 1,000 seed-42 whole-domain bootstrap 95% percentile intervals. Undefined/unsupported
 metrics are null. Prevalence scenarios are conditional calculations, not deployment
 estimates. Cold/warm timings include model loading and single-URL inference as labelled.
+
+Failed pilot/candidate fits retain structured diagnostics. The CLI exits with code 2
+and writes a new exclusive JSON file under `--root/failed-runs/`; `diagnostic_path`
+identifies it. Reports include attempted parameters, available exception details,
+resource measurements and split provenance. They never create or overwrite a trained
+artifact or successful pilot. API callers can inspect `DatasetError.diagnostics`.
+Keep failure files private: exception text can contain source content or local paths.
+If the file cannot be saved, the error output includes the diagnostics instead.
 
 Local source/row/split files and binary artifacts remain ignored. Published output is
 aggregate only. Artifact checksums detect corruption, not a malicious replacement;
@@ -102,3 +112,23 @@ PhiUSIIL's full paper experiment. A source-held-out domain test is not temporal 
 external-source validation. Main paired-message research still needs reviewed genuine
 message-link cases and legitimate comparisons. Contextual harm, cautious profile ML,
 team investigations, dashboard redesign and the usability pilot follow in later milestones.
+
+## Final review corrections
+
+The final independent review identified host identity, tied-score calibration and
+failure-diagnostic defects. Regression tests reproduced each before the fix; the fresh
+locked suite now passes 78 Python tests and 12 web-client checks. See the
+[delivery record](url-ml-delivery-record.md) for the findings and implementation decisions.
+
+The [parser correction audit](../output/research/url-ml-v1/parser-correction-audit.json)
+compares the old and corrected parser on all 235,795 source records. Zero source outcomes,
+accepted URL identities, flags or domain groups changed. The 235,343 frozen rows,
+splits and immutable url-v1 artifact are preserved byte for byte. `url-parser-v1` is the
+schema/normalization contract; the Git implementation revision and correction source
+hash distinguish the fixed edge-input behavior. Reproduce the original experiment with
+its recorded training commit; use the corrected implementation for new inputs.
+
+The [calibration correction audit](../output/research/url-ml-v1/calibration-correction-audit.json)
+checks all 23,534 frozen calibration scores. Their clipped-logit range is 27.6310, so the
+new variation guard accepts the existing fitted calibration. No refit, threshold change,
+or final-test tuning was performed, and these fixes do not remove the source bias.

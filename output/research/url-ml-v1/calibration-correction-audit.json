@@ -1,0 +1,13 @@
+{
+  "artifact_manifest_sha256": "020db47e5103e0eb28194a793c5ddd37a8e4f0a161da2ffd45ae4b0899b59709",
+  "calibration_file_sha256": "a068c55cf1a9c1b673a107c32676bf3de7a52c801f2522f413d008baef28d5ea",
+  "calibration_rows_checked": 23534,
+  "clipped_logit_range": 27.63101911589879,
+  "effect": "The added variation guard accepts the frozen calibration scores. No refit, threshold change, or final-test tuning.",
+  "minimum_logit_range": 1e-08,
+  "original_calibration_status": "available",
+  "raw_score_max": 0.9999999999999676,
+  "raw_score_min": 2.213827170508949e-09,
+  "retained_calibration_status": "available",
+  "schema": "url-calibration-correction-audit-v1"
+}
