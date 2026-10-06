@@ -20,6 +20,7 @@ STATIC = {
     "/app.js": ("app.js", "text/javascript; charset=utf-8"),
     "/styles.css": ("styles.css", "text/css; charset=utf-8"),
 }
+MAX_JSON_BYTES = 40000
 EXTENSION_ORIGIN = re.compile(r"^chrome-extension://[a-p]{32}$")
 
 
@@ -96,7 +97,7 @@ def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None,
                 size = int(self.headers.get("Content-Length", "0"))
             except ValueError as error:
                 raise ValueError("Invalid Content-Length") from error
-            if size < 1 or size > 40000:
+            if size < 1 or size > MAX_JSON_BYTES:
                 raise ValueError("JSON body must be between 1 and 40000 bytes")
             try:
                 return json.loads(self.rfile.read(size))
@@ -108,6 +109,22 @@ def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None,
 
         def _guard(self):
             if not self._host_allowed() or not self._allowed_origin():
+                # Drain a bounded, declared POST body before closing. Otherwise
+                # Windows can reset the socket before the client reads HTTP 403.
+                if self.command == "POST":
+                    try:
+                        size = int(self.headers.get("Content-Length", "0"))
+                    except ValueError:
+                        size = 0
+                    if 0 < size <= MAX_JSON_BYTES:
+                        previous_timeout = self.connection.gettimeout()
+                        self.connection.settimeout(1)
+                        try:
+                            self.rfile.read(size)
+                        except OSError:
+                            pass
+                        finally:
+                            self.connection.settimeout(previous_timeout)
                 self._json(HTTPStatus.FORBIDDEN, {"error": "Origin or host is not allowed"})
                 return False
             return True

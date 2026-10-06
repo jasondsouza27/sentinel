@@ -41,7 +41,7 @@ At assumed 0.1% prevalence, the measured rates imply only 2.25% expected precisi
 
 The artifact reference is SHA-256 of canonical manifest JSON (sorted keys, compact separators), not the pretty-printed file bytes: `020db47e5103e0eb28194a793c5ddd37a8e4f0a161da2ffd45ae4b0899b59709`. Every component file also has its own byte checksum. Binary models, raw rows and frozen assignments stay local and ignored. Final reports are outside the immutable artifact. [Workflow](../../../docs/url-ml-workflow.md) and [source audit](../../../docs/url-ml-source-audit.md) provide commands, attribution and hashes.
 
-The frozen split manifest reproduced exactly. An independent repeat of the selected fit reproduced all 500 validation scores with maximum absolute difference **0.0** (tolerance 1e-6). The committed lock passed **68 Python tests without dependency skips** and **12 web-client tests** in a fresh environment. The stdlib server entry point also passed without ML packages on a separate ephemeral port.
+The frozen split manifest reproduced exactly. An independent repeat of the selected fit reproduced all 500 validation scores with maximum absolute difference **0.0** (tolerance 1e-6). The committed lock passed **69 Python tests without dependency skips** and **12 web-client tests** in a fresh environment. The stdlib server entry point also passed without ML packages on a separate ephemeral port.
 
 ## Next gate
 

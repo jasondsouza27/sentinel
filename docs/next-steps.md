@@ -13,7 +13,7 @@ The [approved year-long design](superpowers/specs/2026-10-05-sentinel-year-long-
 ## Ready now
 
 - The local app, shared API, Chrome extension, research baselines and collection workflow are implemented.
-- All 68 Python tests without ML dependency skips and 12 web-client checks passed in a fresh locked Python 3.11 environment on 2026-10-06. The original dependency-free server entry point also passed separately. The [web-app browser test record](web-app-smoke-test-2026-10-05.md) covers analysis, recovery, saving, reopening, feedback and layout. Chrome toolbar/context-menu checks, a confirmed report download and UI deletion remain pending.
+- All 69 Python tests without ML dependency skips and 12 web-client checks passed in a fresh locked Python 3.11 environment on 2026-10-06. The original dependency-free server entry point also passed separately. The [web-app browser test record](web-app-smoke-test-2026-10-05.md) covers analysis, recovery, saving, reopening, feedback and layout. Chrome toolbar/context-menu checks, a confirmed report download and UI deletion remain pending.
 - `data/curation/ncsu_candidates.csv` contains 100 unreviewed phishing candidates.
 - `data/curation/legitimate_sms_candidates.csv` contains 18 unreviewed potential legitimate SMS candidates from UCI and NUS.
 - Source and candidate hashes are recorded in the local audit files. Raw sources and candidate sheets stay local and ignored by Git.

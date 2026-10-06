@@ -10,6 +10,30 @@ from sentinel.server import create_server
 
 
 class ServerTests(unittest.TestCase):
+    def test_forbidden_post_consumes_bounded_body_before_response(self):
+        # Closing with unread POST bytes can reset the connection on Windows,
+        # hiding the intended HTTP 403 from the client.
+        import io
+        from unittest.mock import Mock
+        with tempfile.TemporaryDirectory() as directory:
+            server = create_server(port=0, db_path=Path(directory) / "cases.db")
+            try:
+                handler = object.__new__(server.RequestHandlerClass)
+                body = b'{"message":"test"}'
+                handler.server = server
+                handler.command = "POST"
+                handler.headers = {"Host": f"127.0.0.1:{server.server_port}",
+                                   "Origin": "https://evil.example", "Content-Length": str(len(body))}
+                handler.rfile = io.BytesIO(body)
+                handler.connection = Mock()
+                handler.connection.gettimeout.return_value = None
+                read_positions = []
+                handler._json = lambda status, result: read_positions.append(handler.rfile.tell())
+                self.assertFalse(handler._guard())
+                self.assertEqual(read_positions, [len(body)])
+            finally:
+                server.server_close()
+
     def test_analysis_is_not_saved_until_user_requests_it(self):
         with tempfile.TemporaryDirectory() as directory:
             server = create_server("127.0.0.1", 0, Path(directory) / "cases.db")
