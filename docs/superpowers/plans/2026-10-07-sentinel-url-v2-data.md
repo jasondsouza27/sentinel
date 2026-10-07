@@ -10,7 +10,7 @@
 
 **Spec:** [Approved URL v2 design](../specs/2026-10-07-sentinel-url-v2-data-design.md), approved on 2026-10-07. [Source audit](../../url-v2-source-audit.md) records feasibility evidence.
 
-**Status:** Plan awaiting user review. Preserve inline implementation with one independent final review. Preparing this plan creates no product code, environment, corpus or training result.
+**Status:** Approved by the user on 2026-10-07 for inline implementation with one independent final review. Execution in progress; checked tasks and the plan-scoped ledger record verified deliverables.
 
 ## Global Constraints
 
