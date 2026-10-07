@@ -1,6 +1,6 @@
 # Sentinel URL v2: multi-source data and robustness design
 
-Date: 2026-10-07. Status: proposed; awaiting review of this written specification.
+Date: 2026-10-07. Status: approved by the user on 2026-10-07; implementation-plan review pending.
 Parent: [approved year-long design](2026-10-05-sentinel-year-long-design.md).
 Existing reference: [URL-v1 model card](../../../output/research/url-ml-v1/model-card.md).
 Source evidence: [v2 source audit](../../url-v2-source-audit.md).
@@ -34,8 +34,7 @@ cases, feedback and the empty paired-message intake are not training inputs here
 | Crawl arbitrary sites and build a new labelled corpus | Potentially current observations | Crawling does not establish labels; expands data-access and infrastructure scope |
 
 Use the first approach. Preserve url-v1 and its frozen results as a historical reference.
-The earlier in-chat v2 outline supplies the direction; approval of this written design
-is required before producing its detailed implementation plan.
+The user approved this written design on 2026-10-07. The [implementation plan](../plans/2026-10-07-sentinel-url-v2-data.md) awaits written review before execution.
 
 ## Sources and labels
 
@@ -224,6 +223,6 @@ No accuracy test uses fabricated examples. Software fixtures are synthetic and i
 
 Self-review: scope is one URL data/robustness subsystem; no placeholder source or promised
 performance; unavailable external access is explicit; original v1 compatibility and provenance
-semantics are protected. Next: written-spec review, then a focused implementation plan with
-exact interfaces, regression cases and the preserved inline execution preference. Source
-acquisition, dependency installation, product changes and retraining follow that review.
+semantics are protected. This written specification was approved on 2026-10-07. Next:
+written implementation-plan review with the preserved inline execution preference. Source
+acquisition, dependency installation, product changes and retraining follow plan approval.
