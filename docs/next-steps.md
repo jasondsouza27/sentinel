@@ -1,8 +1,13 @@
 # Sentinel: current state and next steps
 
-Updated on 2026-10-06. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
+Updated on 2026-10-07. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
 
 ## Current priority: broaden URL data before deployment
+
+A focused [URL-v2 data/robustness specification](superpowers/specs/2026-10-07-sentinel-url-v2-data-design.md)
+is prepared for written review. The [source feasibility audit](url-v2-source-audit.md)
+records a pinned PhreshPhish release and an eight-byte range probe; ISCX official acquisition
+remains pending. V2 data, dependencies, code and results have not yet been produced.
 
 The first ML milestone is integrated and pushed to the private GitHub repository. The independent review findings were reproduced and fixed; the [delivery record](url-ml-delivery-record.md) documents all decisions and correction audits.
 
