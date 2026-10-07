@@ -216,7 +216,7 @@ def test_all_conflicting_observations_excluded_and_duplicates_retained(self):
 
 **Interfaces:** `freeze_protocol(audit: AuditBundle, catalog: SourceCatalog, config: dict, output_dir: Path) -> V2Splits`; `load_protocol(audit: AuditBundle, catalog: SourceCatalog, root: Path, config: dict) -> V2Splits`; `assert_training_ready(splits: V2Splits) -> None`. Manifest binds components/assignments/exclusions/catalog/parser/config/file hashes, support/formats and per-track status/reasons.
 
-- [ ] Test domain/equivalent URL overlaps; one opaque ID linking different domains; equal IDs from different sources remaining distinct; external priority; component exceeding `200000`; reordered-input determinism; tampered assignments; missing rows/classes/groups/formats; missing/ambiguous/equal/interleaved dates; positive-only external data:
+- [x] Test domain/equivalent URL overlaps; one opaque ID linking different domains; equal IDs from different sources remaining distinct; external priority; component exceeding `200000`; reordered-input determinism; tampered assignments; missing rows/classes/groups/formats; missing/ambiguous/equal/interleaved dates; positive-only external data:
 
 ```python
 def test_frozen_component_ownership_and_unavailable_tracks(self):
@@ -230,12 +230,12 @@ def test_frozen_component_ownership_and_unavailable_tracks(self):
     self.assertEqual(first_assignment_bytes, reordered_assignment_bytes)
 ```
 
-- [ ] Run `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_protocol.py -v`; expect missing protocol behavior to fail.
-- [ ] Connect canonical domain/IP and same-source opaque IDs; equivalent URLs already canonicalized. Component ID hashes sorted canonical case IDs. Priority **primary reserved test > development > external**. Any component with published primary-test observations loses its development observations; retain published test rows. External rows connected to primary or eligible development are excluded externally. Keep observation-level ownership/pruning audits; duplicate provenance never produces copies across tracks. Holdout labels never select a fitted model.
-- [ ] Sort eligible training component IDs, shuffle with `Random(42)`, retain each whole component only if it fits the cap; record all skips. Allocate retained components at `80/10/10` with the current split algorithm's class-count squared-deviation objective, descending size/seeded ties; fixed tie order train/validation/calibration. Store observed ratios; neither cap nor allocation cuts a component or falls back to random rows.
-- [ ] Freeze owner-observation IDs and derive source/date summaries from those owners. Check every specified support/format minimum before training. Temporal complete requires authenticated semantics and max development date-interval end strictly before min retained primary-test interval start; no download/filename/model-inferred dates. Missing external source permits primary research but leaves external robustness incomplete; failed development/primary gates block fitting. Failed chronology allows group/source evaluation with an unavailable temporal claim.
-- [ ] Reload/revalidate hashes and every isolation link; reject config/parser/catalog mismatch, duplicate/incomplete assignments. Run tests; expect PASS, including giant-component infeasibility without relaxing grouping.
-- [ ] Commit: `feat(url-v2): freeze isolated development and robustness tracks`.
+- [x] Run `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_protocol.py -v`; expect missing protocol behavior to fail.
+- [x] Connect canonical domain/IP and same-source opaque IDs; equivalent URLs already canonicalized. Component ID hashes sorted canonical case IDs. Priority **primary reserved test > development > external**. Any component with published primary-test observations loses its development observations; retain published test rows. External rows connected to primary or eligible development are excluded externally. Keep observation-level ownership/pruning audits; duplicate provenance never produces copies across tracks. Holdout labels never select a fitted model.
+- [x] Sort eligible training component IDs, shuffle with `Random(42)`, retain each whole component only if it fits the cap; record all skips. Allocate retained components at `80/10/10` with the current split algorithm's class-count squared-deviation objective, descending size/seeded ties; fixed tie order train/validation/calibration. Store observed ratios; neither cap nor allocation cuts a component or falls back to random rows.
+- [x] Freeze owner-observation IDs and derive source/date summaries from those owners. Check every specified support/format minimum before training. Temporal complete requires authenticated semantics and max development date-interval end strictly before min retained primary-test interval start; no download/filename/model-inferred dates. Missing external source permits primary research but leaves external robustness incomplete; failed development/primary gates block fitting. Failed chronology allows group/source evaluation with an unavailable temporal claim.
+- [x] Reload/revalidate hashes and every isolation link; reject config/parser/catalog mismatch, duplicate/incomplete assignments. Run tests; expect PASS, including giant-component infeasibility without relaxing grouping.
+- [x] Commit: `feat(url-v2): freeze isolated development and robustness tracks`.
 
 ### Task 7: Compatible learned training and format diagnostic
 

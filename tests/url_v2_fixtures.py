@@ -43,3 +43,28 @@ class LocalRangeSession:
         self.received+=len(body)
         return body
     def snapshot(self): return {"response_bytes":self.received,"requests":self.requests}
+
+def synthetic_audit(root:Path,observations=None,*,authenticated=False):
+    from sentinel.url_ml.urls import UrlParser
+    from sentinel.url_v2.audit import audit_sources
+    from url_ml_fixtures import fixture_psl
+    parser=UrlParser(fixture_psl(root)); catalog=synthetic_catalog(root)
+    if authenticated:
+        for source in catalog.sources:
+            source["date_semantics"]={"meaning":"synthetic collection date","evidence_ref":"software fixture","timezone":"UTC","authenticated":True}
+    if observations is None:
+        observations=[]; ordinal=0
+        for part,groups,source in (("train",30,"phreshphish"),("test",10,"phreshphish"),("external",10,"iscx-url2016")):
+            for group in range(groups):
+                for label in (0,1):
+                    ordinal+=1
+                    observations.append(synthetic_observation(source_id=source,original_partition=part if source=="phreshphish" else ("benign" if label==0 else "phishing"),
+                      reference={"shard":"fixture.parquet","row":ordinal},original_url=f"https://{part}{group}.example/article-{label}?q=1",
+                      original_label=("benign" if label==0 else "phish" if source=="phreshphish" else "phishing"),
+                      source_date="2024-01-01" if part=="train" else "2025-01-01"))
+    return audit_sources(catalog,observations,parser,root/"audited"),catalog,parser
+
+def small_protocol_config(parser):
+    config=test_config(); config["parser"]["psl_sha256"]=parser.psl_sha256
+    for key in config["support"]: config["support"][key]=1
+    return config
