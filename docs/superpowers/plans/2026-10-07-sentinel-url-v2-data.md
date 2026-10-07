@@ -331,7 +331,7 @@ def test_missing_tracks_and_paired_component_metrics(self):
 
 Private layout: `sources/`, `cache/`, `audited/`, `protocol/`, `runs/`, `failed-runs/`. Success prints sanitized aggregate status/hashes. Failure returns `2` with an exclusive private diagnostic path; persistence failure returns sanitized diagnostic inline. Missing dependencies/external source/chronology are explicit; server startup never installs/acquires them.
 
-- [ ] Subprocess tests: help, spaces in paths, wrong runtime/dependency, failed projection/all-fits with context, immutable repeats, missing external report, old CLI. Test default `python -S` server without optional libraries and separately an explicitly configured locally generated v2 artifact. Assert original default keys/case ownership, research checks save no cases, default imports neither PyArrow nor ML.
+- [x] Subprocess tests: help, spaces in paths, wrong runtime/dependency, failed projection/all-fits with context, immutable repeats, missing external report, old CLI. Test default `python -S` server without optional libraries and separately an explicitly configured locally generated v2 artifact. Assert original default keys/case ownership, research checks save no cases, default imports neither PyArrow nor ML.
 
 ```python
 def test_default_stdlib_server_keeps_original_contract(self):
@@ -342,10 +342,10 @@ def test_default_stdlib_server_keeps_original_contract(self):
     self.assertEqual(saved_cases, [])
 ```
 
-- [ ] Run `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_cli.py -v` and `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_compatibility.py -v`; expect missing commands to fail.
-- [ ] Lazy stage dispatch validates config/provenance first. Read explicitly supplied preserved PSL; never refetch. Document exact data/ML commands, runtime handoff, attribution, pending official ISCX mapping, cap/schema protocol amendment and prohibition on final-test tuning. Research prediction may use an explicitly chosen artifact without changing the default launcher or enabling learned user warnings.
-- [ ] Repeat those commands, run `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_ml_integration.py -v` and `node --test tests/web_client.test.mjs` (use the bundled Node absolute executable if absent from PATH); expect PASS. Inspect sanitized output for private queries; research outputs/case DB stay separate.
-- [ ] Commit: `feat(url-v2): expose the reproducible research workflow`.
+- [x] Run `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_cli.py -v` and `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_compatibility.py -v`; expect missing commands to fail.
+- [x] Lazy stage dispatch validates config/provenance first. Read explicitly supplied preserved PSL; never refetch. Document exact data/ML commands, runtime handoff, attribution, pending official ISCX mapping, cap/schema protocol amendment and prohibition on final-test tuning. Research prediction may use an explicitly chosen artifact without changing the default launcher or enabling learned user warnings.
+- [x] Repeat those commands, run `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_ml_integration.py -v` and `node --test tests/web_client.test.mjs` (use the bundled Node absolute executable if absent from PATH); expect PASS. Inspect sanitized output for private queries; research outputs/case DB stay separate.
+- [x] Commit: `feat(url-v2): expose the reproducible research workflow`.
 
 ### Task 11: Execute frozen research and complete independent review
 

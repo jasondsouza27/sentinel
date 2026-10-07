@@ -16,6 +16,13 @@ and [aggregate results](output/research/url-ml-v1/evaluation.json). Broad legiti
 URL formats and independent source/temporal validation are the next data-quality gate.
 The standard launcher keeps the learned model disabled. The [delivery record](docs/url-ml-delivery-record.md) documents the independent review, its three corrected findings, 78 passing Python tests and 12 web-client checks.
 
+The approved [URL-v2 data/robustness plan](docs/superpowers/plans/2026-10-07-sentinel-url-v2-data.md)
+now has a pinned range importer, complete observation provenance, connected-component
+protocol, compatible bounded training, format control and frozen source-specific evaluation.
+See the [v2 reproduction guide](docs/url-v2-workflow.md). Real acquisition/evaluation and
+independent final review are the next delivery checks; official ISCX access remains pending.
+No learned warning is automatically enabled.
+
 ## Run locally
 
 Requires Python 3.10 or newer. No Python packages or cloud account are needed for the prototype.

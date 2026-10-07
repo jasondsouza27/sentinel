@@ -1,15 +1,18 @@
 # Sentinel: current state and next steps
 
-Updated on 2026-10-07. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
+Updated on 2026-10-08. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
 
 ## Current priority: broaden URL data before deployment
 
 A focused [URL-v2 data/robustness specification](superpowers/specs/2026-10-07-sentinel-url-v2-data-design.md)
 was approved on 2026-10-07. Its [implementation plan](superpowers/plans/2026-10-07-sentinel-url-v2-data.md)
-is prepared for written review, preserving inline execution with one independent final review.
-The [source feasibility audit](url-v2-source-audit.md) records a pinned PhreshPhish release and
-an eight-byte range probe; official ISCX acquisition remains pending. V2 data, dependencies,
-code and results have not yet been produced.
+was approved for inline implementation with one independent final review.
+The [v2 reproduction guide](url-v2-workflow.md) documents implemented acquisition,
+provenance, isolation, bounded model/control fits and frozen evaluation commands.
+Synthetic boundary tests pass; actual source acquisition, availability gates, model results
+and the independent final review remain the final delivery step. Official ISCX files are
+still acquisition-pending. The [source audit](url-v2-source-audit.md) preserves the initial
+range feasibility evidence; it does not claim a complete import.
 
 The first ML milestone is integrated and pushed to the private GitHub repository. The independent review findings were reproduced and fixed; the [delivery record](url-ml-delivery-record.md) documents all decisions and correction audits.
 

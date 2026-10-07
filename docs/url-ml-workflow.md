@@ -24,7 +24,8 @@ node --test tests/web_client.test.mjs
 
 If Python 3.11 is already registered, `py -3.11 -m venv .venv-ml` is equivalent.
 The original app remains dependency-free; `python -m sentinel.server` runs Phase 0.
-The ML test suite must have no optional-dependency skips in the ML environment.
+The URL ML tests must have no ML-dependency skips. V2 Arrow checks require the separate
+data runtime or the combined verification environment in the [v2 guide](url-v2-workflow.md).
 
 ## Acquisition, audit and split
 

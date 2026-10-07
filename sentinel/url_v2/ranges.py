@@ -138,7 +138,9 @@ class RangeSession:
                     if isinstance(exc,urllib.error.HTTPError) and exc.code==403:
                         transient=approved_url(exc.geturl(),self.limits["allow_hosts"])=="us.aws.cdn.hf.co"
                     if isinstance(exc,urllib.error.HTTPError): exc.close()
-                    attempt["error"]=type(exc).__name__; self._save()
+                    attempt["error"]=type(exc).__name__; attempt["error_message"]=sanitized(str(exc));
+                    if isinstance(exc,urllib.error.HTTPError): attempt["http_status"]=exc.code
+                    self._save()
                     if not transient or index>=self.limits["max_retries"]: self._fail("range_transport_failed")
                     time.sleep(min(.1*2**index,.4))
                 finally:

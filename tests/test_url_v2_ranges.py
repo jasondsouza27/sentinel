@@ -75,6 +75,7 @@ class RangeTests(unittest.TestCase):
         with patch("sentinel.url_v2.ranges.open_response",side_effect=[TimeoutError("expired")]*4) as request:
             with self.assertRaises(DatasetError): self.session.read_range(self.file,0,8)
             self.assertEqual(request.call_count,4)
+        self.assertEqual(self.session.snapshot()["attempts"][-1]["error_message"],"expired")
     def test_incomplete_read_and_expired_cdn_location(self):
         import http.client
         import urllib.error

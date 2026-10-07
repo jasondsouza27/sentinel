@@ -70,3 +70,15 @@ Recommendation: implement PhreshPhish URL-column acquisition and a multi-source 
 manifest/isolation workflow; support officially acquired ISCX local input without claiming
 that external validation is already available. Keep model activation disabled while the
 new robustness tracks and the application's release checks remain incomplete.
+
+## Implementation evidence (2026-10-08)
+
+The approved importer now has real multi-row-group Arrow fixture tests proving that
+metadata-only footer parsing and selected-column reads avoid HTML/lang chunks. Catalog
+revision/hash checks, hostile/expired redirects, interrupted bytes, cumulative resume
+budgets, corrupt caches, external column files and immutable publications are tested.
+The separate ten-pin ingestion lock includes verified PyArrow 25.0.1; the ML lock is
+unchanged. The bundled MPL-2.0 suffix snapshot is byte-identical to the original.
+These are software/transport checks on invented fixtures, not a completed real import or
+accuracy result. Full source acquisition and measured availability gates follow next.
+Official ISCX members remain unavailable; no form was submitted or mirror used.
