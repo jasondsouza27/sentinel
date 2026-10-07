@@ -54,9 +54,10 @@ def cache_lock(root):
             else: fcntl.flock(f,fcntl.LOCK_UN)
 
 class RangeSession:
-    def __init__(self,catalog,cache_dir,config):
+    def __init__(self,catalog,cache_dir,config,*,purpose="full"):
+        if purpose not in ("full","pilot"): raise DatasetError("range_purpose_invalid")
         self.catalog=catalog; self.root=Path(cache_dir); self.config=config; self.limits=config["projection"]
-        self.binding={"catalog_sha256":manifest_hash(catalog.manifest),"config_sha256":manifest_hash(config),"revision":PHRESH_REVISION}
+        self.binding={"catalog_sha256":manifest_hash(catalog.manifest),"config_sha256":manifest_hash(config),"revision":PHRESH_REVISION,"purpose":purpose}
         self.journal=self.root/"journal.json"
         with cache_lock(self.root):
             if self.journal.exists(): self._load()

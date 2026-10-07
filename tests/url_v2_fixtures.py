@@ -20,3 +20,23 @@ def synthetic_catalog(root:Path):
     sources=tuple(test_config()['sources'].values())
     manifest={'schema':CATALOG_SCHEMA,'sources':list(sources),'files':[],'synthetic':True,'metadata_response_bytes':0}
     return SourceCatalog(sources,(),manifest)
+
+def write_parquet_fixture(path:Path,*,nested=False,missing=False):
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+    values={"url":["https://alpha.example/a?q=1","https://beta.example/login",None],
+            "label":["benign","phish","benign"],"date":["2024-08-01",None,"2025-01-01"],
+            "sha256":["opaque-a","opaque-b",None],"html":["<html>secret</html>"*100]*3,"langs":["en"]*3}
+    if nested: values["url"]=[{"value":"nested"}]*3
+    if missing: values.pop("label")
+    table=pa.table(values); pq.write_table(table,path,row_group_size=2,compression="snappy")
+    return values
+
+class LocalRangeSession:
+    def __init__(self,paths): self.paths=paths; self.requests=[]; self.received=0
+    def read_range(self,file,start,length):
+        self.requests.append((file.path,start,length))
+        with self.paths[file.path].open("rb") as f: f.seek(start); body=f.read(length)
+        self.received+=len(body)
+        return body
+    def snapshot(self): return {"response_bytes":self.received,"requests":self.requests}
