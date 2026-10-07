@@ -91,7 +91,7 @@ Fixture helpers live in `tests/url_v2_fixtures.py`: `synthetic_observation(**ove
 
 **Interfaces:** Shared records; `load_config(path: Path) -> dict`, `manifest_hash(value: dict) -> str`, `publish_jsonl_directory(output_dir: Path, files: dict[str, Iterable[dict]], manifest: dict) -> dict`, `save_failure(root: Path, stage: str, diagnostics: dict) -> Path`. Exclusive/atomic publication; exclusive failures outside immutable outputs.
 
-- [ ] Prepare the execution checkout's `.venv-ml` using the unchanged existing lock before its first test. Base interpreter: `C:\Users\Jason Dsouza\AppData\Roaming\uv\python\cpython-3.11.17-windows-x86_64-none\python.exe`; verify Python 3.11 first. If this checkout already has a verified matching environment, reuse it. Otherwise run:
+- [x] Prepare the execution checkout's `.venv-ml` using the unchanged existing lock before its first test. Base interpreter: `C:\Users\Jason Dsouza\AppData\Roaming\uv\python\cpython-3.11.17-windows-x86_64-none\python.exe`; verify Python 3.11 first. If this checkout already has a verified matching environment, reuse it. Otherwise run:
 
 ```powershell
 $sentinelPython311 = 'C:\Users\Jason Dsouza\AppData\Roaming\uv\python\cpython-3.11.17-windows-x86_64-none\python.exe'
@@ -99,7 +99,7 @@ $sentinelPython311 = 'C:\Users\Jason Dsouza\AppData\Roaming\uv\python\cpython-3.
 .venv-ml\Scripts\python.exe -m pip install --only-binary=:all: -r requirements-ml-win-py311.lock.txt
 ```
 
-- [ ] Write `test_v2_contract_bounds_and_immutable_failure`, with separate schema rejection, immutable publication and stdlib import cases:
+- [x] Write `test_v2_contract_bounds_and_immutable_failure`, with separate schema rejection, immutable publication and stdlib import cases:
 
 ```python
 def test_v2_contract_bounds_and_immutable_failure(self):
@@ -112,11 +112,11 @@ def test_v2_contract_bounds_and_immutable_failure(self):
     self.assertNotIn('pyarrow', child_imported_modules)
 ```
 
-- [ ] Run `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_contracts.py -v`; expect new-interface assertions/imports to fail, not a missing interpreter.
-- [ ] Implement records/config/storage with exact spec limits/current grids; reject unknown keys, Boolean numeric values, nonfinite values, bad relative paths/revisions/checksums/label maps. Acquisition UTC timestamps are metadata, not row dates. Atomic publication errors preserve diagnostics; fixtures are invented and excluded from research evidence.
-- [ ] Create `.venv-url-data` with CPython 3.11. Select an official PyArrow release with a Windows x64 CPython 3.11 binary wheel and required reader options; record wheel name/hash and exact direct pin. Pin `idna==3.20`, `tldextract==5.4.0`, constrain overlapping transitive packages to the ML lock, install binary wheels only, freeze a separate data lock. Smoke-check imports/options in a fresh data runtime. Stop with compatibility diagnostics if resolution fails; do not retarget Python/change the ML lock. Ignore `.venv-url-data/`, `.venv-url-v2-check/`, `data/url-ml-v2/` and existing binary model paths.
-- [ ] Run contract tests and clean `-S` package/server import checks; expect PASS/no optional imports. Verify existing ML-lock byte hash unchanged and private paths recognized by `git check-ignore`.
-- [ ] Commit scoped files: `feat(url-v2): define research contracts and isolated data runtime`.
+- [x] Run `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_contracts.py -v`; expect new-interface assertions/imports to fail, not a missing interpreter.
+- [x] Implement records/config/storage with exact spec limits/current grids; reject unknown keys, Boolean numeric values, nonfinite values, bad relative paths/revisions/checksums/label maps. Acquisition UTC timestamps are metadata, not row dates. Atomic publication errors preserve diagnostics; fixtures are invented and excluded from research evidence.
+- [x] Create `.venv-url-data` with CPython 3.11. Select an official PyArrow release with a Windows x64 CPython 3.11 binary wheel and required reader options; record wheel name/hash and exact direct pin. Pin `idna==3.20`, `tldextract==5.4.0`, constrain overlapping transitive packages to the ML lock, install binary wheels only, freeze a separate data lock. Smoke-check imports/options in a fresh data runtime. Stop with compatibility diagnostics if resolution fails; do not retarget Python/change the ML lock. Ignore `.venv-url-data/`, `.venv-url-v2-check/`, `data/url-ml-v2/` and existing binary model paths.
+- [x] Run contract tests and clean `-S` package/server import checks; expect PASS/no optional imports. Verify existing ML-lock byte hash unchanged and private paths recognized by `git check-ignore`.
+- [x] Commit scoped files: `feat(url-v2): define research contracts and isolated data runtime`.
 
 ### Task 2: Pinned catalog and bounded range transport
 
@@ -124,7 +124,7 @@ def test_v2_contract_bounds_and_immutable_failure(self):
 
 **Interfaces:** `fetch_phresh_catalog(output_dir: Path, config: dict) -> SourceCatalog`; `load_catalog(root: Path) -> SourceCatalog`; `RangeSession(catalog: SourceCatalog, cache_dir: Path, config: dict)`; `RangeSession.read_range(file: SourceFile, start: int, length: int) -> bytes`; `RangeSession.snapshot() -> dict`. Session binds revision, inventory/config hashes and cumulative received bytes. Charge catalog metadata payload receipts once when starting a projection journal; resume retains that charge. Pilot and full projection have separate declared run purposes/journals.
 
-- [ ] Write fake-transport tests for valid 206; 200/compressed/wrong Content-Range; wrong size/weak or changed identity; HTTPS/userinfo/port/redirect rejection; interrupted bodies/expired signed locations; corrupt cache; traversal/unknown files. Assert:
+- [x] Write fake-transport tests for valid 206; 200/compressed/wrong Content-Range; wrong size/weak or changed identity; HTTPS/userinfo/port/redirect rejection; interrupted bodies/expired signed locations; corrupt cache; traversal/unknown files. Assert:
 
 ```python
 def test_resume_budget_cache_and_signed_redirect_redaction(self):
@@ -136,11 +136,11 @@ def test_resume_budget_cache_and_signed_redirect_redaction(self):
     self.assertFalse(completed_manifest.exists())
 ```
 
-- [ ] Run `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_ranges.py -v` and `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_catalog.py -v`; expect missing transport/catalog behavior to fail.
-- [ ] Implement pinned dataset-revision API inventory and pinned card acquisition; validate returned revision; allow only `data/(train|test)-NNN.parquet` members. Bound JSON at 2 MiB/card at 256 KiB; account their payload bytes. Record sizes/object identifiers/expected full-file hashes when supplied. Reject undeclared Parquet members, malformed sizes and absent train/test inventory. Fixed metadata requests may return 200; shard ranges require 206. Persist logical pinned paths/approved response host, never signed query strings.
-- [ ] Implement half-open `[start,start+length)` range validation, identity encoding, exact requested length/Content-Range/size and a strong ETag bound to the pinned object; fail if identity cannot be established. Retry only transient transport/timeout/5xx failures at most three times with bounded backoff; protocol/identity errors are terminal. Close rejected responses promptly and account every payload byte actually read, including partial attempts. Persist budget/journal on failure/resume; verify cache checksums before reuse and reject cross-identity/config/partial entries.
-- [ ] Repeat both exact module commands above; expect PASS/no live requests/full-body fallback. A resumed run cannot bypass its 2 GiB cap by starting another process.
-- [ ] Commit: `feat(url-v2): add pinned catalog and bounded range acquisition`.
+- [x] Run `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_ranges.py -v` and `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_catalog.py -v`; expect missing transport/catalog behavior to fail.
+- [x] Implement pinned dataset-revision API inventory and pinned card acquisition; validate returned revision; allow only `data/(train|test)-NNN.parquet` members. Bound JSON at 2 MiB/card at 256 KiB; account their payload bytes. Record sizes/object identifiers/expected full-file hashes when supplied. Reject undeclared Parquet members, malformed sizes and absent train/test inventory. Fixed metadata requests may return 200; shard ranges require 206. Persist logical pinned paths/approved response host, never signed query strings.
+- [x] Implement half-open `[start,start+length)` range validation, identity encoding, exact requested length/Content-Range/size and a strong ETag bound to the pinned object; fail if identity cannot be established. Retry only transient transport/timeout/5xx failures at most three times with bounded backoff; protocol/identity errors are terminal. Close rejected responses promptly and account every payload byte actually read, including partial attempts. Persist budget/journal on failure/resume; verify cache checksums before reuse and reject cross-identity/config/partial entries.
+- [x] Repeat both exact module commands above; expect PASS/no live requests/full-body fallback. A resumed run cannot bypass its 2 GiB cap by starting another process.
+- [x] Commit: `feat(url-v2): add pinned catalog and bounded range acquisition`.
 
 ### Task 3: Parquet footer planning and metadata projection
 
