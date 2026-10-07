@@ -44,7 +44,7 @@ class LocalRangeSession:
         return body
     def snapshot(self): return {"response_bytes":self.received,"requests":self.requests}
 
-def synthetic_audit(root:Path,observations=None,*,authenticated=False):
+def synthetic_audit(root:Path,observations=None,*,authenticated=False,include_external=True):
     from sentinel.url_ml.urls import UrlParser
     from sentinel.url_v2.audit import audit_sources
     from url_ml_fixtures import fixture_psl
@@ -55,6 +55,7 @@ def synthetic_audit(root:Path,observations=None,*,authenticated=False):
     if observations is None:
         observations=[]; ordinal=0
         for part,groups,source in (("train",30,"phreshphish"),("test",10,"phreshphish"),("external",10,"iscx-url2016")):
+            if source=="iscx-url2016" and not include_external: continue
             for group in range(groups):
                 for label in (0,1):
                     ordinal+=1
@@ -69,10 +70,10 @@ def small_protocol_config(parser):
     for key in config["support"]: config["support"][key]=1
     return config
 
-def small_v2_research(root:Path):
+def small_v2_research(root:Path,*,include_external=True):
     from sentinel.url_v2.protocol import freeze_protocol
     from sentinel.url_v2.training import train_v2
-    audit,catalog,parser=synthetic_audit(root); config=small_protocol_config(parser)
+    audit,catalog,parser=synthetic_audit(root,include_external=include_external); config=small_protocol_config(parser)
     config["training"]["char_tfidf"].update({"C":[1],"class_weight":[None],"max_features":200})
     config["training"]["lexical_hgb"].update({"max_depth":[3],"learning_rate":[.1],"max_iter":5})
     splits=freeze_protocol(audit,catalog,config,root/"protocol")

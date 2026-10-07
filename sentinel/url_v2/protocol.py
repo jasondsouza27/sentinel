@@ -134,17 +134,17 @@ def _assemble(audit,catalog,config):
       "owners.jsonl":owners,"pruning.jsonl":sorted(pruning,key=lambda p:p["observation_id"]),"exclusions.jsonl":excluded}
     return parts,components,sources,manifest,sidecars
 
-def _bundle(parts,components,sources,manifest,audit):
+def _bundle(parts,components,sources,manifest,audit,root):
     provenance={"provenance_schema":PROVENANCE_SCHEMA,"source_catalog_sha256":manifest["source_catalog_sha256"],"dataset_manifest_sha256":manifest["audit_manifest_sha256"],
       "derived_sha256":audit.manifest["files"]["rows.jsonl"],"parser_code_sha256":manifest["parser_code_sha256"],"psl_sha256":manifest["psl_sha256"],"protocol_sha256":manifest_hash(manifest),"seed":manifest["seed"]}
     development=SplitBundle({name:parts[name] for name in ("train","validation","calibration")},
       {"schema":DEVELOPMENT_SCHEMA,"provenance":provenance,"partitions":{name:manifest["tracks"][name] for name in ("train","validation","calibration")}})
-    return V2Splits(development,{name:parts[name] for name in ("primary","external")},components,sources,manifest)
+    return V2Splits(development,{name:parts[name] for name in ("primary","external")},components,sources,manifest,Path(root).resolve(),audit.root.resolve())
 
 def freeze_protocol(audit,catalog,config,output_dir):
     parts,components,sources,manifest,sidecars=_assemble(audit,catalog,config)
     manifest=publish_jsonl_directory(Path(output_dir),sidecars,manifest)
-    return _bundle(parts,components,sources,manifest,audit)
+    return _bundle(parts,components,sources,manifest,audit,output_dir)
 
 def load_protocol(audit,catalog,root,config):
     root=Path(root); actual=read_json(root/"manifest.json")
@@ -156,7 +156,7 @@ def load_protocol(audit,catalog,root,config):
         digest=hashlib.sha256()
         for value in values: digest.update((json.dumps(value,sort_keys=True,ensure_ascii=True,allow_nan=False)+"\n").encode())
         if digest.hexdigest()!=actual["files"][name]: raise DatasetError("protocol_assignment_integrity_failed")
-    return _bundle(parts,components,sources,actual,audit)
+    return _bundle(parts,components,sources,actual,audit,root)
 
 def assert_training_ready(splits):
     required=[splits.manifest["development"]]+[splits.manifest["tracks"][name] for name in ("train","validation","calibration","primary")]

@@ -65,6 +65,8 @@ class V2Splits:
     component_by_case:dict[str,str]
     sources_by_case:dict[str,tuple[str,...]]
     manifest:dict
+    root:Path|None=None
+    audit_root:Path|None=None
 
 @dataclass
 class ResearchRun:
