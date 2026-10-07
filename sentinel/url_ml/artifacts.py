@@ -30,7 +30,8 @@ def _threshold(value):
         raise DatasetError("invalid_threshold")
 
 def _validate_metadata(m):
-    if m.get("schema")!=ARTIFACT_SCHEMA or m.get("feature_schema")!=FEATURE_SCHEMA or m.get("parser_version")!=PARSER_VERSION:
+    if not isinstance(m,dict): raise DatasetError("artifact_metadata_invalid")
+    if m.get("schema") not in (ARTIFACT_SCHEMA,"url-artifact-v2") or m.get("feature_schema")!=FEATURE_SCHEMA or m.get("parser_version")!=PARSER_VERSION:
         raise DatasetError("artifact_schema_mismatch")
     if m.get("trusted_local_only") is not True or m.get("labels")!={"0":"legitimate_url","1":"phishing_url"}:
         raise DatasetError("artifact_label_or_trust_contract")
@@ -40,34 +41,53 @@ def _validate_metadata(m):
         raise DatasetError("artifact_python_mismatch")
     if m.get("platform")!={"system":platform.system(),"machine":platform.machine()}: raise DatasetError("artifact_platform_mismatch")
     if m.get("dependencies")!=runtime_versions(): raise DatasetError("artifact_dependency_mismatch")
-    if set(m.get("files",{}))!=REQUIRED_FILES: raise DatasetError("artifact_required_files")
+    required=REQUIRED_FILES|{"protocol.json","diagnostic.json","diagnostic.joblib"} if m["schema"]=="url-artifact-v2" else REQUIRED_FILES
+    if set(m.get("files",{}))!=required: raise DatasetError("artifact_required_files")
     provenance=m.get("provenance",{})
-    if any(not re.fullmatch(r"[0-9a-f]{64}",provenance.get(name,"")) for name in HASH_FIELDS):
-        raise DatasetError("artifact_provenance_invalid")
+    if not isinstance(provenance,dict): raise DatasetError("artifact_provenance_invalid")
+    if (m["schema"]=="url-artifact-v2")!=(provenance.get("provenance_schema")=="url-provenance-v2"): raise DatasetError("artifact_provenance_schema_mismatch")
+    from .provenance import validate_provenance
+    validate_provenance(provenance,stage="artifact")
     if provenance.get("psl_sha256")!=m["files"]["suffix.dat"]: raise DatasetError("artifact_suffix_mismatch")
     selected=m.get("selected",{})
+    if not isinstance(selected,dict): raise DatasetError("artifact_selection_invalid")
     if selected.get("branch") not in BRANCHES or not isinstance(selected.get("params"),dict) or "raw_threshold" not in selected:
         raise DatasetError("artifact_selection_invalid")
     _threshold(selected["raw_threshold"])
     baselines=m.get("baselines",{})
+    if not isinstance(baselines,dict): raise DatasetError("artifact_baselines_invalid")
     if selected["branch"] not in baselines or not set(baselines)<=BRANCHES: raise DatasetError("artifact_baselines_invalid")
     for entry in baselines.values():
         if not isinstance(entry,dict) or "raw_threshold" not in entry or not isinstance(entry.get("params"),dict): raise DatasetError("artifact_baselines_invalid")
         _threshold(entry["raw_threshold"])
 
-def export_artifact(run,parser,output_dir:Path,version):
+def export_artifact(run,parser,output_dir:Path,version,*,research_payload=None):
     if Path(output_dir).exists(): raise DatasetError("output_exists")
     import joblib
     dependencies=runtime_versions()
     candidates=run.selection.branch_candidates or {run.selection.branch:(run.selection.model,run.selection.raw_threshold,run.selection.config,{},())}
     models={branch:candidate[0] for branch,candidate in candidates.items()}
     baselines={branch:{"raw_threshold":candidate[1],"params":candidate[2]} for branch,candidate in candidates.items()}
+    v2=run.provenance.get("provenance_schema")=="url-provenance-v2"
+    from .provenance import validate_provenance
+    validate_provenance(run.provenance,stage="artifact")
+    if v2:
+        if not isinstance(research_payload,dict) or set(research_payload)!={"format_model","format_report","protocol"}: raise DatasetError("artifact_research_payload_missing")
+        from sentinel.url_v2.artifacts import validate_research_metadata
+        validate_research_metadata(run.provenance,research_payload["protocol"],research_payload["format_report"],run.selection.report,baselines)
+    elif research_payload is not None: raise DatasetError("legacy_research_payload_forbidden")
     temp=new_directory(output_dir)
     try:
         shutil.copyfile(parser.psl_path,temp / "suffix.dat")
         joblib.dump({"selected":run.selection.model,"baselines":models},temp / "pipeline.joblib",compress=3)
         write_json(temp / "calibration.json",asdict(run.calibration))
         write_json(temp / "selection.json",run.selection.report)
+        required=set(REQUIRED_FILES)
+        if v2:
+            write_json(temp/"protocol.json",research_payload["protocol"])
+            write_json(temp/"diagnostic.json",research_payload["format_report"])
+            joblib.dump(research_payload["format_model"],temp/"diagnostic.joblib",compress=3)
+            required.update({"protocol.json","diagnostic.json","diagnostic.joblib"})
         (temp / "requirements.lock").write_text("".join(f"{name}=={value}\n" for name,value in sorted(dependencies.items())),encoding="utf-8")
         card=f"""# Sentinel URL model {version}
 
@@ -83,16 +103,20 @@ Final test results must be written outside this immutable artifact with its mani
 
 Trusted local joblib only; checksums detect byte changes, not a malicious replacement.
 """
+        if v2:
+            tracks=research_payload["protocol"]["tracks"]
+            card += "\nV2 multi-source protocol; historical source annotations.\n"+"\n".join(f"{name}: {entry['status']} ({', '.join(entry['reasons']) or 'support gates met'})." for name,entry in tracks.items())
+            card += "\nFormat-only model is a diagnostic, excluded from deployed candidate selection.\nTemporal validation: "+research_payload["protocol"]["temporal"]["status"]+".\nNo automatic activation; final results remain outside this immutable directory.\n"
         (temp / "model-card.md").write_text(card,encoding="utf-8")
         try:
             git=subprocess.run(["git","rev-parse","HEAD"],cwd=Path(__file__).resolve().parents[2],capture_output=True,text=True,check=True).stdout.strip()
         except (OSError,subprocess.CalledProcessError): git="unavailable"
-        m={"schema":ARTIFACT_SCHEMA,"feature_schema":FEATURE_SCHEMA,"parser_version":PARSER_VERSION,"version":version,
+        m={"schema":"url-artifact-v2" if v2 else ARTIFACT_SCHEMA,"feature_schema":FEATURE_SCHEMA,"parser_version":PARSER_VERSION,"version":version,
            "labels":{"0":"legitimate_url","1":"phishing_url"},"trusted_local_only":True,"git_commit":git,
            "python_minor":f"{sys.version_info.major}.{sys.version_info.minor}","python_version":platform.python_version(),
            "platform":{"system":platform.system(),"machine":platform.machine()},"dependencies":dependencies,
            "provenance":run.provenance,"selected":{"branch":run.selection.branch,"params":run.selection.config,"raw_threshold":run.selection.raw_threshold},
-           "baselines":baselines,"files":{name:sha256(temp/name) for name in sorted(REQUIRED_FILES)}}
+           "baselines":baselines,"files":{name:sha256(temp/name) for name in sorted(required)}}
         _validate_metadata(m); write_json(temp / "manifest.json",m); publish_directory(temp,output_dir)
         return m
     finally:
@@ -112,6 +136,9 @@ def load_artifact(path:Path):
     try: _validate_metadata(m)
     except (TypeError,KeyError): raise DatasetError("artifact_metadata_invalid") from None
     verify_files(root,m["files"])
+    if m["schema"]=="url-artifact-v2":
+        from sentinel.url_v2.artifacts import validate_research_sidecars
+        validate_research_sidecars(root,m)
     expected_lock="".join(f"{name}=={value}\n" for name,value in sorted(m["dependencies"].items()))
     if (root / "requirements.lock").read_text(encoding="utf-8")!=expected_lock: raise DatasetError("artifact_lock_mismatch")
     try:

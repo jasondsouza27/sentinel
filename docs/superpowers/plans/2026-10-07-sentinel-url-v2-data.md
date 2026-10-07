@@ -269,7 +269,7 @@ def test_training_boundaries_and_validation_operating_points(self):
 
 **Interfaces:** `export_v2_artifact(research: ResearchRun, parser: UrlParser, output_dir: Path, version: str) -> dict`; `load_v2_artifact(path: Path) -> ResearchRun`. Common `export_artifact(run: RunBundle, parser: UrlParser, output_dir: Path, version: str, *, research_payload: dict | None = None) -> dict` gains an optional payload containing `format_model`, `format_report`, `protocol`; v1 omits it. Common `load_artifact(path: Path) -> RunBundle` keeps its return type.
 
-- [ ] Test round-trip/equal scores for both versions, wrong schema/catalog/protocol/config/PSL, missing/tampered diagnostics, unsafe paths/thresholds/dependencies and overwrite. Patch `joblib.load`: no deserialization before all file/schema/dependency/provenance checks. Verify legacy prediction CLI with spaces in paths.
+- [x] Test round-trip/equal scores for both versions, wrong schema/catalog/protocol/config/PSL, missing/tampered diagnostics, unsafe paths/thresholds/dependencies and overwrite. Patch `joblib.load`: no deserialization before all file/schema/dependency/provenance checks. Verify legacy prediction CLI with spaces in paths.
 
 ```python
 def test_tampered_v2_sidecar_rejected_before_any_deserialization(self):
@@ -279,11 +279,11 @@ def test_tampered_v2_sidecar_rejected_before_any_deserialization(self):
         loader.assert_not_called()
 ```
 
-- [ ] Run `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_artifacts.py -v`; expect missing v2 behavior to fail.
-- [ ] Dispatch by explicit artifact/provenance schema. V1 retains exact file set/meanings. V2 adds `protocol.json`, `diagnostic.json`, `diagnostic.joblib` to existing files, binding source/protocol/parser hashes and both sensitivity thresholds. Preserve selected/learned-baselines joblib payload shape; diagnostic pickle is locally generated only. Validate every file including diagnostics before selected-pipeline load; generic inference need not deserialize diagnostics/import PyArrow. V2 research loader checks diagnostic four-feature pipeline/labels after shared validation.
-- [ ] Check frozen protocol/config/catalog before export; inference never substitutes current config for artifact provenance. Preserve exclusive publication, runtime/dependency checks, bundled PSL rebinding/unavailable calibration. Research card names incomplete tracks; final metrics stay outside immutable artifact. No default selector/launcher changes.
-- [ ] Run the same discover command with patterns `test_url_v2_artifacts.py`, `test_url_ml_artifacts.py`, `test_url_ml_integration.py`, `test_url_ml_service.py`; expect PASS/identical legacy reload scores. Diagnostic models cannot become the selected service branch.
-- [ ] Commit: `feat(url-v2): persist research artifacts without changing v1 contracts`.
+- [x] Run `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_artifacts.py -v`; expect missing v2 behavior to fail.
+- [x] Dispatch by explicit artifact/provenance schema. V1 retains exact file set/meanings. V2 adds `protocol.json`, `diagnostic.json`, `diagnostic.joblib` to existing files, binding source/protocol/parser hashes and both sensitivity thresholds. Preserve selected/learned-baselines joblib payload shape; diagnostic pickle is locally generated only. Validate every file including diagnostics before selected-pipeline load; generic inference need not deserialize diagnostics/import PyArrow. V2 research loader checks diagnostic four-feature pipeline/labels after shared validation.
+- [x] Check frozen protocol/config/catalog before export; inference never substitutes current config for artifact provenance. Preserve exclusive publication, runtime/dependency checks, bundled PSL rebinding/unavailable calibration. Research card names incomplete tracks; final metrics stay outside immutable artifact. No default selector/launcher changes.
+- [x] Run the same discover command with patterns `test_url_v2_artifacts.py`, `test_url_ml_artifacts.py`, `test_url_ml_integration.py`, `test_url_ml_service.py`; expect PASS/identical legacy reload scores. Diagnostic models cannot become the selected service branch.
+- [x] Commit: `feat(url-v2): persist research artifacts without changing v1 contracts`.
 
 ### Task 9: Frozen robustness metrics and valid v1 comparison
 

@@ -68,3 +68,12 @@ def small_protocol_config(parser):
     config=test_config(); config["parser"]["psl_sha256"]=parser.psl_sha256
     for key in config["support"]: config["support"][key]=1
     return config
+
+def small_v2_research(root:Path):
+    from sentinel.url_v2.protocol import freeze_protocol
+    from sentinel.url_v2.training import train_v2
+    audit,catalog,parser=synthetic_audit(root); config=small_protocol_config(parser)
+    config["training"]["char_tfidf"].update({"C":[1],"class_weight":[None],"max_features":200})
+    config["training"]["lexical_hgb"].update({"max_depth":[3],"learning_rate":[.1],"max_iter":5})
+    splits=freeze_protocol(audit,catalog,config,root/"protocol")
+    return train_v2(splits,config,parser),splits,config,parser
