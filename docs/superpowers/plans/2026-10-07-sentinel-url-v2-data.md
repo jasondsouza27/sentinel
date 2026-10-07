@@ -173,7 +173,7 @@ Metadata, projection and buffering interfaces are documented in [Apache Arrow's 
 
 **Interfaces:** `admit_iscx(mapping_path: Path, output_dir: Path) -> SourceCatalog`; `iter_iscx_observations(catalog: SourceCatalog, admitted_root: Path) -> Iterator[Observation]`; `merge_catalogs(primary: SourceCatalog, external: SourceCatalog | None) -> SourceCatalog` in `catalog.py` validates both immutable catalogs and combines source-scoped file entries in sorted order, retaining child manifest hashes. Mapping schema `iscx-local-mapping-v1`: official URL, acquisition basis/date, original archive/member identity, local path/SHA-256, documented category and explicit `csv` (URL column/header/encoding) or `lines` format.
 
-- [ ] Write tests for absent files/mapping/evidence, swapped hash, renamed member without original identity, CSV wrong header, explicit line format, unsupported schema/category, unsafe member path and positive-only inputs. Assert `benign -> 0`, `phishing -> 1`, spam/malware/defacement excluded/countable and acquisition date never becomes a row date. Patch network calls to fail if invoked.
+- [x] Write tests for absent files/mapping/evidence, swapped hash, renamed member without original identity, CSV wrong header, explicit line format, unsupported schema/category, unsafe member path and positive-only inputs. Assert `benign -> 0`, `phishing -> 1`, spam/malware/defacement excluded/countable and acquisition date never becomes a row date. Patch network calls to fail if invoked.
 
 ```python
 def test_local_mapping_preserves_identity_without_inventing_dates(self):
@@ -183,10 +183,10 @@ def test_local_mapping_preserves_identity_without_inventing_dates(self):
     self.assertEqual(observation.reference['member'], original_member)
 ```
 
-- [ ] Run `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_iscx.py -v`; expect missing adapter behavior to fail.
-- [ ] Require documented category-to-original-member mapping and exact hashes; copy verified local members into exclusive private storage and stream the explicitly declared encoding/format. Record original line/member references and absent authentic dates. Do not extract arbitrary archives, infer schemas/labels from names or certify mapping evidence as externally verified. Unsupported/unaudited inputs stay unavailable. Positive-only data can be audited; Task 6 determines whether it is an evaluable binary holdout.
-- [ ] Run tests; expect PASS/zero network requests. Without official audited files, acquisition status remains pending.
-- [ ] Commit: `feat(url-v2): admit explicitly mapped local ISCX records`.
+- [x] Run `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_iscx.py -v`; expect missing adapter behavior to fail.
+- [x] Require documented category-to-original-member mapping and exact hashes; copy verified local members into exclusive private storage and stream the explicitly declared encoding/format. Record original line/member references and absent authentic dates. Do not extract arbitrary archives, infer schemas/labels from names or certify mapping evidence as externally verified. Unsupported/unaudited inputs stay unavailable. Positive-only data can be audited; Task 6 determines whether it is an evaluable binary holdout.
+- [x] Run tests; expect PASS/zero network requests. Without official audited files, acquisition status remains pending.
+- [x] Commit: `feat(url-v2): admit explicitly mapped local ISCX records`.
 
 ### Task 5: Streaming canonical audit with complete provenance
 

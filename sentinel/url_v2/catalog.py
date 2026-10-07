@@ -65,3 +65,21 @@ def load_catalog(root:Path)->SourceCatalog:
     try: files=tuple(SourceFile(**item) for item in manifest["source_files"]); sources=tuple(manifest["sources"])
     except (TypeError,KeyError): raise DatasetError("catalog_records_invalid") from None
     return SourceCatalog(sources,files,manifest)
+
+def merge_catalogs(primary,external):
+    from .storage import manifest_hash
+    catalogs=[primary]+([external] if external is not None else [])
+    sources=[]; files=[]; seen=set()
+    for catalog in catalogs:
+        if catalog.manifest.get("schema")!=CATALOG_SCHEMA: raise DatasetError("catalog_schema_unsupported")
+        for source in catalog.sources:
+            identity=source["source_id"]
+            if identity in seen: raise DatasetError("duplicate_source_catalog")
+            seen.add(identity); sources.append(source)
+        if any(file.source_id not in seen for file in catalog.files): raise DatasetError("catalog_file_source_missing")
+        files.extend(catalog.files)
+    sources=tuple(sorted(sources,key=lambda s:s["source_id"])); files=tuple(sorted(files,key=lambda f:(f.source_id,f.path)))
+    manifest={"schema":CATALOG_SCHEMA,"sources":list(sources),"source_files":[asdict(f) for f in files],
+      "child_catalog_sha256":[manifest_hash(c.manifest) for c in catalogs],"external_status":"admitted" if external is not None else "access_pending",
+      "metadata_response_bytes":sum(c.manifest.get("metadata_response_bytes",0) for c in catalogs)}
+    return SourceCatalog(sources,files,manifest)
