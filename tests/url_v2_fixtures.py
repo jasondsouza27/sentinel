@@ -8,11 +8,14 @@ def test_config():
 
 def synthetic_observation(**overrides):
     from sentinel.url_v2.contracts import Observation
-    values={'source_id':'phreshphish','revision':'fixture-release','original_partition':'train',
+    values={'source_id':'phreshphish','revision':test_config()['sources']['phreshphish']['revision'],'original_partition':'train',
             'reference':{'shard':'fixture.parquet','row':1},'original_url':'https://alpha.example/a?q=1',
             'original_label':'benign','source_date':None,'opaque_id':None}
     values.update(overrides)
-    values.setdefault('observation_id',hashlib.sha256(json.dumps(values,sort_keys=True).encode()).hexdigest())
+    if 'revision' not in overrides:
+        values['revision']=next(s['revision'] for s in test_config()['sources'].values() if s['source_id']==values['source_id'])
+    identity={key:values[key] for key in ('source_id','revision','reference')}
+    values.setdefault('observation_id',hashlib.sha256(json.dumps(identity,sort_keys=True,separators=(',',':')).encode()).hexdigest())
     return Observation(**values)
 
 def synthetic_catalog(root:Path):

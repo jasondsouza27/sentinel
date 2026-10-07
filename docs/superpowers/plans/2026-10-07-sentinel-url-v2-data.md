@@ -194,7 +194,7 @@ def test_local_mapping_preserves_identity_without_inventing_dates(self):
 
 **Interfaces:** `audit_sources(catalog: SourceCatalog, observations: Iterable[Observation], parser: UrlParser, output_dir: Path) -> AuditBundle`; `load_audit(root: Path, catalog: SourceCatalog, parser: UrlParser) -> AuditBundle`; shared streaming functions; `format_flags(url: str) -> tuple[str, ...]` for `https`, `www_host`, `non_root_path`, `query_present` using URL structure.
 
-- [ ] Test exact/normalized cross-source duplicates, conflicting labels in reversed input order, stable IDs, source-scoped opaque IDs, bad/missing/oversized fields, malformed/unknown dates and preserved path/query. Assert all conflict observations excluded, all nonconflicting duplicate observation IDs retained, input counts reconciled and both source label maps identical. V1 `load_dataset` must reject v2 manifests.
+- [x] Test exact/normalized cross-source duplicates, conflicting labels in reversed input order, stable IDs, source-scoped opaque IDs, bad/missing/oversized fields, malformed/unknown dates and preserved path/query. Assert all conflict observations excluded, all nonconflicting duplicate observation IDs retained, input counts reconciled and both source label maps identical. V1 `load_dataset` must reject v2 manifests.
 
 ```python
 def test_all_conflicting_observations_excluded_and_duplicates_retained(self):
@@ -204,11 +204,11 @@ def test_all_conflicting_observations_excluded_and_duplicates_retained(self):
     self.assertEqual(reconciled_observation_count, input_observation_count)
 ```
 
-- [ ] Run `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_audit.py -v`; expect missing audit behavior to fail.
-- [ ] Use private indexed SQLite staging to avoid retaining every raw observation in RAM. Observation IDs bind source/revision/shard/member/ordinal. Reuse `UrlParser.normalize`; retain original fields/parser flags/distinct exclusion codes. Publish canonical rows/provenance/exclusions with hashes and input/source/class/format counts. Keep all accepted references per canonical row; conflicts produce no model row. Exclude scheme-less URLs without repair.
-- [ ] Parse supported ISO date/datetime representations, preserving originals/semantics. Missing stays missing; invalid representation is `malformed_source_date`; valid naive/date-only values without documented timezone/meaning remain chronology-unknown. Authenticated date-only chronology uses a conservative full-day interval, never midnight assumption. Parsing alone cannot authenticate collection-date meaning. Record unknown suffix limitations and actual parser code/PSL hashes.
-- [ ] Run tests; expect PASS. Loader rechecks catalog/files, canonical URL/domain/label/ID mapping and totals; tampered bytes or missing provenance fail before data reuse.
-- [ ] Commit: `feat(url-v2): audit canonical URLs and retain source observations`.
+- [x] Run `.venv-url-data\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_audit.py -v`; expect missing audit behavior to fail.
+- [x] Use private indexed SQLite staging to avoid retaining every raw observation in RAM. Observation IDs bind source/revision/shard/member/ordinal. Reuse `UrlParser.normalize`; retain original fields/parser flags/distinct exclusion codes. Publish canonical rows/provenance/exclusions with hashes and input/source/class/format counts. Keep all accepted references per canonical row; conflicts produce no model row. Exclude scheme-less URLs without repair.
+- [x] Parse supported ISO date/datetime representations, preserving originals/semantics. Missing stays missing; invalid representation is `malformed_source_date`; valid naive/date-only values without documented timezone/meaning remain chronology-unknown. Authenticated date-only chronology uses a conservative full-day interval, never midnight assumption. Parsing alone cannot authenticate collection-date meaning. Record unknown suffix limitations and actual parser code/PSL hashes.
+- [x] Run tests; expect PASS. Loader rechecks catalog/files, canonical URL/domain/label/ID mapping and totals; tampered bytes or missing provenance fail before data reuse.
+- [x] Commit: `feat(url-v2): audit canonical URLs and retain source observations`.
 
 ### Task 6: Frozen component protocol and availability gates
 
