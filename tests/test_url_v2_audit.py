@@ -19,6 +19,8 @@ class AuditTests(unittest.TestCase):
           self.observation(3,original_url="https://conflict.example/x",original_label="benign"),self.observation(4,original_url="https://conflict.example/x",original_label="phish")]
         audit=audit_sources(self.catalog,observations,self.parser,self.root/"audit"); records=list(iter_records(audit)); provenance=list(iter_provenance(audit))
         self.assertEqual(len(records),1); self.assertEqual(records[0].row.url,"https://alpha.example/a?q=1")
+        import hashlib
+        self.assertEqual(records[0].row.case_id,hashlib.sha256(b"https://alpha.example/a?q=1").hexdigest())
         self.assertEqual(set(records[0].observation_ids),{o.observation_id for o in observations[:2]})
         self.assertEqual({x["observation_id"] for x in provenance if x["reason"]=="conflicting_label"},{o.observation_id for o in observations[2:]})
         self.assertEqual(audit.manifest["included_observations"]+sum(audit.manifest["excluded"].values()),4)

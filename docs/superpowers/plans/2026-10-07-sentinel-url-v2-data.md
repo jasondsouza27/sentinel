@@ -243,7 +243,7 @@ def test_frozen_component_ownership_and_unavailable_tracks(self):
 
 **Interfaces:** `development_bundle(splits: V2Splits) -> SplitBundle`; `validate_provenance(value: dict, *, stage: str) -> None` (`development` or `artifact`); `train_v2(splits: V2Splits, config: dict, parser: UrlParser) -> ResearchRun`; `pilot_v2(splits: V2Splits, config: dict, parser: UrlParser) -> dict`; `build_format_pipeline(branch: str, params: dict, parser: UrlParser) -> object`. Extend `fit_candidate(rows: tuple[UrlRow, ...], branch: str, params: dict, parser: UrlParser, native_threads: int = 4, max_peak_bytes: int = 8589934592, *, pipeline_factory: Callable | None = None) -> tuple[object | None, dict]` preserving positional/default behavior; supplied factory is top-level/picklable for the spawned worker.
 
-- [ ] Spy learners/calibrators prove fit sees train only, selection validation only, calibration its partition only, never final tracks. Test both sensitivity thresholds from frozen validation scores:
+- [x] Spy learners/calibrators prove fit sees train only, selection validation only, calibration its partition only, never final tracks. Test both sensitivity thresholds from frozen validation scores:
 
 ```python
 def test_training_boundaries_and_validation_operating_points(self):
@@ -256,12 +256,12 @@ def test_training_boundaries_and_validation_operating_points(self):
     self.assertLessEqual(fit_record['max_peak_bytes'], 8589934592)
 ```
 
-- [ ] Run `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_training.py -v`; expect missing training/provenance behavior to fail.
-- [ ] Validate development-only envelope before fitting. Reuse `train_run`, selection/rules/calibration/grids without final rows or source/date features. Preserve recall/precision/configuration-index tie policy at 5%. For selected/per-branch frozen candidates compute extra 1% validation thresholds in the selection report, without another model search/test calibration.
-- [ ] Define `FormatTransformer(parser: UrlParser)` in `format_baseline.py`, with `fit(X: list[str], y: object = None) -> FormatTransformer`, `transform(X: list[str]) -> numpy.ndarray`, `get_feature_names_out(input_features: object = None) -> numpy.ndarray`; fixed four-column Boolean matrix, no source metadata. Diagnostic worker branch is `format_only`, excluded from deployment branches. Four-feature pipeline: `CanonicalTransformer -> FormatTransformer -> LogisticRegression(C=1, class_weight=None, solver='liblinear', max_iter=1000, random_state=42)`. Fit once on train through the same fresh-process resource worker with explicit factory; choose both validation thresholds. Exclude from candidate grid/deployable branches/numerical calibration; retain resources and validation diagnostics.
-- [ ] Select whole components for resource pilot capped at `2000`, require both labels, and pass only that preselected subset to existing pilot code. Preserve failed fit parameters/sanitized underlying error/available RAM/time in `DatasetError.diagnostics`. Legacy calls and failure behavior remain unchanged.
-- [ ] Run new tests and `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_ml_training.py -v` plus the same command with patterns `test_url_ml_failure_reports.py` and `test_url_ml_calibration.py`; expect PASS, including tied scores/unavailable calibration and legacy workers.
-- [ ] Commit: `feat(url-v2): reuse bounded training with explicit provenance and format controls`.
+- [x] Run `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_v2_training.py -v`; expect missing training/provenance behavior to fail.
+- [x] Validate development-only envelope before fitting. Reuse `train_run`, selection/rules/calibration/grids without final rows or source/date features. Preserve recall/precision/configuration-index tie policy at 5%. For selected/per-branch frozen candidates compute extra 1% validation thresholds in the selection report, without another model search/test calibration.
+- [x] Define `FormatTransformer(parser: UrlParser)` in `format_baseline.py`, with `fit(X: list[str], y: object = None) -> FormatTransformer`, `transform(X: list[str]) -> numpy.ndarray`, `get_feature_names_out(input_features: object = None) -> numpy.ndarray`; fixed four-column Boolean matrix, no source metadata. Diagnostic worker branch is `format_only`, excluded from deployment branches. Four-feature pipeline: `CanonicalTransformer -> FormatTransformer -> LogisticRegression(C=1, class_weight=None, solver='liblinear', max_iter=1000, random_state=42)`. Fit once on train through the same fresh-process resource worker with explicit factory; choose both validation thresholds. Exclude from candidate grid/deployable branches/numerical calibration; retain resources and validation diagnostics.
+- [x] Select whole components for resource pilot capped at `2000`, require both labels, and pass only that preselected subset to existing pilot code. Preserve failed fit parameters/sanitized underlying error/available RAM/time in `DatasetError.diagnostics`. Legacy calls and failure behavior remain unchanged.
+- [x] Run new tests and `.venv-ml\Scripts\python.exe -m unittest discover -s tests -p test_url_ml_training.py -v` plus the same command with patterns `test_url_ml_failure_reports.py` and `test_url_ml_calibration.py`; expect PASS, including tied scores/unavailable calibration and legacy workers.
+- [x] Commit: `feat(url-v2): reuse bounded training with explicit provenance and format controls`.
 
 ### Task 8: Immutable v2 artifacts with v1 compatibility
 

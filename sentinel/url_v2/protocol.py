@@ -10,7 +10,7 @@ from .audit import format_flags,iter_records,iter_provenance
 from .contracts import PROTOCOL_SCHEMA,PROVENANCE_SCHEMA,V2Splits
 from .storage import manifest_hash,publish_jsonl_directory,read_json,verify_files
 
-DEVELOPMENT_SCHEMA="url-development-v2"
+DEVELOPMENT_SCHEMA="url-development-envelope-v2"
 NAMES=("train","validation","calibration","primary","external")
 
 class Union:
@@ -135,7 +135,7 @@ def _assemble(audit,catalog,config):
     return parts,components,sources,manifest,sidecars
 
 def _bundle(parts,components,sources,manifest,audit):
-    provenance={"schema":PROVENANCE_SCHEMA,"source_catalog_sha256":manifest["source_catalog_sha256"],"dataset_manifest_sha256":manifest["audit_manifest_sha256"],
+    provenance={"provenance_schema":PROVENANCE_SCHEMA,"source_catalog_sha256":manifest["source_catalog_sha256"],"dataset_manifest_sha256":manifest["audit_manifest_sha256"],
       "derived_sha256":audit.manifest["files"]["rows.jsonl"],"parser_code_sha256":manifest["parser_code_sha256"],"psl_sha256":manifest["psl_sha256"],"protocol_sha256":manifest_hash(manifest),"seed":manifest["seed"]}
     development=SplitBundle({name:parts[name] for name in ("train","validation","calibration")},
       {"schema":DEVELOPMENT_SCHEMA,"provenance":provenance,"partitions":{name:manifest["tracks"][name] for name in ("train","validation","calibration")}})

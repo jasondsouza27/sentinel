@@ -56,7 +56,7 @@ def candidate_grid(config):
         raise DatasetError("candidate_budget_exceeded")
     return grid
 
-def _fit_worker(connection,rows,branch,params,parser,native_threads):
+def _fit_worker(connection,rows,branch,params,parser,native_threads,pipeline_factory=None):
     import psutil
     import warnings
     from sklearn.exceptions import ConvergenceWarning
@@ -65,7 +65,10 @@ def _fit_worker(connection,rows,branch,params,parser,native_threads):
     try:
         with warnings.catch_warnings(record=True) as captured,threadpool_limits(limits=native_threads):
             warnings.simplefilter("always",ConvergenceWarning)
-            model=fit_pipeline(rows,branch,params,parser)
+            if pipeline_factory is None: model=fit_pipeline(rows,branch,params,parser)
+            else:
+                model=pipeline_factory(branch,params,parser)
+                model.fit([r.url for r in rows],[r.label for r in rows])
         info=psutil.Process().memory_info()
         peak=getattr(info,"peak_rss",None) or getattr(info,"peak_wset",None)
         if peak is None: raise DatasetError("peak_memory_field_unavailable")
@@ -85,10 +88,10 @@ def _fit_worker(connection,rows,branch,params,parser,native_threads):
                               "peak_bytes":peak,"native_threads":native_threads,"train_rows":len(rows),"pid":os.getpid()}))
     finally: connection.close()
 
-def fit_candidate(rows,branch,params,parser,native_threads=4,max_peak_bytes=8*1024**3):
+def fit_candidate(rows,branch,params,parser,native_threads=4,max_peak_bytes=8*1024**3,*,pipeline_factory=None):
     import psutil
     ctx=multiprocessing.get_context("spawn"); receiving,sending=ctx.Pipe(duplex=False)
-    process=ctx.Process(target=_fit_worker,args=(sending,rows,branch,params,parser,native_threads))
+    process=ctx.Process(target=_fit_worker,args=(sending,rows,branch,params,parser,native_threads,pipeline_factory))
     keys=("OMP_NUM_THREADS","OPENBLAS_NUM_THREADS","MKL_NUM_THREADS","NUMEXPR_NUM_THREADS")
     previous={key:os.environ.get(key) for key in keys}
     try:

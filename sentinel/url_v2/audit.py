@@ -1,5 +1,6 @@
 """Disk-indexed canonical audit retaining every source observation and exclusion."""
 import json
+import hashlib
 import re
 import sqlite3
 from collections import Counter
@@ -57,7 +58,7 @@ def _stage(catalog,observations,parser,path):
                 if not reason:
                     try: interval,status=date_interval(obs.source_date,source["date_semantics"])
                     except (ValueError,OverflowError): reason="malformed_source_date"
-            case_id=manifest_hash({"url":parsed.model_url}) if parsed is not None and not reason else None
+            case_id=hashlib.sha256(parsed.model_url.encode("utf-8")).hexdigest() if parsed is not None and not reason else None
             value.update({"canonical_case_id":case_id,"reason":reason,"date_interval":interval,"date_status":status,
               "parser_flags":list(parsed.flags) if parsed is not None else []})
             try: db.execute("INSERT INTO observations VALUES (?,?,?,?,?,?,?)",(obs.observation_id,case_id,label,parsed.model_url if parsed else None,parsed.domain_group if parsed else None,reason,json.dumps(value,sort_keys=True,allow_nan=False)))
