@@ -5,6 +5,7 @@ import re
 import sqlite3
 from collections import Counter
 from dataclasses import asdict
+from itertools import chain,groupby
 from datetime import datetime,time,timedelta,timezone
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -76,10 +77,13 @@ def _provenance(db):
         yield value
 
 def _records(db):
-    for case_id in (r[0] for r in db.execute("SELECT DISTINCT case_id FROM observations WHERE reason IS NULL ORDER BY case_id")):
-        first=db.execute("SELECT id,label,url,domain,payload FROM observations WHERE case_id=? AND reason IS NULL ORDER BY id LIMIT 1",(case_id,)).fetchone(); value=json.loads(first[4]); flags=sorted(set(value["parser_flags"])|set(format_flags(first[2])))
-        row=UrlRow(case_id,value["original_url"],first[2],first[1],first[3],"url-v2:case:"+case_id,value["source_date"])
-        yield Record(row,tuple(r[0] for r in db.execute("SELECT id FROM observations WHERE case_id=? AND reason IS NULL ORDER BY id",(case_id,))),tuple(flags))
+    cursor=db.execute("SELECT case_id,id,label,url,domain,payload FROM observations WHERE reason IS NULL ORDER BY case_id,id")
+    for case_id,observations in groupby(cursor,key=lambda row:row[0]):
+        first=next(observations); value=json.loads(first[5])
+        ids=tuple(chain((first[1],),(row[1] for row in observations)))
+        flags=sorted(set(value["parser_flags"])|set(format_flags(first[3])))
+        row=UrlRow(case_id,value["original_url"],first[3],first[2],first[4],"url-v2:case:"+case_id,value["source_date"])
+        yield Record(row,ids,tuple(flags))
 
 def _stats(db,catalog,parser):
     excluded=Counter(); sources=Counter(); dates=Counter(); formats=Counter(); classes=Counter(); groups=set(); count=0

@@ -31,6 +31,24 @@ class AuditTests(unittest.TestCase):
         with self.assertRaises(DatasetError): load_dataset(audit.root,self.parser)
         (audit.root/"provenance.jsonl").write_text("")
         with self.assertRaises(DatasetError): load_audit(audit.root,self.catalog,self.parser)
+    def test_record_scan_keeps_exact_representatives_without_per_row_queries(self):
+        from sentinel.url_v2.audit import _stage,_records
+        observations=[self.observation(i+1,original_url=f"https://site{i}.example/article?q=1",original_label="benign" if i%2 else "phish") for i in range(60)]
+        duplicate=self.observation(100,original_url="https://SITE0.example:443/article?q=1",original_label="phish",source_date="2025-01-02")
+        observations.extend([duplicate,self.observation(101,original_url="https://conflict.example/",original_label="benign"),
+          self.observation(102,original_url="https://conflict.example/",original_label="phish"),self.observation(103,original_url=None)])
+        db=_stage(self.catalog,observations,self.parser,self.root/"scan.sqlite"); self.addCleanup(db.close)
+        statements=[]; db.set_trace_callback(statements.append); records=list(_records(db)); db.set_trace_callback(None)
+        self.assertEqual(len(records),60)
+        self.assertEqual([r.row.case_id for r in records],sorted(r.row.case_id for r in records))
+        self.assertEqual({r.row.url for r in records},{f"https://site{i}.example/article?q=1" for i in range(60)})
+        record=next(r for r in records if r.row.url=="https://site0.example/article?q=1")
+        pair=[observations[0],duplicate]; first=min(pair,key=lambda o:o.observation_id)
+        self.assertEqual(record.observation_ids,tuple(sorted(o.observation_id for o in pair)))
+        self.assertEqual(record.row.original_url,first.original_url); self.assertEqual(record.row.source_date,first.source_date)
+        self.assertLessEqual(sum(q.lstrip().upper().startswith("SELECT") for q in statements),3,
+          "Canonical record iteration must use a bounded scan rather than two extra queries per URL")
+
     def test_missing_invalid_oversized_dates_and_no_scheme_repair(self):
         from sentinel.url_v2.audit import audit_sources,iter_provenance
         variants=[{"original_url":None},{"original_label":None},{"original_label":"malware"},{"original_url":"https://alpha.example/"+"x"*2048},
