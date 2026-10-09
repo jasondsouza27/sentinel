@@ -11,7 +11,9 @@ the independent review and integration are still being finalized.
 ## Measured research outcome
 
 - All 77 pinned PhreshPhish shards: 666,315 observations; 45,871,391 received payload bytes,
-  including metadata/retries; HTML excluded. Full source checksums were not computed.
+  including counted metadata/range retries; dataset HTML excluded. Historical intermediate
+  redirect bodies were unmetered, so total transfer is unknown. Full source checksums
+  were not computed.
 - Audit: 660,130 canonical URLs, 660,164 included observations, 6,151 exclusions and 34
   non-conflicting duplicate observations. No contradictory labels occurred in this release.
 - Development: 200,000 whole-component rows; train/validation/calibration 160,000/20,000/20,000.

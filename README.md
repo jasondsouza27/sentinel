@@ -20,7 +20,9 @@ The approved [URL-v2 data/robustness plan](docs/superpowers/plans/2026-10-07-sen
 now has a pinned range importer, complete observation provenance, connected-component
 protocol, compatible bounded training, format control and frozen source-specific evaluation.
 The real importer acquired **666,315 observations** and audit retained **660,130 canonical
-URLs** using 43.7 MiB of received metadata/range payload, without downloading HTML. The frozen
+URLs** with 43.7 MiB of journal-counted metadata/range payload, without downloading dataset HTML.
+Historical redirect-body bytes were unmetered; the [delivery record](docs/url-v2-delivery-record.md)
+qualifies that receipt and documents the corrected importer. The frozen
 200,000-row development set has only **6 benign query-bearing URLs**, below the required 30,
 so **v2 training is blocked**. No v2 accuracy, artifact or improvement over v1 is claimed.
 See the [research card](output/research/url-ml-v2/model-card.md), [aggregate status](output/research/url-ml-v2/research-status.json),

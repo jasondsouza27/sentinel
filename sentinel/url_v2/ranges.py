@@ -1,6 +1,7 @@
 """Pinned-source HTTP ranges with durable byte accounting and verified caches."""
 import hashlib
 import http.client
+import io
 import json
 import os
 import re
@@ -27,6 +28,13 @@ def approved_url(url,hosts):
 
 class ApprovedRedirect(urllib.request.HTTPRedirectHandler):
     def __init__(self,hosts): self.hosts=tuple(hosts)
+    def http_error_302(self,req,fp,code,msg,headers):
+        # urllib otherwise drains this body without a bound or byte-ledger entry.
+        # Preserve its URL normalization and loop checks using an empty body.
+        if fp is not None: fp.close()
+        with io.BytesIO() as empty:
+            return super().http_error_302(req,empty,code,msg,headers)
+    http_error_301=http_error_303=http_error_307=http_error_308=http_error_302
     def redirect_request(self,req,fp,code,msg,headers,newurl):
         approved_url(newurl,self.hosts)
         return super().redirect_request(req,fp,code,msg,headers,newurl)

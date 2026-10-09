@@ -40,16 +40,19 @@
     ],
     "projection_sha256": "9a7569d8c5e3985551099480256fd842b90ed1f05778bde87fb390c2858b7219",
     "response_bytes": 45871391,
+    "response_bytes_scope": "Journal-counted catalog metadata and requested range bodies, including retries; inherited approved-redirect body drains were not measured before the review fix.",
     "rows": 666315,
     "schema": "sentinel-url-v2-acquisition-receipt-v1",
     "shards": 77,
     "source_revision": "eabec4b7a66324b79cc8a0ad856d1731dc26fe1a",
+    "total_response_payload_bytes_verified": false,
     "transport_attempts": 567,
     "transport_errors": {
       "PermissionError": 1,
       "RemoteDisconnected": 4,
       "TimeoutError": 23
-    }
+    },
+    "unmeasured_historical_redirect_body_bytes": null
   },
   "audit": {
     "class_counts": {
@@ -295,7 +298,8 @@
     "Partial-object range hashes do not verify whole source files.",
     "Published source labels are historical annotations, not present-site verification.",
     "No live reliability, v2 accuracy or v1-v2 improvement has been measured.",
-    "Sampled resource peaks can miss short spikes."
+    "Sampled resource peaks can miss short spikes.",
+    "Historical acquisition receipts omit any bodies drained by inherited urllib approved redirects; total payload transfer is unknown. The reviewed importer closes these bodies without reading them."
   ],
   "metrics": null,
   "minimum_benign_format_counts": {

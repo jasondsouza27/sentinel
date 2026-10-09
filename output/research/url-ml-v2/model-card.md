@@ -7,8 +7,11 @@ application continues to use its existing indicators with learned URL warnings d
 ## Data and frozen protocol
 
 The pinned PhreshPhish release supplied 666,315 observations across 77 Parquet shards.
-The URL-only importer received 45,871,391 payload bytes including metadata and retries;
-HTML was excluded. Audit retained 660,130 canonical URLs (362,228 benign, 297,902 phish)
+The URL-only importer journal counted 45,871,391 payload bytes including metadata and
+requested-range retries; dataset HTML was excluded. The inherited approved-redirect
+handler could drain unmetered intermediate bodies, so this historical number does not
+prove total transfer or the cumulative cap. The reviewed fix closes those bodies without
+reading them; no retrospective redirect-body total or fresh acquisition is claimed. Audit retained 660,130 canonical URLs (362,228 benign, 297,902 phish)
 from 660,164 usable observations. There were 34 duplicate observations and no label
 conflicts. The 6,151 excluded source observations and all original provenance remain private.
 Source labels are historical annotations, not checks of live websites.
@@ -45,7 +48,7 @@ precision, recall, F1, FPR, calibration, confidence intervals and comparison met
 ## Acquisition and resource evidence
 
 The two-shard transport/schema pilot decoded 2,000 rows in 28.1 seconds with 273,377
-received bytes and 55,062,528 sampled peak RSS bytes. The complete projection took
+journal-counted bytes and 55,062,528 sampled peak RSS bytes. The complete projection took
 1,797.7 seconds and 68,829,184 sampled peak process-tree RSS bytes. Its largest footer
 was 5,257 bytes, selected column span 355,922 bytes and decoded batch 4,096 rows.
 

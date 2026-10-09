@@ -89,6 +89,34 @@ class RangeTests(unittest.TestCase):
         result,calls=self.invoke([expired,Response()]); self.assertEqual(result,b"abcdefgh"); self.assertEqual(calls,2)
         self.assertNotIn("signature=SECRET",json.dumps(self.session.snapshot()))
 
+    def test_accepted_redirect_bodies_never_bypass_the_range_budget(self):
+        from types import SimpleNamespace
+        from sentinel.url_v2.ranges import ApprovedRedirect,RangeSession
+        class RedirectBody(io.BytesIO):
+            def __init__(self, interrupted):
+                super().__init__(b'x'*10000); self.received=0; self.interrupted=interrupted
+            def read(self,n=-1):
+                body=super().read(n); self.received+=len(body)
+                if self.interrupted: raise TimeoutError('redirect body interrupted')
+                return body
+        for status in (301,302,303,307,308):
+            for interrupted in (False,True):
+                with self.subTest(status=status,interrupted=interrupted):
+                    config=json.loads(json.dumps(self.config)); config['projection']['max_response_bytes']=8
+                    session=RangeSession(self.catalog,self.root/f'redirect-{status}-{interrupted}',config)
+                    body=RedirectBody(interrupted); handler=ApprovedRedirect(config['projection']['allow_hosts'])
+                    handler.parent=SimpleNamespace(open=lambda request,timeout:Response())
+                    def open_redirect(request,hosts,timeout):
+                        request.timeout=timeout
+                        return getattr(handler,f'http_error_{status}')(request,body,status,'redirect',{'location':'https://us.aws.cdn.hf.co/object?signature=SECRET'})
+                    with patch('sentinel.url_v2.ranges.open_response',side_effect=open_redirect):
+                        result=session.read_range(self.file,0,8)
+                    self.assertEqual(result,b'abcdefgh')
+                    self.assertEqual(body.received,0,'Redirect payload must be closed, never drained outside the byte ledger')
+                    self.assertTrue(body.closed)
+                    self.assertEqual(session.snapshot()['response_bytes'],8)
+                    self.assertNotIn('signature=SECRET',json.dumps(session.snapshot()))
+
     def test_unapproved_redirect_not_contacted(self):
         from sentinel.url_v2.ranges import ApprovedRedirect
         import urllib.request

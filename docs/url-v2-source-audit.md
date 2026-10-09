@@ -94,7 +94,7 @@ count; the inconsistent card class totals are not substituted for measured count
 All shards use large-string URL/label/opaque-hash fields and date32 day fields.
 HTML, target, language and language-score fields were excluded from every view.
 
-The full run received 45,871,391 payload bytes (43.7 MiB), including its metadata
+The full run journal counted 45,871,391 payload bytes (43.7 MiB), including its metadata
 receipt and retries, versus 36,576,373,578 bytes of whole source objects. The largest
 footer was 5,257 bytes, largest selected column span 355,922 bytes and largest
 batch 4,096 rows. Observed peak process-tree RSS was 68,829,184 bytes; elapsed
@@ -103,7 +103,7 @@ time was 1,797.7 seconds. The separate two-shard pilot read 2,000 rows, received
 pilot scores nor invented test fixtures are research findings.
 
 The range journal records 567 attempts: 23 timeouts, four remote disconnects and
-one temporary local journal-replacement lock. Every retry retained its received
+one temporary local journal-replacement lock. Every requested-range retry retained its counted
 bytes; the local lock retried one already-received column without resetting the
 budget. Cached ranges, strong object identity, pinned catalog and column bounds
 were checked. These are partial-object range checks: full-file hashes were not
@@ -118,3 +118,17 @@ Date semantics remain unauthenticated. Canonical audit, frozen support gates and
 research outcomes are recorded separately in the delivery report. The official
 ISCX distribution was rechecked on this date and still showed its form and server
 error; no information was submitted and no archive or mirror was admitted.
+
+## Historical transport-receipt limit found in final review
+
+The accepted-redirect handler inherited urllib's unbounded intermediate-body drain.
+Those bytes were outside the journal. The 45,871,391 full-run and 273,377 pilot figures
+therefore describe **counted metadata/range payload**, not a corroborated total transfer
+or proof that the historical run enforced its cumulative cap. Unmetered redirect-body
+bytes are unknown. Selected source chunks, object identity and cached-range hashes
+remain verified; the original release/caches were not reacquired or relabelled.
+
+The corrected importer closes intermediate redirect bodies without reading them while
+retaining urllib URL normalization/loop checks and the HTTPS host allowlist. Regressions
+cover 301/302/303/307/308 with oversized and interrupted redirect bodies and a full
+range-byte budget. This applies to catalog acquisition through the shared opener too.
