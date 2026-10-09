@@ -99,6 +99,8 @@
     "version": 3,
     "whole_file_checksum_matches_publisher": true
   },
+  "design_direction_approved": true,
+  "design_direction_approved_on": "2026-10-09",
   "frozen_v2": {
     "all_benign_query_domain_groups": 28,
     "all_benign_query_rows": 68,
@@ -165,5 +167,6 @@
   "recommendation": "Use the checksum-verified Mendeley candidate as the first supplemental source for a separately approved URL-v3 design; audit all sources together and freeze source roles and connected-component isolation before fitting.",
   "recorded_at_utc": "2026-10-09T14:42:16Z",
   "schema": "url-source-reconnaissance-v1",
-  "status": "research_complete_design_decision_pending"
+  "status": "research_complete_direction_approved_written_spec_pending",
+  "written_specification": "docs/superpowers/specs/2026-10-09-sentinel-url-v3-design.md"
 }

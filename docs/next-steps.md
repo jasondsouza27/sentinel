@@ -4,6 +4,13 @@ Updated on 2026-10-09. The active project folder on this computer is `C:\Users\J
 
 ## Current priority: broaden URL data before deployment
 
+On 2026-10-09 the [source investigation](url-data-expansion-feasibility-2026-10-09.md)
+verified the official Mendeley URL-label CSV and measured 92 legitimate query URLs across
+87 domain groups outside the existing protected primary domains. This is preliminary
+coverage, before joint conflicts and new reservations. The user approved that direction;
+the [written URL-v3 specification](superpowers/specs/2026-10-09-sentinel-url-v3-design.md)
+awaits review before an implementation plan. No new rows are admitted or model fitted.
+
 A focused [URL-v2 data/robustness specification](superpowers/specs/2026-10-07-sentinel-url-v2-data-design.md)
 was approved on 2026-10-07. Its [implementation plan](superpowers/plans/2026-10-07-sentinel-url-v2-data.md)
 was approved for inline implementation with one independent final review.
