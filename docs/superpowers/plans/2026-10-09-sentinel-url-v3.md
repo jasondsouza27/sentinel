@@ -189,11 +189,11 @@ Reuse `SourceCatalog`, `Observation`, `AuditBundle`, `ResearchRun` from v2 and `
 
 **Interfaces:** Produce `validate_research_metadata(provenance: dict, protocol: dict, diagnostic: dict, selection: dict, baselines: dict) -> None`, `validate_research_sidecars(root: Path, manifest: dict) -> tuple[dict, dict]`, `export_v3_artifact(research: ResearchRun, parser: UrlParser, output_dir: Path, version: str) -> dict` and `load_v3_artifact(path: Path) -> ResearchRun`. Preserve generic `load_artifact(path: Path) -> RunBundle` and service API.
 
-- [ ] Write failing tests asserting schema `url-artifact-v3` and exact six shared plus three sidecar files; missing/extra/hash/schema/provenance/config/threshold/parent mismatches fail with `joblib.load.call_count == 0`. Generic inference reads only `pipeline.joblib`; diagnostic is never deserialized there. Research loader rejects wrong diagnostic feature names/deployment eligibility.
-- [ ] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_artifacts.py' -v`; expect unsupported v3 export/loading.
-- [ ] Implement shared schema-to-validator mapping with unchanged v1/v2 membership/trust/dependency/platform checks. Validate all v3 sidecars before pickle boundaries, then rebind unchanged offline parser. Document historical label/coverage limitations and source attribution in immutable card; artifact cannot overwrite or auto-activate.
-- [ ] Run v3 artifact/compatibility tests and old `test_url_ml_artifacts.py`, `test_url_v2_artifacts.py`, `test_url_v2_compatibility.py`. In a subprocess block Arrow import and assert explicit v3 inference works; `-S` default server still imports no NumPy/sklearn/Arrow, returns its original three analysis keys and leaves cases empty. Expect pass.
-- [ ] Commit artifact/compatibility paths: `feat: persist trusted URL v3 artifacts with compatible inference`.
+- [x] Write failing tests asserting schema `url-artifact-v3` and exact six shared plus three sidecar files; missing/extra/hash/schema/provenance/config/threshold/parent mismatches fail with `joblib.load.call_count == 0`. Generic inference reads only `pipeline.joblib`; diagnostic is never deserialized there. Research loader rejects wrong diagnostic feature names/deployment eligibility.
+- [x] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_artifacts.py' -v`; expect unsupported v3 export/loading.
+- [x] Implement shared schema-to-validator mapping with unchanged v1/v2 membership/trust/dependency/platform checks. Validate all v3 sidecars before pickle boundaries, then rebind unchanged offline parser. Document historical label/coverage limitations and source attribution in immutable card; artifact cannot overwrite or auto-activate.
+- [x] Run v3 artifact/compatibility tests and old `test_url_ml_artifacts.py`, `test_url_v2_artifacts.py`, `test_url_v2_compatibility.py`. In a subprocess block Arrow import and assert explicit v3 inference works; `-S` default server still imports no NumPy/sklearn/Arrow, returns its original three analysis keys and leaves cases empty. Expect pass.
+- [x] Commit artifact/compatibility paths: `feat: persist trusted URL v3 artifacts with compatible inference`.
 
 ### Task 9: Two-track frozen evaluation and honest subgroups
 
