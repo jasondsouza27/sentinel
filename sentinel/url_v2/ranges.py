@@ -134,7 +134,13 @@ class RangeSession:
                     if extra:
                         attempt["received_bytes"]+=len(extra); self.state["response_bytes"]+=len(extra); self._fail("range_body_oversized")
                     body=b"".join(chunks); directory=self.root/"ranges"; directory.mkdir(exist_ok=True); target=directory/(key+".bin")
-                    with target.open("xb") as f: f.write(body); f.flush(); os.fsync(f.fileno())
+                    pending=directory/(".range-"+uuid4().hex)
+                    try:
+                        with pending.open("xb") as f: f.write(body); f.flush(); os.fsync(f.fileno())
+                        # An unjournaled target may be a crash fragment, never a cache hit.
+                        os.replace(pending,target)
+                    finally:
+                        if pending.exists(): pending.unlink()
                     self.state["ranges"][key]={"path":"ranges/"+target.name,"sha256":hashlib.sha256(body).hexdigest(),"etag":etag}
                     attempt["status"]="verified"; self._save(); return body
                 except DatasetError: raise

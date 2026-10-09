@@ -89,6 +89,25 @@ class RangeTests(unittest.TestCase):
         result,calls=self.invoke([expired,Response()]); self.assertEqual(result,b"abcdefgh"); self.assertEqual(calls,2)
         self.assertNotIn("signature=SECRET",json.dumps(self.session.snapshot()))
 
+    def test_unjournaled_partial_payloads_resume_without_reuse_or_budget_reset(self):
+        from sentinel.url_v2.ranges import RangeSession
+        from sentinel.url_v2.storage import manifest_hash
+        for orphan in (b'abc',b'old-full'):
+            with self.subTest(orphan_bytes=len(orphan)):
+                session=RangeSession(self.catalog,self.root/f'orphan-{len(orphan)}',self.config)
+                session.state['response_bytes']=len(orphan); session._save()
+                key=manifest_hash({'file':self.file.__dict__,'start':0,'length':8,**session.binding})
+                folder=session.root/'ranges'; folder.mkdir(); target=folder/(key+'.bin'); target.write_bytes(orphan)
+                with patch('sentinel.url_v2.ranges.open_response',side_effect=lambda *args:Response()):
+                    body=session.read_range(self.file,0,8)
+                self.assertEqual(body,b'abcdefgh')
+                self.assertEqual(target.read_bytes(),b'abcdefgh')
+                self.assertEqual(session.snapshot()['response_bytes'],len(orphan)+8)
+                resumed=RangeSession(self.catalog,session.root,self.config)
+                with patch('sentinel.url_v2.ranges.open_response',side_effect=AssertionError('verified resume must use cache')):
+                    self.assertEqual(resumed.read_range(self.file,0,8),b'abcdefgh')
+                self.assertEqual(resumed.snapshot()['response_bytes'],len(orphan)+8)
+
     def test_accepted_redirect_bodies_never_bypass_the_range_budget(self):
         from types import SimpleNamespace
         from sentinel.url_v2.ranges import ApprovedRedirect,RangeSession
