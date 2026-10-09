@@ -1,6 +1,6 @@
 # Sentinel URL v3: authentic URL coverage and frozen robustness evaluation
 
-Date: 2026-10-09. Status: the user approved the Mendeley-based direction and this written specification on 2026-10-09. The detailed implementation plan awaits review. No v3 acquisition, frozen cohort or fit has been run.
+Date: 2026-10-09. Status: the user approved the Mendeley-based direction and this written specification on 2026-10-09. The detailed implementation plan was approved with implement on 2026-10-09; implementation is in progress. No v3 acquisition, frozen cohort or fit has been run.
 
 Parent: [year-long design](2026-10-05-sentinel-year-long-design.md). Evidence: [source investigation](../../url-data-expansion-feasibility-2026-10-09.md) and [aggregate measurements](../../../output/research/url-data-expansion/source-feasibility.json). Prior outcome: [URL-v2 delivery](../../url-v2-delivery-record.md).
 
@@ -106,4 +106,4 @@ Learned application warnings remain disabled. External or contemporary real-use 
 
 This is one source-expansion and frozen URL-research subsystem. Required source bytes, labels, dates, ownership, caps, schemas, gates, fit/search limits, inference compatibility and failure outcomes are explicit. There are no placeholder datasets, guaranteed scores, guessed dates or deferred core integrity rules. The additional final cohort is described accurately; the original failed v2 experiment remains intact. The user's inline execution/final-review preference is carried forward.
 
-The user approved this written specification on 2026-10-09. The [detailed implementation plan](../plans/2026-10-09-sentinel-url-v3.md) is prepared for review; plan approval permits implementation. Inline execution with one independent final review remains selected.
+The user approved this written specification on 2026-10-09. The [detailed implementation plan](../plans/2026-10-09-sentinel-url-v3.md) was approved for implementation on 2026-10-09. Inline execution with one independent final review remains selected.

@@ -10,9 +10,10 @@ def validate_provenance(value,*,stage):
         if "source_catalog_sha256" in value or "protocol_sha256" in value: raise DatasetError("provenance_schema_required")
         fields=["source_sha256","psl_sha256","derived_sha256","dataset_manifest_sha256"]
         if stage=="artifact": fields.append("split_manifest_sha256")
-    elif schema=="url-provenance-v2":
-        if "source_sha256" in value: raise DatasetError("v2_single_source_digest_forbidden")
+    elif schema in ("url-provenance-v2","url-provenance-v3"):
+        if "source_sha256" in value: raise DatasetError("v2_single_source_digest_forbidden" if schema=="url-provenance-v2" else "v3_single_source_digest_forbidden")
         fields=["source_catalog_sha256","dataset_manifest_sha256","derived_sha256","psl_sha256","parser_code_sha256","protocol_sha256"]
+        if schema=="url-provenance-v3": fields += ["config_sha256","parent_v2_protocol_sha256","protected_domains_sha256"]
         if type(value.get("seed")) is not int or value["seed"]!=42: raise DatasetError("v2_seed_invalid")
         if stage=="artifact":
             fields += ["split_manifest_sha256","training_config_sha256","calibration_ids_sha256"]

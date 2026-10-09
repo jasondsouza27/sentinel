@@ -10,7 +10,7 @@
 
 **Spec:** [Approved URL-v3 specification](../specs/2026-10-09-sentinel-url-v3-design.md), approved on 2026-10-09. [Source investigation](../../url-data-expansion-feasibility-2026-10-09.md) provides reconnaissance, not frozen performance evidence.
 
-**Status:** Specification approved. This plan awaits user review. Preserve the selected execution method: implement inline, with one independent final review.
+**Status:** Approved by the user with implement on 2026-10-09. Execution in progress, inline with one independent final review.
 
 ## Global Constraints
 
@@ -101,12 +101,12 @@ Reuse `SourceCatalog`, `Observation`, `AuditBundle`, `ResearchRun` from v2 and `
 
 **Interfaces:** Produce `default_config() -> dict` and `load_config(path: Path) -> dict` in v3 contracts and the shared records above; extend `validate_provenance(value: dict, *, stage: str) -> None` with v3-specific required hashes/schema pairing.
 
-- [ ] Write failing `ContractTests` pinning production config, exact key shape, boolean-as-number rejection, foreign v2 schema rejection and digest meanings:
+- [x] Write failing `ContractTests` pinning production config, exact key shape, boolean-as-number rejection, foreign v2 schema rejection and digest meanings:
   `assert config["schema"] == "url-ml-config-v3"`; `assert config["training"]["native_threads"] == 4`; `assert config["training"]["max_peak_bytes"] == 8589934592`; `assert config["split"]["development_max_rows"] == 200000`. V3 provenance without `parent_v2_protocol_sha256`/`protected_domains_sha256` or with `source_sha256` must raise `DatasetError`.
-- [ ] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_contracts.py' -v`; expect missing v3 contracts/schema support.
-- [ ] Implement exact config validation with Mendeley source pins/transport/CSV settings, split/source gates and unchanged model-grid values; reuse v1 training settings as the nested factory configuration. Add ignored v3 data root and v3 provenance branch without relaxing old validation.
-- [ ] Run the contract command and existing `test_url_v2_contracts.py`; expect all pass.
-- [ ] Commit only these paths: `feat: define frozen URL v3 contracts and provenance`.
+- [x] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_contracts.py' -v`; expect missing v3 contracts/schema support.
+- [x] Implement exact config validation with Mendeley source pins/transport/CSV settings, split/source gates and unchanged model-grid values; reuse v1 training settings as the nested factory configuration. Add ignored v3 data root and v3 provenance branch without relaxing old validation.
+- [x] Run the contract command and existing `test_url_v2_contracts.py`; expect all pass.
+- [x] Commit only these paths: `feat: define frozen URL v3 contracts and provenance`.
 
 ### Task 2: Read-only v2 binding and protected anchors
 
@@ -242,4 +242,6 @@ Software completion requires tested implemented stages and preserved prior asset
 
 ## Plan-scoped execution ledger
 
-Not started. Specification approved on 2026-10-09; plan review pending. No v3 acquisition, frozen data, fitting or deployment has been performed. Inline execution with one final independent review remains selected.
+Implementation authorized on 2026-10-09. Execution is isolated in the Sentinel URL-v3 worktree; the plan-scoped ledger records task proofs. No real v3 source admission, freezing, fitting or deployment has yet run.
+
+Task 1 evidence: 4 v3 and 6 v2 contract checks passed; full Python suite 134/134, zero skips, 114.774s. Baseline web checks 12/12. No source acquisition or fitting performed.

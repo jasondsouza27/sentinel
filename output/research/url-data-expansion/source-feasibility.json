@@ -121,6 +121,7 @@
     "protocol_manifest_sha256": "3953a7fcb9785d3cee720c5a115e451716a2c81df1389ce439ab7b69a8fcaa96"
   },
   "implementation_plan": "docs/superpowers/plans/2026-10-09-sentinel-url-v3.md",
+  "implementation_plan_approved_on": "2026-10-09",
   "limitations": [
     "These are source and format measurements, not detection accuracy or a passing training gate.",
     "The 92 non-overlapping benign query rows are only preliminary candidates: cross-source conflicts, final-reserved components, caps and new split allocation may remove more.",
@@ -131,7 +132,7 @@
   ],
   "metrics": null,
   "models_fitted": false,
-  "new_implementation_plan_approved": false,
+  "new_implementation_plan_approved": true,
   "new_spec_approved": true,
   "other_candidates": [
     {
@@ -169,6 +170,6 @@
   "recorded_at_utc": "2026-10-09T14:42:16Z",
   "schema": "url-source-reconnaissance-v1",
   "specification_approved_on": "2026-10-09",
-  "status": "research_complete_spec_approved_implementation_plan_pending",
+  "status": "research_complete_implementation_in_progress",
   "written_specification": "docs/superpowers/specs/2026-10-09-sentinel-url-v3-design.md"
 }

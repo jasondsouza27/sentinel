@@ -1,0 +1,129 @@
+{
+  "acquisition": {
+    "allow_hosts": [
+      "data.mendeley.com",
+      "prod-dcd-datasets-public-files-eu-west-1.s3.eu-west-1.amazonaws.com"
+    ],
+    "max_attempts": 3,
+    "max_csv_bytes": 4194304,
+    "max_metadata_bytes": 2097152,
+    "max_received_body_bytes": 16777216,
+    "timeout_seconds": 30
+  },
+  "csv": {
+    "max_field_bytes": 16384,
+    "max_records": 20000
+  },
+  "parser": {
+    "max_url_chars": 2048,
+    "psl_sha256": "e0fe072d26b0536525badea237953ff451c9f8e64c9d02c6daa81a4491d2fc66"
+  },
+  "schema": "url-ml-config-v3",
+  "sources": {
+    "mendeley": {
+      "attribution": "Abdelhakim Hannousse and Salima Yahiouche",
+      "collection_month": "2020-05",
+      "date_semantics": {
+        "authenticated": false,
+        "evidence_ref": "collection month is documentary only",
+        "meaning": "missing row collection date",
+        "timezone": null
+      },
+      "doi": "10.17632/c2gw7fy2j4.3",
+      "download_url": "https://data.mendeley.com/public-files/datasets/c2gw7fy2j4/files/575316f4-ee1d-453e-a04f-7b950915b61b/file_downloaded",
+      "file_id": "575316f4-ee1d-453e-a04f-7b950915b61b",
+      "filename": "dataset_B_05_2020.csv",
+      "inventory_url": "https://data.mendeley.com/public-api/datasets/c2gw7fy2j4/files?folder_id=root&version=3",
+      "label_map": {
+        "legitimate": 0,
+        "phishing": 1
+      },
+      "landing_page": "https://data.mendeley.com/datasets/c2gw7fy2j4/3",
+      "license": "CC BY 4.0",
+      "revision": "c2gw7fy2j4.3",
+      "sha256": "21093e2902e5441c86a6daf95e86e7c332046e477fdf109a579d7bd81e586d6c",
+      "size": 3661166,
+      "source_id": "mendeley-webpage-2020"
+    },
+    "phreshphish": {
+      "date_semantics": {
+        "authenticated": false,
+        "evidence_ref": "source-date semantics require an acquisition audit",
+        "meaning": "unverified source date",
+        "timezone": null
+      },
+      "label_map": {
+        "benign": 0,
+        "phish": 1
+      },
+      "repository": "phreshphish/phreshphish",
+      "revision": "eabec4b7a66324b79cc8a0ad856d1731dc26fe1a",
+      "source_id": "phreshphish"
+    }
+  },
+  "split": {
+    "development_max_rows": 200000,
+    "fractions": {
+      "calibration": 0.1,
+      "train": 0.8,
+      "validation": 0.1
+    },
+    "seed": 42
+  },
+  "support": {
+    "benign_min_non_root_path": 100,
+    "benign_min_non_www_host": 100,
+    "benign_min_query": 30,
+    "other_min_groups_per_class": 30,
+    "other_min_rows_per_class": 100,
+    "source_min_groups_per_class": 30,
+    "source_min_rows_per_class": 100,
+    "train_min_groups_per_class": 100,
+    "train_min_rows_per_class": 1000
+  },
+  "training": {
+    "bootstrap_replicates": 1000,
+    "calibration": {
+      "epsilon": 1e-06,
+      "min_per_class": 20,
+      "min_rows": 100
+    },
+    "char_tfidf": {
+      "C": [
+        0.1,
+        1,
+        10
+      ],
+      "class_weight": [
+        null,
+        "balanced"
+      ],
+      "max_features": 50000,
+      "ngram_range": [
+        3,
+        5
+      ]
+    },
+    "lexical_hgb": {
+      "learning_rate": [
+        0.05,
+        0.1
+      ],
+      "max_depth": [
+        3,
+        5
+      ],
+      "max_iter": 200
+    },
+    "max_fpr": 0.05,
+    "max_peak_bytes": 8589934592,
+    "native_threads": 4,
+    "pilot_max_rows": 2000,
+    "schema": "url-ml-config-v1",
+    "seed": 42,
+    "sensitivity_budgets": [
+      0.05,
+      0.01
+    ]
+  }
+}

@@ -9,7 +9,7 @@ verified the official Mendeley URL-label CSV and measured 92 legitimate query UR
 87 domain groups outside the existing protected primary domains. This is preliminary
 coverage, before joint conflicts and new reservations. The user approved that direction;
 the [written URL-v3 specification](superpowers/specs/2026-10-09-sentinel-url-v3-design.md)
-was approved on 2026-10-09. Its [eleven-task implementation plan](superpowers/plans/2026-10-09-sentinel-url-v3.md) is prepared for review, carrying forward inline implementation with one independent final review. No new rows are admitted or model fitted.
+was approved on 2026-10-09. Its [eleven-task implementation plan](superpowers/plans/2026-10-09-sentinel-url-v3.md) was approved for inline implementation with one independent final review; implementation has started in an isolated worktree. No new rows are admitted or model fitted.
 
 A focused [URL-v2 data/robustness specification](superpowers/specs/2026-10-07-sentinel-url-v2-data-design.md)
 was approved on 2026-10-07. Its [implementation plan](superpowers/plans/2026-10-07-sentinel-url-v2-data.md)

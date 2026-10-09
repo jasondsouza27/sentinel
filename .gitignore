@@ -34,3 +34,5 @@ models/url-ml/
 .venv-url-data/
 .venv-url-v2-check/
 data/url-ml-v2/
+
+data/url-ml-v3/
