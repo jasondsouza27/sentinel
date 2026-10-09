@@ -1,0 +1,169 @@
+{
+  "app_ml_warnings_enabled": false,
+  "candidate": {
+    "admitted_rows": 0,
+    "authors": [
+      "Abdelhakim Hannousse",
+      "Salima Yahiouche"
+    ],
+    "bytes": 3661166,
+    "cross_source_conflicts_audited": false,
+    "dataset_doi": "10.17632/c2gw7fy2j4.3",
+    "dataset_scripts_executed": 0,
+    "declared_collection_month": "2020-05",
+    "destination_requests": 0,
+    "file_id": "575316f4-ee1d-453e-a04f-7b950915b61b",
+    "file_inventory_url": "https://data.mendeley.com/public-api/datasets/c2gw7fy2j4/files?folder_id=root&version=3",
+    "filename": "dataset_B_05_2020.csv",
+    "inspected_in_memory": true,
+    "landing_page": "https://data.mendeley.com/datasets/c2gw7fy2j4/3",
+    "license": "CC BY 4.0",
+    "name": "Web page phishing detection",
+    "new_connected_components_frozen": false,
+    "normalization": {
+      "canonical_all": {
+        "0": {
+          "domain_groups": 4102,
+          "non_root_path": 3499,
+          "non_www_host": 1893,
+          "query_domain_groups": 117,
+          "query_rows": 191,
+          "rows": 5710
+        },
+        "1": {
+          "domain_groups": 3175,
+          "non_root_path": 4578,
+          "non_www_host": 4535,
+          "query_domain_groups": 555,
+          "query_rows": 1350,
+          "rows": 5708
+        }
+      },
+      "canonical_duplicate_observations": 2,
+      "does_not_overlap_v2_primary_reserved_domains": {
+        "0": {
+          "domain_groups": 3487,
+          "non_root_path": 1871,
+          "non_www_host": 1109,
+          "query_domain_groups": 87,
+          "query_rows": 92,
+          "rows": 3895
+        },
+        "1": {
+          "domain_groups": 3099,
+          "non_root_path": 4114,
+          "non_www_host": 4002,
+          "query_domain_groups": 523,
+          "query_rows": 1102,
+          "rows": 5150
+        }
+      },
+      "exclusions": {
+        "url_host": 5,
+        "url_invalid_escape": 2,
+        "url_whitespace_or_control": 3
+      },
+      "overlaps_v2_primary_reserved_domains": {
+        "0": {
+          "domain_groups": 615,
+          "non_root_path": 1628,
+          "non_www_host": 784,
+          "query_domain_groups": 30,
+          "query_rows": 99,
+          "rows": 1815
+        },
+        "1": {
+          "domain_groups": 76,
+          "non_root_path": 464,
+          "non_www_host": 533,
+          "query_domain_groups": 32,
+          "query_rows": 248,
+          "rows": 558
+        }
+      },
+      "psl_sha256": "e0fe072d26b0536525badea237953ff451c9f8e64c9d02c6daa81a4491d2fc66",
+      "within_source_conflicting_canonical_urls": 0
+    },
+    "paper": "https://arxiv.org/html/2010.12847",
+    "per_row_collection_dates_verified": false,
+    "raw_benign_query_hosts": 122,
+    "raw_benign_query_rows": 191,
+    "raw_data_saved": false,
+    "raw_exact_url_duplicate_observations": 1,
+    "raw_rows": 11430,
+    "raw_rows_per_label": {
+      "legitimate": 5715,
+      "phishing": 5715
+    },
+    "sha256": "21093e2902e5441c86a6daf95e86e7c332046e477fdf109a579d7bd81e586d6c",
+    "version": 3,
+    "whole_file_checksum_matches_publisher": true
+  },
+  "frozen_v2": {
+    "all_benign_query_domain_groups": 28,
+    "all_benign_query_rows": 68,
+    "audit_manifest_sha256": "a8e9b1290d3aeff75945c48ca90ed66094871b485d5dd954dd894ec449319288",
+    "benign_rows": 362228,
+    "canonical_rows": 660130,
+    "cap_excluded_benign_query_rows": 1,
+    "cap_excluded_rows": 80475,
+    "data_sidecars_checksum_verified": 8,
+    "development_benign_query_rows": 6,
+    "development_eligible_before_cap_benign_query_rows": 7,
+    "development_eligible_before_cap_rows": 280475,
+    "development_rows": 200000,
+    "manifest_identities_verified": true,
+    "minimum_development_benign_query_rows": 30,
+    "modified": false,
+    "primary_reserved_domain_groups": 78202,
+    "protocol_manifest_sha256": "3953a7fcb9785d3cee720c5a115e451716a2c81df1389ce439ab7b69a8fcaa96"
+  },
+  "limitations": [
+    "These are source and format measurements, not detection accuracy or a passing training gate.",
+    "The 92 non-overlapping benign query rows are only preliminary candidates: cross-source conflicts, final-reserved components, caps and new split allocation may remove more.",
+    "A historical publisher annotation is not a present-day safety guarantee.",
+    "Shared phishing feeds, popular-domain sampling, unknown campaigns and absent row dates restrict generalization and temporal claims.",
+    "Source inspection measured aggregates before any new final split; no model scores or threshold choices were used.",
+    "Human-reviewed contemporary message-link collection remains a separate year-long project requirement."
+  ],
+  "metrics": null,
+  "models_fitted": false,
+  "new_implementation_plan_approved": false,
+  "new_spec_approved": false,
+  "other_candidates": [
+    {
+      "author_page": "https://web.cs.hacettepe.edu.tr/~selman/phish360-dataset/",
+      "declared_legitimate_rows": 6416,
+      "declared_phishing_rows": 4332,
+      "declared_rows": 10748,
+      "limitations": [
+        "Author page timed out during two direct fetches; documentary evidence came from the author paper and repository.",
+        "Dataset academic-use statement does not establish file identity, exact redistribution terms, per-row dates, or Sentinel domain independence.",
+        "Authors repository lists a roughly 0.6 GB Parquet release; no bytes acquired."
+      ],
+      "local_format_counts_measured": false,
+      "name": "Phish360",
+      "source": "https://www.mdpi.com/2076-3417/16/2/751",
+      "source_file_identity_verified": false,
+      "status": "documentary_only"
+    },
+    {
+      "form_submitted": false,
+      "local_format_counts_measured": false,
+      "name": "Grambeddings",
+      "source": "https://web.cs.hacettepe.edu.tr/~selman/grambeddings-dataset/",
+      "status": "official_access_form_required"
+    },
+    {
+      "local_format_counts_measured": false,
+      "name": "PhishStorm",
+      "source": "https://research.aalto.fi/en/datasets/phishstorm-phishing-legitimate-url-dataset/",
+      "status": "license_unspecified_in_official_record"
+    }
+  ],
+  "purpose": "Identify an authentic supplemental URL-label source before designing the next frozen Sentinel experiment.",
+  "recommendation": "Use the checksum-verified Mendeley candidate as the first supplemental source for a separately approved URL-v3 design; audit all sources together and freeze source roles and connected-component isolation before fitting.",
+  "recorded_at_utc": "2026-10-09T14:42:16Z",
+  "schema": "url-source-reconnaissance-v1",
+  "status": "research_complete_design_decision_pending"
+}
