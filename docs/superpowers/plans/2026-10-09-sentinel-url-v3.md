@@ -127,12 +127,12 @@ Reuse `SourceCatalog`, `Observation`, `AuditBundle`, `ResearchRun` from v2 and `
 
 **Interfaces:** Produce `AcquisitionSession(root: Path, config: dict)` with context-manager lock ownership, `fetch(url: str, target: Path, *, resource: str, max_bytes: int) -> dict` and `snapshot() -> dict`. A receipt records complete-body bytes/SHA and durable cumulative received bytes; it never records signed URLs. Reuse approved redirect logic/atomic storage primitives.
 
-- [ ] Write failing transport tests for all five urllib redirect statuses, credentials/downgrade/port/host rejection, oversized/chunked/rejected final bodies, three total attempts, and crash/orphan/concurrent recovery:
+- [x] Write failing transport tests for all five urllib redirect statuses, credentials/downgrade/port/host rejection, oversized/chunked/rejected final bodies, three total attempts, and crash/orphan/concurrent recovery:
   `assert session.snapshot()["received_body_bytes"] <= 16777216`; `assert attempts == 3`; `assert redirect_body.read_calls == 0`; `assert not partial_source_published`. Pre-existing unregistered target is not trusted; complete verified receipts may be reused; interrupted bytes remain charged.
-- [ ] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_transport.py' -v`; expect missing session.
-- [ ] Implement exclusive acquisition lock and atomic durable ledger updates while reading bounded chunks. Include bytes from retries/errors, identity encoding, timeout 30 and resource limits. Close redirects without draining; use bounded unique pending files and checksum/size validation before replacing only unregistered temporary targets.
-- [ ] Run transport tests and existing `test_url_v2_ranges.py`; expect pass.
-- [ ] Commit `transport.py`/tests: `feat: meter and bound official Mendeley acquisition`.
+- [x] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_transport.py' -v`; expect missing session.
+- [x] Implement exclusive acquisition lock and atomic durable ledger updates while reading bounded chunks. Include bytes from retries/errors, identity encoding, timeout 30 and resource limits. Close redirects without draining; use bounded unique pending files and checksum/size validation before replacing only unregistered temporary targets.
+- [x] Run transport tests and existing `test_url_v2_ranges.py`; expect pass.
+- [x] Commit `transport.py`/tests: `feat: meter and bound official Mendeley acquisition`.
 
 ### Task 4: CSV projection and provenance-preserving joint audit
 
