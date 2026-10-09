@@ -1,6 +1,6 @@
 # Sentinel URL v3: authentic URL coverage and frozen robustness evaluation
 
-Date: 2026-10-09. Status: the user approved the Mendeley-based direction on 2026-10-09; this written specification awaits review. No v3 implementation plan, acquisition, frozen cohort or fit has been approved or run.
+Date: 2026-10-09. Status: the user approved the Mendeley-based direction and this written specification on 2026-10-09. The detailed implementation plan awaits review. No v3 acquisition, frozen cohort or fit has been run.
 
 Parent: [year-long design](2026-10-05-sentinel-year-long-design.md). Evidence: [source investigation](../../url-data-expansion-feasibility-2026-10-09.md) and [aggregate measurements](../../../output/research/url-data-expansion/source-feasibility.json). Prior outcome: [URL-v2 delivery](../../url-v2-delivery-record.md).
 
@@ -10,7 +10,7 @@ The user wants a substantial year-long engineering project balancing trained ML 
 
 Carry forward Ryzen 7 7435HS, 16 GiB RAM, CPU-first modelling, four native training threads, an 8 GiB process-tree fitting ceiling, CPython 3.11 on Windows, and the existing dependency locks. Inputs remain HTTP(S) strings of at most 2,048 characters. There are no requests to submitted destinations, HTML/pickle dataset loads, paid APIs or background browsing.
 
-The user approved the researched Mendeley direction and retained inline implementation with one independent final review. The new source and split rules below are design decisions for review, not changes to v2. Message-link fusion, harm/profile ML, team accounts, dashboard redesign, contemporary collection and a release decision remain separate milestones.
+The user approved the researched Mendeley direction and retained inline implementation with one independent final review. The new source and split rules below are approved design decisions for the v3 implementation plan, not changes to v2. Message-link fusion, harm/profile ML, team accounts, dashboard redesign, contemporary collection and a release decision remain separate milestones.
 
 ## Why this experiment
 
@@ -106,4 +106,4 @@ Learned application warnings remain disabled. External or contemporary real-use 
 
 This is one source-expansion and frozen URL-research subsystem. Required source bytes, labels, dates, ownership, caps, schemas, gates, fit/search limits, inference compatibility and failure outcomes are explicit. There are no placeholder datasets, guaranteed scores, guessed dates or deferred core integrity rules. The additional final cohort is described accurately; the original failed v2 experiment remains intact. The user's inline execution/final-review preference is carried forward.
 
-Next: the user reviews this written specification. Only approval of this artifact permits writing the implementation plan; plan approval then permits implementation. The source investigation and approved direction do not pre-approve artifacts that did not yet exist.
+The user approved this written specification on 2026-10-09. The [detailed implementation plan](../plans/2026-10-09-sentinel-url-v3.md) is prepared for review; plan approval permits implementation. Inline execution with one independent final review remains selected.
