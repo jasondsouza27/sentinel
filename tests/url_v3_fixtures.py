@@ -69,3 +69,25 @@ def mendeley_fixture(root,config,body,*,metadata_change=None):
     with patch("sentinel.url_v3.transport.open_response",side_effect=responses) as requests:
         catalog=acquire_mendeley(root,cfg)
     return catalog,cfg,requests.call_args_list
+
+def synthetic_study(root: Path, *, scenario="balanced"):
+    from sentinel.url_v3.binding import bind_v2
+    from sentinel.url_v3.sources import audit_v3,joint_catalog
+    from sentinel.url_v3.protocol import freeze_protocol
+    root.mkdir(parents=True,exist_ok=True)
+    v2,cfg,parser=synthetic_v2_root(root)
+    for key in cfg["support"]: cfg["support"][key]=1
+    cfg["training"]["char_tfidf"]["max_features"]=200
+    binding=bind_v2(v2,root/"binding",cfg,parser)
+    examples=[f"https://m{label}-{i}.example/article?q={i},{'phishing' if label else 'legitimate'}"
+              for label in (0,1) for i in range(40)]
+    if scenario=="primary_conflict":
+        examples.extend(["https://final.example/article?x=1,phishing","https://final.example/new?q=1,legitimate"])
+    if scenario=="missing_source_class": examples.append("https://devbad.example/login,legitimate")
+    if scenario=="no_queries": examples=[x.replace("/article?q=","/article/") for x in examples]
+    body=("url,status\n"+"\n".join(examples)+"\n").encode()
+    cat,cfg,_=mendeley_fixture(root/"sources/mendeley",cfg,body)
+    audit=audit_v3(binding,root/"sources/mendeley",cfg,parser,root/"audited")
+    splits=freeze_protocol(audit,joint_catalog(binding,cat),binding,cfg,root/"protocol",study_root=root)
+    (root/"config.json").write_text(json.dumps(cfg,sort_keys=True)+"\n",encoding="utf-8")
+    return splits,cfg,parser
