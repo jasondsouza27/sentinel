@@ -52,8 +52,10 @@ was 5,257 bytes, selected column span 355,922 bytes and decoded batch 4,096 rows
 The complete canonical audit took 848.7 seconds and sampled 88,920,064 peak RSS bytes.
 Freezing the protocol took 715.5 seconds and 2,514,509,824 sampled peak RSS bytes.
 These are acquisition/audit resources, **not model-training or inference measurements**.
-A subsequent canonical-reader performance fix is under real-data revalidation;
-the completed readiness guard receipt will record the original-sidecar hash checks. Sampling at
+The real ML-runtime readiness guard returned 2 with `training_support_incomplete`
+before fitting, verified all 10 original audit/protocol files unchanged, and peaked at
+2,525,544,448 sampled process-tree RSS bytes in 784.8 seconds. This confirms that the
+canonical-reader performance correction retains the original real-data sidecars. Sampling at
 100 ms can miss short memory spikes. No trained-fit 8 GiB limit result is claimed.
 
 Pinned inventory, strong object identity, exact content ranges and cached-range SHA-256

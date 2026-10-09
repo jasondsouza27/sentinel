@@ -89,7 +89,20 @@
     ]
   },
   "cap_skipped_component_count": 55512,
-  "cli_readiness_guard": null,
+  "cli_readiness_guard": {
+    "audit_protocol_files_unchanged": true,
+    "elapsed_seconds": 784.7970000000205,
+    "exit_code": 2,
+    "expected_error": "training_support_incomplete",
+    "failure_reason_verified": true,
+    "fitting_started": false,
+    "peak_process_tree_bytes": 2525544448,
+    "pilot_report_exists": false,
+    "sampling_seconds": 0.1,
+    "stage": "training_readiness_guard",
+    "v2_artifact_exists": false,
+    "verified_frozen_files": 10
+  },
   "frozen_protocol": {
     "development": {
       "benign_format_counts": {
@@ -347,6 +360,8 @@
     "node_tests": 12,
     "preserved_primary_files": 32,
     "preserved_primary_files_unchanged": true,
+    "primary_data_copied_with_matching_hashes": 575,
+    "primary_environments_recreated_offline": true,
     "python_skips": 0,
     "python_tests": 125,
     "unchanged_shared_pins": 9,
