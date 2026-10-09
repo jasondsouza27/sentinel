@@ -359,13 +359,15 @@ def test_default_stdlib_server_keeps_original_contract(self):
 - [x] When gates pass, ML-runtime `pilot`, `train` once to a new `url-v2` version, `evaluate` once to exclusive private output. Supply verified old root/artifact for overlap/paired diagnostics. Stage failure delivers intact diagnostics/incomplete status; do not alter frozen protocol after scores. Further data/model revision requires a new version and independent final set.
 - [x] Copy only inspected aggregates/card/protocol summaries into public research output. Check no raw URLs/tokens/absolute user paths/private IDs. List unavailable tracks; restrict accuracy claims to measured support. Verify new artifact/preserved v1 hashes and equal scores after reload without refitting. Learned application warnings remain disabled.
 - [x] Request one independent final whole-branch review under preserved inline execution. Reviewer reads this plan/spec/source audit/code/tests/results and checks ranges/conflicts/provenance/isolation/v1 contracts/final-test boundaries. Apply receiving-code-review before fixes; record every finding, disposition and verification. No per-task fresh implementer/reviewer is requested.
-- [ ] Rerun broad regressions only when review fixes/new changes justify it. Verify actual data paths/hashes before integration and preserve needed ignored data/environments before worktree cleanup. Use finishing workflow to integrate/push under existing repository authorization; verify remote HEAD/clean scoped status. Report completed software/evaluable tracks and remaining external/release work.
-- [ ] Commit inspected aggregates/docs: `docs(url-v2): record measured robustness and review decisions`; never stage raw sources/caches/rows/cases/joblib.
+- [x] Rerun broad regressions only when review fixes/new changes justify it. Verify actual data paths/hashes before integration and preserve needed ignored data/environments before worktree cleanup. Use finishing workflow to integrate/push under existing repository authorization; verify remote HEAD/clean scoped status. Report completed software/evaluable tracks and remaining external/release work.
+- [x] Commit inspected aggregates/docs: `docs(url-v2): record measured robustness and review decisions`; never stage raw sources/caches/rows/cases/joblib.
 
 Execution note (2026-10-09): development query gate failed (6/30). Conditional model-fit,
 calibration, artifact export/reload and final-scoring steps are not applicable; their metrics
 remain unavailable. All four independent-review findings were reproduced and fixed.
-Integration/push and final task ledger verification follow; no gate or final data was changed.
+Reviewed changes fast-forwarded to the main checkout; its full suite passed 130/130 Python
+and 12/12 Node. Repository push, ledger completion and private-proof cleanup are recorded
+in the delivery receipts. No gate or final data was changed.
 
 ## Spec coverage and self-review
 

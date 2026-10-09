@@ -6,8 +6,8 @@ training/calibration, format controls, immutable artifacts and frozen robustness
 The actual data run **stopped before fitting**: only six benign query-bearing URLs remain
 in development, below the predeclared minimum of 30. There is no v2 model artifact or
 accuracy result. This completes the data run with a reproducible incomplete outcome;
-software verification and the independent review are complete; integration follows under
-the existing repository authorization.
+software verification and the independent review are complete, and the changes were
+fast-forwarded into `codex/sentinel` under the existing repository authorization.
 
 ## Measured research outcome
 
@@ -96,3 +96,26 @@ source/channel/date evidence. Amend as a new version with independent final data
 fitting. Keep the v2 source/audit/protocol immutable and learned application warnings
 disabled. The year-long paired message/link experiment, contextual harm/profile ML,
 team investigation workflows and usability pilot remain future milestones.
+
+## Integration and preservation
+
+On 2026-10-09 the primary `codex/sentinel` checkout fast-forwarded from `2969dff` to the
+reviewed implementation. The main-folder union environment independently passed all
+130 Python checks with zero skips, and the web client passed 12/12 with zero skips.
+The default stdlib-only API is included in that full suite. The final repository push
+uses the existing private remote; no force push, new public dataset or ML activation
+is part of this milestone. Remote HEAD/clean-check receipts are retained privately.
+
+The source/cache/audit/protocol copy contains 575 files with equal SHA-256 hashes; the
+failed-gate diagnostic is preserved too. Data and verification environments were recreated
+at the main folder from exact saved wheels, with 10/17 pins and successful `pip check`.
+The original ML environment/lock and all 32 snapshotted original files stayed unchanged.
+The implementation ledger, reviewer report, regression logs, package wheels and run
+receipts are archived under ignored `data/url-ml-v2/runs/implementation-proof/` before
+manual worktree cleanup. Research JSON/cards contain aggregates only; no raw URLs,
+source archives, cases, caches or model binaries are committed.
+
+Task-completion order followed the approved Task11 brief: final review and integration
+precede its completion ledger, with cleanup after proof preservation. Cost: delayed
+cleanup and a fresh full suite on the merged primary tree. This resolves the generic
+inline skill's task-before-finishing sequence without claiming delivery prematurely.
