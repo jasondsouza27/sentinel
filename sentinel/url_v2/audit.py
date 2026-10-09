@@ -131,10 +131,12 @@ def iter_records(audit):
 
 def iter_provenance(audit): return _jsonl(audit.root/"provenance.jsonl")
 
-def load_audit(root,catalog,parser):
+def load_audit(root,catalog,parser,*,scratch_root=None):
     root=Path(root); manifest=read_json(root/"manifest.json")
     if manifest.get("schema")!=DATASET_SCHEMA or manifest.get("source_catalog_sha256")!=manifest_hash(catalog.manifest) or manifest.get("psl_sha256")!=parser.psl_sha256: raise DatasetError("audit_identity_mismatch")
-    verify_files(root,manifest.get("files")); stage=new_directory(root.parent/("audit-validation-"+manifest_hash(manifest))); db=None
+    verify_files(root,manifest.get("files"))
+    scratch_parent=Path(scratch_root) if scratch_root is not None else root.parent
+    stage=new_directory(scratch_parent/("audit-validation-"+manifest_hash(manifest))); db=None
     try:
         fields=Observation.__dataclass_fields__
         obs=(Observation(**{key:value[key] for key in fields}) for value in _jsonl(root/"provenance.jsonl"))
@@ -151,4 +153,4 @@ def load_audit(root,catalog,parser):
     except (KeyError,TypeError,ValueError): raise DatasetError("audit_provenance_invalid") from None
     finally:
         if db is not None: db.close()
-        cleanup_pending(stage,root.parent)
+        cleanup_pending(stage,scratch_parent)
