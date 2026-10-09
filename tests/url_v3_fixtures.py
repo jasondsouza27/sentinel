@@ -78,6 +78,9 @@ def synthetic_study(root: Path, *, scenario="balanced"):
     v2,cfg,parser=synthetic_v2_root(root)
     for key in cfg["support"]: cfg["support"][key]=1
     cfg["training"]["char_tfidf"]["max_features"]=200
+    if scenario=="small_training":
+        cfg["training"]["char_tfidf"].update(C=[1],class_weight=[None])
+        cfg["training"]["lexical_hgb"].update(max_depth=[3],learning_rate=[.1],max_iter=5)
     binding=bind_v2(v2,root/"binding",cfg,parser)
     examples=[f"https://m{label}-{i}.example/article?q={i},{'phishing' if label else 'legitimate'}"
               for label in (0,1) for i in range(40)]
@@ -91,3 +94,34 @@ def synthetic_study(root: Path, *, scenario="balanced"):
     splits=freeze_protocol(audit,joint_catalog(binding,cat),binding,cfg,root/"protocol",study_root=root)
     (root/"config.json").write_text(json.dumps(cfg,sort_keys=True)+"\n",encoding="utf-8")
     return splits,cfg,parser
+
+class DescendantHeavyPipeline:
+    def __init__(self,params): self.params=params
+    def fit(self,urls,labels):
+        import os,subprocess,sys,time
+        script="import os,pathlib,time; pathlib.Path("+repr(self.params["marker"])+").write_text(str(os.getpid())); block=bytearray(96*1024**2); time.sleep(30)"
+        subprocess.Popen([sys.executable,"-c",script],stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,
+                         creationflags=subprocess.CREATE_NO_WINDOW if os.name=="nt" else 0)
+        time.sleep(3)
+        return self
+
+def descendant_factory(branch,params,parser): return DescendantHeavyPipeline(params)
+
+class ToyClassifier:
+    @property
+    def classes_(self):
+        import numpy as np
+        return np.asarray([0,1])
+    def predict_proba(self,urls):
+        import numpy as np
+        return np.asarray([[.1,.9] if "m1-" in url or "devbad" in url or "heldout" in url else [.9,.1] for url in urls])
+
+def toy_fit(rows,branch,params,parser,native_threads=4,max_peak_bytes=8589934592,*,pipeline_factory=None):
+    return ToyClassifier(),{"status":"ok","branch":branch,"params":params,"native_threads":native_threads,
+          "max_peak_bytes":max_peak_bytes,"peak_bytes":100,"observed_tree_rss_peak_bytes":100,"observed_rss_peak_bytes":100,
+          "fit_seconds":.01,"train_rows":len(rows)}
+
+def small_v3_research(root: Path):
+    from sentinel.url_v3.training import train_v3
+    splits,cfg,parser=synthetic_study(root,scenario="small_training")
+    return train_v3(splits,cfg,parser),splits,cfg,parser

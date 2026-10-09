@@ -78,3 +78,7 @@ def finish_final_access(splits,*,status,report_sha256=None):
     if receipt.get("protocol_sha256")!=protocol or receipt.get("status")!="started":
         raise DatasetError("v3_final_receipt_state_invalid")
     receipt.update(status=status,report_sha256=report_sha256); _save(path,receipt)
+
+def assert_fitting_guard(splits):
+    if _HELD.get(str(_study(splits))) not in ("pilot","train"):
+        raise DatasetError("v3_fitting_guard_required")

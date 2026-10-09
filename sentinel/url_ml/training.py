@@ -101,31 +101,86 @@ def fit_candidate(rows,branch,params,parser,native_threads=4,max_peak_bytes=8*10
         for key,value in previous.items():
             if value is None: os.environ.pop(key,None)
             else: os.environ[key]=value
-    sending.close(); record=None; result=None; observed_peak=0
-    started=time.perf_counter()
+    sending.close(); record=None; result=None; observed_peak=0; tree_peak=0; conservative_peak=0
+    known={}; individual_peaks={}; started=time.perf_counter()
+    def sample():
+        nonlocal observed_peak,tree_peak,conservative_peak
+        try:
+            worker=psutil.Process(process.pid)
+            members=[worker,*worker.children(recursive=True)]
+        except psutil.NoSuchProcess: members=[]
+        for member in members:
+            identity=(member.pid,member.create_time())
+            known[identity]=member
+        total=0
+        for identity,member in list(known.items()):
+            try:
+                if member.create_time()!=identity[1]: continue
+                info=member.memory_info(); rss=info.rss; total+=rss
+                peak=getattr(info,"peak_rss",None) or getattr(info,"peak_wset",None) or rss
+                individual_peaks[identity]=max(individual_peaks.get(identity,0),rss,peak)
+                if member.pid==process.pid: observed_peak=max(observed_peak,rss)
+            except psutil.NoSuchProcess: pass
+        tree_peak=max(tree_peak,total)
+        # This sum is conservative when individual lifetime peaks are not simultaneous.
+        conservative_peak=max(conservative_peak,sum(individual_peaks.values()))
+        return max(total,conservative_peak)
+    def stop_tree(include_worker):
+        try:
+            worker=psutil.Process(process.pid)
+            for member in worker.children(recursive=True):
+                known[(member.pid,member.create_time())]=member
+        except psutil.NoSuchProcess: pass
+        targets=[]
+        for identity,member in reversed(list(known.items())):
+            if not include_worker and member.pid==process.pid: continue
+            try:
+                if member.create_time()!=identity[1] or not member.is_running(): continue
+                member.terminate(); targets.append(member)
+            except psutil.NoSuchProcess: pass
+        _,alive=psutil.wait_procs(targets,timeout=3)
+        for member in alive:
+            try: member.kill()
+            except psutil.NoSuchProcess: pass
+        _,alive=psutil.wait_procs(alive,timeout=3)
+        return not alive
     try:
         while True:
-            if receiving.poll(.2):
+            try: measured=sample()
+            except psutil.Error:
+                record={"status":"memory_measurement_failed","branch":branch,"params":params}; break
+            if measured>max_peak_bytes:
+                record={"status":"memory_budget_exceeded","branch":branch,"params":params}; break
+            if receiving.poll(.05):
                 try: result,record=receiving.recv()
                 except EOFError: record={"status":"worker_exited","branch":branch,"params":params}
+                try: measured=sample()
+                except psutil.Error:
+                    record["status"]="memory_measurement_failed"; result=None; break
+                if measured>max_peak_bytes: record["status"]="memory_budget_exceeded"; result=None
                 break
             if not process.is_alive():
                 record={"status":"worker_exited","branch":branch,"params":params,"exit_code":process.exitcode}; break
-            try:
-                rss=psutil.Process(process.pid).memory_info().rss
-                observed_peak=max(observed_peak,rss)
-                if rss>max_peak_bytes:
-                    process.terminate(); record={"status":"memory_budget_exceeded","branch":branch,"params":params}; break
-            except psutil.NoSuchProcess: pass
+        try:
+            if not stop_tree(include_worker=result is None):
+                record["status"]="worker_cleanup_failed"; result=None
+        except psutil.Error: record["status"]="worker_cleanup_failed"; result=None
         process.join(timeout=5)
         if process.is_alive(): process.terminate(); process.join()
-        if (record.get("peak_bytes") or 0)>max_peak_bytes:
-            record["status"]="memory_budget_exceeded"; result=None
-        record.update({"observed_rss_peak_bytes":observed_peak,"parent_wall_seconds":time.perf_counter()-started,
-                       "native_threads":native_threads,"train_rows":len(rows),"max_peak_bytes":max_peak_bytes})
+        worker_peak=record.get("peak_bytes")
+        aggregate_peak=max(worker_peak or 0,conservative_peak)
+        if aggregate_peak>max_peak_bytes: record["status"]="memory_budget_exceeded"; result=None
+        record.update({"pid":process.pid,"monitored_process_count":len(known),
+                       "worker_peak_bytes":worker_peak,"peak_bytes":aggregate_peak,
+                       "observed_rss_peak_bytes":observed_peak,"observed_tree_rss_peak_bytes":tree_peak,
+                       "conservative_tree_peak_bytes":conservative_peak,
+                       "parent_wall_seconds":time.perf_counter()-started,"native_threads":native_threads,
+                       "train_rows":len(rows),"max_peak_bytes":max_peak_bytes})
         return result,record
     finally:
         receiving.close()
+        try: stop_tree(include_worker=True)
+        except psutil.Error: pass
         if process.is_alive(): process.terminate(); process.join()
         process.close()
 
