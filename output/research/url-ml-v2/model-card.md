@@ -71,10 +71,13 @@ collection semantics; parsing them cannot establish a chronological holdout.
 
 The fresh union of both Windows CPython 3.11 locks contains 17 exact pins with nine
 identical overlaps; the original ML lock is unchanged. The canonical-reader correction
-passed 125 Python checks with zero skips; the web client passed 12 checks. The default
+and four independently reviewed corrections passed 130 Python checks with zero skips;
+the web client passed 12 checks. The default
 stdlib-only API also passed. The original 32 private v1/case/intake files remained unchanged.
 Fixture models demonstrate software behavior only; their scores are not project results.
-Independent review and its final dispositions are in the [delivery record](../../../docs/url-v2-delivery-record.md).
+The independent review found four important boundary defects; all four were reproduced
+and fixed. Post-fix semantic validation preserved all original real-audit hashes.
+Review dispositions are in the [delivery record](../../../docs/url-v2-delivery-record.md).
 
 The next data milestone needs annotated legitimate paths, non-www hosts and queries,
 with source/channel/date evidence, a new frozen protocol version and an independent final

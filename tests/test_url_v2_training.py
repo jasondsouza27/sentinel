@@ -50,6 +50,45 @@ class V2TrainingTests(unittest.TestCase):
         self.assertEqual(research.format_report["feature_names"],["https","www_host","non_root_path","query_present"])
         self.assertNotIn("format_only",run.selection.branch_candidates)
         record=research.format_report["resources"]; self.assertEqual(record["native_threads"],4); self.assertNotEqual(record["pid"],os.getpid()); self.assertLessEqual(record["peak_bytes"],8589934592)
+    def test_mutated_rows_and_whole_heldout_components_never_reach_a_learner(self):
+        from dataclasses import replace
+        from sentinel.url_v2.training import train_v2,pilot_v2
+        from sentinel.url_ml import training as legacy
+        original_parts=dict(self.splits.development.partitions); original_tracks=dict(self.splits.tracks)
+        for mutation in ('label','url','heldout_component_swap','shadow_training_track'):
+            self.splits.development.partitions.clear(); self.splits.development.partitions.update(original_parts)
+            self.splits.tracks.clear(); self.splits.tracks.update(original_tracks)
+            train=original_parts['train']; primary=original_tracks['primary']
+            if mutation in ('label','url','shadow_training_track'):
+                changed=replace(train[0],**({'label':1-train[0].label} if mutation in ('label','shadow_training_track') else {'url':train[0].url+'&changed=1'}))
+                self.splits.development.partitions['train']=(changed,)+train[1:]
+                if mutation=='shadow_training_track': self.splits.tracks['train']=train
+            else:
+                train_component=self.splits.component_by_case[train[0].case_id]; primary_component=self.splits.component_by_case[primary[0].case_id]
+                train_group=tuple(r for r in train if self.splits.component_by_case[r.case_id]==train_component)
+                primary_group=tuple(r for r in primary if self.splits.component_by_case[r.case_id]==primary_component)
+                self.splits.development.partitions['train']=tuple(r for r in train if r not in train_group)+primary_group
+                self.splits.tracks['primary']=tuple(r for r in primary if r not in primary_group)+train_group
+            for function in (train_v2,pilot_v2):
+                with self.subTest(mutation=mutation,function=function.__name__):
+                    with (patch.object(legacy,'train_run',side_effect=AssertionError('changed data reached training')),
+                          patch.object(legacy,'resource_pilot',side_effect=AssertionError('changed data reached pilot'))):
+                        with self.assertRaises(DatasetError): function(self.splits,self.config,self.parser)
+
+    def test_changed_frozen_files_stop_training_and_pilot_before_fitting(self):
+        from sentinel.url_v2.training import train_v2,pilot_v2
+        from sentinel.url_ml import training as legacy
+        for path in (self.splits.root/'assignments.json',self.splits.root/'owners.jsonl',self.splits.audit_root/'rows.jsonl'):
+            original=path.read_bytes()
+            try:
+                path.write_bytes(original+b'\n')
+                for function in (train_v2,pilot_v2):
+                    with self.subTest(file=path.name,function=function.__name__):
+                        with (patch.object(legacy,'train_run',side_effect=AssertionError('changed files reached training')),
+                              patch.object(legacy,'resource_pilot',side_effect=AssertionError('changed files reached pilot'))):
+                            with self.assertRaises(DatasetError): function(self.splits,self.config,self.parser)
+            finally: path.write_bytes(original)
+
     def test_format_features_and_component_pilot_no_cut(self):
         from sentinel.url_v2.format_baseline import FormatTransformer,build_format_pipeline
         from sentinel.url_v2.training import component_pilot_rows

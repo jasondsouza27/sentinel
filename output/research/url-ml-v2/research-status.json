@@ -289,6 +289,15 @@
     "protocol_manifest_sha256": "3953a7fcb9785d3cee720c5a115e451716a2c81df1389ce439ab7b69a8fcaa96",
     "psl_sha256": "e0fe072d26b0536525badea237953ff451c9f8e64c9d02c6daa81a4491d2fc66"
   },
+  "independent_review": {
+    "critical_findings": 0,
+    "important_findings": 4,
+    "important_findings_fixed": 4,
+    "minor_findings": 0,
+    "re_review": false,
+    "status": "complete",
+    "verification": "Each fix reproduced RED before implementation, then GREEN and a passing whole suite."
+  },
   "learned_application_warnings_enabled": false,
   "limitations": [
     "Only six benign query-bearing URLs remain in frozen development; the minimum is 30.",
@@ -326,6 +335,16 @@
       "peak_process_tree_bytes": 2514509824,
       "sampling_seconds": 0.1,
       "stage": "freeze"
+    },
+    "post_review_audit_validation": {
+      "elapsed_seconds": 578.5470000000205,
+      "exit_code": 0,
+      "fitting_attempted": false,
+      "original_frozen_audit_hashes_unchanged": true,
+      "peak_process_tree_bytes": 87048192,
+      "sampling_seconds": 0.1,
+      "stage": "post_review_audit_semantic_validation",
+      "verified_audit_files": 4
     },
     "projection": {
       "elapsed_seconds": 1797.6977794000413,
@@ -367,7 +386,7 @@
     "primary_data_copied_with_matching_hashes": 575,
     "primary_environments_recreated_offline": true,
     "python_skips": 0,
-    "python_tests": 125,
+    "python_tests": 130,
     "unchanged_shared_pins": 9,
     "union_package_pins": 17
   }

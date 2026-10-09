@@ -6,7 +6,8 @@ training/calibration, format controls, immutable artifacts and frozen robustness
 The actual data run **stopped before fitting**: only six benign query-bearing URLs remain
 in development, below the predeclared minimum of 30. There is no v2 model artifact or
 accuracy result. This completes the data run with a reproducible incomplete outcome;
-the independent review and integration are still being finalized.
+software verification and the independent review are complete; integration follows under
+the existing repository authorization.
 
 ## Measured research outcome
 
@@ -34,7 +35,7 @@ The original application, paired-message intake, case history and v1 artifact re
 
 The fresh CPython 3.11 union environment has 17 exact pins, nine identical shared pins and
 no conflicts. The original 16-pin ML lock remains unchanged. The latest whole suite after
-the canonical-reader correction passed 125 Python checks with zero skips; 12 web-client
+the canonical-reader correction and four review corrections passed 130 Python checks with zero skips; 12 web-client
 checks also passed. A separate `-S` compatibility check passed the default stdlib-only API.
 All 32 snapshotted v1/case/intake files remain byte-identical after acquisition.
 
@@ -47,11 +48,24 @@ sidecar hashes still match; its receipt is recorded in the aggregate status.
 
 ## Independent final review
 
-Pending. One fresh reviewer will review the whole branch, approved plan/spec, source audit,
-tests, privacy/provenance boundaries and measured incomplete outcome. Findings will be
-regraded by user effect; important/critical findings receive one regression-first fix pass,
-and every disposition is recorded here and in the preserved private ledger. No trained
-model or evaluation is required to bypass a failed data gate.
+One fresh independent reviewer inspected the complete branch through `79dabf0`, plan/spec,
+source audit, tests and measured incomplete outcome. They independently passed 24 targeted
+acquisition/audit/protocol checks and reproduced four important gaps with temporary fixtures,
+no acquisition and no fitting. There were no critical or minor findings. All four important
+grades stand by user effect; the single regression-first fix pass is complete. No re-review was dispatched.
+
+| Finding | Cause and correction | Verification |
+| --- | --- | --- |
+| Unmetered redirect bodies | urllib inherited an unbounded body drain; close intermediates, retain redirect validation/loop checks, qualify old byte receipts | RED: 10,000 uncounted bytes under eight-byte budget; GREEN for all five redirect codes, oversized/interrupted bodies; whole suite 126/126 |
+| Ancillary failure hid label conflicts | Retain recognized canonical URL/label before ancillary exclusion; exclude all contradictions and preserve original failure | RED for malformed dates/opaque IDs; GREEN; whole suite 127/127; real-audit semantic hashes unchanged |
+| Interrupted cache broke resume | Replace unjournaled partial files using complete unique temporary payloads and atomic promotion; retain received-byte ledger | RED for partial/complete orphan files; GREEN with exact spent bytes; whole suite 128/128 |
+| Mutable splits bypassed frozen fitting | Share frozen file/assignment/content checks with training and pilot boundaries | RED for labels/URLs/whole-component swaps/frozen files/shadow keys; GREEN in training and pilot; final whole suite 130/130 |
+
+The reviewer declined to judge live v2 accuracy, deployment suitability and activation:
+there is no model and the failed gate prevents fitting. The executor's ruling keeps metrics
+unavailable and warnings disabled. Cost if wrong: software checks might be mistaken for live
+validation; deployment still needs a separately measured release decision. Deferred minors:
+none. No repeated review or untrained accuracy requirement was introduced.
 
 ## Decisions and costs
 
@@ -67,7 +81,8 @@ model or evaluation is required to bypass a failed data gate.
    support and uncertainty must remain visible.
 5. Add private root/audit handles to split bundles for changed-file checks and v1 pruning,
    excluding paths from hashed/public manifests. Cost: manually built evaluation bundles
-   need those handles; the public interface and portable provenance stay unchanged.
+   need those handles for evaluation and pre-fit checks; the public interface and portable
+   provenance stay unchanged.
 6. Bundle the unmodified frozen MPL-2.0 suffix list for offline reproducibility. Cost:
    334,734 repository bytes and retained license attribution; no labelled dataset is bundled.
 7. Replace per-URL audit SELECTs with one ordered canonical scan after the measured

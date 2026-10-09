@@ -62,35 +62,10 @@ def component_metrics(labels,scores,threshold,groups,probabilities=None,*,replic
     return report
 
 def _check_frozen(research,splits,artifact):
-    if splits.root is None or splits.audit_root is None: raise DatasetError("evaluation_private_roots_required")
-    protocol=read_json(splits.root/"manifest.json")
-    if protocol!=splits.manifest: raise DatasetError("evaluation_protocol_changed")
-    verify_files(splits.root,protocol["files"])
-    actual_components={}; actual_sources={}
-    with (splits.root/"components.jsonl").open(encoding="utf-8") as f:
-        for line in f:
-            value=json.loads(line)
-            if manifest_hash({"case_ids":value["case_ids"]})!=value["component_id"]: raise DatasetError("evaluation_component_identity_invalid")
-            for key in value["case_ids"]: actual_components[key]=value["component_id"]
-    with (splits.root/"owners.jsonl").open(encoding="utf-8") as f:
-        for line in f:
-            value=json.loads(line); actual_sources[value["case_id"]]=tuple(value["source_ids"])
-    if actual_components!=splits.component_by_case or actual_sources!=splits.sources_by_case: raise DatasetError("evaluation_components_or_owners_changed")
-    audit_manifest=read_json(splits.audit_root/"manifest.json")
-    verify_files(splits.audit_root,audit_manifest["files"])
-    if manifest_hash(audit_manifest)!=protocol["audit_manifest_sha256"]: raise DatasetError("evaluation_audit_changed")
     bundle=development_bundle(splits)
+    protocol=splits.manifest
     if research.run.provenance["protocol_sha256"]!=manifest_hash(protocol) or research.run.provenance["split_manifest_sha256"]!=manifest_hash(bundle.manifest): raise DatasetError("evaluation_model_protocol_mismatch")
     if research.protocol!=protocol: raise DatasetError("evaluation_research_protocol_mismatch")
-    parts={**splits.development.partitions,**splits.tracks}; assignments={name:[r.case_id for r in rows] for name,rows in parts.items()}
-    encoded=(json.dumps(assignments,sort_keys=True,ensure_ascii=True,allow_nan=False)+"\n").encode()
-    if hashlib.sha256(encoded).hexdigest()!=protocol["files"]["assignments.json"]: raise DatasetError("evaluation_assignments_changed")
-    lookup={r.case_id:r for rows in parts.values() for r in rows}; checked=set()
-    for record in iter_records(AuditBundle(splits.audit_root,audit_manifest)):
-        if record.row.case_id in lookup:
-            if record.row!=lookup[record.row.case_id]: raise DatasetError("evaluation_rows_changed")
-            checked.add(record.row.case_id)
-    if checked!=set(lookup): raise DatasetError("evaluation_rows_missing")
     frozen=load_v2_artifact(artifact)
     for field in ("protocol_sha256","source_catalog_sha256","dataset_manifest_sha256","derived_sha256","training_config_sha256","split_manifest_sha256"):
         if frozen.run.provenance[field]!=research.run.provenance[field]: raise DatasetError("evaluation_artifact_mismatch")
