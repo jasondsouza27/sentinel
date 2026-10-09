@@ -1,8 +1,11 @@
 # Sentinel URL-v2 source feasibility audit
 
-Reviewed on 2026-10-07. This is a documentation/metadata audit; no training corpus has
-been acquired, no new dependency installed and no model trained for v2. The proposed
-[written design](superpowers/specs/2026-10-07-sentinel-url-v2-data-design.md) awaits review.
+Initial feasibility review: 2026-10-07; implementation/acquisition evidence: 2026-10-08;
+frozen outcome recorded on 2026-10-09. The following initial sections describe what was
+known before the approved [design](superpowers/specs/2026-10-07-sentinel-url-v2-data-design.md)
+and plan were implemented. Later sections record the complete 77-shard acquisition.
+**V2 training is blocked by benign-query coverage (6 observed, 30 required).** See the
+[research card](../output/research/url-ml-v2/model-card.md) and [delivery record](url-v2-delivery-record.md).
 
 ## Primary candidate
 
@@ -79,6 +82,39 @@ revision/hash checks, hostile/expired redirects, interrupted bytes, cumulative r
 budgets, corrupt caches, external column files and immutable publications are tested.
 The separate ten-pin ingestion lock includes verified PyArrow 25.0.1; the ML lock is
 unchanged. The bundled MPL-2.0 suffix snapshot is byte-identical to the original.
-These are software/transport checks on invented fixtures, not a completed real import or
-accuracy result. Full source acquisition and measured availability gates follow next.
+These initial software/transport checks used invented fixtures, not research cases or
+accuracy results. The complete real acquisition and measured gates are recorded below.
 Official ISCX members remain unavailable; no form was submitted or mirror used.
+
+## Complete pinned metadata acquisition (2026-10-08)
+
+All 77 shards were projected: 498,255 published train observations and 168,060
+published test observations, 666,315 in total. This confirms the actual test-row
+count; the inconsistent card class totals are not substituted for measured counts.
+All shards use large-string URL/label/opaque-hash fields and date32 day fields.
+HTML, target, language and language-score fields were excluded from every view.
+
+The full run received 45,871,391 payload bytes (43.7 MiB), including its metadata
+receipt and retries, versus 36,576,373,578 bytes of whole source objects. The largest
+footer was 5,257 bytes, largest selected column span 355,922 bytes and largest
+batch 4,096 rows. Observed peak process-tree RSS was 68,829,184 bytes; elapsed
+time was 1,797.7 seconds. The separate two-shard pilot read 2,000 rows, received
+273,377 bytes and peaked at 55,062,528 observed RSS bytes in 28.1 seconds. Neither
+pilot scores nor invented test fixtures are research findings.
+
+The range journal records 567 attempts: 23 timeouts, four remote disconnects and
+one temporary local journal-replacement lock. Every retry retained its received
+bytes; the local lock retried one already-received column without resetting the
+budget. Cached ranges, strong object identity, pinned catalog and column bounds
+were checked. These are partial-object range checks: full-file hashes were not
+computed and `full_file_checksum_verified` remains false. No submitted URL was
+requested, and the original HTML corpus was not downloaded.
+
+The catalog manifest SHA-256 is
+`03801cab6a2c91e0b8df2b3c0863e6351a24b0704765d0d1ce42d0e311142675`;
+the projection manifest SHA-256 is
+`9a7569d8c5e3985551099480256fd842b90ed1f05778bde87fb390c2858b7219`.
+Date semantics remain unauthenticated. Canonical audit, frozen support gates and
+research outcomes are recorded separately in the delivery report. The official
+ISCX distribution was rechecked on this date and still showed its form and server
+error; no information was submitted and no archive or mirror was admitted.

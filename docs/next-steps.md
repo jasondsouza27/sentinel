@@ -1,6 +1,6 @@
 # Sentinel: current state and next steps
 
-Updated on 2026-10-08. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
+Updated on 2026-10-09. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
 
 ## Current priority: broaden URL data before deployment
 
@@ -9,10 +9,20 @@ was approved on 2026-10-07. Its [implementation plan](superpowers/plans/2026-10-
 was approved for inline implementation with one independent final review.
 The [v2 reproduction guide](url-v2-workflow.md) documents implemented acquisition,
 provenance, isolation, bounded model/control fits and frozen evaluation commands.
-Synthetic boundary tests pass; actual source acquisition, availability gates, model results
-and the independent final review remain the final delivery step. Official ISCX files are
-still acquisition-pending. The [source audit](url-v2-source-audit.md) preserves the initial
-range feasibility evidence; it does not claim a complete import.
+Real acquisition is complete: 666,315 observations across 77 shards, 660,130 canonical
+URLs after audit and a 200,000-row frozen development set. Paths/non-www coverage passes,
+but only **6 benign query-bearing development URLs** remain against a minimum of 30.
+Training is blocked; no v2 fit, calibration, artifact, accuracy or comparison was produced.
+The [research card](../output/research/url-ml-v2/model-card.md), [aggregate status](../output/research/url-ml-v2/research-status.json)
+and [delivery record](url-v2-delivery-record.md) record measured counts, hashes, resources
+and review dispositions. The [source audit](url-v2-source-audit.md) retains both initial
+feasibility evidence and complete acquisition receipts. Official ISCX access and authenticated
+chronological validation remain unavailable.
+
+The next URL research step is a documented source of diverse, annotated legitimate URLs,
+including queries, followed by a **new** protocol/version and independent final set. Keep
+these assignments frozen: do not change seed/cap/minima, invent rows or reuse final rows
+to rescue coverage. This is a data-quality result, not a reason to deploy the v1 model.
 
 The first ML milestone is integrated and pushed to the private GitHub repository. The independent review findings were reproduced and fixed; the [delivery record](url-ml-delivery-record.md) documents all decisions and correction audits.
 

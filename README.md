@@ -19,9 +19,13 @@ The standard launcher keeps the learned model disabled. The [delivery record](do
 The approved [URL-v2 data/robustness plan](docs/superpowers/plans/2026-10-07-sentinel-url-v2-data.md)
 now has a pinned range importer, complete observation provenance, connected-component
 protocol, compatible bounded training, format control and frozen source-specific evaluation.
-See the [v2 reproduction guide](docs/url-v2-workflow.md). Real acquisition/evaluation and
-independent final review are the next delivery checks; official ISCX access remains pending.
-No learned warning is automatically enabled.
+The real importer acquired **666,315 observations** and audit retained **660,130 canonical
+URLs** using 43.7 MiB of received metadata/range payload, without downloading HTML. The frozen
+200,000-row development set has only **6 benign query-bearing URLs**, below the required 30,
+so **v2 training is blocked**. No v2 accuracy, artifact or improvement over v1 is claimed.
+See the [research card](output/research/url-ml-v2/model-card.md), [aggregate status](output/research/url-ml-v2/research-status.json),
+[delivery record](docs/url-v2-delivery-record.md) and [v2 reproduction guide](docs/url-v2-workflow.md).
+Official ISCX access and authenticated chronology remain unavailable. Learned warnings stay disabled.
 
 ## Run locally
 

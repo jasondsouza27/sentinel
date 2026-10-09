@@ -1,0 +1,355 @@
+{
+  "acquisition": {
+    "catalog_sha256": "03801cab6a2c91e0b8df2b3c0863e6351a24b0704765d0d1ce42d0e311142675",
+    "excluded_field_shard_counts": {
+      "html": 77,
+      "lang": 77,
+      "lang_score": 77,
+      "target": 77
+    },
+    "full_file_checksum_verified": false,
+    "html_requested": false,
+    "maximum_batch_rows": 4096,
+    "maximum_footer_bytes": 5257,
+    "maximum_selected_span_bytes": 355922,
+    "partition_rows": {
+      "test": 168060,
+      "train": 498255
+    },
+    "projected_columns": [
+      {
+        "name": "date",
+        "shard_count": 77,
+        "type": "date32[day]"
+      },
+      {
+        "name": "label",
+        "shard_count": 77,
+        "type": "large_string"
+      },
+      {
+        "name": "sha256",
+        "shard_count": 77,
+        "type": "large_string"
+      },
+      {
+        "name": "url",
+        "shard_count": 77,
+        "type": "large_string"
+      }
+    ],
+    "projection_sha256": "9a7569d8c5e3985551099480256fd842b90ed1f05778bde87fb390c2858b7219",
+    "response_bytes": 45871391,
+    "rows": 666315,
+    "schema": "sentinel-url-v2-acquisition-receipt-v1",
+    "shards": 77,
+    "source_revision": "eabec4b7a66324b79cc8a0ad856d1731dc26fe1a",
+    "transport_attempts": 567,
+    "transport_errors": {
+      "PermissionError": 1,
+      "RemoteDisconnected": 4,
+      "TimeoutError": 23
+    }
+  },
+  "audit": {
+    "class_counts": {
+      "0": 362228,
+      "1": 297902
+    },
+    "date_status_counts": {
+      "semantics_unverified": 660164,
+      "unchecked": 6151
+    },
+    "duplicate_observations": 34,
+    "excluded": {
+      "oversized_source_url": 18,
+      "url_ambiguous_ipv4": 2,
+      "url_authority": 1,
+      "url_host": 366,
+      "url_invalid_escape": 4,
+      "url_scheme": 5741,
+      "url_whitespace_or_control": 19
+    },
+    "format_counts": {
+      "https": 616870,
+      "ip_host": 796,
+      "non_root_path": 482066,
+      "punycode": 706,
+      "query_present": 34722,
+      "user_info": 265,
+      "www_host": 231531
+    },
+    "included_observations": 660164,
+    "included_rows": 660130,
+    "input_observations": 666315,
+    "limitations": [
+      "Source labels are historical annotations.",
+      "Unknown suffixes use full-host groups.",
+      "Date parsing does not authenticate collection semantics."
+    ]
+  },
+  "cap_skipped_component_count": 55512,
+  "cli_readiness_guard": null,
+  "frozen_protocol": {
+    "development": {
+      "benign_format_counts": {
+        "non_root_path": 63850,
+        "non_www_host": 34320,
+        "query_present": 6
+      },
+      "class_counts": {
+        "0": 75491,
+        "1": 124509
+      },
+      "component_groups_per_class": {
+        "0": 56375,
+        "1": 81847
+      },
+      "components": 138141,
+      "domain_groups_per_class": {
+        "0": 56375,
+        "1": 81847
+      },
+      "reasons": [
+        "benign_format_coverage_insufficient"
+      ],
+      "rows": 200000,
+      "status": "unavailable"
+    },
+    "development_eligible_rows": 280475,
+    "development_max_rows": 200000,
+    "exclusions": {
+      "development_cap": 80475,
+      "heldout_component_overlap": 213286
+    },
+    "fractions": {
+      "calibration": 0.1,
+      "train": 0.8,
+      "validation": 0.1
+    },
+    "limitations": [
+      "Release separation does not establish statistical independence.",
+      "Unknown campaigns or templates may still connect sources."
+    ],
+    "observed_development_fractions": {
+      "calibration": 0.1,
+      "train": 0.8,
+      "validation": 0.1
+    },
+    "pruned_observations": {
+      "primary_ownership_priority": 213290
+    },
+    "seed": 42,
+    "temporal": {
+      "reason": "missing_or_unauthenticated_collection_dates",
+      "status": "unavailable"
+    },
+    "tracks": {
+      "calibration": {
+        "benign_format_counts": {
+          "non_root_path": 6463,
+          "non_www_host": 3407,
+          "query_present": 1
+        },
+        "class_counts": {
+          "0": 7549,
+          "1": 12451
+        },
+        "component_groups_per_class": {
+          "0": 5640,
+          "1": 8187
+        },
+        "components": 13816,
+        "domain_groups_per_class": {
+          "0": 5640,
+          "1": 8187
+        },
+        "reasons": [],
+        "rows": 20000,
+        "status": "available"
+      },
+      "external": {
+        "benign_format_counts": {
+          "non_root_path": 0,
+          "non_www_host": 0,
+          "query_present": 0
+        },
+        "class_counts": {
+          "0": 0,
+          "1": 0
+        },
+        "component_groups_per_class": {
+          "0": 0,
+          "1": 0
+        },
+        "components": 0,
+        "domain_groups_per_class": {
+          "0": 0,
+          "1": 0
+        },
+        "reasons": [
+          "missing_class_or_support",
+          "source_access_pending"
+        ],
+        "rows": 0,
+        "status": "unavailable"
+      },
+      "primary": {
+        "benign_format_counts": {
+          "non_root_path": 81833,
+          "non_www_host": 39140,
+          "query_present": 52
+        },
+        "class_counts": {
+          "0": 89703,
+          "1": 76666
+        },
+        "component_groups_per_class": {
+          "0": 43286,
+          "1": 35037
+        },
+        "components": 78202,
+        "domain_groups_per_class": {
+          "0": 43286,
+          "1": 35037
+        },
+        "reasons": [],
+        "rows": 166369,
+        "status": "available"
+      },
+      "train": {
+        "benign_format_counts": {
+          "non_root_path": 50981,
+          "non_www_host": 27507,
+          "query_present": 5
+        },
+        "class_counts": {
+          "0": 60393,
+          "1": 99607
+        },
+        "component_groups_per_class": {
+          "0": 45096,
+          "1": 65473
+        },
+        "components": 110511,
+        "domain_groups_per_class": {
+          "0": 45096,
+          "1": 65473
+        },
+        "reasons": [],
+        "rows": 160000,
+        "status": "available"
+      },
+      "validation": {
+        "benign_format_counts": {
+          "non_root_path": 6406,
+          "non_www_host": 3406,
+          "query_present": 0
+        },
+        "class_counts": {
+          "0": 7549,
+          "1": 12451
+        },
+        "component_groups_per_class": {
+          "0": 5639,
+          "1": 8187
+        },
+        "components": 13814,
+        "domain_groups_per_class": {
+          "0": 5639,
+          "1": 8187
+        },
+        "reasons": [],
+        "rows": 20000,
+        "status": "available"
+      }
+    }
+  },
+  "hashes": {
+    "audit_manifest_sha256": "a8e9b1290d3aeff75945c48ca90ed66094871b485d5dd954dd894ec449319288",
+    "combined_source_catalog_sha256": "2b6846c853c9f82e9a77620db5440bbd5958e336631181f3dfe59130ef878859",
+    "config_sha256": "397b1fb88988ec8f4cbaa10da2366b0fe693cc42a1931ffa768238ffa4905401",
+    "parser_code_sha256": "ea9795ac035844b2b4d240391e3d0f59b86fc4e935d74c996cc160906841172a",
+    "protocol_manifest_sha256": "3953a7fcb9785d3cee720c5a115e451716a2c81df1389ce439ab7b69a8fcaa96",
+    "psl_sha256": "e0fe072d26b0536525badea237953ff451c9f8e64c9d02c6daa81a4491d2fc66"
+  },
+  "learned_application_warnings_enabled": false,
+  "limitations": [
+    "Only six benign query-bearing URLs remain in frozen development; the minimum is 30.",
+    "Primary test has sufficient data support but no measured model results.",
+    "Official ISCX files were not acquired; external validation is unavailable.",
+    "Date parsing does not authenticate collection dates; chronological validation is unavailable.",
+    "Partial-object range hashes do not verify whole source files.",
+    "Published source labels are historical annotations, not present-site verification.",
+    "No live reliability, v2 accuracy or v1-v2 improvement has been measured.",
+    "Sampled resource peaks can miss short spikes."
+  ],
+  "metrics": null,
+  "minimum_benign_format_counts": {
+    "benign_min_non_root_path": 100,
+    "benign_min_non_www_host": 100,
+    "benign_min_query": 30
+  },
+  "model_artifact": null,
+  "model_status": "not_trained",
+  "next_milestone": "Acquire task-aligned diverse legitimate URLs with documented source annotations, revise the protocol as a new version, and reserve an independent final set before fitting.",
+  "reason": "benign_format_coverage_insufficient",
+  "recorded_on": "2026-10-09",
+  "resources": {
+    "audit": {
+      "elapsed_seconds": 848.6554711000063,
+      "exit_code": 0,
+      "peak_process_tree_bytes": 88920064,
+      "sampling_seconds": 0.1,
+      "stage": "audit"
+    },
+    "freeze": {
+      "elapsed_seconds": 715.4667117999634,
+      "exit_code": 0,
+      "peak_process_tree_bytes": 2514509824,
+      "sampling_seconds": 0.1,
+      "stage": "freeze"
+    },
+    "projection": {
+      "elapsed_seconds": 1797.6977794000413,
+      "exit_code": 0,
+      "peak_process_tree_bytes": 68829184,
+      "sampling_seconds": 0.1,
+      "stage": "project"
+    },
+    "projection_pilot": {
+      "elapsed_seconds": 28.103344600007404,
+      "exit_code": 0,
+      "peak_process_tree_bytes": 55062528,
+      "sampling_seconds": 0.1,
+      "stage": "project-pilot"
+    }
+  },
+  "schema": "sentinel-url-v2-research-status-v1",
+  "source": {
+    "historical_labels": true,
+    "license": "CC-BY-4.0",
+    "repository": "phreshphish/phreshphish",
+    "revision": "eabec4b7a66324b79cc8a0ad856d1731dc26fe1a"
+  },
+  "stages_not_attempted": [
+    "model_fit_pilot",
+    "candidate_training",
+    "calibration_fit",
+    "artifact_export",
+    "final_scoring",
+    "v1_transfer_or_paired_comparison"
+  ],
+  "status": "training_blocked",
+  "verification": {
+    "default_stdlib_api": "passed",
+    "node_skips": 0,
+    "node_tests": 12,
+    "preserved_primary_files": 32,
+    "preserved_primary_files_unchanged": true,
+    "python_skips": 0,
+    "python_tests": 125,
+    "unchanged_shared_pins": 9,
+    "union_package_pins": 17
+  }
+}

@@ -1,6 +1,6 @@
 # Sentinel URL v2: multi-source data and robustness design
 
-Date: 2026-10-07. Status: approved by the user on 2026-10-07; implementation-plan review pending.
+Date: 2026-10-07. Status: approved by the user on 2026-10-07; implementation plan approved on 2026-10-07; software implemented; frozen real-data gate blocks training; final review/integration in progress.
 Parent: [approved year-long design](2026-10-05-sentinel-year-long-design.md).
 Existing reference: [URL-v1 model card](../../../output/research/url-ml-v1/model-card.md).
 Source evidence: [v2 source audit](../../url-v2-source-audit.md).

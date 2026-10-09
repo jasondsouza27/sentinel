@@ -4,8 +4,11 @@ The v2 code adds pinned metadata acquisition, a complete observation audit, froz
 connected components, two CPU model branches, a format-only control, and separate
 source/temporal robustness reporting. Learned warnings remain disabled in the normal app.
 Implementation checks use invented fixtures; their scores are never project findings.
-Actual acquisition and modelling status is recorded in the delivery report after the
-real-data experiment. Official ISCX access is still pending.
+The [delivery record](url-v2-delivery-record.md) and [research card](../output/research/url-ml-v2/model-card.md)
+record the complete acquisition and failed benign-query gate: 6 observed, 30 required.
+No v2 model was trained or scored. Official ISCX access is still pending. Existing frozen
+paths are immutable; reproduction needs a fresh root, and any data/protocol amendment
+needs a new version and independent final set.
 
 ## Runtimes and offline snapshot
 
@@ -132,7 +135,12 @@ source remains an unavailable binary holdout. It cannot be replaced by v1 or syn
 
 ## CPU pilot, immutable artifact, and frozen evaluation
 
-Hand the verified root to the unchanged ML environment; it does not need PyArrow.
+Hand a verified, **training-ready** root to the unchanged ML environment; it does not need
+PyArrow. The actual frozen v2 root is unavailable because benign-query coverage fails. Its
+`pilot` command returns 2 with `training_support_incomplete` before fitting. The commands
+below document the conditional workflow; train/evaluate were not executed on this corpus.
+The published v2 directory contains a negative research-status report, not `evaluation.json`;
+a future version must use a different exclusive output directory.
 
 ```powershell
 .venv-ml\Scripts\python.exe -m sentinel.url_v2.cli pilot --root data/url-ml-v2
