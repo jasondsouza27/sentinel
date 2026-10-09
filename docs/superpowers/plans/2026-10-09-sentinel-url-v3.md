@@ -165,11 +165,11 @@ Reuse `SourceCatalog`, `Observation`, `AuditBundle`, `ResearchRun` from v2 and `
 
 **Interfaces:** Produce `verify_frozen_splits(splits: V3Splits, config: dict, parser: UrlParser) -> dict`; `development_bundle(splits, config, parser) -> SplitBundle`; `study_guard(splits: V3Splits, *, stage: str) -> ContextManager[None]`; `assert_unscored(splits: V3Splits) -> None`; `begin_final_access(splits: V3Splits, artifact_sha256: str, settings_sha256: str) -> dict`; `finish_final_access(splits: V3Splits, *, status: str, report_sha256: str | None = None) -> None`.
 
-- [ ] Write failing tests for absent roots, extra `external`/shadow keys, changed labels/URLs, owners/components/assignments, parser/config/source/parent/anchor files and in-memory mutation. Assert learner/deserializer spies have `call_count == 0`. After a final access receipt, `assert_unscored` raises `final_protocol_already_accessed` even if report destination changes; differing artifact/settings cannot resume; concurrent study guards fail.
-- [ ] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_integrity.py' -v`; expect missing boundary.
-- [ ] Implement v3-specific verification using original source/audit/protocol loaders and full row identity; expose only train/validation/calibration through the development envelope. Store exclusive final-access receipts keyed by protocol hash under the private study root, outside immutable protocol files. Hold one stage lock around pilot/train/evaluate; scoring failure preserves access, while identical artifact/protocol/settings may resume.
-- [ ] Run integrity tests and existing `test_url_v2_compatibility.py`; expect pass.
-- [ ] Commit boundary/tests: `feat: verify v3 fitting inputs and preserve final access`.
+- [x] Write failing tests for absent roots, extra `external`/shadow keys, changed labels/URLs, owners/components/assignments, parser/config/source/parent/anchor files and in-memory mutation. Assert learner/deserializer spies have `call_count == 0`. After a final access receipt, `assert_unscored` raises `final_protocol_already_accessed` even if report destination changes; differing artifact/settings cannot resume; concurrent study guards fail.
+- [x] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_integrity.py' -v`; expect missing boundary.
+- [x] Implement v3-specific verification using original source/audit/protocol loaders and full row identity; expose only train/validation/calibration through the development envelope. Store exclusive final-access receipts keyed by protocol hash under the private study root, outside immutable protocol files. Hold one stage lock around pilot/train/evaluate; scoring failure preserves access, while identical artifact/protocol/settings may resume.
+- [x] Run integrity tests and existing `test_url_v2_compatibility.py`; expect pass.
+- [x] Commit boundary/tests: `feat: verify v3 fitting inputs and preserve final access`.
 
 ### Task 7: Process-tree bounded pilot and training
 
