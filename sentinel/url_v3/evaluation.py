@@ -235,6 +235,61 @@ def publish_evaluation(report,output_dir):
     _public(report); json.dumps(report,allow_nan=False)
     output=Path(output_dir); stage=new_directory(output)
     try:
-        write_json(stage/"evaluation.json",report); (stage/"model-card.md").write_text(render_card(report),encoding="utf-8")
+        write_json(stage/"evaluation.json",report)
+        from .contracts import STATUS_SCHEMA
+        completed={"schema":STATUS_SCHEMA,"stage":"evaluate","status":"complete","reason":None,
+                   "models_fitted":True,"metrics":report,"training_ready":True,
+                   "support":{"tracks":{n:t["support"] for n,t in report["tracks"].items()},
+                              "source_counts":report["source_counts"]},
+                   "identities":{k:v for k,v in report.items() if k.endswith("_sha256")},
+                   "limitations":report["limitations"]}
+        write_json(stage/"research-status.json",completed)
+        (stage/"model-card.md").write_text(render_card(report),encoding="utf-8")
         publish_directory(stage,output); return report
     finally: cleanup_pending(stage,output.parent)
+
+
+def publish_research_status(splits,config,output_dir,*,stage,status,reason=None,metrics=None):
+    """Publish measured support even when a frozen study cannot be fitted."""
+    from .contracts import STATUS_SCHEMA
+    stages=("bind-v2","acquire-mendeley","audit","freeze","pilot","train","evaluate")
+    if stage not in stages or status not in ("ready","unavailable","failed","complete"):
+        raise DatasetError("v3_research_status_invalid")
+    if metrics is not None and (stage!="evaluate" or status!="complete" or
+          metrics.get("schema")!=EVALUATION_SCHEMA or metrics.get("status")!="complete"):
+        raise DatasetError("v3_status_metrics_not_completed")
+    m=splits.manifest if splits is not None else None
+    if metrics is not None and (m is None or metrics.get("protocol_sha256")!=manifest_hash(m)):
+        raise DatasetError("v3_status_metrics_protocol_mismatch")
+    fitted=True if metrics is not None else False if stage in stages[:4] or reason=="v3_training_support_incomplete" else None
+    identities={"config_sha256":manifest_hash(config)}
+    support=None
+    if m is not None:
+        identities.update({k:m[k] for k in ("parent_v2_protocol_sha256","protected_domains_sha256","source_catalog_sha256",
+                                            "audit_manifest_sha256","parser_code_sha256","psl_sha256")})
+        identities["protocol_sha256"]=manifest_hash(m)
+        support={k:m[k] for k in ("tracks","development","source_development","source_partitions","protected_domain_groups",
+                                  "original_primary_cases","original_primary_removed","mandatory_development_rows",
+                                  "development_eligible_rows","pruned_observations","exclusions","observed_development_fractions","temporal")}
+        support["cap_skipped_components"]=len(m["cap_skipped_components"])
+    report={"schema":STATUS_SCHEMA,"stage":stage,"status":status,"reason":reason,"models_fitted":fitted,"metrics":metrics,
+            "training_ready":m["training_ready"] if m is not None else None,"support":support,"identities":identities,
+            "limitations":["Historical annotations do not verify current sites.",
+                           "Supplemental is group-held-out from a development source, not source-independent.",
+                           "Temporal validation is unavailable; no row dates were invented.",
+                           "Learned application warnings remain disabled.",
+                           "Unknown fitting completion is null rather than a claim that no partial fits occurred."]}
+    _public(report); json.dumps(report,allow_nan=False)
+    if metrics is not None: card=render_card(metrics)
+    else:
+        fit_text="No model was fitted." if fitted is False else "Fitting completion is unavailable; consult preserved private diagnostics."
+        card="\n".join(["# Sentinel URL v3 research status","",f"Stage: {stage}; status: {status}; reason: {reason}.",
+                        fit_text,"Accuracy, recall, F1, calibration and final latency are unavailable.",
+                        "Measured frozen support is in research-status.json. Failed gates do not authorize another seed, cap or final reservation.",
+                        "",*report["limitations"],"","Hannousse and Yahiouche, Web page phishing detection V3, CC BY 4.0.",
+                        "https://data.mendeley.com/datasets/c2gw7fy2j4/3",""])
+    output=Path(output_dir); pending=new_directory(output)
+    try:
+        write_json(pending/"research-status.json",report); (pending/"model-card.md").write_text(card,encoding="utf-8")
+        publish_directory(pending,output); return report
+    finally: cleanup_pending(pending,output.parent)

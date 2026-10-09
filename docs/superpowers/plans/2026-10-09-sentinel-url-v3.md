@@ -213,11 +213,11 @@ Reuse `SourceCatalog`, `Observation`, `AuditBundle`, `ResearchRun` from v2 and `
 
 **Interfaces:** Produce `main(argv: list[str] | None = None) -> int`, `publish_research_status(splits: V3Splits | None, config: dict, output_dir: Path, *, stage: str, status: str, reason: str | None = None, metrics: dict | None = None) -> dict` in `evaluation.py`. Use shared private `save_failure` and sanitized aggregate stdout.
 
-- [ ] Write failing CLI tests for `bind-v2`, `acquire-mendeley`, `audit`, `freeze`, `pilot`, `train`, `evaluate`, `predict`; `--root` required except predict, `--v2-root` required only bind, paths with spaces, foreign schema/wrong Python, staged failures and zero automatic startup work. Failed gates assert `metrics is None`, `models_fitted is False` and preserved diagnostic/nonzero pilot/train exit.
-- [ ] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_cli.py' -v`; expect missing CLI.
-- [ ] Implement common `--config`/`--psl` defaults; immutable `binding`, `sources/mendeley`, `audited`, `protocol` directories under root. `train --artifact` exports a candidate; `evaluate --artifact --output` scores without fitting; `predict --artifact --url` uses only trusted artifact. Freeze can record successful freezing with `training_ready: false`, while pilot/train refuse it. Publish truthful aggregate failure/unavailable status with no raw/private stdout values.
-- [ ] Run CLI/compatibility tests and full Python/Node suites; expect every installed-environment test passes with zero dependency skips. Verify both lock hashes and unchanged protected assets; inspect tracked diff for source/model data.
-- [ ] Commit CLI/workflow/status paths: `feat: expose explicit URL v3 research workflow`.
+- [x] Write failing CLI tests for `bind-v2`, `acquire-mendeley`, `audit`, `freeze`, `pilot`, `train`, `evaluate`, `predict`; `--root` required except predict, `--v2-root` required only bind, paths with spaces, foreign schema/wrong Python, staged failures and zero automatic startup work. Failed gates assert `metrics is None`, `models_fitted is False` and preserved diagnostic/nonzero pilot/train exit.
+- [x] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_cli.py' -v`; expect missing CLI.
+- [x] Implement common `--config`/`--psl` defaults; immutable `binding`, `sources/mendeley`, `audited`, `protocol` directories under root. `train --artifact` exports a candidate; `evaluate --artifact --output` scores without fitting; `predict --artifact --url` uses only trusted artifact. Freeze can record successful freezing with `training_ready: false`, while pilot/train refuse it. Publish truthful aggregate failure/unavailable status with no raw/private stdout values.
+- [x] Run CLI/compatibility tests and full Python/Node suites; expect every installed-environment test passes with zero dependency skips. Verify both lock hashes and unchanged protected assets; inspect tracked diff for source/model data.
+- [x] Commit CLI/workflow/status paths: `feat: expose explicit URL v3 research workflow`.
 
 ### Task 11: Real measured run, final independent review and delivery
 
