@@ -51,28 +51,32 @@ def _stage(catalog,observations,parser,path):
             elif len(obs.original_url)>2048: reason="oversized_source_url"
             elif obs.original_label is None or obs.original_label=="": reason="missing_source_label"
             elif not isinstance(obs.original_label,str) or obs.original_label not in source["label_map"]: reason="invalid_source_label"
-            elif obs.opaque_id is not None and (not isinstance(obs.opaque_id,str) or len(obs.opaque_id)>4096): reason="invalid_or_oversized_opaque_id"
             else:
                 label=source["label_map"][obs.original_label]
                 try: parsed=parser.normalize(obs.original_url)
                 except UnsupportedUrl as exc: reason=exc.reason
                 if not reason:
-                    try: interval,status=date_interval(obs.source_date,source["date_semantics"])
-                    except (ValueError,OverflowError): reason="malformed_source_date"
-            case_id=hashlib.sha256(parsed.model_url.encode("utf-8")).hexdigest() if parsed is not None and not reason else None
+                    if obs.opaque_id is not None and (not isinstance(obs.opaque_id,str) or len(obs.opaque_id)>4096): reason="invalid_or_oversized_opaque_id"
+                    else:
+                        try: interval,status=date_interval(obs.source_date,source["date_semantics"])
+                        except (ValueError,OverflowError): reason="malformed_source_date"
+            # Ancillary metadata cannot erase a recognized URL/label contradiction.
+            case_id=hashlib.sha256(parsed.model_url.encode("utf-8")).hexdigest() if parsed is not None else None
             value.update({"canonical_case_id":case_id,"reason":reason,"date_interval":interval,"date_status":status,
               "parser_flags":list(parsed.flags) if parsed is not None else []})
             try: db.execute("INSERT INTO observations VALUES (?,?,?,?,?,?,?)",(obs.observation_id,case_id,label,parsed.model_url if parsed else None,parsed.domain_group if parsed else None,reason,json.dumps(value,sort_keys=True,allow_nan=False)))
             except sqlite3.IntegrityError: raise DatasetError("duplicate_observation_identity") from None
             if ordinal%4096==0: db.commit()
-        conflicts=[x[0] for x in db.execute("SELECT case_id FROM observations WHERE reason IS NULL GROUP BY case_id HAVING MIN(label)<>MAX(label)")]
+        conflicts=[x[0] for x in db.execute("SELECT case_id FROM observations WHERE case_id IS NOT NULL GROUP BY case_id HAVING MIN(label)<>MAX(label)")]
         for case_id in conflicts: db.execute("UPDATE observations SET reason='conflicting_label' WHERE case_id=?",(case_id,))
         db.commit(); return db
     except BaseException: db.close(); raise
 
 def _provenance(db):
     for payload,reason in db.execute("SELECT payload,reason FROM observations ORDER BY id"):
-        value=json.loads(payload); value["reason"]=reason
+        value=json.loads(payload)
+        if value["reason"] and value["reason"]!=reason: value["original_exclusion_reason"]=value["reason"]
+        value["reason"]=reason
         if reason: value["canonical_case_id"]=None
         yield value
 

@@ -31,6 +31,22 @@ class AuditTests(unittest.TestCase):
         with self.assertRaises(DatasetError): load_dataset(audit.root,self.parser)
         (audit.root/"provenance.jsonl").write_text("")
         with self.assertRaises(DatasetError): load_audit(audit.root,self.catalog,self.parser)
+    def test_ancillary_failures_cannot_hide_cross_source_label_conflicts(self):
+        from sentinel.url_v2.audit import audit_sources,iter_records,iter_provenance,load_audit
+        cases=[({'source_date':'2024-99-99'},'malformed_source_date'),
+               ({'opaque_id':'x'*4097},'invalid_or_oversized_opaque_id')]
+        for i,(ancillary,reason) in enumerate(cases):
+            with self.subTest(reason=reason):
+                benign=self.observation(100+i*2,original_url='https://conflict.example/a',original_label='benign')
+                phish=self.observation(101+i*2,source_id='iscx-url2016',original_url='https://CONFLICT.example:443/a',original_label='phishing',**ancillary)
+                audit=audit_sources(self.catalog,[benign,phish],self.parser,self.root/f'ancillary-{i}')
+                self.assertEqual(list(iter_records(audit)),[],'A known contradictory label must exclude the complete canonical URL')
+                self.assertEqual(audit.manifest['excluded'],{'conflicting_label':2})
+                observations={o['observation_id']:o for o in iter_provenance(audit)}
+                self.assertEqual(observations[phish.observation_id]['original_exclusion_reason'],reason)
+                self.assertEqual(observations[phish.observation_id]['source_date'],phish.source_date)
+                self.assertEqual(load_audit(audit.root,self.catalog,self.parser),audit)
+
     def test_record_scan_keeps_exact_representatives_without_per_row_queries(self):
         from sentinel.url_v2.audit import _stage,_records
         observations=[self.observation(i+1,original_url=f"https://site{i}.example/article?q=1",original_label="benign" if i%2 else "phish") for i in range(60)]
