@@ -114,12 +114,12 @@ Reuse `SourceCatalog`, `Observation`, `AuditBundle`, `ResearchRun` from v2 and `
 
 **Interfaces:** Consume existing `load_catalog(root)`, `iter_phresh_observations(root, catalog)`, `load_audit(root, catalog, parser)` and `load_protocol(audit, catalog, root, config)`. Produce `bind_v2(v2_root: Path, output_dir: Path, config: dict, parser: UrlParser) -> V2Binding` and `load_v2_binding(root: Path, config: dict, parser: UrlParser) -> V2Binding`.
 
-- [ ] Write failing tests proving failed v2 support remains valid historical input, changed projection/audit/ownership bytes fail, and excluded primary-component members contribute anchors:
+- [x] Write failing tests proving failed v2 support remains valid historical input, changed projection/audit/ownership bytes fail, and excluded primary-component members contribute anchors:
   `assert binding.anchor_domains == tuple(sorted(expected_reserved_domains))`; `assert binding.primary_owners == expected_original_primary_owners`; `assert before_hashes == after_hashes`. A fabricated anchor list fails loading; a primary case whose sole row is later conflicted still has its domain reserved. Verify exactly one original primary track without treating an unavailable v2 training gate as corruption.
-- [ ] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_binding.py' -v`; expect missing binding implementation.
-- [ ] Implement loaders without `assert_training_ready`. Verify historical catalog/projection/audit/protocol semantics; reconstruct the original combined catalog with v2 merge behavior for historical verification, retaining the primary catalog for projection. Consume the complete original projection, and derive anchors from all original primary-reserved components, including overlap exclusions. Atomically write sorted anchors/primary owners and binding hashes; never write to the v2 input root.
-- [ ] Run the binding command and existing `test_url_v2_protocol.py`; expect all pass and unchanged fixture input hashes.
-- [ ] Commit `binding.py` and its fixtures/tests: `feat: bind URL v2 history and protected domains read only`.
+- [x] Run `& $sentinelPython -m unittest discover -s tests -p 'test_url_v3_binding.py' -v`; expect missing binding implementation.
+- [x] Implement loaders without `assert_training_ready`. Verify historical catalog/projection/audit/protocol semantics; reconstruct the original combined catalog with v2 merge behavior for historical verification, retaining the primary catalog for projection. Consume the complete original projection, and derive anchors from all original primary-reserved components, including overlap exclusions. Atomically write sorted anchors/primary owners and binding hashes; never write to the v2 input root.
+- [x] Run the binding command and existing `test_url_v2_protocol.py`; expect all pass and unchanged fixture input hashes.
+- [x] Commit `binding.py` and its fixtures/tests: `feat: bind URL v2 history and protected domains read only`.
 
 ### Task 3: Bounded official Mendeley transport
 
