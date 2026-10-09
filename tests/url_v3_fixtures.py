@@ -49,3 +49,23 @@ def synthetic_v2_root(root: Path):
 def hashes(root: Path):
     from sentinel.url_ml.source import sha256
     return {str(p.relative_to(root)):sha256(p) for p in root.rglob("*") if p.is_file()}
+
+def mendeley_fixture(root,config,body,*,metadata_change=None):
+    """Official metadata shape with explicitly synthetic bytes and pins."""
+    import copy,hashlib
+    from unittest.mock import patch
+    from sentinel.url_v3.mendeley import acquire_mendeley
+    from test_url_v3_transport import Response
+    cfg=copy.deepcopy(config); source=cfg["sources"]["mendeley"]
+    source["size"]=len(body); source["sha256"]=hashlib.sha256(body).hexdigest()
+    entry={"id":source["file_id"],"filename":source["filename"],"size":len(body),"status":"COMPLETED",
+           "content_details":{"size":len(body),"sha256_hash":source["sha256"],"download_url":source["download_url"]}}
+    page={"@type":"Dataset","name":"Web page phishing detection","version":"3","sameAs":source["landing_page"],
+          "url":"http://doi.org/"+source["doi"],"license":{"text":"CC BY 4.0","url":"http://creativecommons.org/licenses/by/4.0"},
+          "author":{"name":"Abdelhakim Hannousse"},"citation":{"text":"Hannousse, Abdelhakim; Yahiouche, Salima (2021)"}}
+    if metadata_change: metadata_change(entry,page)
+    html='<script type="application/ld+json">'+json.dumps(page)+'</script>'
+    responses=[Response(json.dumps([entry]).encode()),Response(html.encode()),Response(body)]
+    with patch("sentinel.url_v3.transport.open_response",side_effect=responses) as requests:
+        catalog=acquire_mendeley(root,cfg)
+    return catalog,cfg,requests.call_args_list
