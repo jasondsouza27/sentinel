@@ -1,6 +1,8 @@
 # Sentinel: current state and next steps
 
-Updated on 2026-10-11. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
+Updated on 2026-10-12. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
+
+The [paired-study software workflow](paired-study-workflow.md) is implemented. It covers evidence-ledger binding, blinded two-reviewer packets, a counts-only `audit`, group-isolated four-way lock, CPU branch/fusion models, a single-use final evaluation receipt and a research-only optional API card. The synthetic integration test verifies software behavior only. The real `data/curation/intake.csv` remains empty, so the current paired-study result is **unavailable**; no phishing-fusion performance or live learned warning is claimed.
 
 ## Current priority: paired message–link evidence and URL error analysis
 
@@ -39,12 +41,12 @@ The first approved [ML foundation plan](superpowers/plans/2026-10-05-sentinel-ml
 
 The benchmark achieved 97.07% positive F1, but **url-v1 is research-only**. All legitimate source rows are HTTPS www homepages with empty paths and queries; ordinary benign documentation URLs are falsely flagged. This measured source-format confounding persists despite domain isolation. The URL-v3 study above tests broader formats, but its supplemental false-positive rate and missing independent/temporal validation still prevent activation. Do not tune or whitelist against the staged smoke cases or the final test.
 
-The [approved year-long design](superpowers/specs/2026-10-05-sentinel-year-long-design.md) still defines the balanced research/application scope. The main paired-message question, contextual harm/profile ML, team investigation workflows, dashboard redesign and user pilot remain future milestones. The human collection and browser work below can continue independently.
+The [approved year-long design](superpowers/specs/2026-10-05-sentinel-year-long-design.md) still defines the balanced research/application scope. The software for the main paired-message question is ready; its **real-data answer** remains a future milestone. Contextual harm/profile ML, team investigation workflows, dashboard redesign and the user pilot also remain. Human collection and browser work below can continue independently.
 
 ## Ready now
 
 - The local app, shared API, Chrome extension, research baselines and collection workflow are implemented.
-- The locked CPython 3.11 suite passed 190 Python checks with zero skips; the Node web suite passed 12/12 with zero skips. The Python suite includes the stdlib-only server contract. The [web-app browser test record](web-app-smoke-test-2026-10-05.md) covers analysis, recovery, saving, reopening, feedback and layout. Chrome toolbar/context-menu checks, a confirmed report download and UI deletion remain pending.
+- The locked CPython 3.11 suite passed **234 Python checks with zero skips** in 314.030 seconds; the Node web/extension suites passed **14/14 with zero skips**. The synthetic paired model worker smoke recorded a 144,351,232-byte peak and 58.268-second fit for 12 invented pairs and seven candidates; these are engineering measurements, not a phishing result. The [web-app browser test record](web-app-smoke-test-2026-10-05.md) covers analysis, recovery, saving, reopening, feedback and layout. Chrome toolbar/context-menu checks, a confirmed report download and UI deletion remain pending.
 - `data/curation/ncsu_candidates.csv` contains 100 unreviewed phishing candidates.
 - `data/curation/legitimate_sms_candidates.csv` contains 18 unreviewed potential legitimate SMS candidates from UCI and NUS.
 - Source and candidate hashes are recorded in the local audit files. Raw sources and candidate sheets stay local and ignored by Git.

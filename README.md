@@ -30,6 +30,8 @@ Official ISCX access and authenticated chronology remain unavailable. Learned wa
 
 The completed [URL-v3 study](docs/url-v3-workflow.md) adds a pinned Mendeley URL-label source to the preserved PhreshPhish data, audits 671,521 canonical URLs and trains a CPU candidate on a frozen 200,000-row development set. The selected character TF-IDF model reached **0.927 F1 / 5.76% false-positive rate** on 166,369 primary URLs and **0.839 F1 / 22.39% false-positive rate** on 4,348 supplemental URLs. Legitimate query URLs were falsely flagged 13/52 and 27/44 respectively; a synthetic `example.com` check also flagged incorrectly. This is a useful research result, **not a deployable warning model**. The supplemental track is group-held-out from a development source, not independent-source or temporal validation. See the [aggregate evaluation](output/research/url-ml-v3/evaluation.json), [model card](output/research/url-ml-v3/model-card.md) and [delivery record](docs/url-v3-delivery-record.md). Learned live warnings remain disabled.
 
+The [paired message–link study workflow](docs/paired-study-workflow.md) now provides an evidence-bound two-reviewer packet, counts-only readiness audit, sealed four-way group split, CPU message/URL/fusion training, paired held-out evaluation and an optional research-only API card. **The real paired phishing study remains unavailable:** the intake has no admitted cases. Synthetic software tests are not research findings, and no learned paired warning is active.
+
 ## Run locally
 
 Requires Python 3.10 or newer. No Python packages or cloud account are needed for the prototype.
@@ -49,7 +51,7 @@ python -m unittest discover -s tests -v
 For the web client's asynchronous analysis and saving checks, developers can also use Node.js 22 or newer. No npm packages are required; Node is not needed to run Sentinel:
 
 ```powershell
-node --test tests/web_client.test.mjs
+node --test tests/web_client.test.mjs tests/extension_popup.test.mjs
 ```
 
 The [web-app browser test record](docs/web-app-smoke-test-2026-10-05.md) documents the checked workflows, fixes and remaining browser checks.
@@ -106,9 +108,10 @@ The next [local review batch](data/curation/legitimate_sms_candidates.csv) adds 
 - `sentinel/analysis.py` — assessment rules and explanations.
 - `sentinel/research.py` — paired-data baseline training and evaluation.
 - `sentinel/curation.py` — local collection, independent review, adjudication, and locked test split.
+- `sentinel/paired/` — evidence-gated four-way paired study, CPU fusion models and guarded optional service.
 - `sentinel/storage.py` and `sentinel/server.py` — local cases and shared API.
 - `web/` and `extension/` — user interfaces.
 - `tests/` — automated checks.
 - `docs/` — implementation and research guidance.
 
-The proposed twelve-month schedule is in the year-long design. The original implementation plan and presentation describe Phase 0. Contextual harm/profile ML, the paired phishing study, team investigation workflows, dashboard expansion and the user pilot remain to be carried out; no real-world performance or user-study result is claimed here.
+The proposed twelve-month schedule is in the year-long design. The original implementation plan and presentation describe Phase 0. The paired-study **software path** is implemented; permissioned human collection, a real held-out experiment, release review, contextual harm/profile ML, team investigation workflows, dashboard expansion and the user pilot remain. No paired phishing performance or user-study result is claimed here.
