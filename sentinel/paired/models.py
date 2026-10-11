@@ -20,6 +20,38 @@ class BranchCandidate:
     fit_record: dict
 
 
+class LateFusionUnavailable(ValueError):
+    """Group-held-out fusion cannot be fit without leakage."""
+
+
+class LateFusionModel:
+    def __init__(self, parser, message_model, url_model, classifier):
+        self.parser = parser
+        self.message_model = message_model
+        self.url_model = url_model
+        self.classifier = classifier
+
+    @property
+    def classes_(self):
+        return self.classifier.classes_
+
+    def predict_proba(self, rows):
+        import numpy as np
+        from threadpoolctl import threadpool_limits
+
+        message = _positive_scores(self.message_model, rows)
+        url = _positive_scores(self.url_model, rows)
+        with threadpool_limits(limits=MAX_NATIVE_THREADS):
+            return self.classifier.predict_proba(np.column_stack((message, url)))
+
+
+def _positive_scores(model, rows):
+    classes = list(model.classes_)
+    if "1" not in classes:
+        raise ValueError("branch lacks phishing class")
+    return model.predict_proba(rows)[:, classes.index("1")]
+
+
 class BranchModel:
     def __init__(self, kind, parser, config):
         from sklearn.ensemble import HistGradientBoostingClassifier
@@ -201,7 +233,89 @@ def fit_branch_candidates(train: list[dict], parser, config: dict) -> dict[str, 
         config_id = f"{kind}-" + "-".join(f"{key}{value}" for key, value in sorted(params.items()))
         key = "combined" if kind == "early" else kind
         output[key].append(BranchCandidate(kind, config_id, model, record))
+    try:
+        output["combined"].append(fit_late_fusion(train, parser, config))
+    except LateFusionUnavailable:
+        for candidate in output["combined"]:
+            candidate.fit_record["late_fusion_status"] = "late_fusion_unavailable"
     return {key: tuple(value) for key, value in output.items()}
+
+
+def fit_late_fusion(train: list[dict], parser, config: dict, *, folds: int = 5) -> BranchCandidate:
+    import numpy as np
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.model_selection import StratifiedGroupKFold
+    from threadpoolctl import threadpool_limits
+    from .protocol import connected_groups
+
+    if folds != 5:
+        raise LateFusionUnavailable("late_fusion_unavailable: fixed protocol uses five folds")
+    groups = connected_groups(train, parser)
+    if len(set(groups.values())) < folds:
+        raise LateFusionUnavailable("late_fusion_unavailable: too few connected groups")
+    labels = [row["label"] for row in train]
+    if any(labels.count(label) < folds for label in ("0", "1")):
+        raise LateFusionUnavailable("late_fusion_unavailable: class-sparse fold")
+    splitter = StratifiedGroupKFold(n_splits=folds, shuffle=True, random_state=42)
+    try:
+        splits = [(list(inside), list(outside)) for inside, outside in
+                  splitter.split(np.zeros(len(train)), labels, [groups[row["case_id"]] for row in train])]
+    except ValueError as error:
+        raise LateFusionUnavailable("late_fusion_unavailable: fold allocation failed") from error
+    for inside, outside in splits:
+        if {labels[i] for i in inside} != {"0", "1"} or {labels[i] for i in outside} != {"0", "1"}:
+            raise LateFusionUnavailable("late_fusion_unavailable: class-sparse fold")
+    oof = np.full((len(train), 2), np.nan, dtype=float)
+    fold_records = []
+    all_fit_records = []
+    for fold_id, (inside, outside) in enumerate(splits):
+        training = [train[i] for i in inside]
+        heldout = [train[i] for i in outside]
+        trained_groups = {groups[row["case_id"]] for row in training}
+        heldout_groups = {groups[row["case_id"]] for row in heldout}
+        if trained_groups & heldout_groups:
+            raise LateFusionUnavailable("late_fusion_unavailable: connected group crossed fold")
+        fitted = []
+        for kind, params in (("message", {"C": 1.0}), ("url", {"max_depth": 3})):
+            model, record = _fit_monitored(training, kind, params, parser,
+                                            max_peak_bytes=config.get("max_peak_bytes", MAX_PEAK_BYTES))
+            if model is None or record["status"] != "ok":
+                raise LateFusionUnavailable("late_fusion_unavailable: fold branch fit failed")
+            fitted.append(model)
+            all_fit_records.append(record)
+        for column, model in enumerate(fitted):
+            oof[outside, column] = _positive_scores(model, heldout)
+        fold_records.append({
+            "fold": fold_id, "train_groups": len(trained_groups), "holdout_groups": len(heldout_groups),
+            "train_classes": dict(__import__("collections").Counter(labels[i] for i in inside)),
+            "holdout_classes": dict(__import__("collections").Counter(labels[i] for i in outside)),
+            "train_ids_sha256": hashlib.sha256("\0".join(sorted(train[i]["case_id"] for i in inside)).encode()).hexdigest(),
+            "holdout_ids_sha256": hashlib.sha256("\0".join(sorted(train[i]["case_id"] for i in outside)).encode()).hexdigest(),
+        })
+    if not np.all(np.isfinite(oof)):
+        raise LateFusionUnavailable("late_fusion_unavailable: incomplete held-out scores")
+    with threadpool_limits(limits=MAX_NATIVE_THREADS):
+        classifier = LogisticRegression(C=1.0, solver="liblinear", max_iter=1000, random_state=42)
+        classifier.fit(oof, labels)
+    final_models = []
+    final_records = []
+    for kind, params in (("message", {"C": 1.0}), ("url", {"max_depth": 3})):
+        model, record = _fit_monitored(train, kind, params, parser,
+                                        max_peak_bytes=config.get("max_peak_bytes", MAX_PEAK_BYTES))
+        if model is None or record["status"] != "ok":
+            raise LateFusionUnavailable("late_fusion_unavailable: final branch fit failed")
+        final_models.append(model)
+        final_records.append(record)
+        all_fit_records.append(record)
+    fit_record = {
+        "status": "ok", "folds": fold_records, "out_of_fold_rows": len(train),
+        "train_rows": len(train), "train_groups": len(set(groups.values())),
+        "train_ids_sha256": hashlib.sha256("\0".join(sorted(groups)).encode()).hexdigest(),
+        "peak_bytes": max(record.get("peak_bytes", 0) for record in all_fit_records),
+        "native_threads": MAX_NATIVE_THREADS,
+    }
+    return BranchCandidate("late", "late-logistic-oof5",
+                           LateFusionModel(parser, final_models[0], final_models[1], classifier), fit_record)
 
 
 def score_candidate(candidate: BranchCandidate, rows: list[dict]) -> list[float]:
