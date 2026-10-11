@@ -1,6 +1,6 @@
 # Sentinel: paired message–link evidence and fusion study
 
-Date: 2026-10-11. Status: **proposed for user review**. This refines subproject B of the [approved year-long design](2026-10-05-sentinel-year-long-design.md). It does not report a trained phishing model or a completed paired experiment.
+Date: 2026-10-11. Status: **approved by the user on 2026-10-12**. This refines subproject B of the [approved year-long design](2026-10-05-sentinel-year-long-design.md). It does not report a trained phishing model or a completed paired experiment.
 
 ## Purpose and current evidence
 
