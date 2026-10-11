@@ -85,7 +85,7 @@ def _profile_assessment(profile):
     return result
 
 
-def analyze(payload, known_phishing=None, model=None, url_model=None):
+def analyze(payload, known_phishing=None, model=None, url_model=None, paired_model=None):
     """Assess submitted data without fetching URLs or scraping profiles."""
     if not isinstance(payload, dict):
         raise ValueError("Request must be a JSON object")
@@ -154,4 +154,11 @@ def analyze(payload, known_phishing=None, model=None, url_model=None):
     result = {"fraud": fraud, "harmful_content": harmful, "profile": _profile_assessment(profile)}
     if url_model is not None:
         result["url_assessment"] = url_model.assess(supplied_url).to_dict()
+    if paired_model is not None:
+        try:
+            result["paired_assessment"] = paired_model.assess(message, url)
+        except Exception:
+            from .paired.service import unavailable
+            result["paired_assessment"] = unavailable(
+                "inference_unavailable", "The paired model could not assess this input.")
     return result

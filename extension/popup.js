@@ -19,15 +19,21 @@ async function request(path, body) {
   return value;
 }
 
-function draw(name, item, profile = false) {
+function draw(name, item, profile = false, paired = false) {
   const div = document.createElement('div');
   div.className = 'finding';
-  line(div, 'strong', `${name}: ${(profile ? item.status : item.level).replaceAll('_', ' ')}`);
+  const category = paired ? (item.state === 'available' ? item.category : item.state)
+    : profile ? item.status : item.level;
+  line(div, 'strong', `${name}: ${category.replaceAll('_', ' ')}`);
   if (item.evidence?.length) {
     const list = document.createElement('ul');
     item.evidence.forEach((fact) => line(list, 'li', fact));
     div.append(list);
   }
+  if (paired && item.unavailable_checks?.length) {
+    item.unavailable_checks.forEach((check) => line(div, 'p', `Could not check: ${check}`));
+  }
+  if (paired && item.uncertainty) line(div, 'p', item.uncertainty);
   line(div, 'p', item.action);
   return div;
 }
@@ -50,11 +56,13 @@ $('check').onclick = async () => {
   $('save-status').textContent = '';
   try {
     const result = await request('/api/analyze', submitted);
-    $('findings').replaceChildren(
+    const cards = [
       draw('Message & link', result.fraud),
       draw('Harmful content', result.harmful_content),
       draw('Profile', result.profile, true),
-    );
+    ];
+    if (result.paired_assessment) cards.push(draw('Paired message–link model', result.paired_assessment, false, true));
+    $('findings').replaceChildren(...cards);
     $('result').hidden = false;
   } catch (error) {
     $('result').hidden = true;
