@@ -30,6 +30,7 @@ data/curation/
 .venv-ml/
 data/url-ml/
 models/url-ml/
+models/paired/
 
 .venv-url-data/
 .venv-url-v2-check/
