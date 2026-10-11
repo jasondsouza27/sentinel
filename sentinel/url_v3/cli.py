@@ -66,6 +66,9 @@ def _prepare(args,config):
     return UrlParser(psl)
 
 def _load(root,config,parser,*,protocol=True):
+    if protocol:
+        from .compat import load_verified_study
+        return load_verified_study(root,config,parser)
     from .binding import load_v2_binding
     from .mendeley import load_mendeley
     from .sources import joint_catalog

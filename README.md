@@ -12,8 +12,7 @@ The first actual URL-only benchmark is complete: **97.07% F1**, **99.80% recall*
 research-only:** all legitimate source URLs are www HTTPS homepages with empty paths;
 staged benign documentation links are falsely flagged. These scores do not establish
 live reliability. Read the [final model card](output/research/url-ml-v1/model-card.md)
-and [aggregate results](output/research/url-ml-v1/evaluation.json). Broad legitimate
-URL formats and independent source/temporal validation are the next data-quality gate.
+and [aggregate results](output/research/url-ml-v1/evaluation.json). Broader URL formats are now tested in URL-v3 below; independent source and temporal validation remain unmet.
 The standard launcher keeps the learned model disabled. The [delivery record](docs/url-ml-delivery-record.md) documents the independent review, its three corrected findings, 78 passing Python tests and 12 web-client checks.
 
 The approved [URL-v2 data/robustness plan](docs/superpowers/plans/2026-10-07-sentinel-url-v2-data.md)
@@ -28,6 +27,8 @@ so **v2 training is blocked**. No v2 accuracy, artifact or improvement over v1 i
 See the [research card](output/research/url-ml-v2/model-card.md), [aggregate status](output/research/url-ml-v2/research-status.json),
 [delivery record](docs/url-v2-delivery-record.md) and [v2 reproduction guide](docs/url-v2-workflow.md).
 Official ISCX access and authenticated chronology remain unavailable. Learned warnings stay disabled.
+
+The completed [URL-v3 study](docs/url-v3-workflow.md) adds a pinned Mendeley URL-label source to the preserved PhreshPhish data, audits 671,521 canonical URLs and trains a CPU candidate on a frozen 200,000-row development set. The selected character TF-IDF model reached **0.927 F1 / 5.76% false-positive rate** on 166,369 primary URLs and **0.839 F1 / 22.39% false-positive rate** on 4,348 supplemental URLs. Legitimate query URLs were falsely flagged 13/52 and 27/44 respectively; a synthetic `example.com` check also flagged incorrectly. This is a useful research result, **not a deployable warning model**. The supplemental track is group-held-out from a development source, not independent-source or temporal validation. See the [aggregate evaluation](output/research/url-ml-v3/evaluation.json), [model card](output/research/url-ml-v3/model-card.md) and [delivery record](docs/url-v3-delivery-record.md). Learned live warnings remain disabled.
 
 ## Run locally
 

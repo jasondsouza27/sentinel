@@ -82,4 +82,16 @@ class IntegrityTests(unittest.TestCase):
             with self.assertRaises(DatasetError):
                 with study_guard(self.splits,stage="evaluate"): pass
 
+    def test_cli_study_loader_primes_only_completed_semantic_verification(self):
+        from sentinel.url_v3.compat import load_verified_study,development_bundle
+        from sentinel.url_v3.binding import load_v2_binding as real_binding
+        with patch("sentinel.url_v3.compat.load_v2_binding",wraps=real_binding) as binding:
+            loaded=load_verified_study(self.root,self.cfg,self.parser)
+            self.assertEqual(binding.call_count,1)
+            with patch("sentinel.url_v3.compat.load_v2_binding",side_effect=AssertionError("duplicate semantic replay")):
+                self.assertTrue(development_bundle(loaded,self.cfg,self.parser).partitions["train"])
+        source=self.root/"sources/mendeley/observations.jsonl"
+        with source.open("a",encoding="utf-8") as f: f.write("corruption")
+        with self.assertRaises(DatasetError): development_bundle(loaded,self.cfg,self.parser)
+
 if __name__=="__main__": unittest.main()

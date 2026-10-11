@@ -2,3 +2,6 @@
 *.cmd text eol=crlf
 *.pptx binary
 *.jpg binary
+
+# Preserve the byte-exact sealed URL-v3 report and recorded SHA-256.
+output/research/url-ml-v3/* -text !eol

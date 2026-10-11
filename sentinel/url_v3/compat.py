@@ -71,3 +71,24 @@ def development_bundle(splits,config,parser):
     manifest=splits.development.manifest
     validate_provenance(manifest["provenance"],stage="development")
     return SplitBundle(dict(splits.development.partitions),copy.deepcopy(manifest))
+
+def load_verified_study(root,config,parser):
+    """Reconstruct the complete study once, then cache only its verified snapshot."""
+    study=Path(root).resolve()
+    probe=V3Splits(SplitBundle({name:() for name in DEVELOPMENT_NAMES},{}),
+                   {name:() for name in FINAL_NAMES},{},{},{},
+                   study/"protocol",study/"audited",study)
+    try:
+        _,before=_physical(probe,config,parser)
+        binding=load_v2_binding(study/"binding",config,parser)
+        source=load_mendeley(study/"sources/mendeley",config)
+        catalog=joint_catalog(binding,source)
+        audit=load_audit(study/"audited",catalog,parser)
+        splits=load_protocol(audit,catalog,binding,study/"protocol",config,study_root=study)
+        _,after=_physical(splits,config,parser)
+        if before!=after: raise DatasetError("v3_files_changed_during_verification")
+        _VERIFIED.clear(); _VERIFIED[after]=copy.deepcopy(splits)
+        return splits
+    except DatasetError: raise
+    except (OSError,KeyError,TypeError,ValueError,AttributeError):
+        raise DatasetError("v3_frozen_input_invalid") from None

@@ -1,0 +1,5201 @@
+{
+  "artifact_manifest_sha256": "1ccaa15e08e6baae002d6cbe9505e4161ef44f2539a590feed8a2e7e9d124896",
+  "bootstrap": {
+    "replicates": 1000,
+    "seed": 42,
+    "unit": "domain_connected_component"
+  },
+  "config_sha256": "a3981c45cb03b34137ae1c61473b0b46214fbbd45f0e666f68075b20fe591676",
+  "evaluation_settings_sha256": "d3d981f237cdb1f6744e7b9e4cecece912aaf1cdadde90b770104a64f49cdaf5",
+  "fit_resources": [
+    {
+      "branch": "char_tfidf",
+      "conservative_tree_peak_bytes": 1276002304,
+      "fit_seconds": 74.59703880001325,
+      "max_peak_bytes": 8589934592,
+      "monitored_process_count": 2,
+      "native_threads": 4,
+      "observed_rss_peak_bytes": 1271136256,
+      "observed_tree_rss_peak_bytes": 1271136256,
+      "params": {
+        "C": 0.1,
+        "class_weight": null,
+        "max_features": 50000
+      },
+      "parent_wall_seconds": 78.74825710000005,
+      "peak_bytes": 1276002304,
+      "status": "ok",
+      "train_rows": 160000,
+      "worker_peak_bytes": 1273729024
+    },
+    {
+      "branch": "char_tfidf",
+      "conservative_tree_peak_bytes": 1276379136,
+      "fit_seconds": 71.65844819997437,
+      "max_peak_bytes": 8589934592,
+      "monitored_process_count": 2,
+      "native_threads": 4,
+      "observed_rss_peak_bytes": 1269157888,
+      "observed_tree_rss_peak_bytes": 1269157888,
+      "params": {
+        "C": 0.1,
+        "class_weight": "balanced",
+        "max_features": 50000
+      },
+      "parent_wall_seconds": 76.43294710002374,
+      "peak_bytes": 1276379136,
+      "status": "ok",
+      "train_rows": 160000,
+      "worker_peak_bytes": 1273876480
+    },
+    {
+      "branch": "char_tfidf",
+      "conservative_tree_peak_bytes": 1274388480,
+      "fit_seconds": 79.70274880004581,
+      "max_peak_bytes": 8589934592,
+      "monitored_process_count": 1,
+      "native_threads": 4,
+      "observed_rss_peak_bytes": 1269944320,
+      "observed_tree_rss_peak_bytes": 1269944320,
+      "params": {
+        "C": 1,
+        "class_weight": null,
+        "max_features": 50000
+      },
+      "parent_wall_seconds": 83.94071829994209,
+      "peak_bytes": 1274388480,
+      "status": "ok",
+      "train_rows": 160000,
+      "worker_peak_bytes": 1274388480
+    },
+    {
+      "branch": "char_tfidf",
+      "conservative_tree_peak_bytes": 1274396672,
+      "fit_seconds": 79.94454990001395,
+      "max_peak_bytes": 8589934592,
+      "monitored_process_count": 2,
+      "native_threads": 4,
+      "observed_rss_peak_bytes": 1270034432,
+      "observed_tree_rss_peak_bytes": 1270034432,
+      "params": {
+        "C": 1,
+        "class_weight": "balanced",
+        "max_features": 50000
+      },
+      "parent_wall_seconds": 84.4666564000072,
+      "peak_bytes": 1274396672,
+      "status": "ok",
+      "train_rows": 160000,
+      "worker_peak_bytes": 1272131584
+    },
+    {
+      "branch": "char_tfidf",
+      "conservative_tree_peak_bytes": 1274335232,
+      "fit_seconds": 86.13907879998442,
+      "max_peak_bytes": 8589934592,
+      "monitored_process_count": 2,
+      "native_threads": 4,
+      "observed_rss_peak_bytes": 1266712576,
+      "observed_tree_rss_peak_bytes": 1266712576,
+      "params": {
+        "C": 10,
+        "class_weight": null,
+        "max_features": 50000
+      },
+      "parent_wall_seconds": 90.35111020004842,
+      "peak_bytes": 1274335232,
+      "status": "ok",
+      "train_rows": 160000,
+      "worker_peak_bytes": 1272066048
+    },
+    {
+      "branch": "char_tfidf",
+      "conservative_tree_peak_bytes": 1272741888,
+      "fit_seconds": 93.0345128000481,
+      "max_peak_bytes": 8589934592,
+      "monitored_process_count": 1,
+      "native_threads": 4,
+      "observed_rss_peak_bytes": 1264128000,
+      "observed_tree_rss_peak_bytes": 1264128000,
+      "params": {
+        "C": 10,
+        "class_weight": "balanced",
+        "max_features": 50000
+      },
+      "parent_wall_seconds": 97.90000019990839,
+      "peak_bytes": 1272741888,
+      "status": "ok",
+      "train_rows": 160000,
+      "worker_peak_bytes": 1272741888
+    },
+    {
+      "branch": "lexical_hgb",
+      "conservative_tree_peak_bytes": 409350144,
+      "fit_seconds": 34.4964635000797,
+      "max_peak_bytes": 8589934592,
+      "monitored_process_count": 1,
+      "native_threads": 4,
+      "observed_rss_peak_bytes": 409083904,
+      "observed_tree_rss_peak_bytes": 409083904,
+      "params": {
+        "learning_rate": 0.05,
+        "max_depth": 3,
+        "max_iter": 200
+      },
+      "parent_wall_seconds": 38.234156700083986,
+      "peak_bytes": 409350144,
+      "status": "ok",
+      "train_rows": 160000,
+      "worker_peak_bytes": 409350144
+    },
+    {
+      "branch": "lexical_hgb",
+      "conservative_tree_peak_bytes": 410423296,
+      "fit_seconds": 33.50703609990887,
+      "max_peak_bytes": 8589934592,
+      "monitored_process_count": 1,
+      "native_threads": 4,
+      "observed_rss_peak_bytes": 409726976,
+      "observed_tree_rss_peak_bytes": 409726976,
+      "params": {
+        "learning_rate": 0.1,
+        "max_depth": 3,
+        "max_iter": 200
+      },
+      "parent_wall_seconds": 37.54288019996602,
+      "peak_bytes": 410423296,
+      "status": "ok",
+      "train_rows": 160000,
+      "worker_peak_bytes": 410423296
+    },
+    {
+      "branch": "lexical_hgb",
+      "conservative_tree_peak_bytes": 412639232,
+      "fit_seconds": 34.61868269997649,
+      "max_peak_bytes": 8589934592,
+      "monitored_process_count": 2,
+      "native_threads": 4,
+      "observed_rss_peak_bytes": 409337856,
+      "observed_tree_rss_peak_bytes": 409337856,
+      "params": {
+        "learning_rate": 0.05,
+        "max_depth": 5,
+        "max_iter": 200
+      },
+      "parent_wall_seconds": 38.11192930000834,
+      "peak_bytes": 412639232,
+      "status": "ok",
+      "train_rows": 160000,
+      "worker_peak_bytes": 410370048
+    },
+    {
+      "branch": "lexical_hgb",
+      "conservative_tree_peak_bytes": 409964544,
+      "fit_seconds": 34.633692000061274,
+      "max_peak_bytes": 8589934592,
+      "monitored_process_count": 1,
+      "native_threads": 4,
+      "observed_rss_peak_bytes": 408236032,
+      "observed_tree_rss_peak_bytes": 408236032,
+      "params": {
+        "learning_rate": 0.1,
+        "max_depth": 5,
+        "max_iter": 200
+      },
+      "parent_wall_seconds": 38.29804379993584,
+      "peak_bytes": 409964544,
+      "status": "ok",
+      "train_rows": 160000,
+      "worker_peak_bytes": 409964544
+    },
+    {
+      "branch": "format_only",
+      "conservative_tree_peak_bytes": 356261888,
+      "fit_seconds": 116.566105099977,
+      "max_peak_bytes": 8589934592,
+      "monitored_process_count": 2,
+      "native_threads": 4,
+      "observed_rss_peak_bytes": 348299264,
+      "observed_tree_rss_peak_bytes": 348299264,
+      "params": {},
+      "parent_wall_seconds": 120.49831199995242,
+      "peak_bytes": 356261888,
+      "status": "ok",
+      "train_rows": 160000,
+      "worker_peak_bytes": 348299264
+    }
+  ],
+  "latency": {
+    "cold_load_and_first_seconds": 3.290374599979259,
+    "scope": "single URL, local CPU, deterministic case order",
+    "warm_count": 100,
+    "warm_median_seconds": 0.013131649990100414,
+    "warm_p95_seconds": 0.01624589491984807,
+    "warm_unique_urls": 100
+  },
+  "limitations": [
+    "Historical URL annotations do not verify present-day sites.",
+    "Supplemental is group-held-out from a source also used in development; it is not source-independent.",
+    "Collection-month documentation is not a row date; temporal validation is unavailable.",
+    "Unknown campaigns and popular-domain sampling restrict generalization.",
+    "Small subgroups and constant bootstrap intervals do not establish certainty.",
+    "Prevalence scenarios assume stable rates; they are not deployment estimates.",
+    "URL-only results do not establish message-link fusion benefit.",
+    "Research candidate only; learned live warnings remain disabled."
+  ],
+  "parent_v2_protocol_sha256": "3953a7fcb9785d3cee720c5a115e451716a2c81df1389ce439ab7b69a8fcaa96",
+  "protected_domains_sha256": "35b06db1c7452008b6c70fb37b6e873060bd7cae3940ec47511fe8e41370d1fd",
+  "protocol_sha256": "3d87c3dd6263837c32744717fd4957579fb1d5eb8c2341dc126acfca0de99e13",
+  "schema": "url-final-evaluation-v3",
+  "selected_branch": "char_tfidf",
+  "source_catalog_sha256": "799bacf9745b1305746ebfd611cea360732d96bbb4e29e2e22e9f132180fc354",
+  "source_counts": {
+    "full_observations": {
+      "mendeley-webpage-2020": 11430,
+      "phreshphish": 666315
+    },
+    "pruned_accepted_observations": {
+      "mendeley-webpage-2020": 2373,
+      "phreshphish": 298465
+    },
+    "source_partition_support": {
+      "calibration": {
+        "mendeley-webpage-2020": {
+          "benign_format_counts": {
+            "non_root_path": 88,
+            "non_www_host": 46,
+            "query_present": 2
+          },
+          "class_counts": {
+            "0": 168,
+            "1": 554
+          },
+          "component_groups_per_class": {
+            "0": 154,
+            "1": 147
+          },
+          "components": 301,
+          "domain_groups_per_class": {
+            "0": 154,
+            "1": 147
+          },
+          "reasons": [],
+          "rows": 722,
+          "status": "available"
+        },
+        "phreshphish": {
+          "benign_format_counts": {
+            "non_root_path": 6245,
+            "non_www_host": 3457,
+            "query_present": 1
+          },
+          "class_counts": {
+            "0": 7370,
+            "1": 11908
+          },
+          "component_groups_per_class": {
+            "0": 5503,
+            "1": 7984
+          },
+          "components": 13475,
+          "domain_groups_per_class": {
+            "0": 5503,
+            "1": 7984
+          },
+          "reasons": [],
+          "rows": 19278,
+          "status": "available"
+        }
+      },
+      "primary": {
+        "mendeley-webpage-2020": {
+          "benign_format_counts": {
+            "non_root_path": 0,
+            "non_www_host": 0,
+            "query_present": 0
+          },
+          "class_counts": {
+            "0": 0,
+            "1": 0
+          },
+          "component_groups_per_class": {
+            "0": 0,
+            "1": 0
+          },
+          "components": 0,
+          "domain_groups_per_class": {
+            "0": 0,
+            "1": 0
+          },
+          "reasons": [
+            "missing_class_or_support"
+          ],
+          "rows": 0,
+          "status": "unavailable"
+        },
+        "phreshphish": {
+          "benign_format_counts": {
+            "non_root_path": 81833,
+            "non_www_host": 39140,
+            "query_present": 52
+          },
+          "class_counts": {
+            "0": 89703,
+            "1": 76666
+          },
+          "component_groups_per_class": {
+            "0": 43286,
+            "1": 35037
+          },
+          "components": 78202,
+          "domain_groups_per_class": {
+            "0": 43286,
+            "1": 35037
+          },
+          "reasons": [],
+          "rows": 166369,
+          "status": "available"
+        }
+      },
+      "supplemental": {
+        "mendeley-webpage-2020": {
+          "benign_format_counts": {
+            "non_root_path": 907,
+            "non_www_host": 529,
+            "query_present": 44
+          },
+          "class_counts": {
+            "0": 1903,
+            "1": 2445
+          },
+          "component_groups_per_class": {
+            "0": 1705,
+            "1": 1562
+          },
+          "components": 3265,
+          "domain_groups_per_class": {
+            "0": 1705,
+            "1": 1562
+          },
+          "reasons": [],
+          "rows": 4348,
+          "status": "available"
+        },
+        "phreshphish": {
+          "benign_format_counts": {
+            "non_root_path": 0,
+            "non_www_host": 0,
+            "query_present": 0
+          },
+          "class_counts": {
+            "0": 0,
+            "1": 0
+          },
+          "component_groups_per_class": {
+            "0": 0,
+            "1": 0
+          },
+          "components": 0,
+          "domain_groups_per_class": {
+            "0": 0,
+            "1": 0
+          },
+          "reasons": [
+            "missing_class_or_support"
+          ],
+          "rows": 0,
+          "status": "unavailable"
+        }
+      },
+      "train": {
+        "mendeley-webpage-2020": {
+          "benign_format_counts": {
+            "non_root_path": 779,
+            "non_www_host": 471,
+            "query_present": 41
+          },
+          "class_counts": {
+            "0": 1644,
+            "1": 1918
+          },
+          "component_groups_per_class": {
+            "0": 1469,
+            "1": 1236
+          },
+          "components": 2703,
+          "domain_groups_per_class": {
+            "0": 1469,
+            "1": 1236
+          },
+          "reasons": [],
+          "rows": 3562,
+          "status": "available"
+        },
+        "phreshphish": {
+          "benign_format_counts": {
+            "non_root_path": 49648,
+            "non_www_host": 26428,
+            "query_present": 2
+          },
+          "class_counts": {
+            "0": 58660,
+            "1": 97781
+          },
+          "component_groups_per_class": {
+            "0": 43771,
+            "1": 63772
+          },
+          "components": 107488,
+          "domain_groups_per_class": {
+            "0": 43771,
+            "1": 63772
+          },
+          "reasons": [],
+          "rows": 156441,
+          "status": "available"
+        }
+      },
+      "validation": {
+        "mendeley-webpage-2020": {
+          "benign_format_counts": {
+            "non_root_path": 97,
+            "non_www_host": 63,
+            "query_present": 5
+          },
+          "class_counts": {
+            "0": 180,
+            "1": 233
+          },
+          "component_groups_per_class": {
+            "0": 159,
+            "1": 154
+          },
+          "components": 312,
+          "domain_groups_per_class": {
+            "0": 159,
+            "1": 154
+          },
+          "reasons": [],
+          "rows": 413,
+          "status": "available"
+        },
+        "phreshphish": {
+          "benign_format_counts": {
+            "non_root_path": 6186,
+            "non_www_host": 3405,
+            "query_present": 3
+          },
+          "class_counts": {
+            "0": 7358,
+            "1": 12229
+          },
+          "component_groups_per_class": {
+            "0": 5500,
+            "1": 7976
+          },
+          "components": 13463,
+          "domain_groups_per_class": {
+            "0": 5500,
+            "1": 7976
+          },
+          "reasons": [],
+          "rows": 19587,
+          "status": "available"
+        }
+      }
+    }
+  },
+  "status": "complete",
+  "tracks": {
+    "primary": {
+      "components": 78202,
+      "domain_groups": 78202,
+      "error_categories": {
+        "false_negative": 5954,
+        "false_negative_https": 5563,
+        "false_negative_non_root_path": 3625,
+        "false_negative_query_present": 705,
+        "false_negative_www_host": 2490,
+        "false_positive": 5168,
+        "false_positive_https": 5026,
+        "false_positive_non_root_path": 4068,
+        "false_positive_query_present": 13,
+        "false_positive_www_host": 1134
+      },
+      "metrics": {
+        "char_tfidf": {
+          "0.01": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 43286,
+                "1": 35037
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 1000,
+                "coverage": 1000,
+                "ece": 1000,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": 0.051228514818420966,
+            "calibration_status": "available",
+            "confusion": {
+              "fn": 17850.0,
+              "fp": 1532.0,
+              "tn": 88171.0,
+              "tp": 58816.0
+            },
+            "coverage": 1.0,
+            "ece": 0.009168469508478883,
+            "f1": 0.8585400032113507,
+            "fpr": 0.017078581541308542,
+            "intervals": {
+              "brier": [
+                0.042055849130535984,
+                0.0659652925258636
+              ],
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": [
+                0.004887203513084379,
+                0.024897321247102602
+              ],
+              "f1": [
+                0.8463720607781786,
+                0.869192669175368
+              ],
+              "fpr": [
+                0.006453904190875287,
+                0.03525271785328821
+              ],
+              "macro_f1": [
+                0.8690529007824108,
+                0.8889620457063542
+              ],
+              "pr_auc": [
+                0.9679215011356622,
+                0.9853460279523155
+              ],
+              "precision": [
+                0.9470470794299732,
+                0.9904028756404202
+              ],
+              "recall": [
+                0.7557876213128961,
+                0.778829472037399
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 14,
+              "false_positive_rate": 0.1346153846153846,
+              "false_positives": 7,
+              "interval": [
+                0.015873015873015872,
+                0.37935139573070603
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 52,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.8797564008208968,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.9784144978578275,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.9746139060117982,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.04303022490355557
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.31211840453772294
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.7027539879060258
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.8330864169403256
+              }
+            ],
+            "raw_threshold": 0.8400370326946794,
+            "recall": 0.7671718884512039,
+            "reliability_bins": [
+              {
+                "count": 73753.0,
+                "lower": 0.0,
+                "mean_probability": 0.015673165008271053,
+                "observed_fraction": 0.020690683768795844,
+                "upper": 0.1
+              },
+              {
+                "count": 6446.0,
+                "lower": 0.1,
+                "mean_probability": 0.14402511104548052,
+                "observed_fraction": 0.14474092460440582,
+                "upper": 0.2
+              },
+              {
+                "count": 3579.0,
+                "lower": 0.2,
+                "mean_probability": 0.24611534453464473,
+                "observed_fraction": 0.22184967868119587,
+                "upper": 0.3
+              },
+              {
+                "count": 2868.0,
+                "lower": 0.3,
+                "mean_probability": 0.34908938111778803,
+                "observed_fraction": 0.3288005578800558,
+                "upper": 0.4
+              },
+              {
+                "count": 2615.0,
+                "lower": 0.4,
+                "mean_probability": 0.44968736465734244,
+                "observed_fraction": 0.4347992351816444,
+                "upper": 0.5
+              },
+              {
+                "count": 2603.0,
+                "lower": 0.5,
+                "mean_probability": 0.5510797460884783,
+                "observed_fraction": 0.530157510564733,
+                "upper": 0.6
+              },
+              {
+                "count": 2914.0,
+                "lower": 0.6,
+                "mean_probability": 0.6508526130889991,
+                "observed_fraction": 0.667124227865477,
+                "upper": 0.7
+              },
+              {
+                "count": 3731.0,
+                "lower": 0.7,
+                "mean_probability": 0.7530669914758553,
+                "observed_fraction": 0.7732511391047976,
+                "upper": 0.8
+              },
+              {
+                "count": 6404.0,
+                "lower": 0.8,
+                "mean_probability": 0.8561218710875818,
+                "observed_fraction": 0.8391630231105559,
+                "upper": 0.9
+              },
+              {
+                "count": 61456.0,
+                "lower": 0.9,
+                "mean_probability": 0.9833201429448812,
+                "observed_fraction": 0.9722403020046863,
+                "upper": 1.0
+              }
+            ]
+          },
+          "0.05": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 43286,
+                "1": 35037
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 1000,
+                "coverage": 1000,
+                "ece": 1000,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": 0.051228514818420966,
+            "calibration_status": "available",
+            "confusion": {
+              "fn": 5954.0,
+              "fp": 5168.0,
+              "tn": 84535.0,
+              "tp": 70712.0
+            },
+            "coverage": 1.0,
+            "ece": 0.009168469508478883,
+            "f1": 0.9270908447288031,
+            "fpr": 0.05761234295397032,
+            "intervals": {
+              "brier": [
+                0.042055849130535984,
+                0.0659652925258636
+              ],
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": [
+                0.004887203513084379,
+                0.024897321247102602
+              ],
+              "f1": [
+                0.9082750305909589,
+                0.939635817376285
+              ],
+              "fpr": [
+                0.03753261499489806,
+                0.0891015309769575
+              ],
+              "macro_f1": [
+                0.9151331720221536,
+                0.9441920314530726
+              ],
+              "pr_auc": [
+                0.9679215011356622,
+                0.9853460279523155
+              ],
+              "precision": [
+                0.8963287461044471,
+                0.9550871816420641
+              ],
+              "recall": [
+                0.914770558622216,
+                0.9289649330445529
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 14,
+              "false_positive_rate": 0.25,
+              "false_positives": 13,
+              "interval": [
+                0.08100717905405407,
+                0.5862576064908721
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 52,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.9326838968804734,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.9784144978578275,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.9318924617817607,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.015772651910339462
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.1392007193500032
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.4572884556548365
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.6401351622231293
+              }
+            ],
+            "raw_threshold": 0.38372611874561074,
+            "recall": 0.922338455117001,
+            "reliability_bins": [
+              {
+                "count": 73753.0,
+                "lower": 0.0,
+                "mean_probability": 0.015673165008271053,
+                "observed_fraction": 0.020690683768795844,
+                "upper": 0.1
+              },
+              {
+                "count": 6446.0,
+                "lower": 0.1,
+                "mean_probability": 0.14402511104548052,
+                "observed_fraction": 0.14474092460440582,
+                "upper": 0.2
+              },
+              {
+                "count": 3579.0,
+                "lower": 0.2,
+                "mean_probability": 0.24611534453464473,
+                "observed_fraction": 0.22184967868119587,
+                "upper": 0.3
+              },
+              {
+                "count": 2868.0,
+                "lower": 0.3,
+                "mean_probability": 0.34908938111778803,
+                "observed_fraction": 0.3288005578800558,
+                "upper": 0.4
+              },
+              {
+                "count": 2615.0,
+                "lower": 0.4,
+                "mean_probability": 0.44968736465734244,
+                "observed_fraction": 0.4347992351816444,
+                "upper": 0.5
+              },
+              {
+                "count": 2603.0,
+                "lower": 0.5,
+                "mean_probability": 0.5510797460884783,
+                "observed_fraction": 0.530157510564733,
+                "upper": 0.6
+              },
+              {
+                "count": 2914.0,
+                "lower": 0.6,
+                "mean_probability": 0.6508526130889991,
+                "observed_fraction": 0.667124227865477,
+                "upper": 0.7
+              },
+              {
+                "count": 3731.0,
+                "lower": 0.7,
+                "mean_probability": 0.7530669914758553,
+                "observed_fraction": 0.7732511391047976,
+                "upper": 0.8
+              },
+              {
+                "count": 6404.0,
+                "lower": 0.8,
+                "mean_probability": 0.8561218710875818,
+                "observed_fraction": 0.8391630231105559,
+                "upper": 0.9
+              },
+              {
+                "count": 61456.0,
+                "lower": 0.9,
+                "mean_probability": 0.9833201429448812,
+                "observed_fraction": 0.9722403020046863,
+                "upper": 1.0
+              }
+            ]
+          }
+        },
+        "format_only": {
+          "0.01": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 43286,
+                "1": 35037
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 54792.0,
+              "fp": 103.0,
+              "tn": 89600.0,
+              "tp": 21874.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.4434982715448638,
+            "fpr": 0.0011482336153751825,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.41560392554909514,
+                0.4690556878692105
+              ],
+              "fpr": [
+                0.0008052582444999563,
+                0.001570158851605028
+              ],
+              "macro_f1": [
+                0.5883933119623155,
+                0.6194018060532231
+              ],
+              "pr_auc": [
+                0.818678799506656,
+                0.8625924756385077
+              ],
+              "precision": [
+                0.9935556284294561,
+                0.9967462144903665
+              ],
+              "recall": [
+                0.2627052160068582,
+                0.30688698404316916
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 14,
+              "false_positive_rate": 0.38461538461538464,
+              "false_positives": 20,
+              "interval": [
+                0.05263157894736842,
+                0.7343979779411764
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 52,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.6044997284805205,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.842252725766395,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.9953132820676162,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.19918691983464376
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.7150932553508399
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.9289672150478806
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.9650461167751255
+              }
+            ],
+            "raw_threshold": 0.961241130698125,
+            "recall": 0.2853155244828216,
+            "reliability_bins": []
+          },
+          "0.05": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 43286,
+                "1": 35037
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 51944.0,
+              "fp": 281.0,
+              "tn": 89422.0,
+              "tp": 24722.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.4863232647119574,
+            "fpr": 0.0031325596691303523,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.46257743971022264,
+                0.5089436007879573
+              ],
+              "fpr": [
+                0.0025461107857362685,
+                0.003782038538027929
+              ],
+              "macro_f1": [
+                0.615110021325529,
+                0.6440924092914104
+              ],
+              "pr_auc": [
+                0.818678799506656,
+                0.8625924756385077
+              ],
+              "precision": [
+                0.9861962946140946,
+                0.9908772942967575
+              ],
+              "recall": [
+                0.3020964393790736,
+                0.34238221136746533
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 14,
+              "false_positive_rate": 0.38461538461538464,
+              "false_positives": 20,
+              "interval": [
+                0.05263157894736842,
+                0.7343979779411764
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 52,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.6301542622630627,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.842252725766395,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.9887613486381635,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.09341653425994495
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.5097538083901821
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.8441848416160423
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.9195993227325432
+              }
+            ],
+            "raw_threshold": 0.9308488498416724,
+            "recall": 0.3224636735971617,
+            "reliability_bins": []
+          }
+        },
+        "lexical_hgb": {
+          "0.01": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 43286,
+                "1": 35037
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 21040.0,
+              "fp": 523.0,
+              "tn": 89180.0,
+              "tp": 55626.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.8376463501863495,
+            "fpr": 0.005830351270303112,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.823909018839458,
+                0.8502868504380657
+              ],
+              "fpr": [
+                0.00490133038703466,
+                0.00678641704825979
+              ],
+              "macro_f1": [
+                0.8543282858156539,
+                0.8740631965094335
+              ],
+              "pr_auc": [
+                0.954550900542459,
+                0.9659861208722191
+              ],
+              "precision": [
+                0.9892116814688727,
+                0.9920883378310048
+              ],
+              "recall": [
+                0.7056220445273073,
+                0.7443030983296068
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 14,
+              "false_positive_rate": 0.75,
+              "false_positives": 39,
+              "interval": [
+                0.4996794871794872,
+                0.8979678312002767
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 52,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.8648949127121581,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.9607029138127515,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.990685497515539,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.11077153494099888
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.5569395702093968
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.867545807105841
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.9325568971816723
+              }
+            ],
+            "raw_threshold": 0.932841621522474,
+            "recall": 0.7255628309811389,
+            "reliability_bins": []
+          },
+          "0.05": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 43286,
+                "1": 35037
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 14922.0,
+              "fp": 2711.0,
+              "tn": 86992.0,
+              "tp": 61744.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.8750504885878077,
+            "fpr": 0.03022195467264194,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.8645234415606118,
+                0.884940776156252
+              ],
+              "fpr": [
+                0.026540962633326226,
+                0.03359477623644571
+              ],
+              "macro_f1": [
+                0.8825421307759248,
+                0.8998456655041194
+              ],
+              "pr_auc": [
+                0.954550900542459,
+                0.9659861208722191
+              ],
+              "precision": [
+                0.9535790138814679,
+                0.9615970819281845
+              ],
+              "recall": [
+                0.7891158452038548,
+                0.8204796365377012
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 14,
+              "false_positive_rate": 0.9230769230769231,
+              "false_positives": 48,
+              "interval": [
+                0.7142857142857143,
+                1.0
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 52,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.891514190994875,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.9607029138127515,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.9579396478163059,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.02598190225916662
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.21208639553158504
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.5837741468133414
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.7475334984960365
+              }
+            ],
+            "raw_threshold": 0.7970387299930636,
+            "recall": 0.8053635249002166,
+            "reliability_bins": []
+          }
+        },
+        "phase0_rules": {
+          "0.01": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 43286,
+                "1": 35037
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 71182.0,
+              "fp": 993.0,
+              "tn": 88710.0,
+              "tp": 5484.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.13191729911116992,
+            "fpr": 0.011069863884151031,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.11234728837623532,
+                0.15628715280948502
+              ],
+              "fpr": [
+                0.007992786007504154,
+                0.01535733441756788
+              ],
+              "macro_f1": [
+                0.40424815897804833,
+                0.4398553728853402
+              ],
+              "pr_auc": [
+                0.45771325804856827,
+                0.5174855707088062
+              ],
+              "precision": [
+                0.7916447724587478,
+                0.8859559688779974
+              ],
+              "recall": [
+                0.060223637301108475,
+                0.08574809112528788
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 14,
+              "false_positive_rate": 0.019230769230769232,
+              "false_positives": 1,
+              "interval": [
+                0.0,
+                0.08004081632653058
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 52,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.42137442310874107,
+            "operating_point_source": "fixed descriptive rules",
+            "pr_auc": 0.48842065864276707,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.8466882816118574,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.0064266817273140354
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.061271322101461315
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.2537835979947539
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.4179196489082217
+              }
+            ],
+            "raw_threshold": 0.5,
+            "recall": 0.07153105679179819,
+            "reliability_bins": []
+          },
+          "0.05": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 43286,
+                "1": 35037
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 71182.0,
+              "fp": 993.0,
+              "tn": 88710.0,
+              "tp": 5484.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.13191729911116992,
+            "fpr": 0.011069863884151031,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.11234728837623532,
+                0.15628715280948502
+              ],
+              "fpr": [
+                0.007992786007504154,
+                0.01535733441756788
+              ],
+              "macro_f1": [
+                0.40424815897804833,
+                0.4398553728853402
+              ],
+              "pr_auc": [
+                0.45771325804856827,
+                0.5174855707088062
+              ],
+              "precision": [
+                0.7916447724587478,
+                0.8859559688779974
+              ],
+              "recall": [
+                0.060223637301108475,
+                0.08574809112528788
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 14,
+              "false_positive_rate": 0.019230769230769232,
+              "false_positives": 1,
+              "interval": [
+                0.0,
+                0.08004081632653058
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 52,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.42137442310874107,
+            "operating_point_source": "fixed descriptive rules",
+            "pr_auc": 0.48842065864276707,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.8466882816118574,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.0064266817273140354
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.061271322101461315
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.2537835979947539
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.4179196489082217
+              }
+            ],
+            "raw_threshold": 0.5,
+            "recall": 0.07153105679179819,
+            "reliability_bins": []
+          }
+        }
+      },
+      "rows": 166369,
+      "status": "available",
+      "subgroups": {
+        "class": {
+          "0": {
+            "class_support": {
+              "0": {
+                "components": 43286,
+                "rows": 89703
+              },
+              "1": {
+                "components": 0,
+                "rows": 0
+              }
+            },
+            "exploratory": true,
+            "metrics": {
+              "brier": 0.04909634181399986,
+              "confusion": {
+                "fn": 0.0,
+                "fp": 5168.0,
+                "tn": 84535.0,
+                "tp": 0.0
+              },
+              "coverage": 1.0,
+              "ece": 0.09280912638104785,
+              "f1": null,
+              "fpr": 0.05761234295397032,
+              "macro_f1": null,
+              "pr_auc": null,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.0,
+              "recall": null,
+              "reliability_bins": [
+                {
+                  "count": 72227.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.015150130069172917,
+                  "observed_fraction": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "count": 5513.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.143174037300779,
+                  "observed_fraction": 0.0,
+                  "upper": 0.2
+                },
+                {
+                  "count": 2785.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.24482633156146263,
+                  "observed_fraction": 0.0,
+                  "upper": 0.3
+                },
+                {
+                  "count": 1925.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.34772013586692097,
+                  "observed_fraction": 0.0,
+                  "upper": 0.4
+                },
+                {
+                  "count": 1478.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.447015140201601,
+                  "observed_fraction": 0.0,
+                  "upper": 0.5
+                },
+                {
+                  "count": 1223.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5495977837862055,
+                  "observed_fraction": 0.0,
+                  "upper": 0.6
+                },
+                {
+                  "count": 970.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6484973656183955,
+                  "observed_fraction": 0.0,
+                  "upper": 0.7
+                },
+                {
+                  "count": 846.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7491576377768651,
+                  "observed_fraction": 0.0,
+                  "upper": 0.8
+                },
+                {
+                  "count": 1030.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8542917216456256,
+                  "observed_fraction": 0.0,
+                  "upper": 0.9
+                },
+                {
+                  "count": 1706.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9465948478187167,
+                  "observed_fraction": 0.0,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 89703
+          },
+          "1": {
+            "class_support": {
+              "0": {
+                "components": 0,
+                "rows": 0
+              },
+              "1": {
+                "components": 35037,
+                "rows": 76666
+              }
+            },
+            "exploratory": true,
+            "metrics": {
+              "brier": 0.05372326235990725,
+              "confusion": {
+                "fn": 5954.0,
+                "fp": 0.0,
+                "tn": 0.0,
+                "tp": 70712.0
+              },
+              "coverage": 1.0,
+              "ece": 0.1016708245026364,
+              "f1": 0.9596004831114548,
+              "fpr": null,
+              "macro_f1": null,
+              "pr_auc": null,
+              "pr_auc_kind": "average_precision",
+              "precision": 1.0,
+              "recall": 0.922338455117001,
+              "reliability_bins": [
+                {
+                  "count": 1526.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.040428895379333314,
+                  "observed_fraction": 1.0,
+                  "upper": 0.1
+                },
+                {
+                  "count": 933.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.1490540173204424,
+                  "observed_fraction": 1.0,
+                  "upper": 0.2
+                },
+                {
+                  "count": 794.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2506366305929724,
+                  "observed_fraction": 1.0,
+                  "upper": 0.3
+                },
+                {
+                  "count": 943.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.3518845000021136,
+                  "observed_fraction": 1.0,
+                  "upper": 0.4
+                },
+                {
+                  "count": 1137.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.45316102142566783,
+                  "observed_fraction": 1.0,
+                  "upper": 0.5
+                },
+                {
+                  "count": 1380.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5523931083317244,
+                  "observed_fraction": 1.0,
+                  "upper": 0.6
+                },
+                {
+                  "count": 1944.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6520278137301952,
+                  "observed_fraction": 1.0,
+                  "upper": 0.7
+                },
+                {
+                  "count": 2885.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7542133738777081,
+                  "observed_fraction": 1.0,
+                  "upper": 0.8
+                },
+                {
+                  "count": 5374.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8564726440546854,
+                  "observed_fraction": 1.0,
+                  "upper": 0.9
+                },
+                {
+                  "count": 59750.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9843687346350108,
+                  "observed_fraction": 1.0,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 76666
+          }
+        },
+        "format": {
+          "https_false": {
+            "class_support": {
+              "0": {
+                "components": 476,
+                "rows": 532
+              },
+              "1": {
+                "components": 6309,
+                "rows": 11484
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.029935944930634197,
+              "confusion": {
+                "fn": 391.0,
+                "fp": 142.0,
+                "tn": 390.0,
+                "tp": 11093.0
+              },
+              "coverage": 1.0,
+              "ece": 0.03866992244216222,
+              "f1": 0.9765394603635723,
+              "fpr": 0.2669172932330827,
+              "macro_f1": 0.7852994331520832,
+              "pr_auc": 0.9975606783623847,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.9873609256786827,
+              "recall": 0.9659526297457331,
+              "reliability_bins": [
+                {
+                  "count": 275.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.030456454133328394,
+                  "observed_fraction": 0.13818181818181818,
+                  "upper": 0.1
+                },
+                {
+                  "count": 105.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.1533600585356761,
+                  "observed_fraction": 0.44761904761904764,
+                  "upper": 0.2
+                },
+                {
+                  "count": 83.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.24664751885270395,
+                  "observed_fraction": 0.6265060240963856,
+                  "upper": 0.3
+                },
+                {
+                  "count": 106.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.3520016051970976,
+                  "observed_fraction": 0.7169811320754716,
+                  "upper": 0.4
+                },
+                {
+                  "count": 128.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.4521371305514657,
+                  "observed_fraction": 0.796875,
+                  "upper": 0.5
+                },
+                {
+                  "count": 166.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.549790297219572,
+                  "observed_fraction": 0.8674698795180723,
+                  "upper": 0.6
+                },
+                {
+                  "count": 212.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6535294931063773,
+                  "observed_fraction": 0.8773584905660378,
+                  "upper": 0.7
+                },
+                {
+                  "count": 321.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7541754870602484,
+                  "observed_fraction": 0.9345794392523364,
+                  "upper": 0.8
+                },
+                {
+                  "count": 647.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8576772308139259,
+                  "observed_fraction": 0.9598145285935085,
+                  "upper": 0.9
+                },
+                {
+                  "count": 9973.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9879058931530996,
+                  "observed_fraction": 0.9944851097964504,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 12016
+          },
+          "https_true": {
+            "class_support": {
+              "0": {
+                "components": 42899,
+                "rows": 89171
+              },
+              "1": {
+                "components": 30769,
+                "rows": 65182
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.05288608881939047,
+              "confusion": {
+                "fn": 5563.0,
+                "fp": 5026.0,
+                "tn": 84145.0,
+                "tp": 59619.0
+              },
+              "coverage": 1.0,
+              "ece": 0.011084198978109784,
+              "f1": 0.9184376131313209,
+              "fpr": 0.05636361597380314,
+              "macro_f1": 0.9296205865398329,
+              "pr_auc": 0.9734876134210713,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.9222523010286952,
+              "recall": 0.9146543524285846,
+              "reliability_bins": [
+                {
+                  "count": 73478.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.01561783682147513,
+                  "observed_fraction": 0.020250959470862025,
+                  "upper": 0.1
+                },
+                {
+                  "count": 6341.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.14387053456125556,
+                  "observed_fraction": 0.13972559533196657,
+                  "upper": 0.2
+                },
+                {
+                  "count": 3496.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.24610270996130407,
+                  "observed_fraction": 0.2122425629290618,
+                  "upper": 0.3
+                },
+                {
+                  "count": 2762.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.34897761582003023,
+                  "observed_fraction": 0.3139029688631427,
+                  "upper": 0.4
+                },
+                {
+                  "count": 2487.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.44956128100858983,
+                  "observed_fraction": 0.4161640530759952,
+                  "upper": 0.5
+                },
+                {
+                  "count": 2437.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5511675788797127,
+                  "observed_fraction": 0.5071809601969635,
+                  "upper": 0.6
+                },
+                {
+                  "count": 2702.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6506425840128761,
+                  "observed_fraction": 0.6506291635825314,
+                  "upper": 0.7
+                },
+                {
+                  "count": 3410.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7529626433577934,
+                  "observed_fraction": 0.7580645161290323,
+                  "upper": 0.8
+                },
+                {
+                  "count": 5757.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8559470721049616,
+                  "observed_fraction": 0.8256036129928782,
+                  "upper": 0.9
+                },
+                {
+                  "count": 51483.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9824318169571463,
+                  "observed_fraction": 0.9679311617427112,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 154353
+          },
+          "non_root_path_false": {
+            "class_support": {
+              "0": {
+                "components": 7685,
+                "rows": 7870
+              },
+              "1": {
+                "components": 25126,
+                "rows": 47828
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.04383813335218086,
+              "confusion": {
+                "fn": 2329.0,
+                "fp": 1100.0,
+                "tn": 6770.0,
+                "tp": 45499.0
+              },
+              "coverage": 1.0,
+              "ece": 0.037558818597067146,
+              "f1": 0.963686233810245,
+              "fpr": 0.1397712833545108,
+              "macro_f1": 0.8808059314492913,
+              "pr_auc": 0.9948039651345446,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.9763943432262495,
+              "recall": 0.9513046750857238,
+              "reliability_bins": [
+                {
+                  "count": 4767.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.02955387702955488,
+                  "observed_fraction": 0.07027480595762534,
+                  "upper": 0.1
+                },
+                {
+                  "count": 1226.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.146931073348133,
+                  "observed_fraction": 0.2561174551386623,
+                  "upper": 0.2
+                },
+                {
+                  "count": 872.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2486745273230092,
+                  "observed_fraction": 0.3669724770642202,
+                  "upper": 0.3
+                },
+                {
+                  "count": 864.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.3505513978418762,
+                  "observed_fraction": 0.5277777777777778,
+                  "upper": 0.4
+                },
+                {
+                  "count": 884.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.4517303162763868,
+                  "observed_fraction": 0.6447963800904978,
+                  "upper": 0.5
+                },
+                {
+                  "count": 1049.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5514416929676451,
+                  "observed_fraction": 0.7044804575786463,
+                  "upper": 0.6
+                },
+                {
+                  "count": 1346.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6509549719598526,
+                  "observed_fraction": 0.8023774145616642,
+                  "upper": 0.7
+                },
+                {
+                  "count": 1916.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7543090672121073,
+                  "observed_fraction": 0.8825678496868476,
+                  "upper": 0.8
+                },
+                {
+                  "count": 3697.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8564972979072818,
+                  "observed_fraction": 0.9475250202867189,
+                  "upper": 0.9
+                },
+                {
+                  "count": 39077.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9834327990271475,
+                  "observed_fraction": 0.9934232412928321,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 55698
+          },
+          "non_root_path_true": {
+            "class_support": {
+              "0": {
+                "components": 36506,
+                "rows": 81833
+              },
+              "1": {
+                "components": 11274,
+                "rows": 28838
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.054947912555015396,
+              "confusion": {
+                "fn": 3625.0,
+                "fp": 4068.0,
+                "tn": 77765.0,
+                "tp": 25213.0
+              },
+              "coverage": 1.0,
+              "ece": 0.02687599729422524,
+              "f1": 0.8676336482045458,
+              "fpr": 0.04971099678613762,
+              "macro_f1": 0.9102509050835071,
+              "pr_auc": 0.941549680957392,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.8610703186366586,
+              "recall": 0.8742978015118941,
+              "reliability_bins": [
+                {
+                  "count": 68986.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.014713994246008272,
+                  "observed_fraction": 0.017264372481373032,
+                  "upper": 0.1
+                },
+                {
+                  "count": 5220.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.1433425995927886,
+                  "observed_fraction": 0.11858237547892721,
+                  "upper": 0.2
+                },
+                {
+                  "count": 2707.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2452909605703101,
+                  "observed_fraction": 0.17510158847432583,
+                  "upper": 0.3
+                },
+                {
+                  "count": 2004.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.3484590505541092,
+                  "observed_fraction": 0.24301397205588823,
+                  "upper": 0.4
+                },
+                {
+                  "count": 1731.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.44864405487615505,
+                  "observed_fraction": 0.3275563258232236,
+                  "upper": 0.5
+                },
+                {
+                  "count": 1554.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.550835420299388,
+                  "observed_fraction": 0.4124839124839125,
+                  "upper": 0.6
+                },
+                {
+                  "count": 1568.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6507647463541975,
+                  "observed_fraction": 0.5510204081632653,
+                  "upper": 0.7
+                },
+                {
+                  "count": 1815.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7517557974754921,
+                  "observed_fraction": 0.6578512396694215,
+                  "upper": 0.8
+                },
+                {
+                  "count": 2707.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.855609143731678,
+                  "observed_fraction": 0.6911710380495013,
+                  "upper": 0.9
+                },
+                {
+                  "count": 22379.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9831234289841718,
+                  "observed_fraction": 0.935251798561151,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 110671
+          },
+          "query_present_false": {
+            "class_support": {
+              "0": {
+                "components": 43285,
+                "rows": 89651
+              },
+              "1": {
+                "components": 33013,
+                "rows": 58341
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.05399935465619675,
+              "confusion": {
+                "fn": 5249.0,
+                "fp": 5155.0,
+                "tn": 84496.0,
+                "tp": 53092.0
+              },
+              "coverage": 1.0,
+              "ece": 0.014651660960035338,
+              "f1": 0.9107626856966412,
+              "fpr": 0.057500752919655104,
+              "macro_f1": 0.9263840407903037,
+              "pr_auc": 0.9698011863689743,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.9114975878586021,
+              "recall": 0.9100289676213983,
+              "reliability_bins": [
+                {
+                  "count": 73558.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.015625209529234747,
+                  "observed_fraction": 0.01846162212131923,
+                  "upper": 0.1
+                },
+                {
+                  "count": 6358.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.14394780400154175,
+                  "observed_fraction": 0.13353255740798994,
+                  "upper": 0.2
+                },
+                {
+                  "count": 3508.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2459503260828461,
+                  "observed_fraction": 0.20667046750285062,
+                  "upper": 0.3
+                },
+                {
+                  "count": 2744.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.348714385511454,
+                  "observed_fraction": 0.2988338192419825,
+                  "upper": 0.4
+                },
+                {
+                  "count": 2446.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.4493081414907623,
+                  "observed_fraction": 0.3973834832379395,
+                  "upper": 0.5
+                },
+                {
+                  "count": 2378.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5508198910991361,
+                  "observed_fraction": 0.4861227922624054,
+                  "upper": 0.6
+                },
+                {
+                  "count": 2530.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6504187640745552,
+                  "observed_fraction": 0.61699604743083,
+                  "upper": 0.7
+                },
+                {
+                  "count": 3128.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7527455568638479,
+                  "observed_fraction": 0.7301790281329923,
+                  "upper": 0.8
+                },
+                {
+                  "count": 5199.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8557905219023869,
+                  "observed_fraction": 0.8024620119253703,
+                  "upper": 0.9
+                },
+                {
+                  "count": 46143.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9828043625749462,
+                  "observed_fraction": 0.9631796805582645,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 147992
+          },
+          "query_present_true": {
+            "class_support": {
+              "0": {
+                "components": 14,
+                "rows": 52
+              },
+              "1": {
+                "components": 2739,
+                "rows": 18325
+              }
+            },
+            "exploratory": true,
+            "metrics": {
+              "brier": 0.02891463718485113,
+              "confusion": {
+                "fn": 705.0,
+                "fp": 13.0,
+                "tn": 39.0,
+                "tp": 17620.0
+              },
+              "coverage": 1.0,
+              "ece": 0.06641374008055936,
+              "f1": 0.9800322598587241,
+              "fpr": 0.25,
+              "macro_f1": 0.5390111048037339,
+              "pr_auc": 0.9996105162190364,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.9992627459876369,
+              "recall": 0.9615279672578445,
+              "reliability_bins": [
+                {
+                  "count": 195.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.03376295540289903,
+                  "observed_fraction": 0.8615384615384616,
+                  "upper": 0.1
+                },
+                {
+                  "count": 88.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.14961054497005893,
+                  "observed_fraction": 0.9545454545454546,
+                  "upper": 0.2
+                },
+                {
+                  "count": 71.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2542686505756255,
+                  "observed_fraction": 0.971830985915493,
+                  "upper": 0.3
+                },
+                {
+                  "count": 124.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.3573876709869849,
+                  "observed_fraction": 0.9919354838709677,
+                  "upper": 0.4
+                },
+                {
+                  "count": 169.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.4551760029144733,
+                  "observed_fraction": 0.9763313609467456,
+                  "upper": 0.5
+                },
+                {
+                  "count": 225.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5538261245980592,
+                  "observed_fraction": 0.9955555555555555,
+                  "upper": 0.6
+                },
+                {
+                  "count": 384.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6537110453977042,
+                  "observed_fraction": 0.9973958333333334,
+                  "upper": 0.7
+                },
+                {
+                  "count": 603.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7547344002094525,
+                  "observed_fraction": 0.9966832504145937,
+                  "upper": 0.8
+                },
+                {
+                  "count": 1205.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.857551484709016,
+                  "observed_fraction": 0.9975103734439834,
+                  "upper": 0.9
+                },
+                {
+                  "count": 15313.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.984874355287983,
+                  "observed_fraction": 0.9995428720694834,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 18377
+          },
+          "www_host_false": {
+            "class_support": {
+              "0": {
+                "components": 20757,
+                "rows": 39140
+              },
+              "1": {
+                "components": 29445,
+                "rows": 64114
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.0560652674901055,
+              "confusion": {
+                "fn": 3464.0,
+                "fp": 4034.0,
+                "tn": 35106.0,
+                "tp": 60650.0
+              },
+              "coverage": 1.0,
+              "ece": 0.011761182933571175,
+              "f1": 0.9417848103231417,
+              "fpr": 0.10306591722023506,
+              "macro_f1": 0.9226489358526015,
+              "pr_auc": 0.9853890197926489,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.937635273019603,
+              "recall": 0.9459712387310104,
+              "reliability_bins": [
+                {
+                  "count": 27652.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.020611927329664173,
+                  "observed_fraction": 0.026508028352379576,
+                  "upper": 0.1
+                },
+                {
+                  "count": 4064.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.14426348446163748,
+                  "observed_fraction": 0.13336614173228348,
+                  "upper": 0.2
+                },
+                {
+                  "count": 2357.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.24679471509163778,
+                  "observed_fraction": 0.209588459906661,
+                  "upper": 0.3
+                },
+                {
+                  "count": 1955.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.3495520993341253,
+                  "observed_fraction": 0.30843989769820973,
+                  "upper": 0.4
+                },
+                {
+                  "count": 1727.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.4491898050141376,
+                  "observed_fraction": 0.41169658367110595,
+                  "upper": 0.5
+                },
+                {
+                  "count": 1795.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.552354337621756,
+                  "observed_fraction": 0.5164345403899722,
+                  "upper": 0.6
+                },
+                {
+                  "count": 2079.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6516260928355859,
+                  "observed_fraction": 0.658008658008658,
+                  "upper": 0.7
+                },
+                {
+                  "count": 2717.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7527660456736358,
+                  "observed_fraction": 0.7563489142436511,
+                  "upper": 0.8
+                },
+                {
+                  "count": 4864.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8571697146673994,
+                  "observed_fraction": 0.8326480263157895,
+                  "upper": 0.9
+                },
+                {
+                  "count": 54044.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9843551471077138,
+                  "observed_fraction": 0.973854636962475,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 103254
+          },
+          "www_host_true": {
+            "class_support": {
+              "0": {
+                "components": 24126,
+                "rows": 50563
+              },
+              "1": {
+                "components": 7672,
+                "rows": 12552
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.04331575144422919,
+              "confusion": {
+                "fn": 2490.0,
+                "fp": 1134.0,
+                "tn": 49429.0,
+                "tp": 10062.0
+              },
+              "coverage": 1.0,
+              "ece": 0.008533753220094876,
+              "f1": 0.8473976755937342,
+              "fpr": 0.0224274667246801,
+              "macro_f1": 0.9060176840332794,
+              "pr_auc": 0.9240693759703361,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.8987138263665595,
+              "recall": 0.8016252390057361,
+              "reliability_bins": [
+                {
+                  "count": 46101.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.012710828926382096,
+                  "observed_fraction": 0.01720136222641591,
+                  "upper": 0.1
+                },
+                {
+                  "count": 2382.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.14361841517509347,
+                  "observed_fraction": 0.16414777497900923,
+                  "upper": 0.2
+                },
+                {
+                  "count": 1222.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2448049710462383,
+                  "observed_fraction": 0.24549918166939444,
+                  "upper": 0.3
+                },
+                {
+                  "count": 913.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.3480985660981391,
+                  "observed_fraction": 0.3723986856516977,
+                  "upper": 0.4
+                },
+                {
+                  "count": 888.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.4506550285129897,
+                  "observed_fraction": 0.4797297297297297,
+                  "upper": 0.5
+                },
+                {
+                  "count": 808.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5482481968282884,
+                  "observed_fraction": 0.5606435643564357,
+                  "upper": 0.6
+                },
+                {
+                  "count": 835.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6489267874684552,
+                  "observed_fraction": 0.6898203592814371,
+                  "upper": 0.7
+                },
+                {
+                  "count": 1014.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7538733718946226,
+                  "observed_fraction": 0.8185404339250493,
+                  "upper": 0.8
+                },
+                {
+                  "count": 1540.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8528123183783393,
+                  "observed_fraction": 0.8597402597402597,
+                  "upper": 0.9
+                },
+                {
+                  "count": 7412.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9757734935957026,
+                  "observed_fraction": 0.9604695089044792,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 63115
+          }
+        },
+        "legitimate_queries": {
+          "bootstrap": {
+            "replicates": 1000,
+            "seed": 42,
+            "status": "complete",
+            "unit": "domain_connected_component",
+            "valid_replicates": 1000
+          },
+          "components": 14,
+          "false_positive_rate": 0.25,
+          "false_positives": 13,
+          "interval": [
+            0.08100717905405407,
+            0.5862576064908721
+          ],
+          "limitations": [
+            "exploratory_small_support"
+          ],
+          "rows": 52,
+          "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+        },
+        "scope": "selected model at validation budget 0.05",
+        "source": {
+          "phreshphish": {
+            "class_support": {
+              "0": {
+                "components": 43286,
+                "rows": 89703
+              },
+              "1": {
+                "components": 35037,
+                "rows": 76666
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.051228514818420966,
+              "confusion": {
+                "fn": 5954.0,
+                "fp": 5168.0,
+                "tn": 84535.0,
+                "tp": 70712.0
+              },
+              "coverage": 1.0,
+              "ece": 0.009168469508478883,
+              "f1": 0.9270908447288031,
+              "fpr": 0.05761234295397032,
+              "macro_f1": 0.9326838968804734,
+              "pr_auc": 0.9784144978578275,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.9318924617817607,
+              "recall": 0.922338455117001,
+              "reliability_bins": [
+                {
+                  "count": 73753.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.015673165008271053,
+                  "observed_fraction": 0.020690683768795844,
+                  "upper": 0.1
+                },
+                {
+                  "count": 6446.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.14402511104548052,
+                  "observed_fraction": 0.14474092460440582,
+                  "upper": 0.2
+                },
+                {
+                  "count": 3579.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.24611534453464473,
+                  "observed_fraction": 0.22184967868119587,
+                  "upper": 0.3
+                },
+                {
+                  "count": 2868.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.34908938111778803,
+                  "observed_fraction": 0.3288005578800558,
+                  "upper": 0.4
+                },
+                {
+                  "count": 2615.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.44968736465734244,
+                  "observed_fraction": 0.4347992351816444,
+                  "upper": 0.5
+                },
+                {
+                  "count": 2603.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5510797460884783,
+                  "observed_fraction": 0.530157510564733,
+                  "upper": 0.6
+                },
+                {
+                  "count": 2914.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6508526130889991,
+                  "observed_fraction": 0.667124227865477,
+                  "upper": 0.7
+                },
+                {
+                  "count": 3731.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7530669914758553,
+                  "observed_fraction": 0.7732511391047976,
+                  "upper": 0.8
+                },
+                {
+                  "count": 6404.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8561218710875818,
+                  "observed_fraction": 0.8391630231105559,
+                  "upper": 0.9
+                },
+                {
+                  "count": 61456.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9833201429448812,
+                  "observed_fraction": 0.9722403020046863,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 166369
+          }
+        }
+      },
+      "support": {
+        "benign_format_counts": {
+          "non_root_path": 81833,
+          "non_www_host": 39140,
+          "query_present": 52
+        },
+        "class_counts": {
+          "0": 89703,
+          "1": 76666
+        },
+        "component_groups_per_class": {
+          "0": 43286,
+          "1": 35037
+        },
+        "components": 78202,
+        "domain_groups_per_class": {
+          "0": 43286,
+          "1": 35037
+        },
+        "reasons": [],
+        "rows": 166369,
+        "status": "available"
+      },
+      "temporal": {
+        "reason": "missing_or_unauthenticated_collection_dates",
+        "status": "unavailable"
+      }
+    },
+    "supplemental": {
+      "components": 3265,
+      "domain_groups": 3265,
+      "error_categories": {
+        "false_negative": 371,
+        "false_negative_https": 156,
+        "false_negative_non_root_path": 336,
+        "false_negative_query_present": 22,
+        "false_negative_www_host": 199,
+        "false_positive": 426,
+        "false_positive_https": 74,
+        "false_positive_non_root_path": 136,
+        "false_positive_query_present": 27,
+        "false_positive_www_host": 142
+      },
+      "metrics": {
+        "char_tfidf": {
+          "0.01": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 1705,
+                "1": 1562
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 1000,
+                "coverage": 1000,
+                "ece": 1000,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": 0.13689822630760215,
+            "calibration_status": "available",
+            "confusion": {
+              "fn": 860.0,
+              "fp": 165.0,
+              "tn": 1738.0,
+              "tp": 1585.0
+            },
+            "coverage": 1.0,
+            "ece": 0.07389694438090585,
+            "f1": 0.7556615017878426,
+            "fpr": 0.08670520231213873,
+            "intervals": {
+              "brier": [
+                0.1254105549621851,
+                0.14913074149068517
+              ],
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": [
+                0.06112353357586874,
+                0.09177129386596934
+              ],
+              "f1": [
+                0.7308366480413147,
+                0.7799169931855461
+              ],
+              "fpr": [
+                0.07373512175866885,
+                0.10031197380062216
+              ],
+              "macro_f1": [
+                0.7434834935936665,
+                0.7826003623798222
+              ],
+              "pr_auc": [
+                0.8825199980545333,
+                0.9190312923527231
+              ],
+              "precision": [
+                0.889269406392694,
+                0.9221871327301557
+              ],
+              "recall": [
+                0.6167854111491445,
+                0.6806419511849304
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 44,
+              "false_positive_rate": 0.3181818181818182,
+              "false_positives": 14,
+              "interval": [
+                0.18181818181818182,
+                0.45511363636363583
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 44,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.7639671650241147,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.902491480577829,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.9057142857142857,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.0074285073388358925
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.07021841061400297
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.2823857141385951
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.4537714304626994
+              }
+            ],
+            "raw_threshold": 0.8400370326946794,
+            "recall": 0.6482617586912065,
+            "reliability_bins": [
+              {
+                "count": 1047.0,
+                "lower": 0.0,
+                "mean_probability": 0.030681234786740206,
+                "observed_fraction": 0.08882521489971347,
+                "upper": 0.1
+              },
+              {
+                "count": 265.0,
+                "lower": 0.1,
+                "mean_probability": 0.14864325824129204,
+                "observed_fraction": 0.23018867924528302,
+                "upper": 0.2
+              },
+              {
+                "count": 182.0,
+                "lower": 0.2,
+                "mean_probability": 0.25058615793386707,
+                "observed_fraction": 0.33516483516483514,
+                "upper": 0.3
+              },
+              {
+                "count": 150.0,
+                "lower": 0.3,
+                "mean_probability": 0.3497030934655852,
+                "observed_fraction": 0.4066666666666667,
+                "upper": 0.4
+              },
+              {
+                "count": 134.0,
+                "lower": 0.4,
+                "mean_probability": 0.4525542716784485,
+                "observed_fraction": 0.44029850746268656,
+                "upper": 0.5
+              },
+              {
+                "count": 128.0,
+                "lower": 0.5,
+                "mean_probability": 0.5456458742244039,
+                "observed_fraction": 0.484375,
+                "upper": 0.6
+              },
+              {
+                "count": 158.0,
+                "lower": 0.6,
+                "mean_probability": 0.6471848344728677,
+                "observed_fraction": 0.569620253164557,
+                "upper": 0.7
+              },
+              {
+                "count": 233.0,
+                "lower": 0.7,
+                "mean_probability": 0.7483867310005952,
+                "observed_fraction": 0.6695278969957081,
+                "upper": 0.8
+              },
+              {
+                "count": 279.0,
+                "lower": 0.8,
+                "mean_probability": 0.8533383844734478,
+                "observed_fraction": 0.7168458781362007,
+                "upper": 0.9
+              },
+              {
+                "count": 1772.0,
+                "lower": 0.9,
+                "mean_probability": 0.9811987073612077,
+                "observed_fraction": 0.9040632054176072,
+                "upper": 1.0
+              }
+            ]
+          },
+          "0.05": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 1705,
+                "1": 1562
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 1000,
+                "coverage": 1000,
+                "ece": 1000,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": 0.13689822630760215,
+            "calibration_status": "available",
+            "confusion": {
+              "fn": 371.0,
+              "fp": 426.0,
+              "tn": 1477.0,
+              "tp": 2074.0
+            },
+            "coverage": 1.0,
+            "ece": 0.07389694438090585,
+            "f1": 0.8388270980788676,
+            "fpr": 0.22385706778770362,
+            "intervals": {
+              "brier": [
+                0.1254105549621851,
+                0.14913074149068517
+              ],
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": [
+                0.06112353357586874,
+                0.09177129386596934
+              ],
+              "f1": [
+                0.8162134839124588,
+                0.8590972443040136
+              ],
+              "fpr": [
+                0.1941815197190133,
+                0.26026936704156395
+              ],
+              "macro_f1": [
+                0.7932204177805376,
+                0.8315398225221688
+              ],
+              "pr_auc": [
+                0.8825199980545333,
+                0.9190312923527231
+              ],
+              "precision": [
+                0.793873561577782,
+                0.8584548423457098
+              ],
+              "recall": [
+                0.8264183978677169,
+                0.8684111214880368
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 44,
+              "false_positive_rate": 0.6136363636363636,
+              "false_positives": 27,
+              "interval": [
+                0.4767045454545455,
+                0.75
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 44,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.8131752125958187,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.902491480577829,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.8296,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.003778760667083762
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.03686473921732937
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.1662754292391362
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.29628678190567764
+              }
+            ],
+            "raw_threshold": 0.38372611874561074,
+            "recall": 0.8482617586912066,
+            "reliability_bins": [
+              {
+                "count": 1047.0,
+                "lower": 0.0,
+                "mean_probability": 0.030681234786740206,
+                "observed_fraction": 0.08882521489971347,
+                "upper": 0.1
+              },
+              {
+                "count": 265.0,
+                "lower": 0.1,
+                "mean_probability": 0.14864325824129204,
+                "observed_fraction": 0.23018867924528302,
+                "upper": 0.2
+              },
+              {
+                "count": 182.0,
+                "lower": 0.2,
+                "mean_probability": 0.25058615793386707,
+                "observed_fraction": 0.33516483516483514,
+                "upper": 0.3
+              },
+              {
+                "count": 150.0,
+                "lower": 0.3,
+                "mean_probability": 0.3497030934655852,
+                "observed_fraction": 0.4066666666666667,
+                "upper": 0.4
+              },
+              {
+                "count": 134.0,
+                "lower": 0.4,
+                "mean_probability": 0.4525542716784485,
+                "observed_fraction": 0.44029850746268656,
+                "upper": 0.5
+              },
+              {
+                "count": 128.0,
+                "lower": 0.5,
+                "mean_probability": 0.5456458742244039,
+                "observed_fraction": 0.484375,
+                "upper": 0.6
+              },
+              {
+                "count": 158.0,
+                "lower": 0.6,
+                "mean_probability": 0.6471848344728677,
+                "observed_fraction": 0.569620253164557,
+                "upper": 0.7
+              },
+              {
+                "count": 233.0,
+                "lower": 0.7,
+                "mean_probability": 0.7483867310005952,
+                "observed_fraction": 0.6695278969957081,
+                "upper": 0.8
+              },
+              {
+                "count": 279.0,
+                "lower": 0.8,
+                "mean_probability": 0.8533383844734478,
+                "observed_fraction": 0.7168458781362007,
+                "upper": 0.9
+              },
+              {
+                "count": 1772.0,
+                "lower": 0.9,
+                "mean_probability": 0.9811987073612077,
+                "observed_fraction": 0.9040632054176072,
+                "upper": 1.0
+              }
+            ]
+          }
+        },
+        "format_only": {
+          "0.01": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 1705,
+                "1": 1562
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 1769.0,
+              "fp": 204.0,
+              "tn": 1699.0,
+              "tp": 676.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.40661654135338343,
+            "fpr": 0.10719915922228061,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.3694456518750406,
+                0.4453239516421254
+              ],
+              "fpr": [
+                0.09257048928928437,
+                0.12263858644384955
+              ],
+              "macro_f1": [
+                0.4925522582121745,
+                0.5465553765840829
+              ],
+              "pr_auc": [
+                0.7267112008425607,
+                0.7927328807500128
+              ],
+              "precision": [
+                0.731388036367828,
+                0.8040238853595906
+              ],
+              "recall": [
+                0.24597054775133587,
+                0.3109898173449801
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 44,
+              "false_positive_rate": 0.8863636363636364,
+              "false_positives": 39,
+              "interval": [
+                0.7954545454545454,
+                0.9545454545454546
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 44,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.5196367011365688,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.7615272595056353,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.7681818181818182,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.0025750826842974423
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.02539053679921354
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.1195204272910928
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.22274081595055484
+              }
+            ],
+            "raw_threshold": 0.961241130698125,
+            "recall": 0.27648261758691206,
+            "reliability_bins": []
+          },
+          "0.05": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 1705,
+                "1": 1562
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 932.0,
+              "fp": 412.0,
+              "tn": 1491.0,
+              "tp": 1513.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.6924485125858123,
+            "fpr": 0.2165002627430373,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.667278319733756,
+                0.7190672293994282
+              ],
+              "fpr": [
+                0.18195965602025416,
+                0.26130646817248454
+              ],
+              "macro_f1": [
+                0.6678833966343437,
+                0.7130869187804987
+              ],
+              "pr_auc": [
+                0.7267112008425607,
+                0.7927328807500128
+              ],
+              "precision": [
+                0.7400478717049311,
+                0.8232551373062322
+              ],
+              "recall": [
+                0.5906593668392434,
+                0.6464949199070045
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 44,
+              "false_positive_rate": 0.8863636363636364,
+              "false_positives": 39,
+              "interval": [
+                0.7954545454545454,
+                0.9545454545454546
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 44,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.6908844504676634,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.7615272595056353,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.785974025974026,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.002852957840521855
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.028061144905518545
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.13076335709026224
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.24103532276588474
+              }
+            ],
+            "raw_threshold": 0.9308488498416724,
+            "recall": 0.6188139059304704,
+            "reliability_bins": []
+          }
+        },
+        "lexical_hgb": {
+          "0.01": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 1705,
+                "1": 1562
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 1350.0,
+              "fp": 150.0,
+              "tn": 1753.0,
+              "tp": 1095.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.5934959349593496,
+            "fpr": 0.0788229111928534,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.5609418880721279,
+                0.6234659408587558
+              ],
+              "fpr": [
+                0.06560632210915839,
+                0.09396734963409592
+              ],
+              "macro_f1": [
+                0.6255454711560396,
+                0.6685263696006917
+              ],
+              "pr_auc": [
+                0.792479228696317,
+                0.84104351758554
+              ],
+              "precision": [
+                0.8540040388997946,
+                0.9009522221119528
+              ],
+              "recall": [
+                0.41507783411972504,
+                0.4793356277726383
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 44,
+              "false_positive_rate": 0.5454545454545454,
+              "false_positives": 24,
+              "interval": [
+                0.38636363636363635,
+                0.6818181818181818
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 44,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.6469277517385641,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.8184623310244814,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.8795180722891566,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.00565528202543275
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.054276492506844194
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.23020072282089055
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.3869944201309862
+              }
+            ],
+            "raw_threshold": 0.932841621522474,
+            "recall": 0.44785276073619634,
+            "reliability_bins": []
+          },
+          "0.05": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 1705,
+                "1": 1562
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 841.0,
+              "fp": 587.0,
+              "tn": 1316.0,
+              "tp": 1604.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.6919758412424504,
+            "fpr": 0.3084603258013663,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.6656278895284141,
+                0.715375897867869
+              ],
+              "fpr": [
+                0.2828839504621427,
+                0.33551762298272736
+              ],
+              "macro_f1": [
+                0.6505053139658179,
+                0.6888451754322359
+              ],
+              "pr_auc": [
+                0.792479228696317,
+                0.84104351758554
+              ],
+              "precision": [
+                0.7007721080487651,
+                0.7597692999564614
+              ],
+              "recall": [
+                0.6271614393525267,
+                0.6824798499460947
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 44,
+              "false_positive_rate": 0.7045454545454546,
+              "false_positives": 31,
+              "interval": [
+                0.5676136363636365,
+                0.8409090909090909
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 44,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.6701258516557079,
+            "operating_point_source": "frozen validation scores",
+            "pr_auc": 0.8184623310244814,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.7320858055682337,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.0021244039536232632
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.02103100043677531
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.1006682486685931
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.19114194212199156
+              }
+            ],
+            "raw_threshold": 0.7970387299930636,
+            "recall": 0.6560327198364008,
+            "reliability_bins": []
+          }
+        },
+        "phase0_rules": {
+          "0.01": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 1705,
+                "1": 1562
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 2097.0,
+              "fp": 5.0,
+              "tn": 1898.0,
+              "tp": 348.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.24874910650464618,
+            "fpr": 0.002627430373095113,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.21237008579606398,
+                0.29059000065553353
+              ],
+              "fpr": [
+                0.0005200140438049955,
+                0.005385102153083393
+              ],
+              "macro_f1": [
+                0.41806881409620117,
+                0.47541823113919957
+              ],
+              "pr_auc": [
+                0.5964817742611702,
+                0.6475167779651185
+              ],
+              "precision": [
+                0.9701918289100233,
+                0.9971690898165273
+              ],
+              "recall": [
+                0.11917637833825903,
+                0.1702025916505683
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 44,
+              "false_positive_rate": 0.022727272727272728,
+              "false_positives": 1,
+              "interval": [
+                0.0,
+                0.06818181818181818
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 44,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.4461785546087151,
+            "operating_point_source": "fixed descriptive rules",
+            "pr_auc": 0.6226059728010087,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.9858356940509915,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.051436351278394236
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.35366476922263534
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.7403353086966292
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.8575302129180375
+              }
+            ],
+            "raw_threshold": 0.5,
+            "recall": 0.1423312883435583,
+            "reliability_bins": []
+          },
+          "0.05": {
+            "bootstrap": {
+              "class_component_support": {
+                "0": 1705,
+                "1": 1562
+              },
+              "constant_metrics": [
+                "coverage"
+              ],
+              "replicates": 1000,
+              "seed": 42,
+              "status": "complete",
+              "unit": "domain_connected_component",
+              "valid_replicates": {
+                "brier": 0,
+                "coverage": 1000,
+                "ece": 0,
+                "f1": 1000,
+                "fpr": 1000,
+                "macro_f1": 1000,
+                "pr_auc": 1000,
+                "precision": 1000,
+                "recall": 1000
+              }
+            },
+            "brier": null,
+            "calibration_status": "unavailable_not_selected",
+            "confusion": {
+              "fn": 2097.0,
+              "fp": 5.0,
+              "tn": 1898.0,
+              "tp": 348.0
+            },
+            "coverage": 1.0,
+            "ece": null,
+            "f1": 0.24874910650464618,
+            "fpr": 0.002627430373095113,
+            "intervals": {
+              "brier": null,
+              "coverage": [
+                1.0,
+                1.0
+              ],
+              "ece": null,
+              "f1": [
+                0.21237008579606398,
+                0.29059000065553353
+              ],
+              "fpr": [
+                0.0005200140438049955,
+                0.005385102153083393
+              ],
+              "macro_f1": [
+                0.41806881409620117,
+                0.47541823113919957
+              ],
+              "pr_auc": [
+                0.5964817742611702,
+                0.6475167779651185
+              ],
+              "precision": [
+                0.9701918289100233,
+                0.9971690898165273
+              ],
+              "recall": [
+                0.11917637833825903,
+                0.1702025916505683
+              ]
+            },
+            "legitimate_queries": {
+              "bootstrap": {
+                "replicates": 1000,
+                "seed": 42,
+                "status": "complete",
+                "unit": "domain_connected_component",
+                "valid_replicates": 1000
+              },
+              "components": 44,
+              "false_positive_rate": 0.022727272727272728,
+              "false_positives": 1,
+              "interval": [
+                0.0,
+                0.06818181818181818
+              ],
+              "limitations": [
+                "exploratory_small_support"
+              ],
+              "rows": 44,
+              "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+            },
+            "limitations": [
+              "constant_bootstrap_outcomes"
+            ],
+            "macro_f1": 0.4461785546087151,
+            "operating_point_source": "fixed descriptive rules",
+            "pr_auc": 0.6226059728010087,
+            "pr_auc_kind": "average_precision",
+            "precision": 0.9858356940509915,
+            "prevalence_scenarios": [
+              {
+                "assumed_prevalence": 0.001,
+                "expected_precision": 0.051436351278394236
+              },
+              {
+                "assumed_prevalence": 0.01,
+                "expected_precision": 0.35366476922263534
+              },
+              {
+                "assumed_prevalence": 0.05,
+                "expected_precision": 0.7403353086966292
+              },
+              {
+                "assumed_prevalence": 0.1,
+                "expected_precision": 0.8575302129180375
+              }
+            ],
+            "raw_threshold": 0.5,
+            "recall": 0.1423312883435583,
+            "reliability_bins": []
+          }
+        }
+      },
+      "rows": 4348,
+      "status": "available",
+      "subgroups": {
+        "class": {
+          "0": {
+            "class_support": {
+              "0": {
+                "components": 1705,
+                "rows": 1903
+              },
+              "1": {
+                "components": 0,
+                "rows": 0
+              }
+            },
+            "exploratory": true,
+            "metrics": {
+              "brier": 0.18341345859837566,
+              "confusion": {
+                "fn": 0.0,
+                "fp": 426.0,
+                "tn": 1477.0,
+                "tp": 0.0
+              },
+              "coverage": 1.0,
+              "ece": 0.27483272062622827,
+              "f1": null,
+              "fpr": 0.22385706778770362,
+              "macro_f1": null,
+              "pr_auc": null,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.0,
+              "recall": null,
+              "reliability_bins": [
+                {
+                  "count": 954.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.02932855936075092,
+                  "observed_fraction": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "count": 204.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.14644326956062007,
+                  "observed_fraction": 0.0,
+                  "upper": 0.2
+                },
+                {
+                  "count": 121.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2489296002846344,
+                  "observed_fraction": 0.0,
+                  "upper": 0.3
+                },
+                {
+                  "count": 89.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.35078254949521154,
+                  "observed_fraction": 0.0,
+                  "upper": 0.4
+                },
+                {
+                  "count": 75.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.45396600939096876,
+                  "observed_fraction": 0.0,
+                  "upper": 0.5
+                },
+                {
+                  "count": 66.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5468743480137888,
+                  "observed_fraction": 0.0,
+                  "upper": 0.6
+                },
+                {
+                  "count": 68.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6463749554226802,
+                  "observed_fraction": 0.0,
+                  "upper": 0.7
+                },
+                {
+                  "count": 77.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7442864274657367,
+                  "observed_fraction": 0.0,
+                  "upper": 0.8
+                },
+                {
+                  "count": 79.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.854029865130462,
+                  "observed_fraction": 0.0,
+                  "upper": 0.9
+                },
+                {
+                  "count": 170.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9702329252325399,
+                  "observed_fraction": 0.0,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 1903
+          },
+          "1": {
+            "class_support": {
+              "0": {
+                "components": 0,
+                "rows": 0
+              },
+              "1": {
+                "components": 1562,
+                "rows": 2445
+              }
+            },
+            "exploratory": true,
+            "metrics": {
+              "brier": 0.10069434612382219,
+              "confusion": {
+                "fn": 371.0,
+                "fp": 0.0,
+                "tn": 0.0,
+                "tp": 2074.0
+              },
+              "coverage": 1.0,
+              "ece": 0.16955052398552634,
+              "f1": 0.917902190750166,
+              "fpr": null,
+              "macro_f1": null,
+              "pr_auc": null,
+              "pr_auc_kind": "average_precision",
+              "precision": 1.0,
+              "recall": 0.8482617586912066,
+              "reliability_bins": [
+                {
+                  "count": 93.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.04455706657592063,
+                  "observed_fraction": 1.0,
+                  "upper": 0.1
+                },
+                {
+                  "count": 61.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.15600059743567057,
+                  "observed_fraction": 1.0,
+                  "upper": 0.2
+                },
+                {
+                  "count": 61.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2538721165495582,
+                  "observed_fraction": 1.0,
+                  "upper": 0.3
+                },
+                {
+                  "count": 61.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.34812814942236,
+                  "observed_fraction": 1.0,
+                  "upper": 0.4
+                },
+                {
+                  "count": 59.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.45075968984049913,
+                  "observed_fraction": 1.0,
+                  "upper": 0.5
+                },
+                {
+                  "count": 62.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.54433814406151,
+                  "observed_fraction": 1.0,
+                  "upper": 0.6
+                },
+                {
+                  "count": 90.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6477967430885652,
+                  "observed_fraction": 1.0,
+                  "upper": 0.7
+                },
+                {
+                  "count": 156.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7504105987710061,
+                  "observed_fraction": 1.0,
+                  "upper": 0.8
+                },
+                {
+                  "count": 200.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8530652496139272,
+                  "observed_fraction": 1.0,
+                  "upper": 0.9
+                },
+                {
+                  "count": 1602.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9823623671376581,
+                  "observed_fraction": 1.0,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 2445
+          }
+        },
+        "format": {
+          "https_false": {
+            "class_support": {
+              "0": {
+                "components": 973,
+                "rows": 1127
+              },
+              "1": {
+                "components": 1167,
+                "rows": 1792
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.14686304708171893,
+              "confusion": {
+                "fn": 215.0,
+                "fp": 352.0,
+                "tn": 775.0,
+                "tp": 1577.0
+              },
+              "coverage": 1.0,
+              "ece": 0.08879412481979665,
+              "f1": 0.847621607094867,
+              "fpr": 0.31233362910381546,
+              "macro_f1": 0.7898948847944812,
+              "pr_auc": 0.9047377795757087,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.8175220321410057,
+              "recall": 0.8800223214285714,
+              "reliability_bins": [
+                {
+                  "count": 478.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.03390065066942749,
+                  "observed_fraction": 0.09832635983263599,
+                  "upper": 0.1
+                },
+                {
+                  "count": 145.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.1500063700848776,
+                  "observed_fraction": 0.22758620689655173,
+                  "upper": 0.2
+                },
+                {
+                  "count": 118.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.25011619550833675,
+                  "observed_fraction": 0.3050847457627119,
+                  "upper": 0.3
+                },
+                {
+                  "count": 100.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.348809607507658,
+                  "observed_fraction": 0.36,
+                  "upper": 0.4
+                },
+                {
+                  "count": 99.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.45188818080719917,
+                  "observed_fraction": 0.3939393939393939,
+                  "upper": 0.5
+                },
+                {
+                  "count": 87.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5444411852049791,
+                  "observed_fraction": 0.4482758620689655,
+                  "upper": 0.6
+                },
+                {
+                  "count": 107.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6456268613547466,
+                  "observed_fraction": 0.5514018691588785,
+                  "upper": 0.7
+                },
+                {
+                  "count": 168.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7474401481350472,
+                  "observed_fraction": 0.5892857142857143,
+                  "upper": 0.8
+                },
+                {
+                  "count": 199.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8558123984908962,
+                  "observed_fraction": 0.6884422110552764,
+                  "upper": 0.9
+                },
+                {
+                  "count": 1418.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9820015215006697,
+                  "observed_fraction": 0.8935119887165022,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 2919
+          },
+          "https_true": {
+            "class_support": {
+              "0": {
+                "components": 736,
+                "rows": 776
+              },
+              "1": {
+                "components": 475,
+                "rows": 653
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.11654321452338459,
+              "confusion": {
+                "fn": 156.0,
+                "fp": 74.0,
+                "tn": 702.0,
+                "tp": 497.0
+              },
+              "coverage": 1.0,
+              "ece": 0.06140117170084747,
+              "f1": 0.8120915032679739,
+              "fpr": 0.09536082474226804,
+              "macro_f1": 0.8356663146694827,
+              "pr_auc": 0.9068237377087667,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.8704028021015762,
+              "recall": 0.7611026033690659,
+              "reliability_bins": [
+                {
+                  "count": 569.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.027976699124306954,
+                  "observed_fraction": 0.08084358523725835,
+                  "upper": 0.1
+                },
+                {
+                  "count": 120.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.14699616476362617,
+                  "observed_fraction": 0.23333333333333334,
+                  "upper": 0.2
+                },
+                {
+                  "count": 64.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2514526511559386,
+                  "observed_fraction": 0.390625,
+                  "upper": 0.3
+                },
+                {
+                  "count": 50.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.3514900653814398,
+                  "observed_fraction": 0.5,
+                  "upper": 0.4
+                },
+                {
+                  "count": 35.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.45443835728569704,
+                  "observed_fraction": 0.5714285714285714,
+                  "upper": 0.5
+                },
+                {
+                  "count": 41.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5482021655583049,
+                  "observed_fraction": 0.5609756097560976,
+                  "upper": 0.6
+                },
+                {
+                  "count": 51.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6504535231716706,
+                  "observed_fraction": 0.6078431372549019,
+                  "upper": 0.7
+                },
+                {
+                  "count": 65.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7508332836377039,
+                  "observed_fraction": 0.8769230769230769,
+                  "upper": 0.8
+                },
+                {
+                  "count": 80.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8471842746050452,
+                  "observed_fraction": 0.7875,
+                  "upper": 0.9
+                },
+                {
+                  "count": 354.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9779829151302563,
+                  "observed_fraction": 0.9463276836158192,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 1429
+          },
+          "non_root_path_false": {
+            "class_support": {
+              "0": {
+                "components": 987,
+                "rows": 996
+              },
+              "1": {
+                "components": 402,
+                "rows": 512
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.18080324710331128,
+              "confusion": {
+                "fn": 35.0,
+                "fp": 290.0,
+                "tn": 706.0,
+                "tp": 477.0
+              },
+              "coverage": 1.0,
+              "ece": 0.20041586188828608,
+              "f1": 0.7458952306489445,
+              "fpr": 0.29116465863453816,
+              "macro_f1": 0.7793955140003501,
+              "pr_auc": 0.8177664345702609,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.621903520208605,
+              "recall": 0.931640625,
+              "reliability_bins": [
+                {
+                  "count": 399.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.036466477364737584,
+                  "observed_fraction": 0.017543859649122806,
+                  "upper": 0.1
+                },
+                {
+                  "count": 124.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.14698823570886174,
+                  "observed_fraction": 0.056451612903225805,
+                  "upper": 0.2
+                },
+                {
+                  "count": 74.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2509167537864908,
+                  "observed_fraction": 0.04054054054054054,
+                  "upper": 0.3
+                },
+                {
+                  "count": 63.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.35177823711368716,
+                  "observed_fraction": 0.12698412698412698,
+                  "upper": 0.4
+                },
+                {
+                  "count": 52.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.45577180026939595,
+                  "observed_fraction": 0.07692307692307693,
+                  "upper": 0.5
+                },
+                {
+                  "count": 51.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5429299450811654,
+                  "observed_fraction": 0.19607843137254902,
+                  "upper": 0.6
+                },
+                {
+                  "count": 50.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6464180196028476,
+                  "observed_fraction": 0.22,
+                  "upper": 0.7
+                },
+                {
+                  "count": 63.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7497762429453804,
+                  "observed_fraction": 0.4603174603174603,
+                  "upper": 0.8
+                },
+                {
+                  "count": 94.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8548838194274817,
+                  "observed_fraction": 0.4148936170212766,
+                  "upper": 0.9
+                },
+                {
+                  "count": 538.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9840430133600576,
+                  "observed_fraction": 0.7323420074349443,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 1508
+          },
+          "non_root_path_true": {
+            "class_support": {
+              "0": {
+                "components": 731,
+                "rows": 907
+              },
+              "1": {
+                "components": 1199,
+                "rows": 1933
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.11358527864565521,
+              "confusion": {
+                "fn": 336.0,
+                "fp": 136.0,
+                "tn": 771.0,
+                "tp": 1597.0
+              },
+              "coverage": 1.0,
+              "ece": 0.06922036270010318,
+              "f1": 0.8712493180578287,
+              "fpr": 0.14994487320837926,
+              "macro_f1": 0.8184449172215658,
+              "pr_auc": 0.9612006234438637,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.9215233698788229,
+              "recall": 0.826176927056389,
+              "reliability_bins": [
+                {
+                  "count": 648.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.027119025236399228,
+                  "observed_fraction": 0.13271604938271606,
+                  "upper": 0.1
+                },
+                {
+                  "count": 141.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.15009873904995416,
+                  "observed_fraction": 0.3829787234042553,
+                  "upper": 0.2
+                },
+                {
+                  "count": 108.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2503596385533657,
+                  "observed_fraction": 0.5370370370370371,
+                  "upper": 0.3
+                },
+                {
+                  "count": 87.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.34820040323764934,
+                  "observed_fraction": 0.6091954022988506,
+                  "upper": 0.4
+                },
+                {
+                  "count": 82.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.45051388769394546,
+                  "observed_fraction": 0.6707317073170732,
+                  "upper": 0.5
+                },
+                {
+                  "count": 77.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5474447363842111,
+                  "observed_fraction": 0.6753246753246753,
+                  "upper": 0.6
+                },
+                {
+                  "count": 108.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6475398413571362,
+                  "observed_fraction": 0.7314814814814815,
+                  "upper": 0.7
+                },
+                {
+                  "count": 170.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7478717942210572,
+                  "observed_fraction": 0.7470588235294118,
+                  "upper": 0.8
+                },
+                {
+                  "count": 185.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8525531364427494,
+                  "observed_fraction": 0.8702702702702703,
+                  "upper": 0.9
+                },
+                {
+                  "count": 1234.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9799586452644649,
+                  "observed_fraction": 0.9789303079416531,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 2840
+          },
+          "query_present_false": {
+            "class_support": {
+              "0": {
+                "components": 1664,
+                "rows": 1859
+              },
+              "1": {
+                "components": 1382,
+                "rows": 2041
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.14310806375388196,
+              "confusion": {
+                "fn": 349.0,
+                "fp": 399.0,
+                "tn": 1460.0,
+                "tp": 1692.0
+              },
+              "coverage": 1.0,
+              "ece": 0.07725190078930261,
+              "f1": 0.818973862536302,
+              "fpr": 0.21463152232383,
+              "macro_f1": 0.8075240086945414,
+              "pr_auc": 0.8776467306516349,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.8091822094691535,
+              "recall": 0.8290053895149436,
+              "reliability_bins": [
+                {
+                  "count": 1033.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.030553887904426313,
+                  "observed_fraction": 0.08422071636011616,
+                  "upper": 0.1
+                },
+                {
+                  "count": 261.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.1488084353150255,
+                  "observed_fraction": 0.2222222222222222,
+                  "upper": 0.2
+                },
+                {
+                  "count": 178.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.2509699983041579,
+                  "observed_fraction": 0.33146067415730335,
+                  "upper": 0.3
+                },
+                {
+                  "count": 141.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.34999289307289355,
+                  "observed_fraction": 0.3971631205673759,
+                  "upper": 0.4
+                },
+                {
+                  "count": 127.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.4529556686348942,
+                  "observed_fraction": 0.4251968503937008,
+                  "upper": 0.5
+                },
+                {
+                  "count": 125.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5451096530402041,
+                  "observed_fraction": 0.48,
+                  "upper": 0.6
+                },
+                {
+                  "count": 150.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6467834022258168,
+                  "observed_fraction": 0.5666666666666667,
+                  "upper": 0.7
+                },
+                {
+                  "count": 213.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7482505566512255,
+                  "observed_fraction": 0.6572769953051644,
+                  "upper": 0.8
+                },
+                {
+                  "count": 260.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8530761112566718,
+                  "observed_fraction": 0.7153846153846154,
+                  "upper": 0.9
+                },
+                {
+                  "count": 1412.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9793530411814568,
+                  "observed_fraction": 0.8895184135977338,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 3900
+          },
+          "query_present_true": {
+            "class_support": {
+              "0": {
+                "components": 44,
+                "rows": 44
+              },
+              "1": {
+                "components": 250,
+                "rows": 404
+              }
+            },
+            "exploratory": true,
+            "metrics": {
+              "brier": 0.08283937353864855,
+              "confusion": {
+                "fn": 22.0,
+                "fp": 27.0,
+                "tn": 17.0,
+                "tp": 382.0
+              },
+              "coverage": 1.0,
+              "ece": 0.05889795995331669,
+              "f1": 0.939729397293973,
+              "fpr": 0.6136363636363636,
+              "macro_f1": 0.6746839757554202,
+              "pr_auc": 0.9809644085061959,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.9339853300733496,
+              "recall": 0.9455445544554455,
+              "reliability_bins": [
+                {
+                  "count": 14.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.04007761546032963,
+                  "observed_fraction": 0.42857142857142855,
+                  "upper": 0.1
+                },
+                {
+                  "count": 4.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.1378654541801866,
+                  "observed_fraction": 0.75,
+                  "upper": 0.2
+                },
+                {
+                  "count": 4.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.23350526145592526,
+                  "observed_fraction": 0.5,
+                  "upper": 0.3
+                },
+                {
+                  "count": 9.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.3451628996177544,
+                  "observed_fraction": 0.5555555555555556,
+                  "upper": 0.4
+                },
+                {
+                  "count": 7.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.4452717840400791,
+                  "observed_fraction": 0.7142857142857143,
+                  "upper": 0.5
+                },
+                {
+                  "count": 3.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5679884235660617,
+                  "observed_fraction": 0.6666666666666666,
+                  "upper": 0.6
+                },
+                {
+                  "count": 8.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6547116891050754,
+                  "observed_fraction": 0.625,
+                  "upper": 0.7
+                },
+                {
+                  "count": 20.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7498369878213833,
+                  "observed_fraction": 0.8,
+                  "upper": 0.8
+                },
+                {
+                  "count": 19.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8569273863872252,
+                  "observed_fraction": 0.7368421052631579,
+                  "upper": 0.9
+                },
+                {
+                  "count": 360.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9884378202662313,
+                  "observed_fraction": 0.9611111111111111,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 448
+          },
+          "www_host_false": {
+            "class_support": {
+              "0": {
+                "components": 450,
+                "rows": 529
+              },
+              "1": {
+                "components": 1224,
+                "rows": 1871
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.13908545655688093,
+              "confusion": {
+                "fn": 172.0,
+                "fp": 284.0,
+                "tn": 245.0,
+                "tp": 1699.0
+              },
+              "coverage": 1.0,
+              "ece": 0.08973513499036197,
+              "f1": 0.8816813700051894,
+              "fpr": 0.5368620037807184,
+              "macro_f1": 0.6998258858482607,
+              "pr_auc": 0.9282597896126623,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.8567826525466465,
+              "recall": 0.9080705505077499,
+              "reliability_bins": [
+                {
+                  "count": 146.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.034740910672069504,
+                  "observed_fraction": 0.19863013698630136,
+                  "upper": 0.1
+                },
+                {
+                  "count": 65.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.151555537578683,
+                  "observed_fraction": 0.36923076923076925,
+                  "upper": 0.2
+                },
+                {
+                  "count": 55.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.24959264321085128,
+                  "observed_fraction": 0.4909090909090909,
+                  "upper": 0.3
+                },
+                {
+                  "count": 54.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.34843365899886686,
+                  "observed_fraction": 0.5925925925925926,
+                  "upper": 0.4
+                },
+                {
+                  "count": 60.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.45236049797072014,
+                  "observed_fraction": 0.5666666666666667,
+                  "upper": 0.5
+                },
+                {
+                  "count": 64.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5449388458485998,
+                  "observed_fraction": 0.5625,
+                  "upper": 0.6
+                },
+                {
+                  "count": 88.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6475737507901045,
+                  "observed_fraction": 0.6022727272727273,
+                  "upper": 0.7
+                },
+                {
+                  "count": 159.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.746404187193956,
+                  "observed_fraction": 0.6981132075471698,
+                  "upper": 0.8
+                },
+                {
+                  "count": 185.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8536499972228334,
+                  "observed_fraction": 0.7675675675675676,
+                  "upper": 0.9
+                },
+                {
+                  "count": 1524.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9831091407697521,
+                  "observed_fraction": 0.90748031496063,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 2400
+          },
+          "www_host_true": {
+            "class_support": {
+              "0": {
+                "components": 1260,
+                "rows": 1374
+              },
+              "1": {
+                "components": 417,
+                "rows": 574
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.13420348678077,
+              "confusion": {
+                "fn": 199.0,
+                "fp": 142.0,
+                "tn": 1232.0,
+                "tp": 375.0
+              },
+              "coverage": 1.0,
+              "ece": 0.06734304467864524,
+              "f1": 0.687442713107241,
+              "fpr": 0.10334788937409024,
+              "macro_f1": 0.7829370428281304,
+              "pr_auc": 0.7581836858298133,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.7253384912959381,
+              "recall": 0.6533101045296167,
+              "reliability_bins": [
+                {
+                  "count": 901.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.03002339607502203,
+                  "observed_fraction": 0.07103218645948946,
+                  "upper": 0.1
+                },
+                {
+                  "count": 200.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.14769676745664,
+                  "observed_fraction": 0.185,
+                  "upper": 0.2
+                },
+                {
+                  "count": 127.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.25101642021548815,
+                  "observed_fraction": 0.2677165354330709,
+                  "upper": 0.3
+                },
+                {
+                  "count": 96.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.3504171503531143,
+                  "observed_fraction": 0.3020833333333333,
+                  "upper": 0.4
+                },
+                {
+                  "count": 74.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.45271138549552586,
+                  "observed_fraction": 0.33783783783783783,
+                  "upper": 0.5
+                },
+                {
+                  "count": 64.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.546352902600208,
+                  "observed_fraction": 0.40625,
+                  "upper": 0.6
+                },
+                {
+                  "count": 70.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6466959111026273,
+                  "observed_fraction": 0.5285714285714286,
+                  "upper": 0.7
+                },
+                {
+                  "count": 74.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7526465210716173,
+                  "observed_fraction": 0.6081081081081081,
+                  "upper": 0.8
+                },
+                {
+                  "count": 94.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8527251040624227,
+                  "observed_fraction": 0.6170212765957447,
+                  "upper": 0.9
+                },
+                {
+                  "count": 248.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9694587859312832,
+                  "observed_fraction": 0.8830645161290323,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 1948
+          }
+        },
+        "legitimate_queries": {
+          "bootstrap": {
+            "replicates": 1000,
+            "seed": 42,
+            "status": "complete",
+            "unit": "domain_connected_component",
+            "valid_replicates": 1000
+          },
+          "components": 44,
+          "false_positive_rate": 0.6136363636363636,
+          "false_positives": 27,
+          "interval": [
+            0.4767045454545455,
+            0.75
+          ],
+          "limitations": [
+            "exploratory_small_support"
+          ],
+          "rows": 44,
+          "scope": "legitimate URLs with a nonempty query; phishing recall is not measured"
+        },
+        "scope": "selected model at validation budget 0.05",
+        "source": {
+          "mendeley-webpage-2020": {
+            "class_support": {
+              "0": {
+                "components": 1705,
+                "rows": 1903
+              },
+              "1": {
+                "components": 1562,
+                "rows": 2445
+              }
+            },
+            "exploratory": false,
+            "metrics": {
+              "brier": 0.13689822630760215,
+              "confusion": {
+                "fn": 371.0,
+                "fp": 426.0,
+                "tn": 1477.0,
+                "tp": 2074.0
+              },
+              "coverage": 1.0,
+              "ece": 0.07389694438090585,
+              "f1": 0.8388270980788676,
+              "fpr": 0.22385706778770362,
+              "macro_f1": 0.8131752125958187,
+              "pr_auc": 0.902491480577829,
+              "pr_auc_kind": "average_precision",
+              "precision": 0.8296,
+              "recall": 0.8482617586912066,
+              "reliability_bins": [
+                {
+                  "count": 1047.0,
+                  "lower": 0.0,
+                  "mean_probability": 0.030681234786740206,
+                  "observed_fraction": 0.08882521489971347,
+                  "upper": 0.1
+                },
+                {
+                  "count": 265.0,
+                  "lower": 0.1,
+                  "mean_probability": 0.14864325824129204,
+                  "observed_fraction": 0.23018867924528302,
+                  "upper": 0.2
+                },
+                {
+                  "count": 182.0,
+                  "lower": 0.2,
+                  "mean_probability": 0.25058615793386707,
+                  "observed_fraction": 0.33516483516483514,
+                  "upper": 0.3
+                },
+                {
+                  "count": 150.0,
+                  "lower": 0.3,
+                  "mean_probability": 0.3497030934655852,
+                  "observed_fraction": 0.4066666666666667,
+                  "upper": 0.4
+                },
+                {
+                  "count": 134.0,
+                  "lower": 0.4,
+                  "mean_probability": 0.4525542716784485,
+                  "observed_fraction": 0.44029850746268656,
+                  "upper": 0.5
+                },
+                {
+                  "count": 128.0,
+                  "lower": 0.5,
+                  "mean_probability": 0.5456458742244039,
+                  "observed_fraction": 0.484375,
+                  "upper": 0.6
+                },
+                {
+                  "count": 158.0,
+                  "lower": 0.6,
+                  "mean_probability": 0.6471848344728677,
+                  "observed_fraction": 0.569620253164557,
+                  "upper": 0.7
+                },
+                {
+                  "count": 233.0,
+                  "lower": 0.7,
+                  "mean_probability": 0.7483867310005952,
+                  "observed_fraction": 0.6695278969957081,
+                  "upper": 0.8
+                },
+                {
+                  "count": 279.0,
+                  "lower": 0.8,
+                  "mean_probability": 0.8533383844734478,
+                  "observed_fraction": 0.7168458781362007,
+                  "upper": 0.9
+                },
+                {
+                  "count": 1772.0,
+                  "lower": 0.9,
+                  "mean_probability": 0.9811987073612077,
+                  "observed_fraction": 0.9040632054176072,
+                  "upper": 1.0
+                }
+              ]
+            },
+            "rows": 4348
+          }
+        }
+      },
+      "support": {
+        "benign_format_counts": {
+          "non_root_path": 907,
+          "non_www_host": 529,
+          "query_present": 44
+        },
+        "class_counts": {
+          "0": 1903,
+          "1": 2445
+        },
+        "component_groups_per_class": {
+          "0": 1705,
+          "1": 1562
+        },
+        "components": 3265,
+        "domain_groups_per_class": {
+          "0": 1705,
+          "1": 1562
+        },
+        "reasons": [],
+        "rows": 4348,
+        "status": "available"
+      },
+      "temporal": {
+        "reason": "missing_or_unauthenticated_collection_dates",
+        "status": "unavailable"
+      }
+    }
+  },
+  "v1_comparison": {
+    "reason": "historical cohorts are not headline comparators",
+    "status": "deferred"
+  }
+}

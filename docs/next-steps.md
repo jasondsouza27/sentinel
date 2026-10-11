@@ -1,48 +1,50 @@
 # Sentinel: current state and next steps
 
-Updated on 2026-10-09. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
+Updated on 2026-10-11. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
 
-## Current priority: broaden URL data before deployment
+## Current priority: paired message–link evidence and URL error analysis
 
-On 2026-10-09 the [source investigation](url-data-expansion-feasibility-2026-10-09.md)
-verified the official Mendeley URL-label CSV and measured 92 legitimate query URLs across
-87 domain groups outside the existing protected primary domains. This is preliminary
-coverage, before joint conflicts and new reservations. The user approved that direction;
-the [written URL-v3 specification](superpowers/specs/2026-10-09-sentinel-url-v3-design.md)
-was approved on 2026-10-09. Its [eleven-task implementation plan](superpowers/plans/2026-10-09-sentinel-url-v3.md) was approved for inline implementation with one independent final review; implementation has started in an isolated worktree. No new rows are admitted or model fitted.
+The approved [URL-v3 specification](superpowers/specs/2026-10-09-sentinel-url-v3-design.md)
+and [implementation plan](superpowers/plans/2026-10-09-sentinel-url-v3.md) have produced
+a frozen, measured URL-only study. A checksum-pinned Mendeley source contributed 11,430
+observations; the joint audit retained 671,521 canonical URLs. All coverage gates passed,
+so a 200,000-row development set was used for ten CPU configurations. The selected
+candidate scored 0.927 F1/5.76% FPR on 166,369 primary URLs and 0.839 F1/22.39% FPR
+on 4,348 supplemental URLs. Legitimate query URLs were falsely flagged 13/52 and 27/44.
+A synthetic `example.com` inference was also falsely flagged. These results block
+live learned warnings. Read the [public model card](../output/research/url-ml-v3/model-card.md),
+[aggregate evaluation](../output/research/url-ml-v3/evaluation.json),
+[delivery record](url-v3-delivery-record.md) and [workflow](url-v3-workflow.md).
+The original 27 protected files, 17 exact dependency pins and empty paired-message intake
+stayed unchanged.
 
-A focused [URL-v2 data/robustness specification](superpowers/specs/2026-10-07-sentinel-url-v2-data-design.md)
-was approved on 2026-10-07. Its [implementation plan](superpowers/plans/2026-10-07-sentinel-url-v2-data.md)
-was approved for inline implementation with one independent final review.
-The [v2 reproduction guide](url-v2-workflow.md) documents implemented acquisition,
-provenance, isolation, bounded model/control fits and frozen evaluation commands.
-Real acquisition is complete: 666,315 observations across 77 shards, 660,130 canonical
-URLs after audit and a 200,000-row frozen development set. Paths/non-www coverage passes,
-but only **6 benign query-bearing development URLs** remain against a minimum of 30.
-Training is blocked; no v2 fit, calibration, artifact, accuracy or comparison was produced.
-The [research card](../output/research/url-ml-v2/model-card.md), [aggregate status](../output/research/url-ml-v2/research-status.json)
-and [delivery record](url-v2-delivery-record.md) record measured counts, hashes, resources
-and review dispositions. The [source audit](url-v2-source-audit.md) retains both initial
-feasibility evidence and complete acquisition receipts. Official ISCX access and authenticated
-chronological validation remain unavailable.
+The supplemental set is group-held-out from a source that also appears in development;
+neither it nor the primary historical set supplies independent contemporary or authenticated
+temporal validation. Keep both final sets sealed. Any error analysis that changes features,
+thresholds, sources or cohort assignments requires a new version and a newly reserved final
+set. URL-v2 remains an honest unavailable outcome because only six legitimate query URLs
+passed its development gate; its [record](url-v2-delivery-record.md) is preserved.
 
-The next URL research step is a documented source of diverse, annotated legitimate URLs,
-including queries, followed by a **new** protocol/version and independent final set. Keep
-these assignments frozen: do not change seed/cap/minima, invent rows or reuse final rows
-to rescue coverage. This is a data-quality result, not a reason to deploy the v1 model.
+The central year-long question is whether genuinely paired message and URL evidence
+improves suspicious-message detection. The existing 100 phishing and 18 possible legitimate
+SMS candidates are unreviewed, and the intake is empty. The next data milestone is to
+collect independently verified legitimate pairs from comparable channels, complete the
+two-reviewer admission workflow and freeze a group-isolated paired test set. The extension
+and browser checks below can continue independently. No URL-v3 result proves message–link
+fusion, account authenticity, harassment patterns or live-site safety.
 
 The first ML milestone is integrated and pushed to the private GitHub repository. The independent review findings were reproduced and fixed; the [delivery record](url-ml-delivery-record.md) documents all decisions and correction audits.
 
 The first approved [ML foundation plan](superpowers/plans/2026-10-05-sentinel-ml-foundation.md) has produced an audited 235,343-URL dataset, domain-isolated frozen splits, two trained CPU branches, separate calibration, immutable artifacts, inference CLI and optional API. See the [reproduction workflow](url-ml-workflow.md) and [final model card](../output/research/url-ml-v1/model-card.md).
 
-The benchmark achieved 97.07% positive F1, but **url-v1 is research-only**. All legitimate source rows are HTTPS www homepages with empty paths and queries; ordinary benign documentation URLs are falsely flagged. This measured source-format confounding persists despite domain isolation. Next, acquire diverse legitimate paths/queries and non-www hosts alongside phishing examples, define a new frozen version and independent source/temporal holdout, and evaluate again before enabling learned live warnings. Do not tune or whitelist against the staged smoke cases or the final test.
+The benchmark achieved 97.07% positive F1, but **url-v1 is research-only**. All legitimate source rows are HTTPS www homepages with empty paths and queries; ordinary benign documentation URLs are falsely flagged. This measured source-format confounding persists despite domain isolation. The URL-v3 study above tests broader formats, but its supplemental false-positive rate and missing independent/temporal validation still prevent activation. Do not tune or whitelist against the staged smoke cases or the final test.
 
 The [approved year-long design](superpowers/specs/2026-10-05-sentinel-year-long-design.md) still defines the balanced research/application scope. The main paired-message question, contextual harm/profile ML, team investigation workflows, dashboard redesign and user pilot remain future milestones. The human collection and browser work below can continue independently.
 
 ## Ready now
 
 - The local app, shared API, Chrome extension, research baselines and collection workflow are implemented.
-- All 78 Python tests without ML dependency skips and 12 web-client checks passed in a fresh locked Python 3.11 environment on 2026-10-06. The original dependency-free server entry point also passed separately. The [web-app browser test record](web-app-smoke-test-2026-10-05.md) covers analysis, recovery, saving, reopening, feedback and layout. Chrome toolbar/context-menu checks, a confirmed report download and UI deletion remain pending.
+- The locked CPython 3.11 suite passed 190 Python checks with zero skips; the Node web suite passed 12/12 with zero skips. The Python suite includes the stdlib-only server contract. The [web-app browser test record](web-app-smoke-test-2026-10-05.md) covers analysis, recovery, saving, reopening, feedback and layout. Chrome toolbar/context-menu checks, a confirmed report download and UI deletion remain pending.
 - `data/curation/ncsu_candidates.csv` contains 100 unreviewed phishing candidates.
 - `data/curation/legitimate_sms_candidates.csv` contains 18 unreviewed potential legitimate SMS candidates from UCI and NUS.
 - Source and candidate hashes are recorded in the local audit files. Raw sources and candidate sheets stay local and ignored by Git.
