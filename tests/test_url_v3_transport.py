@@ -1,4 +1,5 @@
 import hashlib
+import http.client
 import io
 import json
 import tempfile
@@ -20,6 +21,17 @@ class Response(io.BytesIO):
         if self.fail_after is not None and self.tell()>=self.fail_after: raise TimeoutError("SECRET")
         if self.fail_after is not None: n=min(n,self.fail_after-self.tell())
         return super().read(n)
+
+class PartialBufferedBody(io.RawIOBase):
+    def __init__(self):
+        self.calls=0; self.consumed=0
+    def readable(self): return True
+    def readinto(self, buffer):
+        self.calls+=1
+        if self.calls==1:
+            buffer[:3]=b"abc"; self.consumed=3
+            return 3
+        raise TimeoutError("buffered body timeout")
 
 class TransportTests(unittest.TestCase):
     def setUp(self):
@@ -100,6 +112,30 @@ class TransportTests(unittest.TestCase):
             self.assertFalse((self.root/".pending-fetch-test").exists())
             with patch("sentinel.url_v3.transport.open_response",return_value=Response()): self.fetch(session)
             self.assertEqual(session.snapshot()["received_body_bytes"],8)
+    def test_timeout_inside_buffered_http_read_keeps_reserved_budget_across_reopen(self):
+        self.config["acquisition"]["max_received_body_bytes"]=8
+        raw=PartialBufferedBody()
+        response=http.client.HTTPResponse(SimpleNamespace(
+            makefile=lambda mode:io.BufferedReader(raw,buffer_size=8)))
+        response.chunked=False; response.length=None
+        try:
+            with self.cls(self.root,self.config) as session:
+                attempt={"received_bytes":0}
+                with self.assertRaises(TimeoutError): session._read(response,8,attempt)
+                self.assertEqual(raw.consumed,3)
+                self.assertEqual(attempt["received_bytes"],0)
+                self.assertEqual(session.snapshot()["received_body_bytes"],0)
+                self.assertEqual(session.snapshot()["interrupted_body_bytes_upper_bound"],8)
+                self.assertEqual(session.snapshot()["inflight_bytes"],0)
+        finally:
+            response.close()
+        with self.cls(self.root,self.config) as resumed:
+            self.assertEqual(resumed.snapshot()["interrupted_body_bytes_upper_bound"],8)
+            with patch("sentinel.url_v3.transport.open_response") as request:
+                with self.assertRaises(DatasetError) as caught: self.fetch(resumed)
+                self.assertEqual(caught.exception.reason,"source_cumulative_body_budget_exceeded")
+                request.assert_not_called()
+
     def test_all_redirect_statuses_close_without_draining(self):
         from sentinel.url_v2.ranges import ApprovedRedirect
         for status in (301,302,303,307,308):

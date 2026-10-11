@@ -71,8 +71,9 @@ class AcquisitionSession:
         except http.client.IncompleteRead as exc:
             self._credit(exc.partial,n,attempt); raise
         except BaseException:
-            # Ordinary reported I/O failures expose no additional body bytes.
-            # A process crash leaves the pre-read reservation on disk.
+            # A buffered read may consume body bytes before failing without
+            # exposing a partial buffer. Keep the full reservation charged.
+            self.state["interrupted_body_bytes_upper_bound"]+=self.state["inflight_bytes"]
             self.state["inflight_bytes"]=0; self._save(); raise
         self._credit(chunk,n,attempt); return chunk
     def _credit(self,chunk,n,attempt):
