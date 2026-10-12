@@ -43,11 +43,12 @@ function node(tag, className, text) {
   return element;
 }
 
-function assessment(title, item, isProfile = false) {
+function assessment(title, item, isProfile = false, isPaired = false) {
   const card = node('section', 'assessment');
   const head = node('div', 'assessment-head');
   head.append(node('h4', '', title));
-  const level = isProfile ? item.status : item.level;
+  const level = isPaired ? (item.state === 'available' ? item.category : item.state)
+    : isProfile ? item.status : item.level;
   head.append(node('span', `badge ${level}`, level.replaceAll('_', ' ')));
   card.append(head);
   if (item.evidence?.length) {
@@ -55,7 +56,8 @@ function assessment(title, item, isProfile = false) {
     for (const evidence of item.evidence) list.append(node('li', '', evidence));
     card.append(list);
   } else {
-    card.append(node('p', '', 'No warning signs were identified from the available information.'));
+    card.append(node('p', '', isPaired ? 'No additional observed warning signs to display.'
+      : 'No warning signs were identified from the available information.'));
   }
   if (item.unavailable_checks?.length) {
     for (const missing of item.unavailable_checks) card.append(node('p', '', `Could not check: ${missing}`));
@@ -71,11 +73,13 @@ function assessment(title, item, isProfile = false) {
 
 function renderResult(result) {
   const target = $('result-content');
-  target.replaceChildren(
+  const cards = [
     assessment('Message & link', result.fraud),
     assessment('Harmful content', result.harmful_content),
     assessment('Profile indicators', result.profile, true),
-  );
+  ];
+  if (result.paired_assessment) cards.push(assessment('Paired message–link model', result.paired_assessment, false, true));
+  target.replaceChildren(...cards);
   target.hidden = false;
   $('result-empty').hidden = true;
   $('result-actions').hidden = false;

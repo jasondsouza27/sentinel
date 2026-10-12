@@ -10,6 +10,25 @@ from sentinel.server import create_server
 
 
 class ServerTests(unittest.TestCase):
+    def test_optional_paired_model_does_not_break_local_rule_analysis(self):
+        with tempfile.TemporaryDirectory() as directory:
+            server = create_server(port=0, db_path=Path(directory) / "cases.db",
+                                   paired_model_path=Path(directory) / "missing-artifact")
+            worker = threading.Thread(target=server.serve_forever, daemon=True)
+            worker.start()
+            try:
+                base = f"http://127.0.0.1:{server.server_port}"
+                body = json.dumps({"message": "Pay a fee", "url": "https://example.com"}).encode()
+                with urlopen(Request(base + "/api/analyze", data=body,
+                                     headers={"Content-Type": "application/json"}), timeout=3) as response:
+                    result = json.load(response)
+                self.assertIn("fraud", result)
+                self.assertEqual(result["paired_assessment"]["state"], "unavailable")
+            finally:
+                server.shutdown()
+                server.server_close()
+                worker.join(timeout=3)
+
     def test_forbidden_post_consumes_bounded_body_before_response(self):
         # Closing with unread POST bytes can reset the connection on Windows,
         # hiding the intended HTTP 403 from the client.

@@ -46,6 +46,21 @@ class AnalysisTests(unittest.TestCase):
         self.assertIn("combined", result["fraud"]["model_votes"])
         self.assertIn("not calibrated", result["fraud"]["model_note"])
 
+    def test_optional_paired_result_does_not_change_default_or_rule_fraud(self):
+        payload = {"message": "Pay now", "url": "https://example.com/pay"}
+        default = analyze(payload)
+        self.assertNotIn("paired_assessment", default)
+
+        class Paired:
+            def assess(self, message, url):
+                return {"state": "unavailable", "category": "not_assessed", "evidence": [],
+                        "uncertainty": "Not released", "unavailable_checks": ["Research only"],
+                        "action": "Verify independently", "model_version": None}
+
+        optional = analyze(payload, paired_model=Paired())
+        self.assertEqual(optional["fraud"], default["fraud"])
+        self.assertEqual(optional["paired_assessment"]["state"], "unavailable")
+
 
 if __name__ == "__main__":
     unittest.main()

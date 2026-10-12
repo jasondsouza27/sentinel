@@ -268,3 +268,23 @@ test('a failed save can be retried for the current assessment', async () => {
   assert.equal(app.get('save-button').disabled, true);
   assert.equal(app.get('save-status').textContent, 'Saved locally');
 });
+
+test('optional paired state and category render as text without changing rule cards', async () => {
+  const app = await client();
+  app.get('message').value = 'Fee request';
+  app.replyWith(async () => ({
+    ...result('Rule evidence'),
+    paired_assessment: {
+      state: 'unavailable', category: 'not_assessed', evidence: ['<img src=x onerror=alert(1)>'],
+      unavailable_checks: ['Research artifact only'], uncertainty: 'No live model claim',
+      action: 'Verify independently', model_version: null,
+    },
+  }));
+  await app.submit();
+  const rendered = app.get('result-content').textContent;
+  assert.match(rendered, /Rule evidence/);
+  assert.match(rendered, /Paired message.*link/i);
+  assert.match(rendered, /Research artifact only/);
+  assert.match(rendered, /<img src=x onerror=alert\(1\)>/);
+  assert.doesNotMatch(rendered, /undefined/);
+});
