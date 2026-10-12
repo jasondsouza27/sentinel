@@ -1,0 +1,227 @@
+{
+  "audited_on": "2026-10-12",
+  "cad": {
+    "archive_bytes": 9941773,
+    "exact_target_duplicate_probe": {
+      "cross_pool_test_normalized_target_matches": 15,
+      "development_pool": {
+        "context_coverage": {
+          "no_parent_reference": 524,
+          "parent_text_unavailable": 18,
+          "resolved_parent_text": 1180,
+          "unresolved_parent_reference": 1260
+        },
+        "repeated_normalized_targets": 49
+      },
+      "method": "Exact canonical parent ID lookup on full author v1.1 source; context text from same thread only; source sentinels are unavailable. Target duplicates use casefold, whitespace collapse and linebreak marker conversion only.",
+      "published_test": {
+        "context_coverage": {
+          "no_parent_reference": 423,
+          "parent_text_unavailable": 66,
+          "resolved_parent_text": 2888,
+          "unresolved_parent_reference": 1930
+        },
+        "repeated_normalized_targets": 60
+      }
+    },
+    "license_id_from_record": "cc-by-4.0",
+    "member_sha256": "7287d635e1d35ae1e64779ffe107df16f493c6ccc4084c4497bbf3f56ae0f349",
+    "parent_alias_probe": {
+      "development_pool": {
+        "coverage": {
+          "direct_parent": 1171,
+          "no_parent_reference": 524,
+          "parent_text_unavailable_or_unsupported": 63,
+          "verified_root_post_title_alias": 1224
+        },
+        "directed_abuse_with_available_parent": 382
+      },
+      "published_test": {
+        "coverage": {
+          "direct_parent": 2877,
+          "no_parent_reference": 423,
+          "parent_text_unavailable_or_unsupported": 83,
+          "verified_root_post_title_alias": 1924
+        },
+        "directed_abuse_with_available_parent": 819
+      }
+    },
+    "recommended_pooled_development": {
+      "directed_abuse_utterances": 422,
+      "known_author_components": 241,
+      "largest_component": 711,
+      "largest_component_directed_abuse": 127,
+      "largest_fraction": 0.23843058350100604,
+      "method": "Pool original train+dev after removing whole threads with any known test author; connect remaining threads by known authors before allocating train/validation/calibration. Published test stays fixed.",
+      "other_components_directed_abuse": 295,
+      "threads": 405,
+      "utterances": 2982
+    },
+    "record_url": "https://zenodo.org/records/4881008",
+    "selected_member": "data/cad_v1_1.tsv",
+    "sequential_purge_alternative": {
+      "dev": {
+        "counter_speech_only_utterances": 23,
+        "directed_abuse_utterances": 298,
+        "missing_target_author": 59,
+        "neutral_only_utterances": 1298,
+        "original_threads": 304,
+        "retained_threads": 184,
+        "retained_utterances": 1627,
+        "slur_only_utterances": 8
+      },
+      "method": "Keep published test threads; remove whole dev threads sharing any known author in test (including context rows); remove whole train threads sharing known authors in test or retained dev. This is a pre-modeling feasibility audit, not a frozen protocol or evaluation.",
+      "retained_dev_author_components": {
+        "groups": 102,
+        "largest_thread_count": 42
+      },
+      "test": {
+        "counter_speech_only_utterances": 59,
+        "directed_abuse_utterances": 906,
+        "missing_target_author": 125,
+        "neutral_only_utterances": 4325,
+        "original_threads": 342,
+        "retained_threads": 342,
+        "retained_utterances": 5307,
+        "slur_only_utterances": 17
+      },
+      "train": {
+        "counter_speech_only_utterances": 2,
+        "directed_abuse_utterances": 102,
+        "missing_target_author": 55,
+        "neutral_only_utterances": 1123,
+        "original_threads": 743,
+        "retained_threads": 206,
+        "retained_utterances": 1229,
+        "slur_only_utterances": 2
+      }
+    },
+    "source_md5": "md5:63091d7a48bac5666e818fefed1f6575",
+    "source_sha256": "69f5ed2fd7b40de21fe54c620549f0be6c34eaf55b8de06ff481cabe3e9476d2",
+    "source_url": "https://zenodo.org/api/records/4881008/files/data.zip/content",
+    "structure_audit": {
+      "annotation_rows": 27494,
+      "conflicting_text_for_same_utterance": 0,
+      "context_annotation_counts": {
+        "\"NA\"": 21935,
+        "CurrentContent": 3993,
+        "PreviousContent": 1566
+      },
+      "eligible_label_set_counts": {
+        "AffiliationDirectedAbuse": 958,
+        "AffiliationDirectedAbuse,CounterSpeech": 4,
+        "AffiliationDirectedAbuse,CounterSpeech,IdentityDirectedAbuse": 1,
+        "AffiliationDirectedAbuse,IdentityDirectedAbuse": 154,
+        "AffiliationDirectedAbuse,IdentityDirectedAbuse,PersonDirectedAbuse": 28,
+        "AffiliationDirectedAbuse,IdentityDirectedAbuse,Slur": 1,
+        "AffiliationDirectedAbuse,PersonDirectedAbuse": 48,
+        "AffiliationDirectedAbuse,Slur": 5,
+        "CounterSpeech": 190,
+        "CounterSpeech,IdentityDirectedAbuse": 4,
+        "CounterSpeech,PersonDirectedAbuse": 17,
+        "CounterSpeech,Slur": 1,
+        "IdentityDirectedAbuse": 1931,
+        "IdentityDirectedAbuse,PersonDirectedAbuse": 178,
+        "IdentityDirectedAbuse,PersonDirectedAbuse,Slur": 1,
+        "IdentityDirectedAbuse,Slur": 7,
+        "Neutral": 18999,
+        "PersonDirectedAbuse": 778,
+        "PersonDirectedAbuse,Slur": 4,
+        "Slur": 108
+      },
+      "eligible_split_utterance_counts": {
+        "dev": 4526,
+        "test": 5307,
+        "train": 13584
+      },
+      "eligible_utterances": 23417,
+      "grouping_method": "QUOTE_NONE; strip metadata quote wrapper; ignore empty/NA/nan/none/deleted/removed marker IDs. Do not apply metadata unquoting to comment text.",
+      "missing_metadata_markers": {
+        "info_id.link": {
+          "missing": 2870,
+          "nonmissing_unique": 1377,
+          "quoted_values": 2870
+        },
+        "info_thread.id": {
+          "missing": 0,
+          "nonmissing_unique": 1395,
+          "quoted_values": 0
+        },
+        "meta_author": {
+          "missing": 1875,
+          "nonmissing_unique": 11122,
+          "quoted_values": 0
+        }
+      },
+      "primary_annotation_counts": {
+        "AffiliationDirectedAbuse": 1349,
+        "CounterSpeech": 220,
+        "IdentityDirectedAbuse": 2729,
+        "Neutral": 21935,
+        "PersonDirectedAbuse": 1112,
+        "Slur": 149
+      },
+      "published_split_overlap": {
+        "dev_test": {
+          "authors": 203,
+          "threads": 0
+        },
+        "train_dev": {
+          "authors": 573,
+          "threads": 0
+        },
+        "train_test": {
+          "authors": 501,
+          "threads": 0
+        }
+      },
+      "quote_mode": "QUOTE_NONE (matches author loader)",
+      "source_audit_elapsed_seconds": 47.047,
+      "source_sha256": "69f5ed2fd7b40de21fe54c620549f0be6c34eaf55b8de06ff481cabe3e9476d2",
+      "thread_components": {
+        "groups": 1389,
+        "largest_fraction": 0.01251227740530384,
+        "largest_group": 293
+      },
+      "thread_link_author_components": {
+        "groups": 263,
+        "largest_fraction": 0.9574240936072085,
+        "largest_group": 22420
+      },
+      "thread_link_components": {
+        "groups": 1389,
+        "largest_fraction": 0.01251227740530384,
+        "largest_group": 293
+      },
+      "unique_utterances": 26550
+    }
+  },
+  "ccc": {
+    "duplicate_normalized_targets": 1,
+    "empty_parent": 0,
+    "empty_target": 0,
+    "git_blob_sha1": "734f1a41e92ebe2c217e9ed245e7c3767953a441",
+    "largest_shared_text_component": 3,
+    "limit": "Author CSV lacks article/thread IDs and parent IDs. Shared text groups cannot establish complete conversation isolation. TFDS enrichment is a different, unaudited source.",
+    "rows": 9929,
+    "shared_text_components": 9838,
+    "source_bytes": 7761632,
+    "source_commit": "5df49c294e6a41f0ba351e65fda7c315aa4cc168",
+    "source_sha256": "d424a5b6cd9dc90156a6caedb09634262ea92e619c323221b81eb3f72702ae29",
+    "source_url": "https://raw.githubusercontent.com/ipavlopoulos/context_toxicity/5df49c294e6a41f0ba351e65fda7c315aa4cc168/data/CCC.csv",
+    "unique_target_ids": 9929
+  },
+  "final_test_scored": false,
+  "models_trained": false,
+  "pending_before_freeze": [
+    "final task/label mapping and codebook review",
+    "canonical raw text, username/URL masking and duplicate leakage audit",
+    "ancestry/cycle/context limits and text-only exclusion audit",
+    "class/group support after every exclusion and actual four-way allocation",
+    "model/resource experiment specification and human challenge-set protocol"
+  ],
+  "privacy": "Aggregate counts and source hashes only. Raw comments, usernames, target IDs and annotator IDs are not serialized.",
+  "protocol_frozen": false,
+  "schema_version": 1,
+  "status": "source_feasibility_audit_only"
+}

@@ -4,7 +4,11 @@ Updated on 2026-10-12. The active project folder on this computer is `C:\Users\J
 
 The [paired-study software workflow](paired-study-workflow.md) is implemented. It covers evidence-ledger binding, blinded two-reviewer packets, a counts-only `audit`, group-isolated four-way lock, CPU branch/fusion models, a single-use final evaluation receipt and a research-only optional API card. The synthetic integration test verifies software behavior only. The real `data/curation/intake.csv` remains empty, so the current paired-study result is **unavailable**; no phishing-fusion performance or live learned warning is claimed.
 
-## Current priority: paired message–link evidence and URL error analysis
+## Current priority: English conversation/harm module
+
+The user selected the English conversation/harm module as the next engineering milestone. The [source feasibility investigation](context-harm-source-audit-2026-10-12.md) verifies CAD v1.1 and CCC source structure, labels and grouping limits. It recommends a test-preserving author purge and pooled CAD development cohort, subject to the final label/context/duplicate gates. The focused specification and implementation plan still require review; the harm module currently remains rule-based. Real paired-message collection can proceed alongside this work.
+
+## Completed URL benchmark and paired-message data work
 
 The approved [URL-v3 specification](superpowers/specs/2026-10-09-sentinel-url-v3-design.md)
 and [implementation plan](superpowers/plans/2026-10-09-sentinel-url-v3.md) have produced
@@ -46,7 +50,7 @@ The [approved year-long design](superpowers/specs/2026-10-05-sentinel-year-long-
 ## Ready now
 
 - The local app, shared API, Chrome extension, research baselines and collection workflow are implemented.
-- The locked CPython 3.11 suite passed **234 Python checks with zero skips** in 314.030 seconds; the Node web/extension suites passed **14/14 with zero skips**. The synthetic paired model worker smoke recorded a 144,351,232-byte peak and 58.268-second fit for 12 invented pairs and seven candidates; these are engineering measurements, not a phishing result. The [web-app browser test record](web-app-smoke-test-2026-10-05.md) covers analysis, recovery, saving, reopening, feedback and layout. Chrome toolbar/context-menu checks, a confirmed report download and UI deletion remain pending.
+- The locked CPython 3.11 suite passed **236 Python checks with zero skips** in 481.235 seconds after paired-study review fixes; the Node web/extension suites passed **14/14 with zero skips**. The synthetic paired model worker smoke recorded a 144,351,232-byte peak and 58.268-second fit for 12 invented pairs and seven candidates; these are engineering measurements, not a phishing result. The [web-app browser test record](web-app-smoke-test-2026-10-05.md) covers analysis, recovery, saving, reopening, feedback and layout. Chrome toolbar/context-menu checks, a confirmed report download and UI deletion remain pending.
 - `data/curation/ncsu_candidates.csv` contains 100 unreviewed phishing candidates.
 - `data/curation/legitimate_sms_candidates.csv` contains 18 unreviewed potential legitimate SMS candidates from UCI and NUS.
 - Source and candidate hashes are recorded in the local audit files. Raw sources and candidate sheets stay local and ignored by Git.
