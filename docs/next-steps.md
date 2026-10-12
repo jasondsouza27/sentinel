@@ -1,12 +1,12 @@
 # Sentinel: current state and next steps
 
-Updated on 2026-10-12. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
+Updated on 2026-10-13. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
 
 The [paired-study software workflow](paired-study-workflow.md) is implemented. It covers evidence-ledger binding, blinded two-reviewer packets, a counts-only `audit`, group-isolated four-way lock, CPU branch/fusion models, a single-use final evaluation receipt and a research-only optional API card. The synthetic integration test verifies software behavior only. The real `data/curation/intake.csv` remains empty, so the current paired-study result is **unavailable**; no phishing-fusion performance or live learned warning is claimed.
 
 ## Current priority: English conversation/harm module
 
-The user selected the English conversation/harm module as the next engineering milestone. The [source feasibility investigation](context-harm-source-audit-2026-10-12.md) verifies CAD v1.1 and CCC source structure, labels and grouping limits. It recommends a test-preserving author purge and pooled CAD development cohort, subject to the final label/context/duplicate gates. The focused specification and implementation plan still require review; the harm module currently remains rule-based. Real paired-message collection can proceed alongside this work.
+The user selected the English conversation/harm module as the next engineering milestone and approved the CAD-based direction. The [source feasibility investigation](context-harm-source-audit-2026-10-12.md) verifies CAD v1.1 and CCC source structure, labels and grouping limits. The [focused specification](superpowers/specs/2026-10-13-sentinel-context-harm-design.md) is written and awaiting review. It defines a test-preserving author purge, fair target/context comparisons, bounded CPU and compact-encoder experiments, ordered app turns and an empty challenge-review workflow. The implementation plan follows specification approval; the harm module currently remains rule-based. Real paired-message collection can proceed alongside this work.
 
 ## Completed URL benchmark and paired-message data work
 
