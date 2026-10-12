@@ -1,6 +1,6 @@
 # Sentinel: English conversation and directed-abuse design
 
-Date: 2026-10-13. Status: **proposed for written-spec review**. The user approved the CAD-based direction and bounded compact-encoder pilot after the source investigation. Implementation and live model activation have not been approved by this document's existence. Preserve the user's execution preference: implementation in this chat with one final independent review, after the written specification and plan reviews.
+Date: 2026-10-13. Status: **approved written specification; implementation plan awaiting review**. The user approved the CAD-based direction and bounded compact-encoder pilot after the source investigation, then approved this written specification on 2026-10-13. Specification approval permits preparing the plan; product implementation and live model activation have not occurred. Preserve the user's execution preference: implementation in this chat with one final independent review, after plan review.
 
 ## Purpose and experiment
 

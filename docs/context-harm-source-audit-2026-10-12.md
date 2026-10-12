@@ -1,6 +1,6 @@
 # English conversation/harm module: source feasibility investigation
 
-Date: 2026-10-12. Status: **source investigation complete; focused design and implementation are pending review**. The user selected this module as Sentinel's next milestone. No harm model has been trained, no protocol has been frozen, and no final test has been scored.
+Date: 2026-10-12; taxonomy clarification and design status updated 2026-10-13. Status: **source investigation complete; focused specification approved and implementation plan pending review**. The user selected this module as Sentinel's next milestone. No harm model has been trained, no protocol has been frozen, and no final test has been scored.
 
 The [approved year-long design](superpowers/specs/2026-10-05-sentinel-year-long-design.md) requires an English module using ordered conversation turns, a message-only/context comparison, conversation/user isolation where the source permits it, and human-reviewed challenge cases. The current `sentinel.analysis` implementation still uses phrase rules and a quotation/reporting heuristic. The [aggregate audit](../output/research/context-harm-source-audit.json) contains source hashes and counts only; it contains no comments, usernames or annotator IDs.
 
