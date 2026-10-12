@@ -39,6 +39,22 @@ def _environment():
             "joblib": joblib.__version__}
 
 
+def _implementation_identity() -> dict:
+    """Bind a model to the exact local training/scoring code and pinned ML lock."""
+    root = Path(__file__).resolve().parents[2]
+    paired = (root / "sentinel" / "paired").glob("*.py")
+    support = (
+        "sentinel/curation.py", "sentinel/datasets.py", "sentinel/research.py",
+        "sentinel/url_ml/calibration.py", "sentinel/url_ml/contracts.py",
+        "sentinel/url_ml/features.py", "sentinel/url_ml/metrics.py",
+        "sentinel/url_ml/urls.py", "requirements-ml-win-py311.lock.txt",
+    )
+    paths = sorted({*paired, *(root / name for name in support)})
+    files = {path.relative_to(root).as_posix(): _sha(path) for path in paths}
+    digest = hashlib.sha256(json.dumps(files, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    return {"sha256": digest, "files": files}
+
+
 def export_study_artifact(selections: dict, calibrators: dict, protocol: dict, output: Path) -> dict:
     import joblib
 
@@ -56,6 +72,7 @@ def export_study_artifact(selections: dict, calibrators: dict, protocol: dict, o
         metadata = {
             "schema_version": SCHEMA_VERSION, "release_status": "research_only",
             "protocol_sha256": protocol_hash, "environment": _environment(),
+            "implementation": _implementation_identity(),
             "branches": {name: {"config_id": selection.candidate.config_id,
                                 "raw_threshold": selection.raw_threshold,
                                 "calibration_status": calibrators[name].status,
@@ -70,6 +87,7 @@ def export_study_artifact(selections: dict, calibrators: dict, protocol: dict, o
             "Research-only artifact. No learned phishing warning may be served until an independent "
             "release review creates a separately approved artifact.\n\n"
             f"Protocol manifest SHA-256: `{protocol_hash}`.\n\n"
+            f"Implementation SHA-256: `{metadata['implementation']['sha256']}`.\n\n"
             "The paired cohort, source balance, held-out errors, calibration and false positives "
             "must be reviewed before deployment. An unavailable real-data gate is not a model result.\n",
             encoding="utf-8",
@@ -106,6 +124,8 @@ def inspect_study_artifact(path: Path) -> dict:
         raise ValueError("unsupported paired artifact metadata")
     if metadata.get("environment") != _environment():
         raise ValueError("artifact environment is unsupported or foreign")
+    if metadata.get("implementation") != _implementation_identity():
+        raise ValueError("artifact implementation or dependency lock changed")
     if metadata.get("release_status") != "research_only":
         raise ValueError("approved release format is not available in artifact schema 1")
     if not _HEX.fullmatch(metadata.get("protocol_sha256", "")):

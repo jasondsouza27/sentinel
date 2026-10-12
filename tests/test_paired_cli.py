@@ -34,14 +34,17 @@ class PairedCliTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             (root / "study-v1").mkdir()
-            first = reserve_final_access(root, "a" * 64, "b" * 64)
+            first = reserve_final_access(root, "a" * 64, "b" * 64, "c" * 64)
             self.assertEqual(first["state"], "reserved")
-            self.assertEqual(first, reserve_final_access(root, "a" * 64, "b" * 64))
+            self.assertEqual(first["evaluation_sha256"], "c" * 64)
+            self.assertEqual(first, reserve_final_access(root, "a" * 64, "b" * 64, "c" * 64))
             with self.assertRaises(ValueError):
-                reserve_final_access(root, "a" * 64, "c" * 64)
+                reserve_final_access(root, "a" * 64, "d" * 64, "c" * 64)
+            with self.assertRaisesRegex(ValueError, "different"):
+                reserve_final_access(root, "a" * 64, "b" * 64, "d" * 64)
             (root / "study-v1" / "evaluation.json").write_text("{}", encoding="utf-8")
             with self.assertRaises(FileExistsError):
-                reserve_final_access(root, "a" * 64, "b" * 64)
+                reserve_final_access(root, "a" * 64, "b" * 64, "c" * 64)
 
     def test_training_rejects_changed_private_split_before_any_fit(self):
         with tempfile.TemporaryDirectory() as temporary:

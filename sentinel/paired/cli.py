@@ -11,8 +11,10 @@ from pathlib import Path
 
 from sentinel import curation
 
-from .admission import finalize_study_reviews, prepare_study_reviews
-from .artifacts import export_study_artifact, inspect_study_artifact, load_study_artifact
+from .admission import (finalize_study_reviews, prepare_study_reviews,
+                        validate_ledger, verify_finalized_study)
+from .artifacts import (_implementation_identity, export_study_artifact,
+                        inspect_study_artifact, load_study_artifact)
 from .contracts import PRODUCTION_CRITERIA, StudyCriteria
 from .readiness import readiness_report
 
@@ -35,6 +37,16 @@ def _protocol(root):
     from .protocol import _checked_manifest
     manifest, digest = _checked_manifest(Path(root), _parser())
     return {**manifest, "manifest_sha256": digest}
+
+
+def _verified_observation_dates(root: Path, test: list[dict]) -> dict[str, str]:
+    """Rejoin private, hash-verified observation dates without changing final CSV rows."""
+    verify_finalized_study(root)
+    ledger = validate_ledger(root, curation._intake(root))
+    ids = {row["case_id"] for row in test}
+    if not ids <= ledger.keys():
+        raise ValueError("final test lacks verified observation-date evidence")
+    return {case_id: ledger[case_id]["observed_on"].strip() for case_id in ids}
 
 
 def run_train(root: Path, *, criteria: StudyCriteria = PRODUCTION_CRITERIA) -> dict:
@@ -60,11 +72,21 @@ def run_train(root: Path, *, criteria: StudyCriteria = PRODUCTION_CRITERIA) -> d
             "protocol_sha256": protocol["manifest_sha256"], "branches": metadata["branches"]}
 
 
+def _evaluation_identity(replicates: int, implementation_sha256: str) -> str:
+    if replicates < 2:
+        raise ValueError("final evaluation needs at least two bootstrap replicates")
+    settings = {"schema_version": 1, "replicates": replicates, "bootstrap_seed": 42,
+                "validation_fpr_budget": .05, "implementation_sha256": implementation_sha256}
+    return hashlib.sha256(json.dumps(settings, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
 def reserve_final_access(root: Path, protocol_sha256: str, artifact_sha256: str,
+                         evaluation_sha256: str,
                          *, output_name: str = "evaluation.json") -> dict:
     root = Path(root)
-    if not _HEX.fullmatch(protocol_sha256) or not _HEX.fullmatch(artifact_sha256):
-        raise ValueError("final access needs valid protocol and artifact SHA-256")
+    if any(not _HEX.fullmatch(value) for value in
+           (protocol_sha256, artifact_sha256, evaluation_sha256)):
+        raise ValueError("final access needs valid protocol, artifact and evaluation SHA-256")
     if output_name not in {"evaluation.json", "final-evaluation"}:
         raise ValueError("unsupported final output identity")
     study = root / "study-v1"
@@ -74,11 +96,13 @@ def reserve_final_access(root: Path, protocol_sha256: str, artifact_sha256: str,
     receipt = study / "final_access.json"
     value = {"schema_version": 1, "state": "reserved", "protocol_sha256": protocol_sha256,
              "artifact_sha256": artifact_sha256, "output_name": output_name,
+             "evaluation_sha256": evaluation_sha256,
+             "implementation_sha256": _implementation_identity()["sha256"],
              "output_path_sha256": hashlib.sha256(str(output.resolve()).encode()).hexdigest()}
     if receipt.exists():
         saved = json.loads(receipt.read_text(encoding="utf-8"))
         if saved != value:
-            raise ValueError("final evaluation was reserved for a different protocol, artifact or output")
+            raise ValueError("final evaluation was reserved for a different protocol, artifact, implementation, configuration or output")
         return saved
     with receipt.open("x", encoding="utf-8") as stream:
         json.dump(value, stream, indent=2, sort_keys=True)
@@ -104,10 +128,13 @@ def run_evaluate(root: Path, *, criteria: StudyCriteria = PRODUCTION_CRITERIA,
         raise ValueError("artifact does not match frozen study")
     bundle = load_study_artifact(artifact_path)
     artifact_hash = curation._sha256(artifact_path / "manifest.json")
+    evaluation_hash = _evaluation_identity(replicates, metadata["implementation"]["sha256"])
     receipt = reserve_final_access(root, protocol["manifest_sha256"], artifact_hash,
+                                   evaluation_hash,
                                    output_name="final-evaluation")
     # The receipt is durable before this sealed loader may return row data.
     test = load_final_test(root, parser, receipt)
+    observation_dates = _verified_observation_dates(root, test)
     groups = connected_groups(test, parser)
     train_domains = {parser.normalize(row["url"]).domain_group for row in development["train"]}
     study = root / "study-v1"
@@ -116,9 +143,12 @@ def run_evaluate(root: Path, *, criteria: StudyCriteria = PRODUCTION_CRITERIA,
         report = evaluate_branches(bundle.selections, test, bundle.calibrators, groups,
                                    replicates=replicates, train_domains=train_domains,
                                    baseline_train=development["train"],
+                                   observation_dates=observation_dates,
                                    private_error_path=stage / "private_error_cases.json")
         report.update({"protocol_sha256": protocol["manifest_sha256"],
-                       "artifact_sha256": artifact_hash, "release_status": "research_only"})
+                       "artifact_sha256": artifact_hash, "evaluation_sha256": evaluation_hash,
+                       "implementation_sha256": metadata["implementation"]["sha256"],
+                       "release_status": "research_only"})
         (stage / "aggregate.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         os.replace(stage, study / "final-evaluation")
     return report

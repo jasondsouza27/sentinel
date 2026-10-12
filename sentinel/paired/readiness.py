@@ -74,6 +74,7 @@ def readiness_report(root: Path, criteria: StudyCriteria = PRODUCTION_CRITERIA) 
     by_channel = _cross(admitted, lambda row: row["channel"])
     known = [row for row in admitted if ledger[row["case_id"]]["observed_on"].strip()]
     by_month = _cross(known, lambda row: ledger[row["case_id"]]["observed_on"][:7])
+    by_collection_month = _cross(admitted, lambda row: row["collected_on"][:7])
     domain_count = len(set().union(*(research._domains(row) for row in admitted))) if admitted else 0
     group_count = _component_count(admitted)
     verified_legitimate = sum(
@@ -97,6 +98,8 @@ def readiness_report(root: Path, criteria: StudyCriteria = PRODUCTION_CRITERIA) 
         reasons.append("source_label_confounded")
     if _predicts_class(by_month):
         reasons.append("observation_period_confounded")
+    if _predicts_class(by_collection_month):
+        reasons.append("collection_period_confounded")
     if missing_legitimate:
         reasons.append("missing_legitimate_verification")
     base.update(
@@ -107,6 +110,7 @@ def readiness_report(root: Path, criteria: StudyCriteria = PRODUCTION_CRITERIA) 
         class_counts={label: counts[label] for label in ("0", "1")},
         source_class_counts=by_source, channel_class_counts=by_channel,
         month_class_counts=by_month,
+        collection_month_class_counts=by_collection_month,
         channel_counts=dict(sorted(Counter(row["channel"] for row in admitted).items())),
         observation_dates={"known": len(known), "unknown": len(admitted) - len(known)},
         independent_groups=group_count, distinct_domains=domain_count,

@@ -38,7 +38,8 @@ class WorkflowTests(unittest.TestCase):
             for i, case in enumerate(cases):
                 case["message"] = f"Unique software-only synthetic wording {i} {case['url']}"
             write_intake(root, cases)
-            complete_reviews(root, [i % 2 for i in range(40)])
+            complete_reviews(root, [i % 2 for i in range(40)],
+                             observed_months=[None if i % 3 == 0 else 9 for i in range(40)])
             criteria = StudyCriteria(min_total=20, min_per_class=10, min_test_per_class=2, min_test_domains=3)
             parser = UrlParser(Path(__file__).resolve().parents[1] / "resources" / "url-v2-suffix.dat")
             lock = freeze_study(root, parser, criteria=criteria)
@@ -48,6 +49,11 @@ class WorkflowTests(unittest.TestCase):
             report = run_evaluate(root, criteria=criteria, replicates=40)
             self.assertEqual(report["release_status"], "research_only")
             self.assertEqual(report["bootstrap"]["replicates"], 40)
+            observation = report["breakdowns"]["observation_date"]
+            self.assertEqual(observation["unknown"]["cases"] + observation["2026-09"]["cases"],
+                             report["final_cases"])
+            self.assertGreater(observation["2026-09"]["cases"], 0)
+            self.assertGreater(observation["unknown"]["cases"], 0)
             self.assertTrue((root / "study-v1" / "final_access.json").exists())
             self.assertTrue((root / "study-v1" / "final-evaluation" / "private_error_cases.json").exists())
             aggregate = (root / "study-v1" / "final-evaluation" / "aggregate.json").read_text()

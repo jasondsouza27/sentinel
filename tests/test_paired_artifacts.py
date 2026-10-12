@@ -3,6 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from sentinel.paired.artifacts import export_study_artifact, inspect_study_artifact, load_study_artifact
 from sentinel.paired.evaluation import Selection
@@ -28,6 +29,8 @@ class ArtifactTests(unittest.TestCase):
     def test_research_only_artifact_round_trip_and_no_overwrite(self):
         report = self._export()
         self.assertEqual(report["release_status"], "research_only")
+        self.assertEqual(len(report["implementation"]["sha256"]), 64)
+        self.assertIn("requirements-ml-win-py311.lock.txt", report["implementation"]["files"])
         self.assertEqual(inspect_study_artifact(self.output)["release_status"], "research_only")
         loaded = load_study_artifact(self.output)
         self.assertEqual(loaded.selections["message"].candidate.config_id, "message-v1")
@@ -57,6 +60,15 @@ class ArtifactTests(unittest.TestCase):
         (self.output / "manifest.sha256").write_text(hashlib.sha256(manifest_path.read_bytes()).hexdigest(), encoding="ascii")
         with self.assertRaisesRegex(ValueError, "environment"):
             load_study_artifact(self.output)
+
+    def test_changed_implementation_rejected_before_joblib_load(self):
+        self._export()
+        with patch("sentinel.paired.artifacts._implementation_identity",
+                   return_value={"sha256": "0" * 64, "files": {}}), \
+             patch("joblib.load") as deserialize:
+            with self.assertRaisesRegex(ValueError, "implementation"):
+                load_study_artifact(self.output)
+            deserialize.assert_not_called()
 
 
 if __name__ == "__main__":

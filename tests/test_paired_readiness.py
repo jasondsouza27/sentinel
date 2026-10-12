@@ -17,11 +17,13 @@ class ReadinessTests(unittest.TestCase):
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
 
-    def _final(self, *, sources=None, months=None, channels=None):
+    def _final(self, *, sources=None, months=None, channels=None, collected_months=None):
         rows = [intake_case(i, source=(sources or ["shared"] * 8)[i]) for i in range(8)]
         for i, row in enumerate(rows):
             row["message"] = f"Unique synthetic wording {i} {row['url']}"
             row["channel"] = (channels or ["sms", "email"] * 4)[i]
+            if collected_months is not None:
+                row["collected_on"] = f"2026-{collected_months[i]:02d}-01"
         write_intake(self.root, rows)
         labels = [i % 2 for i in range(8)]
         complete_reviews(self.root, labels, observed_months=months)
@@ -70,6 +72,16 @@ class ReadinessTests(unittest.TestCase):
         report = readiness_report(self.root, SMALL)
         self.assertIn("observation_period_confounded", report["reasons"])
         self.assertEqual(report["observation_dates"]["unknown"], 0)
+
+    def test_collection_period_confounds_with_unknown_observation_dates(self):
+        self._final(months=[None] * 8,
+                    collected_months=[1 if i % 2 == 0 else 9 for i in range(8)])
+        report = readiness_report(self.root, SMALL)
+        self.assertEqual(report["status"], "unavailable")
+        self.assertIn("collection_period_confounded", report["reasons"])
+        self.assertEqual(report["observation_dates"], {"known": 0, "unknown": 8})
+        self.assertEqual(report["collection_month_class_counts"]["2026-01"], {"0": 4, "1": 0})
+        self.assertEqual(report["collection_month_class_counts"]["2026-09"], {"0": 0, "1": 4})
 
     def test_unknown_observation_dates_are_not_fabricated(self):
         self._final(months=[None, 1, 1, 1, 1, 1, 1, 1])

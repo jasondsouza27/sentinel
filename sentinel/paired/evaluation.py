@@ -72,14 +72,15 @@ def fit_calibrators(selections: dict[str, Selection], calibration: list[dict]) -
     return output
 
 
-def _aggregate_breakdowns(rows, labels, branch_scores, thresholds, calibrators, *, train_domains=None, parser=None):
+def _aggregate_breakdowns(rows, labels, branch_scores, thresholds, calibrators, *,
+                          train_domains=None, parser=None, observation_dates=None):
     source_map = {name: f"source_{i + 1}" for i, name in
                   enumerate(sorted({row.get("source_name", "unknown") for row in rows}))}
     categories = defaultdict(list)
     for i, row in enumerate(rows):
         categories[("source", source_map[row.get("source_name", "unknown")])].append(i)
         categories[("channel", row.get("channel", "unknown"))].append(i)
-        date = row.get("observed_on", "")
+        date = observation_dates[row["case_id"]] if observation_dates is not None else row.get("observed_on", "")
         categories[("observation_date", date[:7] if date else "unknown")].append(i)
         url = row["url"]
         pattern = "query" if "?" in url else "punycode" if "xn--" in url else "userinfo" if "@" in url else "ordinary"
@@ -106,7 +107,8 @@ def evaluate_branches(selections: dict[str, Selection], test: list[dict],
                       calibrators: dict, groups: dict[str, str], *,
                       replicates: int = 1000, train_domains: set[str] | None = None,
                       baseline_train: list[dict] | None = None,
-                      private_error_path: Path | None = None) -> dict:
+                      private_error_path: Path | None = None,
+                      observation_dates: dict[str, str] | None = None) -> dict:
     labels = _labels(test)
     ids = [row["case_id"] for row in test]
     if set(labels) != {0, 1} or any(case_id not in groups for case_id in ids):
@@ -174,6 +176,7 @@ def evaluate_branches(selections: dict[str, Selection], test: list[dict],
                       "status": "complete" if support else "insufficient_group_support"},
         "breakdowns": _aggregate_breakdowns(test, labels, raw, thresholds, calibrators,
                                              train_domains=train_domains,
+                                             observation_dates=observation_dates,
                                              parser=getattr(selections["url"].candidate.model, "parser", None)),
     }
     if baseline_train is not None:
