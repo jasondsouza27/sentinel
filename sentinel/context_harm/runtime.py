@@ -291,6 +291,16 @@ def run_worker(command: list[str], limits: WorkerLimits, *, cancel: threading.Ev
         reason = 'worker_cleanup_failed'
     if outputs and any(pipe.overflow for pipe in outputs):
         reason = 'worker_output_limit_exceeded'
+    if reason == 'worker_exit_failure' and outputs:
+        try:
+            failure = json.loads(bytes(outputs[0].retained))
+            safe_reason = failure.get('reason') if isinstance(failure, dict) else None
+            if (isinstance(failure, dict) and set(failure) == {'status', 'reason'}
+                    and failure['status'] == 'unavailable' and isinstance(safe_reason, str)
+                    and re.fullmatch(r'(?:worker|cpu|neural|cuda|harm|fitting|protected)_[a-z0-9_]{1,88}', safe_reason)):
+                reason = safe_reason
+        except (ValueError, UnicodeError):
+            pass
     if reason is None:
         try:
             value = json.loads(bytes(outputs[0].retained), parse_constant=lambda _: (_ for _ in ()).throw(ValueError()))

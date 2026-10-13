@@ -313,6 +313,9 @@ def _score_limits(runtime):
 
 
 def score_candidate(candidate: CandidateRef, rows: tuple[HarmCase, ...], runtime: dict | None = None) -> ScoreBatch:
+    if candidate.kind in {'target_neural', 'context_neural'}:
+        from .neural import score_neural
+        return score_neural(candidate, rows, runtime)
     record = checked_candidate(candidate)
     limits, interpreter = _score_limits(runtime)
     features = tuple(_feature_row(row) for row in rows)

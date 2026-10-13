@@ -157,3 +157,12 @@ class OwnershipFailureTests(unittest.TestCase):
         self.assertFalse(marker.exists())
         self.assertTrue(record.measurements['cleanup_complete'])
 
+
+class SafeWorkerFailureTests(unittest.TestCase):
+    def test_owned_worker_preserves_controlled_failure_code_without_payload_text(self):
+        from sentinel.context_harm.runtime import run_worker
+        payload=b'{"operation":"invalid_operation","private":"PRIVATE_UNSAVED_TEXT"}'
+        record=run_worker([sys.executable,'-m','sentinel.context_harm.worker','--request-stdin'],WorkerLimits(5,512*1024**2,4),input_payload=payload)
+        self.assertEqual((record.status,record.reason),('unavailable','worker_operation_invalid'))
+        self.assertEqual(record.output,{})
+        self.assertNotIn('PRIVATE_UNSAVED_TEXT',json.dumps(record.__dict__))
