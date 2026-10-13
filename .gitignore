@@ -31,6 +31,9 @@ data/curation/
 data/url-ml/
 models/url-ml/
 models/paired/
+data/context-harm/
+models/context-harm/
+.venv-harm-neural/
 
 .venv-url-data/
 .venv-url-v2-check/

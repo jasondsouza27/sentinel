@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "task_id": "english_directed_abuse",
+  "source": {
+    "source_id": "cad-v1.1",
+    "metadata_url": "https://zenodo.org/api/records/4881008",
+    "download_url": "https://zenodo.org/api/records/4881008/files/data.zip/content",
+    "size": 9941773,
+    "sha256": "69f5ed2fd7b40de21fe54c620549f0be6c34eaf55b8de06ff481cabe3e9476d2",
+    "member": "data/cad_v1_1.tsv",
+    "member_sha256": "7287d635e1d35ae1e64779ffe107df16f493c6ccc4084c4497bbf3f56ae0f349",
+    "codebook": "data/cad_codebook_april2021.pdf"
+  },
+  "acquisition": {
+    "allow_hosts": ["zenodo.org"],
+    "deadline_seconds": 120,
+    "max_received_body_bytes": 33554432,
+    "max_attempts": 3
+  },
+  "context": {"max_turns": 4, "max_target_characters": 10000, "max_total_characters": 20000},
+  "protocol": {"seed": 42, "fractions": [0.7, 0.15, 0.15]},
+  "cpu": {"c_values": [0.5, 1.0, 2.0], "class_weights": [null, "balanced"], "max_features": 30000,
+    "max_iter": 1000, "solver": "liblinear", "deadline_seconds": 900, "rss_bytes": 8589934592, "native_threads": 4},
+  "selection": {"max_fpr": 0.05, "calibration_folds": 3, "bootstrap_replicates": 1000},
+  "neural": {"model_id": "distilbert/distilbert-base-uncased", "revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+    "sequence_length": 256, "max_target_tokens": 252, "microbatch": 2, "accumulation": 4,
+    "learning_rates": [0.00002, 0.00005], "max_epochs": 3, "weight_decay": 0.01,
+    "pilot_examples": 32, "pilot_steps": 20, "pilot_deadline_seconds": 600,
+    "deadline_seconds": 1800, "gpu_bytes": 3435973836, "model_source_bytes": 536870912},
+  "inference": {"deadline_seconds": 60, "rss_bytes": 8589934592, "native_threads": 4}
+}
