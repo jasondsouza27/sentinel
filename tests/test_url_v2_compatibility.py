@@ -27,7 +27,9 @@ with tempfile.TemporaryDirectory() as td:
         request=Request(base+'/api/analyze',data=b'{"url":"https://example.org/"}',headers={'Content-Type':'application/json'})
         with urlopen(request) as response: result=json.load(response)
         with urlopen(base+'/api/cases') as response: cases=json.load(response)
-        assert set(result)=={'fraud','harmful_content','profile'} and cases==[]
+        assert {'fraud','harmful_content','profile'} <= set(result) and cases==[]
+        assert result['harm_assessment']['state']=='not_assessed'
+        assert isinstance(result['assessment_receipt'],str)
         assert not any(name in sys.modules for name in ('pyarrow','sklearn','numpy'))
         print('stdlib and case ownership verified')
     finally: server.shutdown(); server.server_close(); thread.join()

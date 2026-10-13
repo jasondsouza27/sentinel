@@ -5,6 +5,7 @@ import csv
 import json
 import os
 import re
+import secrets
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -18,9 +19,10 @@ ROOT = Path(__file__).resolve().parent.parent
 STATIC = {
     "/": ("index.html", "text/html; charset=utf-8"),
     "/app.js": ("app.js", "text/javascript; charset=utf-8"),
+    "/conversation.js": ("conversation.js", "text/javascript; charset=utf-8"),
     "/styles.css": ("styles.css", "text/css; charset=utf-8"),
 }
-MAX_JSON_BYTES = 40000
+MAX_JSON_BYTES = 200000
 EXTENSION_ORIGIN = re.compile(r"^chrome-extension://[a-p]{32}$")
 
 
@@ -39,7 +41,8 @@ def load_phishing_feed(path):
 
 
 def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None, model_path=None,
-                  url_model_path=None, paired_model_path=None):
+                  url_model_path=None, paired_model_path=None, harm_model_path=None,
+                  harm_neural_python=None):
     if host not in ("127.0.0.1", "localhost"):
         raise ValueError("Sentinel serves only on the local loopback address")
     store = CaseStore(db_path or ROOT / "data" / "cases.db")
@@ -54,6 +57,12 @@ def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None,
     if paired_model_path:
         from .paired.service import PairedService
         paired_model = PairedService(Path(paired_model_path))
+    from .context_harm.service import HarmService
+    from .optional_work import OptionalModelBudget
+    from .assessment_receipts import SnapshotSigner
+    harm_model = HarmService(harm_model_path, harm_neural_python)
+    optional_budget = OptionalModelBudget()
+    signer = SnapshotSigner(secrets.token_bytes(32))
 
     class Handler(BaseHTTPRequestHandler):
         server_version = "Sentinel/0.1"
@@ -103,9 +112,9 @@ def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None,
             except ValueError as error:
                 raise ValueError("Invalid Content-Length") from error
             if size < 1 or size > MAX_JSON_BYTES:
-                raise ValueError("JSON body must be between 1 and 40000 bytes")
+                raise ValueError(f"JSON body must be between 1 and {MAX_JSON_BYTES} bytes")
             try:
-                return json.loads(self.rfile.read(size))
+                return json.loads(self.rfile.read(size), parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Nonfinite JSON is invalid")))
             except (UnicodeDecodeError, json.JSONDecodeError) as error:
                 raise ValueError("Invalid JSON body") from error
 
@@ -151,6 +160,7 @@ def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None,
                     health["url_model"] = url_model.health()
                 if paired_model is not None:
                     health["paired_model"] = paired_model.health()
+                health["harm_model"] = harm_model.health()
                 return self._json(HTTPStatus.OK, health)
             if path == "/api/cases":
                 return self._json(HTTPStatus.OK, store.list_cases())
@@ -177,13 +187,21 @@ def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None,
                 path = urlsplit(self.path).path
                 parts = self._parts()
                 if path == "/api/analyze":
-                    return self._json(HTTPStatus.OK, analyze(body, known_phishing, model, url_model,
-                                                            paired_model=paired_model))
+                    result = analyze(body, known_phishing, model, url_model,
+                        paired_model=paired_model, harm_model=harm_model, optional_budget=optional_budget)
+                    return self._json(HTTPStatus.OK, {**result, "assessment_receipt": signer.issue(body, result)})
                 if path == "/api/cases":
                     if not isinstance(body, dict) or not isinstance(body.get("input"), dict):
                         raise ValueError("Supply an input object")
-                    result = analyze(body["input"], known_phishing, model, url_model,
-                                     paired_model=paired_model)
+                    if "result" in body or "assessment_receipt" in body:
+                        if not isinstance(body.get("result"), dict) or not isinstance(body.get("assessment_receipt"), str):
+                            raise ValueError("Recheck this content: a signed reviewed result is required.")
+                        signer.verify(body["assessment_receipt"], body["input"], body["result"])
+                        result = body["result"]
+                    else:
+                        # Legacy input-only clients explicitly create a new assessment.
+                        result = analyze(body["input"], known_phishing, model, url_model,
+                            paired_model=paired_model, harm_model=harm_model, optional_budget=optional_budget)
                     return self._json(HTTPStatus.CREATED, store.save(body["input"], result))
                 if len(parts) == 4 and parts[:2] == ["api", "cases"] and parts[3] == "feedback":
                     if not isinstance(body, dict):
@@ -205,7 +223,9 @@ def create_server(host="127.0.0.1", port=8787, db_path=None, phishing_path=None,
                                   {"deleted": deleted} if deleted else {"error": "Case not found"})
             return self._json(HTTPStatus.NOT_FOUND, {"error": "Not found"})
 
-    return ThreadingHTTPServer((host, port), Handler)
+    server = ThreadingHTTPServer((host, port), Handler)
+    server.harm_model = harm_model
+    return server
 
 
 def main():
@@ -216,10 +236,13 @@ def main():
     parser.add_argument("--model", default=os.environ.get("SENTINEL_MODEL_PATH"))
     parser.add_argument("--url-model", default=os.environ.get("SENTINEL_URL_MODEL_PATH"))
     parser.add_argument("--paired-model", default=os.environ.get("SENTINEL_PAIRED_MODEL_PATH"))
+    parser.add_argument("--harm-model", default=os.environ.get("SENTINEL_HARM_MODEL_PATH"))
+    parser.add_argument("--harm-neural-python", default=os.environ.get("SENTINEL_HARM_NEURAL_PYTHON"))
     args = parser.parse_args()
     server = create_server(port=args.port, db_path=args.db, phishing_path=args.phishing_feed,
                            model_path=args.model, url_model_path=args.url_model,
-                           paired_model_path=args.paired_model)
+                           paired_model_path=args.paired_model, harm_model_path=args.harm_model,
+                           harm_neural_python=args.harm_neural_python)
     print(f"Sentinel is running at http://127.0.0.1:{server.server_port}")
     try:
         server.serve_forever()

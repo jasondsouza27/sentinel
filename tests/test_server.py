@@ -10,6 +10,35 @@ from sentinel.server import create_server
 
 
 class ServerTests(unittest.TestCase):
+    def test_receipt_save_preserves_reviewed_result_without_reanalysis(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            server=create_server(port=0,db_path=Path(directory)/'cases.db')
+            worker=threading.Thread(target=server.serve_forever,daemon=True); worker.start()
+            def request(path,payload):
+                data=json.dumps(payload).encode()
+                with urlopen(Request(f'http://127.0.0.1:{server.server_port}'+path,
+                    data=data,headers={'Content-Type':'application/json'}),timeout=3) as response:
+                    return json.load(response)
+            try:
+                submitted={'conversation_kind':'linear','conversation_turns':[
+                    {'turn_id':'a','speaker_id':None,'text':'Earlier discussion.'},
+                    {'turn_id':'b','speaker_id':'local1','text':'A calm discussion.'}], 'target_turn_id':'b'}
+                response=request('/api/analyze',submitted)
+                self.assertIn('assessment_receipt',response)
+                token=response.pop('assessment_receipt')
+                with patch('sentinel.server.analyze',side_effect=AssertionError('must not reanalyse')):
+                    saved=request('/api/cases',{'input':submitted,'result':response,'assessment_receipt':token})
+                self.assertEqual(saved['result'],response)
+                self.assertEqual(saved['input'],submitted)
+                with self.assertRaises(HTTPError) as unsigned:
+                    request('/api/cases',{'input':submitted,'result':response})
+                self.assertEqual(unsigned.exception.code,400)
+                with self.assertRaises(HTTPError):
+                    request('/api/cases',{'input':{'message':'edited'},'result':response,'assessment_receipt':token})
+            finally:
+                server.shutdown(); server.server_close(); worker.join(3)
+
     def test_optional_paired_model_does_not_break_local_rule_analysis(self):
         with tempfile.TemporaryDirectory() as directory:
             server = create_server(port=0, db_path=Path(directory) / "cases.db",

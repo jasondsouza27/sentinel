@@ -5,6 +5,16 @@ from sentinel.research import train_models
 
 
 class AnalysisTests(unittest.TestCase):
+    def test_structured_target_keeps_embedded_url_and_excludes_future_observations(self):
+        payload={'conversation_kind':'linear','target_turn_id':'selected','conversation_turns':[
+            {'turn_id':'prior','speaker_id':None,'text':'An ordinary discussion.'},
+            {'turn_id':'selected','speaker_id':'local1','text':'Pay a fee at https://example.org/apply'},
+            {'turn_id':'future','speaker_id':'local2','text':'you are stupid send password at https://later.example/'}]}
+        result=analyze(payload)
+        self.assertEqual(result['fraud']['analyzed_url'],'https://example.org/apply')
+        self.assertEqual(result['harmful_content']['level'],'low_observed_concern')
+        self.assertFalse(any('password' in fact for fact in result['fraud']['evidence']))
+
     def test_known_phishing_link_and_payment_request_have_separate_evidence(self):
         result = analyze(
             {"message": "You are shortlisted. Pay a registration fee now at https://fake.example/pay", "url": "https://fake.example/pay"},

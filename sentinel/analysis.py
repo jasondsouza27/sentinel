@@ -85,12 +85,17 @@ def _profile_assessment(profile):
     return result
 
 
-def analyze(payload, known_phishing=None, model=None, url_model=None, paired_model=None):
+def analyze(payload, known_phishing=None, model=None, url_model=None, paired_model=None,
+            harm_model=None, optional_budget=None):
     """Assess submitted data without fetching URLs or scraping profiles."""
     if not isinstance(payload, dict):
         raise ValueError("Request must be a JSON object")
-    message = _string(payload.get("message"), 10000)
-    conversation = _string(payload.get("conversation"), 20000)
+    from .context_harm.conversation import parse_submission
+    submitted_conversation = parse_submission(payload)
+    message = submitted_conversation.model_input.target.strip()
+    structured = any(key in payload for key in ("conversation_kind", "conversation_turns", "target_turn_id"))
+    conversation = ("\n".join(submitted_conversation.model_input.context) if structured
+                    else _string(payload.get("conversation"), 20000))
     supplied_url = _string(payload.get("url"), 2048)
     profile = payload.get("profile") or {}
     if not isinstance(profile, dict):
@@ -153,12 +158,35 @@ def analyze(payload, known_phishing=None, model=None, url_model=None, paired_mod
     }
     result = {"fraud": fraud, "harmful_content": harmful, "profile": _profile_assessment(profile)}
     if url_model is not None:
-        result["url_assessment"] = url_model.assess(supplied_url).to_dict()
+        def url_unavailable():
+            from .url_ml.contracts import UrlAssessment
+            return UrlAssessment("unavailable", None, None, (),
+                ("The optional URL check could not assess this input.",),
+                ("The optional-model budget is busy or the worker is unavailable.",),
+                "Verify independently or retry after the current assessment.").to_dict()
+        try:
+            operation = lambda: url_model.assess(supplied_url).to_dict()
+            result["url_assessment"] = (optional_budget.run("url", operation, url_unavailable)
+                                         if optional_budget else operation())
+        except Exception:
+            result["url_assessment"] = url_unavailable()
     if paired_model is not None:
         try:
-            result["paired_assessment"] = paired_model.assess(message, url)
+            from .paired.service import unavailable
+            operation = lambda: paired_model.assess(message, url)
+            result["paired_assessment"] = (optional_budget.run("paired", operation,
+                lambda: unavailable("optional_model_busy")) if optional_budget else operation())
         except Exception:
             from .paired.service import unavailable
             result["paired_assessment"] = unavailable(
                 "inference_unavailable", "The paired model could not assess this input.")
+    if harm_model is not None:
+        from .context_harm.service import unavailable
+        try:
+            operation = lambda: harm_model.assess(submitted_conversation)
+            result["harm_assessment"] = (optional_budget.run("harm", operation,
+                lambda: unavailable(submitted_conversation, "optional_model_busy"))
+                if optional_budget else operation())
+        except Exception:
+            result["harm_assessment"] = unavailable(submitted_conversation, "inference_unavailable")
     return result
