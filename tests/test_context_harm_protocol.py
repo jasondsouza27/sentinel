@@ -99,11 +99,13 @@ class ProtocolTests(unittest.TestCase):
             for label in (0,1): entries.append(case(f'support{i}{label}',label=label,thread=f'support{i}'))
         entries.extend([case('test0','test'),case('test1','test',label=1)])
         audit=self.module.audit_cohort(self.cohort(entries),self.empty_challenge(),
-                                      HarmCriteria(1000,1,1,1,1,1,.7))
+                                      HarmCriteria(1000,1,1,20,1,1,.7))
         self.assertEqual(audit['status'],'unavailable')
         self.assertIn('failed_allocation',audit)
         self.assertEqual(sum(row['cases'] for row in audit['failed_allocation'].values()),80)
         self.assertLess(audit['failed_allocation']['train']['class_counts']['1'],1000)
+        self.assertIn('greedy_allocation_component_support_validation',audit['unavailable_reasons'])
+        self.assertIn('greedy_allocation_component_support_calibration',audit['unavailable_reasons'])
 
     def test_challenge_cannot_own_protected_test_cases(self):
         cohort=self.cohort([case('protected','test')])

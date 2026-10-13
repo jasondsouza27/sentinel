@@ -163,7 +163,7 @@ def audit_cohort(cohort: CaseCohort, challenge: dict, criteria: HarmCriteria) ->
         audit['partitions']={name:{**_counts(rows,cohort.source),'components':len({components[c.case_id] for c in rows})}
                              for name,rows in parts.items()}
     except HarmError as error:
-        reasons.append(error.reason)
+        reasons.extend(getattr(error,'violations',[error.reason]))
         if hasattr(error,'allocation_report'): audit['failed_allocation']=error.allocation_report
     audit.update(status='ready' if not reasons else 'unavailable',unavailable_reasons=reasons)
     return audit
@@ -197,14 +197,15 @@ def allocate_development(cases: tuple[HarmCase,...], components: dict[str,str],
         assigned[PARTITIONS[destination]].extend(rows)
     report={name:{'cases':len(rows),'class_counts':{str(label):sum(c.label==label for c in rows) for label in (0,1)},
                   'components':len({components[c.case_id] for c in rows})} for name,rows in assigned.items()}
-    def failure(reason):
-        error=HarmError(reason); error.allocation_report=report; raise error
+    violations=[]
     for name, minimum in zip(PARTITIONS,(criteria.train_per_class,criteria.validation_per_class,criteria.calibration_per_class)):
         rows=assigned[name]
         if any(sum(c.label==label for c in rows)<minimum for label in (0,1)):
-            failure('greedy_allocation_class_support_'+name)
+            violations.append('greedy_allocation_class_support_'+name)
         if name!='train' and len({components[c.case_id] for c in rows})<criteria.development_components:
-            failure('greedy_allocation_component_support_'+name)
+            violations.append('greedy_allocation_component_support_'+name)
+    if violations:
+        error=HarmError(violations[0]); error.allocation_report=report; error.violations=violations; raise error
     return {name:tuple(sorted(rows,key=lambda c:c.case_id)) for name,rows in assigned.items()}
 
 
