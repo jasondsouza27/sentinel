@@ -30,6 +30,16 @@ class ModelText:
 
 
 @dataclass(frozen=True)
+class ConversationInput:
+    target_id: str | None
+    model_input: ModelText
+    turns: tuple[dict, ...]
+    coverage: dict
+    language: str
+    language_assumed: bool
+
+
+@dataclass(frozen=True)
 class CadUtterance:
     case_id: str
     thread_id: str
