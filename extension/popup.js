@@ -1,7 +1,9 @@
 const ENDPOINT = 'http://127.0.0.1:8787';
-const $ = (id) => document.getElementById(id);
-let submitted = null;
+const $ = id => document.getElementById(id);
+let currentSnapshot = null;
 let saved = false;
+let analysisVersion = 0;
+const pendingSaves = new Set();
 
 function line(parent, tag, text) {
   const element = document.createElement(tag);
@@ -11,9 +13,14 @@ function line(parent, tag, text) {
 }
 
 async function request(path, body) {
-  const response = await fetch(ENDPOINT + path, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
-  });
+  let response;
+  try {
+    response = await fetch(ENDPOINT + path, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+    });
+  } catch {
+    throw new Error('Start the local Sentinel app, then retry.');
+  }
   const value = await response.json();
   if (!response.ok) throw new Error(value.error || 'The check failed');
   return value;
@@ -27,65 +34,120 @@ function draw(name, item, profile = false, paired = false) {
   line(div, 'strong', `${name}: ${category.replaceAll('_', ' ')}`);
   if (item.evidence?.length) {
     const list = document.createElement('ul');
-    item.evidence.forEach((fact) => line(list, 'li', fact));
+    item.evidence.forEach(fact => line(list, 'li', fact));
     div.append(list);
   }
-  if (paired && item.unavailable_checks?.length) {
-    item.unavailable_checks.forEach((check) => line(div, 'p', `Could not check: ${check}`));
-  }
+  if (paired && item.unavailable_checks?.length) item.unavailable_checks.forEach(check => line(div, 'p', `Could not check: ${check}`));
   if (paired && item.uncertainty) line(div, 'p', item.uncertainty);
   line(div, 'p', item.action);
   return div;
 }
 
-$('selection').onclick = async () => {
+function drawHarm(item) {
+  const card = draw('English directed-abuse model', item, false, true);
+  line(card, 'p', `Learned category: ${String(item.category).replaceAll('_', ' ')}.`);
+  const coverage = item.coverage || {};
+  if (coverage.used_context_turns) line(card, 'p', `Context: ${coverage.used_context_turns} preceding turns used.`);
+  else line(card, 'p', 'Context unavailable: target-only assessment.');
+  if (coverage.language_assumed) line(card, 'p', 'Language: English is assumed.');
+  else if (coverage.language) line(card, 'p', `Declared language: ${coverage.language}.`);
+  if (Array.isArray(item.model_contributions)) {
+    item.model_contributions.forEach(value => line(card, 'p', `Model contribution: ${typeof value === 'string' ? value : JSON.stringify(value)}`));
+  }
+  const probability = item.calibrated_probability;
+  if (['complete', 'degraded'].includes(item.state) && typeof probability === 'number' && Number.isFinite(probability) && probability >= 0 && probability <= 1) {
+    line(card, 'p', `Calibrated probability: ${(probability * 100).toFixed(1)}% on the evaluated distribution.`);
+  }
+  return card;
+}
+
+function setChecking(busy) { $('check').disabled = busy; }
+function invalidate() {
+  analysisVersion += 1;
+  currentSnapshot = null;
+  saved = false;
+  $('result').hidden = true;
+  $('findings').replaceChildren();
+  $('save').disabled = true;
+  $('save-status').textContent = '';
   $('error').textContent = '';
+  setChecking(false);
+}
+for (const id of ['message', 'url']) $(id).addEventListener('input', invalidate);
+$('save').disabled = true;
+
+$('selection').onclick = async () => {
+  invalidate();
+  const version = analysisVersion;
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     const [selection] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: () => window.getSelection()?.toString() || '' });
+    if (version !== analysisVersion) return;
     if (!selection.result.trim()) throw new Error('Select text on the page first.');
     $('message').value = selection.result.trim();
-  } catch (error) { $('error').textContent = error.message || 'This page cannot be read by the extension.'; }
+  } catch (error) {
+    if (version === analysisVersion) $('error').textContent = error.message || 'This page cannot be read by the extension.';
+  }
 };
 
 $('check').onclick = async () => {
-  $('error').textContent = '';
-  submitted = { message: $('message').value.trim(), url: $('url').value.trim() };
-  saved = false;
-  $('save').disabled = false;
-  $('save-status').textContent = '';
+  invalidate();
+  const version = analysisVersion;
+  const input = { message: $('message').value.trim(), url: $('url').value.trim() };
+  setChecking(true);
   try {
-    const result = await request('/api/analyze', submitted);
-    const cards = [
-      draw('Message & link', result.fraud),
-      draw('Harmful content', result.harmful_content),
-      draw('Profile', result.profile, true),
-    ];
+    const response = await request('/api/analyze', input);
+    if (version !== analysisVersion) return;
+    const { assessment_receipt, ...result } = response;
+    const cards = [draw('Message & link', result.fraud),
+      draw('Harmful content observations', result.harmful_content), draw('Profile', result.profile, true)];
     if (result.paired_assessment) cards.push(draw('Paired message–link model', result.paired_assessment, false, true));
+    if (result.harm_assessment) cards.push(drawHarm(result.harm_assessment));
     $('findings').replaceChildren(...cards);
     $('result').hidden = false;
+    const receipt = typeof assessment_receipt === 'string' && assessment_receipt ? assessment_receipt : null;
+    currentSnapshot = { input, result, receipt };
+    $('save').disabled = !receipt;
+    if (!receipt) $('save-status').textContent = 'Restart the local Sentinel service and recheck to save this assessment.';
   } catch (error) {
-    $('result').hidden = true;
-    $('error').textContent = error.message.includes('fetch') ? 'Start the local Sentinel app, then retry.' : error.message;
+    if (version === analysisVersion) $('error').textContent = error.message;
+  } finally {
+    if (version === analysisVersion) setChecking(false);
   }
 };
 
 $('save').onclick = async () => {
-  if (!submitted || saved) return;
+  const version = analysisVersion;
+  const snapshot = currentSnapshot;
+  if (!snapshot?.receipt || saved || pendingSaves.has(version)) return;
+  pendingSaves.add(version);
+  $('save').disabled = true;
+  $('save-status').textContent = 'Saving…';
   try {
-    await request('/api/cases', { input: submitted });
-    saved = true;
-    $('save').disabled = true;
-    $('save-status').textContent = 'Saved in the local app.';
-  } catch (error) { $('save-status').textContent = error.message; }
+    await request('/api/cases', { input: snapshot.input, result: snapshot.result, assessment_receipt: snapshot.receipt });
+    if (version === analysisVersion) {
+      saved = true;
+      $('save-status').textContent = 'Saved in the local app.';
+    }
+  } catch (error) {
+    if (version === analysisVersion) {
+      if (/recheck|expired|restart|receipt/i.test(error.message)) currentSnapshot.receipt = null;
+      $('save').disabled = saved || !currentSnapshot.receipt;
+      $('save-status').textContent = error.message;
+    }
+  } finally { pendingSaves.delete(version); }
 };
 
 $('open').onclick = () => chrome.tabs.create({ url: ENDPOINT });
 
 (async () => {
+  const version = analysisVersion;
   const { pendingCheck } = await chrome.storage.session.get('pendingCheck');
   if (!pendingCheck) return;
-  if (pendingCheck.message) $('message').value = pendingCheck.message;
-  if (pendingCheck.url) $('url').value = pendingCheck.url;
+  if (version === analysisVersion) {
+    if (pendingCheck.message) $('message').value = pendingCheck.message;
+    if (pendingCheck.url) $('url').value = pendingCheck.url;
+    invalidate();
+  }
   await chrome.storage.session.remove('pendingCheck');
 })();

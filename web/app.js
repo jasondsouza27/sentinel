@@ -1,5 +1,7 @@
 const $ = (id) => document.getElementById(id);
 let currentInput = null;
+let currentResult = null;
+let currentReceipt = null;
 let currentCaseId = null;
 let analysisVersion = 0;
 const pendingSaves = new Set();
@@ -20,8 +22,12 @@ async function api(path, options = {}) {
 }
 
 function inputData() {
-  const result = {};
+  const structured = conversationEditor.read();
+  const isStructured = Boolean(structured.conversation_kind);
+  const result = { ...structured };
+  if (isStructured) result.message = structured.conversation_turns.find(turn => turn.turn_id === structured.target_turn_id).text;
   for (const id of ['message', 'url', 'conversation']) {
+    if (isStructured && id !== 'url') continue;
     const value = $(id).value.trim();
     if (value) result[id] = value;
   }
@@ -34,6 +40,26 @@ function inputData() {
   if ($('official').value.trim()) profile.official_domain = $('official').value.trim();
   if (Object.keys(profile).length) result.profile = profile;
   return result;
+}
+
+function syncConversationFields(input = {}) {
+  const structured = Boolean(input.conversation_kind);
+  $('message').readOnly = structured;
+  $('conversation').disabled = structured;
+  if (structured) $('message').value = input.conversation_turns.find(turn => turn.turn_id === input.target_turn_id)?.text || '';
+}
+
+function invalidateEditedInput(input) {
+  analysisVersion += 1;
+  clearResult();
+  setAnalyzing(false);
+  $('form-message').textContent = '';
+  if (input) syncConversationFields(input);
+}
+
+const conversationEditor = globalThis.SentinelConversation.createEditor($('conversation-editor'), input => invalidateEditedInput(input));
+for (const id of ['message', 'url', 'conversation', 'username', 'age', 'posts', 'followers', 'following', 'website', 'official']) {
+  $(id).addEventListener('input', () => invalidateEditedInput());
 }
 
 function node(tag, className, text) {
@@ -71,14 +97,36 @@ function assessment(title, item, isProfile = false, isPaired = false) {
   return card;
 }
 
+function harmAssessment(item) {
+  const card = assessment('English directed-abuse model', item, false, true);
+  card.append(node('p', '', `Learned category: ${String(item.category).replaceAll('_', ' ')}.`));
+  const coverage = item.coverage || {};
+  if (coverage.used_context_turns) {
+    card.append(node('p', '', `Context: ${coverage.used_context_turns} preceding turns used of ${coverage.available_context_turns}; ${coverage.omitted_context_turns || 0} older turns omitted.`));
+    if (coverage.context_missing) card.append(node('p', '', 'Some preceding context is unavailable.'));
+  } else card.append(node('p', '', 'Context unavailable: target-only assessment.'));
+  if (coverage.language_assumed) card.append(node('p', '', 'Language: English is assumed.'));
+  else if (coverage.language) card.append(node('p', '', `Declared language: ${coverage.language}.`));
+  if (item.branch) card.append(node('p', '', `Branch: ${item.branch.replaceAll('_', ' ')}.`));
+  if (Array.isArray(item.model_contributions)) {
+    for (const contribution of item.model_contributions) card.append(node('p', '', `Model contribution: ${typeof contribution === 'string' ? contribution : JSON.stringify(contribution)}`));
+  }
+  const probability = item.calibrated_probability;
+  if (['complete', 'degraded'].includes(item.state) && typeof probability === 'number' && Number.isFinite(probability) && probability >= 0 && probability <= 1) {
+    card.append(node('p', '', `Calibrated probability: ${(probability * 100).toFixed(1)}% on the evaluated distribution.`));
+  }
+  return card;
+}
+
 function renderResult(result) {
   const target = $('result-content');
   const cards = [
     assessment('Message & link', result.fraud),
-    assessment('Harmful content', result.harmful_content),
+    assessment('Harmful content observations', result.harmful_content),
     assessment('Profile indicators', result.profile, true),
   ];
   if (result.paired_assessment) cards.push(assessment('Paired message–link model', result.paired_assessment, false, true));
+  if (result.harm_assessment) cards.push(harmAssessment(result.harm_assessment));
   target.replaceChildren(...cards);
   target.hidden = false;
   $('result-empty').hidden = true;
@@ -87,6 +135,8 @@ function renderResult(result) {
 
 function clearResult() {
   currentInput = null;
+  currentResult = null;
+  currentReceipt = null;
   currentCaseId = null;
   $('result-content').replaceChildren();
   $('result-content').hidden = true;
@@ -102,6 +152,7 @@ function setAnalyzing(busy) {
 }
 
 function populate(input) {
+  conversationEditor.populate(input);
   for (const id of ['message', 'url', 'conversation']) $(id).value = input[id] || '';
   const p = input.profile || {};
   $('username').value = p.username || '';
@@ -111,6 +162,7 @@ function populate(input) {
   $('following').value = p.following_count ?? '';
   $('website').value = p.website_url || '';
   $('official').value = p.official_domain || '';
+  syncConversationFields(input);
 }
 
 async function refreshCases() {
@@ -124,7 +176,7 @@ async function refreshCases() {
   for (const item of cases) {
     const row = node('div', 'case-row');
     const main = node('div', 'case-main');
-    main.append(node('strong', '', item.input.message || item.input.url || item.input.profile?.username || 'Profile assessment'));
+    main.append(node('strong', '', item.input.message || item.input.conversation_turns?.find(turn => turn.turn_id === item.input.target_turn_id)?.text || item.input.url || item.input.profile?.username || 'Profile assessment'));
     main.append(node('small', '', `${new Date(item.created_at).toLocaleString()} · ${item.feedback ? `Feedback: ${item.feedback}` : 'No feedback'}`));
     const controls = node('div', 'case-controls');
     const open = node('button', '', 'Open');
@@ -133,6 +185,8 @@ async function refreshCases() {
       setAnalyzing(false);
       $('form-message').textContent = '';
       currentInput = item.input;
+      currentResult = item.result;
+      currentReceipt = null;
       currentCaseId = item.id;
       populate(item.input);
       renderResult(item.result);
@@ -172,16 +226,20 @@ async function refreshCases() {
 $('check-form').addEventListener('submit', async (event) => {
   event.preventDefault();
   const requestVersion = ++analysisVersion;
-  const submittedInput = inputData();
   clearResult();
   $('form-message').textContent = '';
   setAnalyzing(true);
   try {
-    const result = await api('/api/analyze', { method: 'POST', body: JSON.stringify(submittedInput) });
+    const submittedInput = inputData();
+    const response = await api('/api/analyze', { method: 'POST', body: JSON.stringify(submittedInput) });
+    const { assessment_receipt, ...result } = response;
     if (requestVersion !== analysisVersion) return;
     renderResult(result);
     currentInput = submittedInput;
-    $('save-button').disabled = false;
+    currentResult = result;
+    currentReceipt = typeof assessment_receipt === 'string' && assessment_receipt ? assessment_receipt : null;
+    $('save-button').disabled = !currentReceipt;
+    if (!currentReceipt) $('save-status').textContent = 'Restart the local Sentinel service and recheck to save this assessment.';
   } catch (error) {
     if (requestVersion === analysisVersion) $('form-message').textContent = error.message;
   } finally {
@@ -192,12 +250,14 @@ $('check-form').addEventListener('submit', async (event) => {
 $('save-button').onclick = async () => {
   const saveVersion = analysisVersion;
   const inputToSave = currentInput;
-  if (!inputToSave || currentCaseId || pendingSaves.has(saveVersion)) return;
+  const resultToSave = currentResult;
+  const receiptToSave = currentReceipt;
+  if (!inputToSave || !resultToSave || !receiptToSave || currentCaseId || pendingSaves.has(saveVersion)) return;
   pendingSaves.add(saveVersion);
   $('save-button').disabled = true;
   $('save-status').textContent = 'Saving…';
   try {
-    const saved = await api('/api/cases', { method: 'POST', body: JSON.stringify({ input: inputToSave }) });
+    const saved = await api('/api/cases', { method: 'POST', body: JSON.stringify({ input: inputToSave, result: resultToSave, assessment_receipt: receiptToSave }) });
     if (saveVersion === analysisVersion) {
       currentCaseId = saved.id;
       $('save-status').textContent = 'Saved locally';
@@ -205,7 +265,8 @@ $('save-button').onclick = async () => {
     await refreshCases();
   } catch (error) {
     if (saveVersion === analysisVersion) {
-      $('save-button').disabled = Boolean(currentCaseId);
+      if (/recheck|expired|restart|receipt/i.test(error.message)) currentReceipt = null;
+      $('save-button').disabled = Boolean(currentCaseId) || !currentReceipt;
       $('save-status').textContent = currentCaseId ? `Saved locally; history could not refresh. ${error.message}` : error.message;
     }
   } finally {
@@ -216,6 +277,8 @@ $('save-button').onclick = async () => {
 $('clear-button').onclick = () => {
   analysisVersion += 1;
   $('check-form').reset();
+  conversationEditor.clear();
+  syncConversationFields();
   clearResult();
   setAnalyzing(false);
   $('form-message').textContent = '';
