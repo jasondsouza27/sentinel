@@ -32,6 +32,17 @@ The completed [URL-v3 study](docs/url-v3-workflow.md) adds a pinned Mendeley URL
 
 The [paired message–link study workflow](docs/paired-study-workflow.md) now provides an evidence-bound two-reviewer packet, counts-only readiness audit, sealed four-way group split, CPU message/URL/fusion training, paired held-out evaluation and an optional research-only API card. **The real paired phishing study remains unavailable:** the intake has no admitted cases. Synthetic software tests are not research findings, and no learned paired warning is active.
 
+The [English conversation/harm workflow](docs/context-harm-workflow.md) adds ordered
+linear/reply turns, target selection, preceding-context coverage and exact signed
+assessment saving. Its research tooling includes verified CAD ingestion, protected
+cohorts, bounded sparse CPU models, conditional compact-encoder training, calibration,
+checked artifacts and single-use final evaluation. **The real CAD allocation is
+unavailable:** training has 175 positive cases rather than 200; validation and
+calibration have five and eight components rather than ten. No real harm model or
+final score is claimed. See the [research card](output/research/context-harm-v1/model-card.md),
+[status](output/research/context-harm-v1/research-status.json) and
+[browser verification](docs/context-harm-web-smoke-test.md). Existing rules remain usable.
+
 ## Run locally
 
 Requires Python 3.10 or newer. No Python packages or cloud account are needed for the prototype.
@@ -51,7 +62,7 @@ python -m unittest discover -s tests -v
 For the web client's asynchronous analysis and saving checks, developers can also use Node.js 22 or newer. No npm packages are required; Node is not needed to run Sentinel:
 
 ```powershell
-node --test tests/web_client.test.mjs tests/extension_popup.test.mjs
+node --test tests/web_client.test.mjs tests/extension_popup.test.mjs tests/conversation_editor.test.mjs
 ```
 
 The [web-app browser test record](docs/web-app-smoke-test-2026-10-05.md) documents the checked workflows, fixes and remaining browser checks.

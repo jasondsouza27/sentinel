@@ -10,7 +10,7 @@
 
 **Spec:** [Approved English conversation/harm design](../specs/2026-10-13-sentinel-context-harm-design.md), approved on 2026-10-13; [source investigation](../../context-harm-source-audit-2026-10-12.md) supplies measured feasibility figures.
 
-**Status:** Proposed for plan review. Preserve the user's choice of implementation in this chat with one final independent whole-branch review. Plan preparation installed no dependencies, downloaded no package/model bodies and ran no training or final scoring.
+**Status:** Approved for implementation; software under final verification. The user subsequently requested parallel agents; preserve one final independent whole-branch review. Plan preparation installed no dependencies or model bodies. Execution acquired the verified CAD source; production allocation failed, so real fitting, encoder acquisition and protected final scoring remain unavailable. Synthetic tests verify software only.
 
 ## Global Constraints
 

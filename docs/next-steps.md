@@ -1,12 +1,33 @@
 # Sentinel: current state and next steps
 
-Updated on 2026-10-13. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
+Updated on 2026-10-14. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
 
 The [paired-study software workflow](paired-study-workflow.md) is implemented. It covers evidence-ledger binding, blinded two-reviewer packets, a counts-only `audit`, group-isolated four-way lock, CPU branch/fusion models, a single-use final evaluation receipt and a research-only optional API card. The synthetic integration test verifies software behavior only. The real `data/curation/intake.csv` remains empty, so the current paired-study result is **unavailable**; no phishing-fusion performance or live learned warning is claimed.
 
-## Current priority: English conversation/harm module
+## English conversation/harm software and next data milestone
 
-The user selected the English conversation/harm module as the next engineering milestone and approved its [focused specification](superpowers/specs/2026-10-13-sentinel-context-harm-design.md). The [source feasibility investigation](context-harm-source-audit-2026-10-12.md) verifies CAD v1.1 and CCC source structure, labels and grouping limits. The [12-task implementation plan](superpowers/plans/2026-10-13-sentinel-context-harm.md) is prepared and awaiting review. It covers protected cohorts, CPU and conditional compact-encoder comparisons, ordered app turns, exact reviewed-result saving and an empty challenge workflow. Official package metadata and Windows wheel hashes are pinned in the [planning catalog](../output/research/context-harm-neural-package-catalog.json); no package/model bodies were acquired or installed, and no training occurred. The harm module currently remains rule-based. Real paired-message collection can proceed alongside this work.
+The approved [specification](superpowers/specs/2026-10-13-sentinel-context-harm-design.md)
+and [implementation plan](superpowers/plans/2026-10-13-sentinel-context-harm.md) have
+produced ordered linear/reply inputs, exact signed snapshot saving, verified CAD
+ingestion, protected cohorts, bounded CPU/conditional encoder tooling, calibration,
+checked artifacts and a single-use research evaluator. See the
+[workflow](context-harm-workflow.md) and [browser verification](context-harm-web-smoke-test.md).
+
+The real CAD allocation is **unavailable**. After author/duplicate/context purges,
+1,624 primary development cases remain. The fixed allocation has 175 positive
+training cases (minimum 200), five validation components and eight calibration
+components (minimum ten each). No real harm model, frozen replacement split or
+protected test score was produced; no neural package/model body or runtime was
+installed. The app retains rule observations and an explicitly unavailable learned
+card. The [research card](../output/research/context-harm-v1/model-card.md) explains
+the measured exclusions and limits.
+
+The next research milestone requires a newly approved data/protocol version that
+can meet class and component support while preserving held-out ownership. Keep
+this test unscored and do not retry seeds or lower gates to obtain results. Collect
+permissioned challenge cases with two independent human reviews in a new private
+root; the current version's intake is empty and reserved. Real paired-message
+collection can proceed alongside this work. Live learned release remains separate.
 
 ## Completed URL benchmark and paired-message data work
 
