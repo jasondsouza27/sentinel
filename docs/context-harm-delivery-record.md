@@ -83,8 +83,9 @@ reproduced and corrected all three in one test-driven fix pass:
 
 These were verified by failing-then-passing regression tests, six passing focused
 review regressions (including eighteen encoder drift subcases) and the post-fix
-whole suite recorded above. The same reviewer
-will check the delivery records as the closing part of this single review cycle.
+whole suite recorded above. The same reviewer cleared the delivery records for
+integration as the closing part of this single review cycle, confirming report,
+implementation, dependency and protected-file hashes against the logged evidence.
 No per-task or second code-review seats were used.
 
 ## Decisions made during execution
@@ -119,6 +120,18 @@ No per-task or second code-review seats were used.
 11. Retained the user's deferred Chrome toolbar/context-menu check. The browser
     application and actual client scripts were checked. Cost: unpacked-extension
     interaction in Chrome remains unverified.
+12. For the authorized fast-forward integration, compare the exact verified code
+    identity and protected files in the primary checkout and run a folder-specific
+    application smoke check rather than repeat the full suite on identical code.
+    Cost: the folder-specific check may not expose every location-dependent issue.
+
+## Integration
+
+GitHub's verified default branch is `codex/sentinel`. The user's standing
+preference authorizes appropriate integration and pushing to the existing
+repository. Integration will preserve the private source, codebook review,
+empty challenge and reproduction records in the primary project folder; none
+of these files are staged for GitHub. No learned harm warning is activated.
 
 ## Remaining project work
 

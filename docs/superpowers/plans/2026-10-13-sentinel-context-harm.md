@@ -17,7 +17,7 @@ CAD allocation remains unavailable at the original three production gates, so
 there are no real harm fits or final-test scores. The [delivery record](../../context-harm-delivery-record.md)
 contains the final reproduction, review and integration evidence.
 
-**Status:** Approved for implementation; software under final verification. The user subsequently requested parallel agents; preserve one final independent whole-branch review. Plan preparation installed no dependencies or model bodies. Execution acquired the verified CAD source; production allocation failed, so real fitting, encoder acquisition and protected final scoring remain unavailable. Synthetic tests verify software only.
+**Status:** Approved implementation complete; independent review corrections and closing delivery records verified. The user requested parallel agents, with one final independent whole-branch review. Plan preparation installed no dependencies or model bodies. Execution acquired the verified CAD source; production allocation failed, so real fitting, encoder acquisition and protected final scoring remain unavailable. Synthetic tests verify software only.
 
 ## Global Constraints
 
