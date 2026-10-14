@@ -29,10 +29,13 @@ def await_ownership() -> None:
 
 def _dispatch(request: dict) -> dict:
     operation = request.get('operation')
+    if operation == 'source_fetch':
+        from .transport import worker_fetch
+        return worker_fetch(request)
     if operation in {'cpu_fit', 'cpu_score'}:
         from .cpu import worker_operation
         return worker_operation(request)
-    if operation in {'neural_probe', 'neural_pilot', 'neural_fit', 'neural_score'}:
+    if operation in {'neural_probe', 'neural_attest', 'neural_pilot', 'neural_fit', 'neural_score'}:
         from .neural import worker_operation
         return worker_operation(request)
     if operation == 'harm_infer':

@@ -115,18 +115,19 @@ class NeuralSourceTests(unittest.TestCase):
 
     def test_wheel_body_budget_and_deadline_remain_durable_on_failure(self):
         module = self.module()
+        from sentinel.context_harm.transport import AcquisitionSession
         url = 'https://files.pythonhosted.org/fixture.whl'
         body = b'0123456789012345'
         catalog = {'packages': [{'name':'fixture','filename':'fixture.whl','url':url,'sha256':hashlib.sha256(body).hexdigest(),'size_bytes':len(body)}]}
         small = {'allow_hosts':['files.pythonhosted.org'],'deadline_seconds':10,'max_received_body_bytes':8,'max_attempts':1}
-        with patch('sentinel.context_harm.transport.open_response', return_value=FakeResponse(body, url)):
+        with patch.object(AcquisitionSession, 'fetch', AcquisitionSession._fetch_owned), patch('sentinel.context_harm.transport.open_response', return_value=FakeResponse(body, url)):
             with self.assertRaisesRegex(HarmError, 'source_body_budget_exceeded'):
                 module._download_wheels(self.root/'budget', catalog, limits=small)
         journal = json.loads((self.root/'budget/journal.json').read_text())
         self.assertEqual(journal['received_body_bytes'], 8)
         self.assertFalse((self.root/'budget/fixture.whl').exists())
         slow = {**small, 'max_received_body_bytes':100, 'deadline_seconds':.01}
-        with patch('sentinel.context_harm.transport.open_response', return_value=FakeResponse(body, url, delay=.03)):
+        with patch.object(AcquisitionSession, 'fetch', AcquisitionSession._fetch_owned), patch('sentinel.context_harm.transport.open_response', return_value=FakeResponse(body, url, delay=.03)):
             with self.assertRaisesRegex(HarmError, 'source_deadline_exceeded'):
                 module._download_wheels(self.root/'deadline', catalog, limits=slow)
         self.assertFalse((self.root/'deadline/fixture.whl').exists())

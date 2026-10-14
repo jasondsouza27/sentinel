@@ -297,7 +297,7 @@ def run_worker(command: list[str], limits: WorkerLimits, *, cancel: threading.Ev
             safe_reason = failure.get('reason') if isinstance(failure, dict) else None
             if (isinstance(failure, dict) and set(failure) == {'status', 'reason'}
                     and failure['status'] == 'unavailable' and isinstance(safe_reason, str)
-                    and re.fullmatch(r'(?:worker|cpu|neural|cuda|harm|fitting|protected)_[a-z0-9_]{1,88}', safe_reason)):
+                    and re.fullmatch(r'(?:worker|cpu|neural|cuda|harm|fitting|protected|source|unapproved)_[a-z0-9_]{1,88}', safe_reason)):
                 reason = safe_reason
         except (ValueError, UnicodeError):
             pass

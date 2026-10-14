@@ -291,6 +291,14 @@ def _identity(study, bundle, artifact, output):
     binding = verify_study(study)
     if metadata['protocol_manifest_sha256'] != canonical_sha256(study.manifest):
         raise HarmError('final_artifact_study_mismatch')
+    # Attest before reserving or reopening protected final data. Repeating an
+    # interrupted evaluation must use the originally recorded runtime as well.
+    from .neural import attest_current_runtime
+    neural_runtime = {}
+    for kind, selection in sorted(bundle['selections'].items()):
+        if kind in NEURAL_KINDS:
+            record = selection.candidate.fit_record
+            neural_runtime[kind] = attest_current_runtime(record['neural_python'], record['runtime_probe'])
     return {
         'artifact_manifest_sha256': sha256(Path(artifact) / 'manifest.json'),
         'implementation': metadata['implementation'],
@@ -299,6 +307,7 @@ def _identity(study, bundle, artifact, output):
              'calibration': branch['calibration']} for kind, branch in metadata['branches'].items()},
         'preprocessing': metadata['preprocessing'], 'cohorts': binding['case_hashes'],
         'coverage': {**metadata['coverage'], 'neural_settings': metadata['neural_settings'],
+                     'neural_runtime': neural_runtime,
                      'diagnostics': 'declared_protected_missing_context_targets'},
         'tokenizer_base_hashes': {kind: branch['tokenizer_base_hashes']
                                   for kind, branch in metadata['branches'].items() if kind in NEURAL_KINDS},

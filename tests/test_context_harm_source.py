@@ -62,7 +62,9 @@ class SourceTests(unittest.TestCase):
         })
 
     def fetch(self, session, *, digest=None, maximum=8):
-        return session.fetch(URL, session.root / 'data.zip', resource='archive',
+        # These tests exercise durable body accounting inside the worker core;
+        # real process deadlines/cleanup are tested in review_safety.
+        return session._fetch_owned(URL, session.root / 'data.zip', resource='archive',
                              max_bytes=maximum,
                              expected_sha256=digest or hashlib.sha256(b'abcdefgh').hexdigest(),
                              expected_size=8)

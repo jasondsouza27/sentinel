@@ -72,6 +72,7 @@ class ControlledWorkers:
             result={'status':'ready','pilot_rows':32,'optimizer_steps':20,'forecast_seconds':100,
                     'peak_allocated_bytes':1024**3,'peak_reserved_bytes':2*1024**3,'compatible_cohort':cohort,
                     'pilot_case_ids_sha256':canonical_sha256([value.case_id for value in module.balanced_pilot_rows(development['train'])]),
+                    'runtime_binding':request['probe']['runtime_binding'],'runtime_sha256':request['probe']['runtime_sha256'],
                     'fixture_provenance':'controlled software outcome; no GPU optimization'}
         elif request['operation']=='neural_fit':
             directory=Path(request['output_directory']); directory.mkdir()
@@ -80,6 +81,7 @@ class ControlledWorkers:
             (directory/'model.safetensors').write_bytes(b'CONTROLLED CHECKPOINT; NOT REAL TRAINED WEIGHTS')
             (directory/'config.json').write_text('{"num_labels":2}',encoding='utf-8')
             report={'selected_epoch':1,'selection_partition':'validation','validation_report':{'recall':1,'precision':1,'fpr':0,'raw_threshold':.5},
+                    'runtime_binding':request['pilot']['probe']['runtime_binding'],'runtime_sha256':request['pilot']['probe']['runtime_sha256'],
                     'epoch_reports':[], 'peak_allocated_bytes':1024**3,'peak_reserved_bytes':2*1024**3,'fit_seconds':1,
                     'fixture_provenance':'controlled software outcome; no Torch/CUDA fit'}
             record=module.candidate_fit_record(request,directory,report)
@@ -88,8 +90,12 @@ class ControlledWorkers:
             from test_context_harm_neural_pilot import FixtureTokenizer
             encoded=[module.encode_model_text(ModelText(value['model_input']['target'],tuple(value['model_input']['context'])),FixtureTokenizer(),contextual=request['kind']=='context_neural') for value in request['rows']]
             result={'case_ids':[value['case_id'] for value in request['rows']], 'scores':[.25 if value['supported'] else None for value in encoded],
+                    'runtime_binding':read_json(Path(request['candidate_directory'])/'fit-record.json')['runtime_binding'],
+                    'runtime_sha256':read_json(Path(request['candidate_directory'])/'fit-record.json')['runtime_sha256'],
                     'coverage':[value['supported'] for value in encoded],'token_coverage':module.aggregate_token_coverage(encoded),
                     'peak_allocated_bytes':0,'peak_reserved_bytes':0}
+        elif request['operation']=='neural_attest':
+            result={'runtime_binding':request['probe']['runtime_binding'],'runtime_sha256':request['probe']['runtime_sha256']}
         else:
             raise AssertionError('unexpected worker operation')
         return WorkerRecord('ok',None,{**measured(),'deadline_seconds':limits.deadline_seconds},result)

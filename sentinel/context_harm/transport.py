@@ -11,8 +11,8 @@ from uuid import uuid4
 
 from sentinel.url_ml.contracts import DatasetError
 from sentinel.url_v2.ranges import approved_url, cache_lock, open_response
-from .contracts import HarmError
-from .integrity import canonical_sha256, read_json, safe_path, sha256, write_json
+from .contracts import HarmError, WorkerLimits
+from .integrity import canonical_bytes, canonical_sha256, read_json, safe_path, sha256, write_json
 
 
 class AcquisitionSession:
@@ -31,32 +31,39 @@ class AcquisitionSession:
             raise HarmError('source_session_busy') from error
         self.active = True
         try:
-            identity = canonical_sha256(self.limits)
-            if self.journal.exists():
-                self.state = read_json(self.journal)
-                if self.state.get('schema') != 'harm-acquisition-1' or self.state.get('limits_sha256') != identity:
-                    raise HarmError('source_journal_identity_mismatch')
-                keys = ('received_body_bytes', 'interrupted_body_bytes_upper_bound', 'inflight_bytes')
-                if any(type(self.state.get(key)) is not int or self.state[key] < 0 for key in keys):
-                    raise HarmError('source_budget_invalid')
-                if sum(self.state[key] for key in keys) > self.limits['max_received_body_bytes']:
-                    raise HarmError('source_budget_invalid')
-                if not isinstance(self.state.get('attempts'), list) or not isinstance(self.state.get('receipts'), dict):
-                    raise HarmError('source_journal_invalid')
-            else:
-                self.state = {'schema': 'harm-acquisition-1', 'limits_sha256': identity,
-                              'received_body_bytes': 0, 'interrupted_body_bytes_upper_bound': 0,
-                              'inflight_bytes': 0, 'attempts': [], 'receipts': {}}
-            self.state['interrupted_body_bytes_upper_bound'] += self.state['inflight_bytes']
-            self.state['inflight_bytes'] = 0
-            self._save()
-            for pending in self.root.glob('.pending-fetch-*'):
-                if pending.is_file() and pending.parent == self.root:
-                    pending.unlink()
+            self._restore_journal()
             return self
         except BaseException:
             self.__exit__(None, None, None)
             raise
+
+    def _restore_journal(self):
+        """Called only while the supervisor owns the session lock and worker is stopped."""
+        identity = canonical_sha256(self.limits)
+        if self.journal.exists():
+            self.state = read_json(self.journal)
+            if self.state.get('schema') != 'harm-acquisition-1' or self.state.get('limits_sha256') != identity:
+                raise HarmError('source_journal_identity_mismatch')
+            keys = ('received_body_bytes', 'interrupted_body_bytes_upper_bound', 'inflight_bytes')
+            if any(type(self.state.get(key)) is not int or self.state[key] < 0 for key in keys):
+                raise HarmError('source_budget_invalid')
+            if sum(self.state[key] for key in keys) > self.limits['max_received_body_bytes']:
+                raise HarmError('source_budget_invalid')
+            if not isinstance(self.state.get('attempts'), list) or not isinstance(self.state.get('receipts'), dict):
+                raise HarmError('source_journal_invalid')
+        else:
+            self.state = {'schema': 'harm-acquisition-1', 'limits_sha256': identity,
+                          'received_body_bytes': 0, 'interrupted_body_bytes_upper_bound': 0,
+                          'inflight_bytes': 0, 'attempts': [], 'receipts': {}}
+        self.state['interrupted_body_bytes_upper_bound'] += self.state['inflight_bytes']
+        self.state['inflight_bytes'] = 0
+        for attempt in self.state['attempts']:
+            if attempt.get('status') == 'started':
+                attempt.update(status='interrupted', reason='source_worker_interrupted')
+        self._save()
+        for pending in self.root.glob('.pending-fetch-*'):
+            if pending.is_file() and pending.parent == self.root:
+                pending.unlink()
 
     def __exit__(self, *args):
         if self.active:
@@ -113,7 +120,7 @@ class AcquisitionSession:
         attempt['received_bytes'] += len(chunk)
         self._save()
 
-    def fetch(self, url, target, *, resource, max_bytes, expected_sha256=None, expected_size=None):
+    def _prepare_fetch(self, url, target, resource, max_bytes, expected_sha256, expected_size):
         if not self.active:
             raise HarmError('source_session_not_owned')
         try:
@@ -135,12 +142,55 @@ class AcquisitionSession:
                 raise HarmError('source_receipt_identity_mismatch')
             if not target.is_file() or target.stat().st_size != old['size'] or sha256(target) != old['sha256']:
                 raise HarmError('source_verified_cache_corrupt')
-            return old
+            return target, identity, old
         attempts = [item for item in self.state['attempts'] if item['resource'] == resource]
         if any(item['identity'] != identity for item in attempts):
             raise HarmError('source_attempt_identity_mismatch')
         if target.exists():
             raise HarmError('source_unregistered_cache')
+        return target, identity, None
+
+    def fetch(self, url, target, *, resource, max_bytes, expected_sha256=None, expected_size=None):
+        """Own the entire connection/header/body operation, including blocking DNS.
+
+        Socket timeouts bound inactivity only. The native worker deadline bounds
+        absolute elapsed time and closes every socket even during slow progress.
+        The supervisor retains the session lock while the worker writes its journal.
+        """
+        import sys
+        from .runtime import run_worker
+        arguments = (url, target, resource, max_bytes, expected_sha256, expected_size)
+        target, _, cached = self._prepare_fetch(*arguments)
+        if cached is not None:
+            return cached
+        if self._remaining() <= 0:
+            raise HarmError('source_body_budget_exceeded')
+        payload = {'operation': 'source_fetch', 'root': str(self.root), 'limits': self.limits,
+                   'url': url, 'target': str(target), 'resource': resource, 'max_bytes': max_bytes,
+                   'expected_sha256': expected_sha256, 'expected_size': expected_size}
+        result = run_worker([sys.executable, '-m', 'sentinel.context_harm.worker', '--request-stdin'],
+                            WorkerLimits(self.limits['deadline_seconds'], 512 * 1024**2, 1),
+                            input_payload=canonical_bytes(payload))
+        # run_worker kills and joins the whole tree before returning. Any read
+        # interrupted before crediting its body retains the full byte reservation.
+        self._restore_journal()
+        self.state.setdefault('worker_runs', []).append({'resource': resource, 'status': result.status,
+                                                       'reason': result.reason, 'measurements': result.measurements})
+        self._save()
+        if result.status != 'ok':
+            reason = 'source_deadline_exceeded' if result.reason == 'worker_deadline_exceeded' else result.reason
+            raise HarmError(reason or 'source_transport_unavailable')
+        _, _, cached = self._prepare_fetch(*arguments)
+        if cached is None or result.output.get('receipt') != cached:
+            raise HarmError('source_worker_receipt_invalid')
+        return cached
+
+    def _fetch_owned(self, url, target, *, resource, max_bytes, expected_sha256=None, expected_size=None):
+        """Network core: invoked inside the owned worker, never by application callers."""
+        target, identity, cached = self._prepare_fetch(url, target, resource, max_bytes, expected_sha256, expected_size)
+        if cached is not None:
+            return cached
+        attempts = [item for item in self.state['attempts'] if item['resource'] == resource]
         target.parent.mkdir(parents=True, exist_ok=True)
         for number in range(len(attempts) + 1, self.limits.get('max_attempts', 3) + 1):
             if self._remaining() <= 0:
@@ -207,3 +257,15 @@ class AcquisitionSession:
                     response.close()
                 pending.unlink(missing_ok=True)
         raise HarmError('source_attempt_limit_exhausted')
+
+
+def worker_fetch(request):
+    session = AcquisitionSession(Path(request['root']), request['limits'])
+    # The calling supervisor holds this root's lock throughout run_worker.
+    # Child ownership was established before dispatch; it must not reacquire it.
+    session.active = True
+    session._restore_journal()
+    receipt = session._fetch_owned(request['url'], request['target'], resource=request['resource'],
+                                  max_bytes=request['max_bytes'], expected_sha256=request['expected_sha256'],
+                                  expected_size=request['expected_size'])
+    return {'receipt': receipt}

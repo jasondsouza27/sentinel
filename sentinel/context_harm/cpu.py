@@ -88,7 +88,7 @@ def build_cpu_model(kind: str, params: dict) -> CPUModel:
 CPU_SETTINGS = {'c_values': [0.5, 1.0, 2.0], 'class_weights': [None, 'balanced'], 'max_features': 30000,
                 'max_iter': 1000, 'solver': 'liblinear', 'deadline_seconds': 900,
                 'rss_bytes': 8589934592, 'native_threads': 4}
-CPU_IMPLEMENTATION_FILES = ('cpu.py', 'text.py', 'worker.py', 'runtime.py', 'contracts.py', 'integrity.py')
+CPU_IMPLEMENTATION_FILES = ('cpu.py', 'admission.py', 'text.py', 'worker.py', 'runtime.py', 'contracts.py', 'integrity.py')
 CPU_DEPENDENCIES = ('numpy', 'scipy', 'scikit-learn', 'joblib', 'psutil', 'threadpoolctl')
 MAX_MODEL_BYTES = 64 * 1024**2
 SCORE_BATCH_SIZE = 128
@@ -100,15 +100,15 @@ import os
 import shutil
 import sys
 import tempfile
-import threading
 import time
 from uuid import uuid4
 
 from .contracts import CandidateRef, FrozenStudy, ScoreBatch, WorkerLimits
 from .integrity import canonical_bytes, canonical_sha256, publish_stage, read_json, sha256, write_json
 from .runtime import run_worker
+from .admission import TrainingAdmission
 
-_FIT_LOCK = threading.Lock()
+_FIT_LOCK = TrainingAdmission()
 
 
 def _lf_hash(path):

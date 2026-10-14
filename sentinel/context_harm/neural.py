@@ -6,6 +6,7 @@ import sys
 from .contracts import FrozenStudy, HarmCase, HarmError, ModelText, WorkerLimits
 from .integrity import canonical_bytes, canonical_sha256, read_json, write_json
 from .runtime import run_worker
+from .admission import TrainingAdmission
 
 MAX_SEQUENCE_TOKENS = 256
 MAX_TARGET_TOKENS = 252
@@ -112,6 +113,24 @@ def run_neural_pilot(study: FrozenStudy, python: Path, sources: dict, output: Pa
     from .protocol import assert_fitting_allowed
     try:
         assert_fitting_allowed(study)
+    except (HarmError, OSError):
+        return _unavailable(output, 'protected_cohort_unavailable')
+    try:
+        acquired = _NEURAL_FIT_LOCK.acquire(blocking=False)
+    except HarmError as error:
+        return _unavailable(output, error.reason)
+    if not acquired:
+        return _unavailable(output, 'neural_fitting_busy')
+    try:
+        return _run_neural_pilot_owned(study, python, sources, output)
+    finally:
+        _NEURAL_FIT_LOCK.release()
+
+
+def _run_neural_pilot_owned(study: FrozenStudy, python: Path, sources: dict, output: Path) -> dict:
+    from .protocol import assert_fitting_allowed
+    try:
+        assert_fitting_allowed(study)
     except (HarmError,OSError):
         return _unavailable(output,'protected_cohort_unavailable')
     from .neural_sources import verify_sources
@@ -136,6 +155,8 @@ def run_neural_pilot(study: FrozenStudy, python: Path, sources: dict, output: Pa
         return _unavailable(output,value.get('reason','neural_pilot_gates_failed'),worker_runtime=result.measurements)
     if not _cohort_report_valid(value.get('compatible_cohort',{})):
         return _unavailable(output,'neural_compatible_cohort_unavailable',worker_runtime=result.measurements)
+    if not _attestation_matches(value, probe):
+        return _unavailable(output, 'neural_worker_runtime_invalid', worker_runtime=result.measurements)
     record = {**value,'schema_version':1,'may_fit_full_candidate':True,'neural_python':str(Path(python).resolve()),
               'report_path':str(Path(output).resolve()),
               'study_manifest_sha256':canonical_sha256(study.manifest),'source_manifest_sha256':sources['source_manifest_sha256'],
@@ -152,7 +173,6 @@ import random
 import shutil
 import subprocess
 import tempfile
-import threading
 import time
 
 from .contracts import CandidateRef,PRODUCTION_CRITERIA,ScoreBatch
@@ -160,10 +180,10 @@ from .integrity import publish_stage,sha256
 from .neural_sources import CATALOG_SHA256,MODEL_FILES,MODEL_ID,REVISION,load_catalog
 
 NEURAL_KINDS = ('target_neural','context_neural')
-NEURAL_IMPLEMENTATION_FILES = ('neural.py','neural_sources.py','text.py','worker.py','runtime.py','contracts.py','integrity.py')
+NEURAL_IMPLEMENTATION_FILES = ('neural.py','neural_sources.py','admission.py','text.py','worker.py','runtime.py','contracts.py','integrity.py')
 TOKENIZER_FILES = ('tokenizer.json','tokenizer_config.json','vocab.txt')
 CANDIDATE_MEMBERS = set(MODEL_FILES) | {'source-provenance.json'}
-_NEURAL_FIT_LOCK = threading.Lock()
+_NEURAL_FIT_LOCK = TrainingAdmission()
 
 
 def _repository():
@@ -219,6 +239,53 @@ def _runtime_inventory():
     return installed,installer
 
 
+def _measure_runtime_binding():
+    """Measure the interpreter and CUDA device actually executing this worker."""
+    inventory, _ = _runtime_inventory()
+    import torch
+    if not torch.cuda.is_available():
+        raise HarmError('cuda_unavailable')
+    # All model operations use the default CUDA device; the approved probe is
+    # explicitly for device zero. A changed current device cannot inherit it.
+    device = torch.cuda.current_device()
+    if device != 0:
+        raise HarmError('neural_runtime_changed')
+    return runtime_identity_for_inventory(inventory,
+        python_executable_sha256=sha256(Path(sys.executable)),
+        base_executable_sha256=sha256(Path(sys._base_executable)),
+        cuda_version=torch.version.cuda, device_name=torch.cuda.get_device_name(device),
+        device_total_bytes=int(torch.cuda.get_device_properties(device).total_memory),
+        amp_supported=torch.cuda.get_device_capability(device)[0] >= 7)
+
+
+def _attestation_matches(value, probe):
+    binding = value.get('runtime_binding') if isinstance(value, dict) else None
+    return (isinstance(binding, dict) and binding == probe.get('runtime_binding')
+            and value.get('runtime_sha256') == canonical_sha256(binding) == probe.get('runtime_sha256'))
+
+
+def _attest_worker_runtime(probe):
+    if not _runtime_record_valid(probe):
+        raise HarmError('neural_runtime_record_invalid')
+    actual = _measure_runtime_binding()
+    result = {'runtime_binding': actual, 'runtime_sha256': canonical_sha256(actual)}
+    if not _attestation_matches(result, probe):
+        raise HarmError('neural_runtime_changed')
+    return result
+
+
+def attest_current_runtime(python, probe):
+    """Verify current runtime before final reservation; no cases or models loaded."""
+    result = run_worker([str(python), '-m', 'sentinel.context_harm.worker', '--request-stdin'],
+                        WorkerLimits(60, 8589934592, 4),
+                        input_payload=canonical_bytes({'operation': 'neural_attest', 'probe': probe}))
+    if result.status != 'ok':
+        raise HarmError(result.reason or 'neural_runtime_unavailable')
+    if not _attestation_matches(result.output, probe):
+        raise HarmError('neural_worker_runtime_invalid')
+    return {key: result.output[key] for key in ('runtime_binding', 'runtime_sha256')}
+
+
 def _gpu_memory(torch):
     torch.cuda.synchronize()
     allocated,reserved=int(torch.cuda.max_memory_allocated()),int(torch.cuda.max_memory_reserved())
@@ -260,11 +327,8 @@ def _worker_probe():
         if check.returncode!=0:
             raise HarmError('neural_pip_check_failed')
         import torch
+        identity = _measure_runtime_binding()
         smoke=_cuda_smoke(torch)
-        identity=runtime_identity_for_inventory(inventory,python_executable_sha256=sha256(Path(sys.executable)),
-                    base_executable_sha256=sha256(Path(sys._base_executable)),cuda_version=torch.version.cuda,
-                    device_name=torch.cuda.get_device_name(0),device_total_bytes=int(torch.cuda.get_device_properties(0).total_memory),
-                    amp_supported=torch.cuda.get_device_capability(0)[0]>=7)
         if identity['cuda_version']!='12.8' or identity['device_total_bytes']<GPU_LIMIT_BYTES:
             raise HarmError('cuda_runtime_or_capacity_unavailable')
         return {'status':'ready','may_fit_full_candidate':False,'runtime_binding':identity,'runtime_sha256':canonical_sha256(identity),
@@ -416,13 +480,11 @@ def _worker_pilot(request):
         raise HarmError('neural_study_manifest_changed')
     assert_fitting_allowed(study)
     sources=_verified_sources(request['sources'])
+    probe=request['probe']
+    attestation = _attest_worker_runtime(probe)
     partitions,cohort,coverage,tokenizer=_compatible_development(study,sources)
     if cohort['status']!='ready':
         return {'status':'neural_unavailable','reason':'neural_compatible_cohort_unavailable','may_fit_full_candidate':False,'compatible_cohort':cohort}
-    probe=request['probe']
-    if not _runtime_record_valid(probe):
-        raise HarmError('neural_runtime_record_invalid')
-    _runtime_inventory()
     import torch
     _seed(torch)
     torch.set_num_threads(4); torch.set_num_interop_threads(4); torch.cuda.reset_peak_memory_stats()
@@ -446,7 +508,7 @@ def _worker_pilot(request):
     return {'status':'ready','pilot_rows':len(chosen),'pilot_class_counts':{'0':16,'1':16},'optimizer_steps':20,
             'pilot_case_ids_sha256':canonical_sha256([row.case_id for row in chosen]),'compatible_cohort':cohort,'coverage':coverage,
             'model_load_seconds':load_seconds,'optimizer_seconds':optimizer_seconds,'mean_loss':sum(losses)/len(losses),
-            'forecast_seconds':forecast,'amp_enabled':amp,**memory}
+            'forecast_seconds':forecast,'amp_enabled':amp,**memory,**attestation}
 
 
 def neural_candidate_grid():
@@ -491,6 +553,8 @@ def fit_epoch_loop(training,validation,fit_epoch,validate,retain_checkpoint,conf
 
 def candidate_fit_record(request,directory,report):
     sources,pilot=request['sources'],request['pilot']
+    if not _attestation_matches(report, pilot['probe']):
+        raise HarmError('neural_worker_runtime_invalid')
     base=sources['manifest']['model']['members']
     tokenizer={name:base[name] for name in TOKENIZER_FILES}
     provenance={'base_model_id':MODEL_ID,'revision':REVISION,'base_members':base,'tokenizer_members':tokenizer,
@@ -525,7 +589,7 @@ def checked_candidate(candidate):
     if record.get('catalog_sha256')!=CATALOG_SHA256 or record.get('neural_lock_sha256')!=_lf_hash(_repository()/'requirements-harm-neural-win-py311.lock.txt'):
         raise HarmError('neural_lock_changed')
     probe=record.get('runtime_probe',{})
-    if not _runtime_record_valid(probe) or record.get('runtime_sha256')!=probe.get('runtime_sha256'):
+    if not _runtime_record_valid(probe) or not _attestation_matches(record, probe):
         raise HarmError('neural_runtime_binding_changed')
     cohort=record.get('compatible_cohort',{})
     if not _cohort_report_valid(cohort) or record.get('compatible_cohort_sha256')!=canonical_sha256(cohort):
@@ -563,6 +627,7 @@ def _pilot_checked(study,pilot):
     if (pilot.get('status')!='ready' or pilot.get('may_fit_full_candidate') is not True
             or pilot.get('study_manifest_sha256')!=canonical_sha256(study.manifest)
             or not _cohort_report_valid(pilot.get('compatible_cohort',{})) or not _runtime_record_valid(pilot.get('probe',{}))
+            or not _attestation_matches(pilot, pilot.get('probe', {}))
             or pilot.get('source_manifest_sha256')!=pilot.get('sources',{}).get('source_manifest_sha256')):
         raise HarmError('neural_pilot_changed')
     _verified_sources(pilot['sources'])
@@ -634,13 +699,13 @@ def _worker_fit(request):
     assert_fitting_allowed(study)
     _pilot_checked(study,request['pilot']); _neural_settings(request['settings'])
     sources=_verified_sources(request['sources'])
+    attestation = _attest_worker_runtime(request['pilot']['probe'])
     partitions,cohort,coverage,tokenizer=_compatible_development(study,sources)
     if cohort!=request['pilot']['compatible_cohort']:
         raise HarmError('neural_compatible_cohort_changed')
     entry=next((entry for entry in neural_candidate_grid() if entry['kind']==request['kind'] and entry['config_id']==request['config_id'] and entry['learning_rate']==request['learning_rate']),None)
     if entry is None:
         raise HarmError('neural_candidate_settings_invalid')
-    _runtime_inventory()
     import torch
     torch.set_num_threads(4); torch.set_num_interop_threads(4); torch.cuda.reset_peak_memory_stats()
     started=time.perf_counter(); model=_load_training_model(sources,torch)
@@ -663,6 +728,7 @@ def _worker_fit(request):
         if name not in {'model.safetensors','config.json'}:
             shutil.copyfile(Path(sources['model_dir'])/name,directory/name)
     report.update(_gpu_memory(torch)); report.update(fit_seconds=time.perf_counter()-started,coverage=coverage)
+    report.update(attestation)
     assert_fitting_allowed(study)
     return {'fit_record':candidate_fit_record(request,directory,report)}
 
@@ -688,6 +754,8 @@ def score_neural(candidate,rows,runtime=None):
         if result.status!='ok':
             return ScoreBatch(ids,(None,)*len(ids),(False,)*len(ids),{'status':'unavailable','reason':result.reason,'records':measurements})
         output=result.output
+        if not _attestation_matches(output, record['runtime_probe']):
+            raise HarmError('neural_worker_runtime_invalid')
         if (output.get('case_ids')!=[value['case_id'] for value in chunk] or not isinstance(output.get('scores'),list)
                 or not isinstance(output.get('coverage'),list) or len(output['scores'])!=len(chunk) or len(output['coverage'])!=len(chunk)
                 or any(type(flag) is not bool for flag in output['coverage'])
@@ -708,7 +776,8 @@ def score_neural(candidate,rows,runtime=None):
             aggregate[field]+=value
         values.extend(output['scores']); covered.extend(output['coverage'])
     return ScoreBatch(ids,tuple(values),tuple(covered),{'status':'ok','records':measurements,'wall_seconds':time.perf_counter()-started,
-                         'rss_peak_bytes':max((value.get('rss_peak_bytes',0) for value in measurements),default=0),'token_coverage':aggregate,**gpu_peaks})
+                         'rss_peak_bytes':max((value.get('rss_peak_bytes',0) for value in measurements),default=0),'token_coverage':aggregate,
+                         'runtime_binding':record['runtime_binding'],'runtime_sha256':record['runtime_sha256'],**gpu_peaks})
 
 
 def _worker_score(request):
@@ -717,7 +786,7 @@ def _worker_score(request):
     if canonical_sha256(record)!=request.get('fit_record_sha256'):
         raise HarmError('neural_fit_record_changed')
     candidate=CandidateRef(request['kind'],request['config_id'],directory,record); checked_candidate(candidate)
-    _runtime_inventory()
+    attestation = _attest_worker_runtime(record['runtime_probe'])
     rows=_request_rows(request['rows']); tokenizer=_load_tokenizer(directory)
     contextual=candidate.kind=='context_neural'
     encodings=[encode_model_text(value,tokenizer,contextual=contextual) for _,value in rows]
@@ -737,13 +806,15 @@ def _worker_score(request):
         for index,flag in enumerate(coverage):
             if flag: values[index]=next(scores)
         memory=_gpu_memory(torch)
-    return {'case_ids':[identity for identity,_ in rows],'scores':values,'coverage':coverage,'token_coverage':aggregate_token_coverage(encodings),**memory}
+    return {'case_ids':[identity for identity,_ in rows],'scores':values,'coverage':coverage,'token_coverage':aggregate_token_coverage(encodings),**memory,**attestation}
 
 
 def worker_operation(request):
     operation=request.get('operation')
     if operation=='neural_probe':
         return _worker_probe()
+    if operation=='neural_attest':
+        return _attest_worker_runtime(request['probe'])
     if operation=='neural_pilot':
         return _worker_pilot(request)
     if operation=='neural_fit':
