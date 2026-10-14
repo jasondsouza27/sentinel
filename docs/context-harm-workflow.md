@@ -15,18 +15,21 @@ The tests use invented data to verify software; their scores are not findings.
 
 Run from the project outside OneDrive. The API and application need only the
 Python standard library. CPU research uses Windows CPython 3.11.17 and the existing
-17-package `requirements-ml-win-py311.lock.txt`. Install its exact hashes into an
+17-package `requirements-ml-win-py311.lock.txt`. Install its exact versions into an
 isolated environment; do not replace pins with current versions:
 
 ```powershell
 python -m venv .venv-harm-cpu
-& .\.venv-harm-cpu\Scripts\python.exe -m pip install --require-hashes -r requirements-ml-win-py311.lock.txt
+& .\.venv-harm-cpu\Scripts\python.exe -m pip install --only-binary=:all: -r requirements-ml-win-py311.lock.txt
 & .\.venv-harm-cpu\Scripts\python.exe -m pip check
 ```
 
 On this computer the existing `.venv-url-v2-check` environment supplies those CPU
 dependencies. Set the working directory to the checkout and use its interpreter
 by absolute path when running a worktree.
+The preserved CPU lock contains version pins rather than wheel hashes; use the
+official registry and verify the installed inventory. The separate encoder lock
+additionally requires hash-verified wheels and offline `--require-hashes` installation.
 
 `data/context-harm/`, `models/context-harm/`, and `.venv-harm-neural/` are ignored.
 Sources, text, author/thread IDs, challenge reviews, predictions and fitted weights
