@@ -1,6 +1,6 @@
 # Sentinel: English conversation and directed-abuse design
 
-Date: 2026-10-13. Status: **specification and implementation plan approved; software under final verification**. The user approved the CAD-based direction, specification and implementation plan, then requested parallel implementation. Preserve one final independent whole-branch review. The measured protected CAD allocation fails production gates; no real harm model or live learned warning has been activated.
+Date: 2026-10-13; delivery updated 2026-10-14. Status: **approved software implemented; independent review corrections verified**. The user approved the CAD-based direction, specification and implementation plan, then requested parallel implementation. One independent whole-branch review was completed, and its three Important findings were corrected by regression tests. The measured protected CAD allocation fails production gates; no real harm model or live learned warning has been activated. See the [delivery record](../../context-harm-delivery-record.md) for verification and integration status.
 
 ## Purpose and experiment
 

@@ -12,6 +12,10 @@ produced ordered linear/reply inputs, exact signed snapshot saving, verified CAD
 ingestion, protected cohorts, bounded CPU/conditional encoder tooling, calibration,
 checked artifacts and a single-use research evaluator. See the
 [workflow](context-harm-workflow.md) and [browser verification](context-harm-web-smoke-test.md).
+One independent review identified three Important reliability issues, all
+corrected by regression tests. The post-review checks pass 477 Python and 61
+client tests with zero skips; [delivery evidence](context-harm-delivery-record.md)
+records the preserved data gates and remaining research limits.
 
 The real CAD allocation is **unavailable**. After author/duplicate/context purges,
 1,624 primary development cases remain. The fixed allocation has 175 positive

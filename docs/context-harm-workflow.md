@@ -15,12 +15,14 @@ The tests use invented data to verify software; their scores are not findings.
 
 Run from the project outside OneDrive. The API and application need only the
 Python standard library. CPU research uses Windows CPython 3.11.17 and the existing
-17-package `requirements-ml-win-py311.lock.txt`. Install its exact versions into an
+ML/data locks: sixteen core packages in `requirements-ml-win-py311.lock.txt`
+and seventeen unique pins when `requirements-url-data-win-py311.lock.txt` is
+included. Install their exact versions into an
 isolated environment; do not replace pins with current versions:
 
 ```powershell
 python -m venv .venv-harm-cpu
-& .\.venv-harm-cpu\Scripts\python.exe -m pip install --only-binary=:all: -r requirements-ml-win-py311.lock.txt
+& .\.venv-harm-cpu\Scripts\python.exe -m pip install --only-binary=:all: -r requirements-ml-win-py311.lock.txt -r requirements-url-data-win-py311.lock.txt
 & .\.venv-harm-cpu\Scripts\python.exe -m pip check
 ```
 
@@ -87,6 +89,11 @@ logistic configurations per branch. Native workers require Windows Job Object
 ownership before requests or ML imports; deadlines, process-tree RSS and bounded
 output apply. Scoring sends feature-only stdin payloads without unsaved input
 files. Fit failures publish no successful partial candidate.
+CPU training, encoder training and the optimizer pilot share one nonblocking
+Windows reservation across processes and output directories; a crashed owner
+cannot leave a permanent reservation. Source connections, headers and body reads
+also run in an owned bounded worker, since a socket inactivity timeout does not
+bound an entire request while bytes continue to arrive.
 
 The optional encoder has its own exact 26-wheel lock and generic DistilBERT
 revision. Source byte/disk/time bounds and a training-only CUDA optimizer pilot
@@ -94,6 +101,10 @@ must pass before full candidates. Both neural branches preserve the whole target
 and share the token-compatible subset; targets over 252 WordPiece tokens abstain.
 The current production gate failure prevents acquisition/installation/pilot and
 full fits. An unavailable pilot is a recorded outcome, not a skipped test.
+Every encoder pilot, fit and scoring worker measures its actual interpreter
+and base-executable hashes, installed inventory, CUDA version and default-device
+properties before loading tokenizers or models. Those measurements must match
+the approved probe, and fitted/scored records retain the verified runtime.
 
 Selection uses validation recall under 5% FPR, then precision, lower FPR and
 configuration ID. Calibration uses separate component-grouped out-of-fold checks;
@@ -104,6 +115,8 @@ checks do not authenticate an artifact from an untrusted distributor.
 
 Final access is durably reserved once before scoring. An identical interrupted
 operation can resume; completed scoring and post-reservation refits are denied.
+Current encoder runtime attestation is bound before the final reservation, so an
+interrupted operation cannot silently resume under a different runtime.
 The report compares identical cases with component-bootstrap uncertainty and
 marks sparse/dominant-component intervals unavailable. A later approved data or
 method revision needs a newly reserved held-out version. Verify archived report

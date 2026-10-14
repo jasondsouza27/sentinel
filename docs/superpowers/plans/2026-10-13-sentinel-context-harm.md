@@ -10,6 +10,13 @@
 
 **Spec:** [Approved English conversation/harm design](../specs/2026-10-13-sentinel-context-harm-design.md), approved on 2026-10-13; [source investigation](../../context-harm-source-audit-2026-10-12.md) supplies measured feasibility figures.
 
+**Delivery, 2026-10-14:** The twelve tasks are implemented. One independent review
+found three Important issues, all corrected with failing-then-passing regressions.
+The post-review suite passes 477 Python and 61 client tests without skips. Real
+CAD allocation remains unavailable at the original three production gates, so
+there are no real harm fits or final-test scores. The [delivery record](../../context-harm-delivery-record.md)
+contains the final reproduction, review and integration evidence.
+
 **Status:** Approved for implementation; software under final verification. The user subsequently requested parallel agents; preserve one final independent whole-branch review. Plan preparation installed no dependencies or model bodies. Execution acquired the verified CAD source; production allocation failed, so real fitting, encoder acquisition and protected final scoring remain unavailable. Synthetic tests verify software only.
 
 ## Global Constraints
