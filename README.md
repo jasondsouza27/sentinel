@@ -2,10 +2,30 @@
 
 **Sentinel: An Explainable Social Media Safety Assistant for Suspicious Profiles, Phishing Links, and Harmful Content**
 
-Sentinel is a local college-project prototype. A user submits a message, URL, conversation excerpt, or available profile facts. It returns separate fraud, harmful-content, and profile assessments, with observed evidence, unavailable checks, and an action to consider. The browser extension uses the same API as the web app. Analysis is not saved until the user chooses **Save case**.
+Sentinel is a **year-long engineering major project** combining applied machine-learning research with a local social-media safety application. A user submits a message, URL, ordered conversation, or available profile facts. It returns separate fraud, harmful-content, and profile assessments, with observed evidence, unavailable checks, and an action to consider. The browser extension uses the same API as the web app. Analysis is saved only when the user chooses **Save case**.
 
-The project is being expanded into a **year-long engineering major project** with balanced ML research and application development. The user approved the [year-long design](docs/superpowers/specs/2026-10-05-sentinel-year-long-design.md) and the [first subsystem: ML foundation and URL detector](docs/superpowers/specs/2026-10-05-sentinel-ml-foundation-design.md). The approved [first implementation plan](docs/superpowers/plans/2026-10-05-sentinel-ml-foundation.md) delivers an independent URL ML subsystem: audited sources, domain-isolated splits, sparse/lexical CPU models, calibration, checked local artifacts and optional API inference. See the [URL ML reproduction guide](docs/url-ml-workflow.md) and [API contract](docs/url-ml-api.md). The existing web/extension interface remains Phase 0.
+The [approved year-long design](docs/superpowers/specs/2026-10-05-sentinel-year-long-design.md) guides the balance between ML experiments and application development. The implemented research infrastructure covers verified sources, group-isolated datasets, bounded training, calibration, checked local artifacts and guarded final evaluation. See the [URL ML reproduction guide](docs/url-ml-workflow.md), [paired-study workflow](docs/paired-study-workflow.md) and [conversation/harm workflow](docs/context-harm-workflow.md).
 
+## Current status
+
+Updated **2026-10-14**. The conversation/harm software milestone is implemented, independently reviewed and integrated into the repository's default branch, `codex/sentinel`.
+
+| Area | Implemented | Current research/release status |
+|---|---|---|
+| Web app and extension | Explicit content checks through one shared API; evidence, uncertainty and suggested actions | Local application available; actual Chrome toolbar/context-menu testing remains pending |
+| Conversation investigation | Ordered linear/reply turns, target selection, preceding-context coverage, signed assessment saving, reopen, feedback, export and deletion | Later turns are excluded from the selected target's context; edits require another check before saving |
+| URL detection | Audited URL-v1/v2/v3 studies, CPU classifiers, calibration and protected evaluation | URL-v3 measured; its false-positive results block live learned warnings |
+| Paired message–link detection | Evidence-bound two-reviewer workflow, group splits, CPU branch/fusion training and single-use evaluation | Real intake remains empty; no paired phishing performance is claimed |
+| English directed-abuse detection | Verified CAD admission, protected cohorts, CPU/conditional encoder tooling, calibration and final-evaluation controls | Fixed CAD allocation fails three support gates; no real harm model or final score |
+| Profile assessment | Indicators from supplied profile facts | Bot likelihood and identity remain unestimated; no trained profile model |
+
+The local app currently provides rule observations and explicitly marks unavailable learned checks. The research models have not been released as live warnings.
+
+**Recorded verification:** 477 Python tests and 61 client tests passed with zero skips. One independent review found three Important issues, all corrected with failing-then-passing regressions: absolute download deadlines, shared training admission across processes/model families, and verification of the encoder runtime actually executing each worker. The same reviewer cleared the delivery records. The primary-folder HTTP check verified signed save, reopen and deletion.
+
+Clean-clone source/admission reproduction passed with all 17 pinned ML/data packages. It reused checksum-verified acquisition bytes after the fresh download failed; a second fresh-download success and actual CUDA performance remain unverified. Details and report hashes are in the [delivery record](docs/context-harm-delivery-record.md) and [aggregate verification](output/research/context-harm-v1/verification.json).
+
+## Research progress
 
 The first actual URL-only benchmark is complete: **97.07% F1**, **99.80% recall** and
 **4.35% false-positive rate** on 23,534 domain-held-out URLs. **The url-v1 model remains
@@ -43,9 +63,19 @@ final score is claimed. See the [research card](output/research/context-harm-v1/
 [status](output/research/context-harm-v1/research-status.json) and
 [browser verification](docs/context-harm-web-smoke-test.md). Existing rules remain usable.
 
+The immediate harm research milestone is a reviewed data/protocol revision that
+meets training and independent-component support while preserving held-out
+ownership. Keep the current protected test unscored; changing seeds or lowering
+gates to obtain a favourable result is outside the approved study. Permissioned
+human challenge collection and paired message–link review can proceed alongside
+this work. See [next steps](docs/next-steps.md).
+
 ## Run locally
 
-Requires Python 3.10 or newer. No Python packages or cloud account are needed for the prototype.
+The local application requires Python 3.10 or newer. Its default mode needs only
+the Python standard library and no cloud account. Run commands from your project
+checkout; keep private research data outside OneDrive. Research environments and
+the full test suite have additional requirements described below.
 
 On Windows, double-click [start-sentinel.cmd](start-sentinel.cmd). It uses the bundled Python available on this computer, or a separately installed Python if present.
 
@@ -53,21 +83,49 @@ On Windows, double-click [start-sentinel.cmd](start-sentinel.cmd). It uses the b
 python -m sentinel.server
 ```
 
-Open [http://127.0.0.1:8787](http://127.0.0.1:8787). The server listens only on your own computer. To run tests:
+Open [http://127.0.0.1:8787](http://127.0.0.1:8787). The server listens only on your own computer.
+
+The web app can analyze a message alone, a URL alone, or both together. Enable the
+conversation editor to add ordered turns, select a target and specify replies.
+Only preceding context is considered. **Save case** preserves the exact reviewed
+input and assessment; editing the conversation requires another check. Save
+receipts expire after 15 minutes or a server restart, so recheck when prompted.
+
+Expand **Have profile details?** to supply available counts and an organisation
+domain. A pasted profile URL does not give Sentinel access to private profile or
+posting history.
+
+## Research setup and verification
+
+Full Python verification and CPU research use **Windows CPython 3.11.17** and the
+17 unique package pins across the existing ML/data locks. Use that exact
+interpreter when creating the isolated environment below:
 
 ```powershell
-python -m unittest discover -s tests -v
+python -m venv .venv-ml
+& .\.venv-ml\Scripts\python.exe -m pip install --only-binary=:all: -r requirements-ml-win-py311.lock.txt -r requirements-url-data-win-py311.lock.txt
+& .\.venv-ml\Scripts\python.exe -m pip check
+& .\.venv-ml\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-For the web client's asynchronous analysis and saving checks, developers can also use Node.js 22 or newer. No npm packages are required; Node is not needed to run Sentinel:
+On the development computer, the existing `.venv-url-v2-check` environment
+already supplies those dependencies and can be used instead. These CPU locks
+contain exact version pins; the optional encoder has its own hash-pinned lock
+and guarded setup in the [harm workflow](docs/context-harm-workflow.md). The
+recorded full suite ran without a neural environment or real CUDA training.
+
+For the conversation editor, web-client and extension checks, use Node.js 22 or
+newer. No npm packages are required; Node is not needed to run Sentinel:
 
 ```powershell
 node --test tests/web_client.test.mjs tests/extension_popup.test.mjs tests/conversation_editor.test.mjs
 ```
 
-The [web-app browser test record](docs/web-app-smoke-test-2026-10-05.md) documents the checked workflows, fixes and remaining browser checks.
-
-The web app can analyze a message alone, a URL alone, or both together. Expand **Have profile details?** to supply available counts and an organisation domain. A pasted profile URL does not give Sentinel access to private profile or posting history.
+The [conversation browser record](docs/context-harm-web-smoke-test.md) documents
+actual target/reply editing, exact saving/reopening/export, safe text display,
+deletion, offline recovery and layout checks. The [earlier browser record](docs/web-app-smoke-test-2026-10-05.md)
+preserves the previous checks. Synthetic pipeline tests demonstrate software
+behaviour; their scores are not findings about real detection quality.
 
 ## Chrome extension
 
@@ -104,7 +162,7 @@ For the actual phishing study, use the [collection and two-reviewer workflow](do
 
 The [real-dataset source audit](docs/real-dataset-source-audit.md) identifies a peer-reviewed SMS phishing release with original message–link pairs. A local importer selected 100 unreviewed candidates for the team. It supplies phishing candidates, but no linked legitimate comparison group; the main experiment still needs independently verified legitimate pairs and team review.
 
-The next [local review batch](data/curation/legitimate_sms_candidates.csv) adds 18 potential legitimate SMS candidates from the UCI and NUS corpora. These are unreviewed, contain no Sentinel labels, and have not been added to the empty intake. The [source audit](docs/real-dataset-source-audit.md) records the selection and its limits; follow the [next steps](docs/next-steps.md) before training.
+The private local review batch at `data/curation/legitimate_sms_candidates.csv` adds 18 potential legitimate SMS candidates from the UCI and NUS corpora. It is not included in the repository. These are unreviewed, contain no Sentinel labels, and have not been added to the empty intake. The [source audit](docs/real-dataset-source-audit.md) records the selection and its limits; follow the [next steps](docs/next-steps.md) before training.
 
 ## Scope and privacy
 
@@ -119,10 +177,21 @@ The next [local review batch](data/curation/legitimate_sms_candidates.csv) adds 
 - `sentinel/analysis.py` — assessment rules and explanations.
 - `sentinel/research.py` — paired-data baseline training and evaluation.
 - `sentinel/curation.py` — local collection, independent review, adjudication, and locked test split.
+- `sentinel/url_ml/`, `sentinel/url_v2/` and `sentinel/url_v3/` — URL research, source admission, protected studies and guarded inference.
 - `sentinel/paired/` — evidence-gated four-way paired study, CPU fusion models and guarded optional service.
+- `sentinel/context_harm/` — conversation contracts, CAD admission, protected cohorts, bounded CPU/encoder workers, calibration and research evaluation.
+- `sentinel/assessment_receipts.py` — signed input/result receipts for exact reviewed-case saving.
 - `sentinel/storage.py` and `sentinel/server.py` — local cases and shared API.
+- `web/conversation.js` — target/reply conversation editor.
 - `web/` and `extension/` — user interfaces.
 - `tests/` — automated checks.
 - `docs/` — implementation and research guidance.
 
-The proposed twelve-month schedule is in the year-long design. The original implementation plan and presentation describe Phase 0. The paired-study **software path** is implemented; permissioned human collection, a real held-out experiment, release review, contextual harm/profile ML, team investigation workflows, dashboard expansion and the user pilot remain. No paired phishing performance or user-study result is claimed here.
+The proposed twelve-month schedule is in the year-long design. The original
+implementation plan and presentation describe the starting prototype. URL
+research, the paired-study software path and conversation/harm research tooling
+are implemented. Remaining work includes supported real harm training and
+evaluation under a revised protocol, permissioned paired/challenge collection,
+reviewed release decisions, profile ML, team investigation workflows, dashboard
+expansion and the voluntary user pilot. No paired phishing performance, trained
+harm quality or user-study result is claimed here.
