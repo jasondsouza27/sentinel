@@ -43,7 +43,12 @@ were produced. The challenge is empty/pending. See the
   local feedback, disposable-case deletion and offline/restart recovery.
   [Browser record and screenshot](context-harm-web-smoke-test.md).
 - Nineteen protected baseline config/lock/research files match their prior byte
-  hashes. No private source, challenge, model or neural environment is tracked.
+  hashes in the feature and clean-clone checkouts. In the primary checkout,
+  seventeen also match those physical hashes; the two older ASSASSIN reports
+  retain their pre-existing CRLF bytes and match unchanged Git/LF-normalized
+  content. All nineteen protected Git blobs are unchanged by the merge. The
+  sealed URL-v3 report retains its exact byte hash. No private source, challenge,
+  model or neural environment is tracked.
 
 Clean-clone verification uses an isolated environment and the unchanged seventeen
 combined ML/data pins (sixteen core packages plus PyArrow). Its source/admission
@@ -124,14 +129,22 @@ No per-task or second code-review seats were used.
     identity and protected files in the primary checkout and run a folder-specific
     application smoke check rather than repeat the full suite on identical code.
     Cost: the folder-specific check may not expose every location-dependent issue.
+13. Preserved the primary checkout's two pre-existing CRLF legacy reports,
+    comparing their unchanged Git content against the feature baseline. The
+    sealed URL-v3 report still requires its exact physical hash. Cost: newline-only
+    differences in those two legacy reports are not treated as content changes.
 
 ## Integration
 
 GitHub's verified default branch is `codex/sentinel`. The user's standing
 preference authorizes appropriate integration and pushing to the existing
-repository. Integration will preserve the private source, codebook review,
-empty challenge and reproduction records in the primary project folder; none
-of these files are staged for GitHub. No learned harm warning is activated.
+repository. The implementation was fast-forwarded into that branch. All 58
+private source, codebook-review, empty-challenge and reproduction files were
+preserved in the primary project with matching before/after file hashes; none
+are staged for GitHub. The primary-folder check confirms the exact tested
+implementation identity, six aggregate report hashes, nineteen unchanged
+protected Git blobs, editor routes and signed save/reopen/delete through real
+HTTP calls against a disposable database. No learned harm warning is activated.
 
 ## Remaining project work
 
