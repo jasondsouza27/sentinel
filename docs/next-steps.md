@@ -33,11 +33,11 @@ permissioned challenge cases with two independent human reviews in a new private
 root; the current version's intake is empty and reserved. Real paired-message
 collection can proceed alongside this work. Live learned release remains separate.
 
-## Proposed CAD-v2 direction — awaiting review
+## CAD-v2 direction approved — written specification awaiting review
 
 The [2026-10-18 feasibility investigation](context-harm-v2-feasibility-2026-10-18.md) found a counts-only allocation of the unchanged primary development components that meets the existing class/component and calibration-fold support minimums. The witness has 205 positive training cases, 30 validation positives and 33 calibration positives; it does not optimise the original fraction targets and is not a frozen or approved split.
 
-Recommend a newly specified, constraint-aware allocation with supported calibration folds reserved before modelling. Preserve v1's unavailable outcome and protected test ownership. No v2 product code, model training, test scoring or live warning was produced. The [aggregate evidence and exact probe](../output/research/context-harm-v2-feasibility/probe.md) document the limits. Review this direction before preparing the focused specification; the user's inline execution and independent final-review preference carries forward.
+Recommend a newly specified, constraint-aware allocation with supported calibration folds reserved before modelling. Preserve v1's unavailable outcome and protected test ownership. No v2 product code, model training, test scoring or live warning was produced. The [aggregate evidence and exact probe](../output/research/context-harm-v2-feasibility/probe.md) document the limits. The user approved this direction on 2026-10-18. Review the [written specification](superpowers/specs/2026-10-18-sentinel-context-harm-v2-design.md) before the implementation plan; the user's inline execution and independent final-review preference carries forward.
 
 
 ## Completed URL benchmark and paired-message data work

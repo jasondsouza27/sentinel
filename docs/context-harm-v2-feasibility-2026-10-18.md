@@ -1,6 +1,6 @@
 # Contextual harm v2: development-support feasibility
 
-Date: 2026-10-18. Status: **investigation complete; proposed direction awaiting user review**. This is evidence for a new specification, not an implemented or approved v2 study. No model was fitted, replacement split published, protected test scored or live warning activated.
+Date: 2026-10-18. Status: **investigation complete; direction approved; written specification awaiting review**. This is evidence for a new specification, not an implemented or approved v2 study. No model was fitted, replacement split published, protected test scored or live warning activated.
 
 ## Purpose and recommendation
 
@@ -74,7 +74,7 @@ These are source-documentation findings, not claims that either dataset is admit
 
 ## Review boundary
 
-The next step is approval of this direction, followed by a focused written v2 specification and implementation plan. The user's existing preference for inline implementation with one independent final review carries forward. Product changes, new frozen splits, fitting and final evaluation remain pending those reviews.
+The user approved this direction on 2026-10-18. The focused [v2 specification](superpowers/specs/2026-10-18-sentinel-context-harm-v2-design.md) is written and awaiting review before an implementation plan. The user's existing preference for inline implementation with one independent final review carries forward. Product changes, new frozen splits, fitting and final evaluation remain pending those reviews.
 
 ## Documentation evidence
 
