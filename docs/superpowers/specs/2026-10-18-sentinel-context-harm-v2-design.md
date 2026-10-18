@@ -1,6 +1,6 @@
 # Sentinel: context-harm v2 with constrained CAD allocation
 
-Date: 2026-10-18. Status: **direction approved; written specification awaiting user review**. The user approved the [feasibility investigation](../../context-harm-v2-feasibility-2026-10-18.md) and requested this specification. This document proposes a new study method; it does not report an implemented v2 allocator, a frozen v2 split, trained models or final-test results. The existing choice of inline implementation with one independent final review carries forward.
+Date: 2026-10-18. Status: **written specification approved on 2026-10-18; implementation plan awaiting review**. The user approved the [feasibility direction](../../context-harm-v2-feasibility-2026-10-18.md), then this written specification on 2026-10-18. This document proposes a new study method; it does not report an implemented v2 allocator, a frozen v2 split, trained models or final-test results. The existing choice of inline implementation with one independent final review carries forward.
 
 ## Purpose and scope
 
@@ -160,4 +160,4 @@ One independent final review covers the whole implemented change and methodology
 
 The existing [CAD-v1 design](2026-10-13-sentinel-context-harm-design.md), [delivery record](../../context-harm-delivery-record.md) and [approved year-long design](2026-10-05-sentinel-year-long-design.md) supply inherited requirements. [SciPy's official 1.17.0 milp documentation](https://docs.scipy.org/doc/scipy-1.17.0/reference/generated/scipy.optimize.milp.html) documents integrality, constraints and solver statuses/limits. The installed 1.17.1 wrapper was inspected for option forwarding; an exact-patch documentation page was unavailable. [HiGHS option definitions](https://ergo-code.github.io/HiGHS/dev/options/definitions/) describe native thread/parallel/seed controls; effective compatibility must be verified with the pinned bundled solver, not assumed from development documentation.
 
-Review this written specification before the detailed implementation plan. Only specification approval permits preparing that plan; product changes, setup, new study freezing, fitting and protected final scoring remain pending plan approval. The selected execution method remains implementation here with one independent final review.
+The user approved this written specification on 2026-10-18. The [twelve-task implementation plan](../plans/2026-10-18-sentinel-context-harm-v2.md) is prepared and awaits review; product changes, setup, new study freezing, fitting and protected final scoring remain pending plan approval. The selected execution method remains implementation here with one independent final review.
