@@ -1,6 +1,6 @@
 # Sentinel: current state and next steps
 
-Updated on 2026-10-14. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
+Updated on 2026-10-18. The active project folder on this computer is `C:\Users\Jason Dsouza\Desktop\major project`. Open this folder in Codex or your editor; the previous OneDrive project entry points to an empty folder. Run launchers from this new folder.
 
 The [paired-study software workflow](paired-study-workflow.md) is implemented. It covers evidence-ledger binding, blinded two-reviewer packets, a counts-only `audit`, group-isolated four-way lock, CPU branch/fusion models, a single-use final evaluation receipt and a research-only optional API card. The synthetic integration test verifies software behavior only. The real `data/curation/intake.csv` remains empty, so the current paired-study result is **unavailable**; no phishing-fusion performance or live learned warning is claimed.
 
@@ -32,6 +32,13 @@ this test unscored and do not retry seeds or lower gates to obtain results. Coll
 permissioned challenge cases with two independent human reviews in a new private
 root; the current version's intake is empty and reserved. Real paired-message
 collection can proceed alongside this work. Live learned release remains separate.
+
+## Proposed CAD-v2 direction — awaiting review
+
+The [2026-10-18 feasibility investigation](context-harm-v2-feasibility-2026-10-18.md) found a counts-only allocation of the unchanged primary development components that meets the existing class/component and calibration-fold support minimums. The witness has 205 positive training cases, 30 validation positives and 33 calibration positives; it does not optimise the original fraction targets and is not a frozen or approved split.
+
+Recommend a newly specified, constraint-aware allocation with supported calibration folds reserved before modelling. Preserve v1's unavailable outcome and protected test ownership. No v2 product code, model training, test scoring or live warning was produced. The [aggregate evidence and exact probe](../output/research/context-harm-v2-feasibility/probe.md) document the limits. Review this direction before preparing the focused specification; the user's inline execution and independent final-review preference carries forward.
+
 
 ## Completed URL benchmark and paired-message data work
 

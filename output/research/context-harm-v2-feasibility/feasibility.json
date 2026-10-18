@@ -1,0 +1,110 @@
+{
+  "component_count_vectors_sha256": "60f4121621cc7758181ae7f2d35e4586ddc837b8eb1da98c56662e876818e935",
+  "date": "2026-10-18",
+  "development": {
+    "cases": 1624,
+    "class_counts": {
+      "0": 1356,
+      "1": 268
+    },
+    "threads": 248,
+    "unknown_target_authors": 66
+  },
+  "development_components": 135,
+  "existing_audit_sha256": "b490a4f49422b282ae24f11ea7c49bd0949147bd822be9bdba0d545e1cb64882",
+  "illustrative_assignment_sha256": "f348973f5be1678b7fdcf1f17ee06bf8375c86b383ba544a62fe2dee99daed15",
+  "illustrative_witness": {
+    "calibration": {
+      "cases": 394,
+      "class_counts": {
+        "0": 361,
+        "1": 33
+      },
+      "components": 73
+    },
+    "calibration_fold_0": {
+      "cases": 143,
+      "class_counts": {
+        "0": 130,
+        "1": 13
+      },
+      "components": 19
+    },
+    "calibration_fold_1": {
+      "cases": 128,
+      "class_counts": {
+        "0": 118,
+        "1": 10
+      },
+      "components": 20
+    },
+    "calibration_fold_2": {
+      "cases": 123,
+      "class_counts": {
+        "0": 113,
+        "1": 10
+      },
+      "components": 34
+    },
+    "train": {
+      "cases": 989,
+      "class_counts": {
+        "0": 784,
+        "1": 205
+      },
+      "components": 21
+    },
+    "validation": {
+      "cases": 241,
+      "class_counts": {
+        "0": 211,
+        "1": 30
+      },
+      "components": 41
+    }
+  },
+  "integer_witness_verified": true,
+  "kind": "read_only_development_support_feasibility",
+  "largest_component_cases": 571,
+  "minimum_calibration_fold_class_support": {
+    "fit": 20,
+    "held_out": 5
+  },
+  "minimum_class_support": {
+    "calibration": 30,
+    "train": 200,
+    "validation": 30
+  },
+  "minimum_components": {
+    "calibration": 10,
+    "validation": 10
+  },
+  "models_trained": false,
+  "numpy": "2.4.6",
+  "protected_files_checked": 84,
+  "protected_files_manifest_sha256": "d4088f02144a1a990fcb9b53494b4084e7afc68132dcd0d2a5554a45329315b4",
+  "protected_files_unchanged": true,
+  "python": "3.11.17",
+  "runtime_or_calibration_quality_proven": false,
+  "schema_version": 1,
+  "scipy": "1.17.1",
+  "scope": "One zero-objective count feasibility solve; no split publication, training, predictions or test scoring",
+  "solver": {
+    "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+    "node_limit": 10000,
+    "objective": "constant zero; feasibility only",
+    "seconds": 0.109,
+    "status": 0,
+    "success": true,
+    "time_limit_seconds": 20
+  },
+  "source_archive_sha256": "69f5ed2fd7b40de21fe54c620549f0be6c34eaf55b8de06ff481cabe3e9476d2",
+  "source_member_sha256": "7287d635e1d35ae1e64779ffe107df16f493c6ccc4084c4497bbf3f56ae0f349",
+  "split_published": false,
+  "test_scored": false,
+  "study_version_implemented": false,
+  "witness_is_final_allocation": false,
+  "witness_uses_original_fraction_objective": false,
+  "calibration_fold_assignment_is_proposed_revision": true,
+  "original_calibration_fold_method": "seeded_component_shuffle_equal_component_folds; not replaced by this probe"
+}
