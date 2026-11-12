@@ -40,3 +40,10 @@ models/context-harm/
 data/url-ml-v2/
 
 data/url-ml-v3/
+
+.venv-text-ml/
+data/text-ml/
+models/text-ml/
+data/network/
+data/bot-ml/
+models/bot-ml/

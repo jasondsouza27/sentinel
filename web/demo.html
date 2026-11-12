@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentinel Auto-scan Demo</title>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#111110">
+<link rel="stylesheet" href="/demo.css">
+<script src="/demo.js" defer></script>
+</head>
+<body>
+<header class="bar">
+  <div class="app"><span class="app-mark" aria-hidden="true">C</span><strong>Campus Chat</strong></div>
+  <span class="note">Demo page · every message, name and link here is invented</span>
+</header>
+<main>
+  <aside class="howto">
+    <p class="kicker">Sentinel · Auto-scan</p>
+    <h1>Auto-scan <em>demo</em></h1>
+    <ol>
+      <li>Start Sentinel and load the <code>extension</code> folder unpacked in Chrome.</li>
+      <li>Open the Sentinel toolbar popup on this page and turn on <b>Auto-scan this site</b>.</li>
+      <li>Markers appear beside risky messages. Click one to see the evidence.</li>
+      <li>Press <b>Simulate incoming message</b>: new messages are scanned as they arrive.</li>
+      <li>Turn on <b>Read text in images</b> too. The pictures in the chat are then read on your computer, including the QR code.</li>
+    </ol>
+    <button id="incoming" type="button">Simulate incoming message <span aria-hidden="true">↓</span></button>
+    <p class="small"><a href="/">← Back to the Sentinel app</a></p>
+    <p class="small">Sentinel reads only visible text (and, if you allow it, images) on sites you turn on. Nothing is saved, and content goes only to the Sentinel app on this computer.</p>
+  </aside>
+  <section class="feed" id="feed" aria-label="Messages">
+    <div class="feed-head"><span class="channel"># general</span><span class="count">Today</span></div>
+    <article class="msg"><span class="avatar" aria-hidden="true">P</span><div><b>Priya (Study group)</b><p>Notes from today's lab are in the shared folder. The quiz moved to Thursday afternoon.</p></div></article>
+    <article class="msg"><span class="avatar" aria-hidden="true">C</span><div><b>Campus Jobs Desk</b><p>Congratulations, you were selected for a remote assistant role! Pay the registration fee of 499 immediately to confirm: <a href="http://192.0.2.44/confirm">http://192.0.2.44/confirm</a></p></div></article>
+    <article class="msg"><span class="avatar" aria-hidden="true">L</span><div><b>Library</b><p>Reminder: borrowed books are due next Monday. Renew online at <a href="https://library.example.edu/renew">library.example.edu/renew</a>.</p></div></article>
+    <article class="msg"><span class="avatar" aria-hidden="true">A</span><div><b>Account Security</b><p>Urgent: your student mail will close within 2 hours. Reply with your one-time password to keep access.</p></div></article>
+    <article class="msg"><span class="avatar" aria-hidden="true">B</span><div><b>Bank alerts</b><p>Your card is on hold. Review the charge at <a href="https://secure-login.bank-check.example.net/review">www.mybank.example/review</a> and enter your login details.</p></div></article>
+    <article class="msg"><span class="avatar" aria-hidden="true">R</span><div><b>Rohan</b><p>Got this forwarded in the family group, is it real?</p><img class="shot" src="/demo-kyc.svg" width="420" height="190" alt="Forwarded image"></div></article>
+    <article class="msg"><span class="avatar" aria-hidden="true">S</span><div><b>Sam</b><p>Want to grab lunch after the seminar? The new place near the station looks good.</p></div></article>
+    <article class="msg"><span class="avatar" aria-hidden="true">?</span><div><b>Anonymous</b><p>you are worthless and nobody in this class wants you here</p></div></article>
+    <article class="msg"><span class="avatar" aria-hidden="true">F</span><div><b>Finance Club</b><p>Saw this poster at the bus stop.</p><img class="shot" src="/demo-refund.svg" width="440" height="200" alt="Poster with a QR code"></div></article>
+    <article class="msg"><span class="avatar" aria-hidden="true">D</span><div><b>Dev</b><p>Screenshot from my manager, weird right?</p><canvas class="shot" id="chat-shot" width="420" height="170" aria-label="Chat screenshot"></canvas></div></article>
+    <article class="msg"><span class="avatar" aria-hidden="true">P</span><div><b>Priya (Study group)</b><p>New library hours for exam week.</p><img class="shot" src="/demo-library.svg" width="420" height="160" alt="Library poster"></div></article>
+    <article class="msg"><span class="avatar" aria-hidden="true">E</span><div><b>Events Team</b><p>Act now to reserve a seat at Friday's free community picnic.</p></div></article>
+  </section>
+</main>
+</body>
+</html>

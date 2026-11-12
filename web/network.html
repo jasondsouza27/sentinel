@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentinel Community Network</title>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#111110">
+<link rel="stylesheet" href="/network.css">
+<script src="/network.js" defer></script>
+</head>
+<body>
+<div class="shell">
+<header class="top">
+  <div class="brand"><span class="mark">S</span><div><strong>Sentinel</strong><small>Community hub · prototype</small></div></div>
+  <nav class="app-nav" aria-label="Sentinel pages"><a href="/" data-app-link>Check content</a><a href="/bot" data-app-link>Bot accounts</a><a href="/network" data-app-link aria-current="page">Community network</a><a href="/demo" data-app-link>Auto-scan demo</a></nav>
+  <div class="clock" id="clock">Waiting for data…</div>
+</header>
+
+<main>
+  <section class="intro">
+    <p class="kicker">Anonymous scam-campaign fingerprints</p>
+    <h1>Community <em>network</em></h1>
+    <p class="lede">Campaigns are published only after enough different people flag them. The hub keeps numbers, never messages.</p>
+  </section>
+
+  <section class="tiles" aria-label="Hub totals">
+    <div class="tile"><span class="label">Clients registered</span><b id="t-clients">–</b></div>
+    <div class="tile"><span class="label">Fingerprint reports</span><b id="t-reports">–</b></div>
+    <div class="tile accent"><span class="label">Campaigns published</span><b id="t-published">–</b><small>k-anonymous</small></div>
+    <div class="tile"><span class="label">Held for review</span><b id="t-held">–</b><small>protected senders</small></div>
+  </section>
+
+  <section class="panel" id="sim-panel" hidden>
+    <div class="panel-head"><div><p class="kicker">Simulation</p><h2>Who is <em>protected</em></h2></div><span id="sim-meta" class="meta"></span></div>
+    <div class="compare">
+      <div><b id="s-model">–</b><span>of scam messages caught by each user's own model</span></div>
+      <div class="accent"><b id="s-combined">–</b><span>caught with the community network as well</span></div>
+      <div><b id="s-saves">–</b><span>scams the model missed but the network caught</span></div>
+    </div>
+    <svg id="chart" viewBox="0 0 720 240" role="img" aria-label="Cumulative protection over time"></svg>
+    <p class="legend"><span><i class="line combined"></i>Model + network</span><span><i class="line model"></i>Model only</span></p>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><div><p class="kicker">Live feed</p><h2>Active <em>campaigns</em></h2></div><span class="meta">Published only once at least k distinct users flagged them</span></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>About (fixed tags)</th><th>Type</th><th class="num">Reporters</th><th class="num">Confidence</th><th>First seen</th><th>Published</th></tr></thead>
+      <tbody id="campaigns"><tr><td colspan="7" class="empty">No published campaigns yet.</td></tr></tbody>
+    </table></div>
+  </section>
+
+  <section class="panel privacy">
+    <p class="kicker">Privacy</p>
+    <h2>What the hub <em>stores</em></h2>
+    <p>Signatures (MinHash numbers), LSH band keys, salted domain hashes, fixed topic tags, counts and hourly time buckets. <b>No message text, senders, phone numbers or full links.</b> Matching happens on each user's device against the downloaded feed, so the hub never learns which messages a user checked.</p>
+  </section>
+</main>
+<footer><span>Sentinel · Community network prototype</span><span>Loopback only · Numbers, never messages</span></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="190" viewBox="0 0 420 190">
+  <!-- Invented demo "screenshot" of an SMS: no real bank or number. -->
+  <rect width="420" height="190" rx="14" fill="#f2f2f2"/>
+  <rect width="420" height="40" rx="14" fill="#b3261e"/>
+  <rect y="26" width="420" height="14" fill="#b3261e"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <text x="18" y="27" font-size="17" font-weight="700" fill="#ffffff">ACCOUNT ALERT</text>
+    <g font-size="17" fill="#111111">
+      <text x="18" y="72">URGENT: Your bank account will be blocked</text>
+      <text x="18" y="96">within 2 hours. Pay the KYC renewal fee</text>
+      <text x="18" y="120">and share your one-time password to</text>
+      <text x="18" y="144">keep it active.</text>
+    </g>
+    <text x="18" y="174" font-size="12" fill="#666666">Forwarded image</text>
+  </g>
+</svg>

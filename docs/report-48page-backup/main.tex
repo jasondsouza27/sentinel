@@ -1,0 +1,184 @@
+\documentclass[12pt,a4paper,oneside,openany,graphicx]{report}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{textcomp}
+\usepackage{chngcntr}
+\usepackage{listings}
+\usepackage{color}	
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{rotating}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{placeins}
+\usepackage{url}
+\usepackage{tabularx}
+\usepackage{lipsum}
+\usepackage{caption}
+\usepackage{ltablex}
+											
+\lstloadlanguages{C,C++,csh,Java}
+
+\definecolor{red}{rgb}{0.6,0,0} 
+\definecolor{blue}{rgb}{0,0,0.6}
+\definecolor{green}{rgb}{0,0.8,0}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+\definecolor{cloudwhite}{rgb}{0.9412, 0.9608, 0.8471}
+\lstset{
+	language=csh,
+	basicstyle=\footnotesize\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	numbersep=5pt,
+	tabsize=2,
+	extendedchars=true,
+	breaklines=true,
+	frame=b,
+	stringstyle=\color{blue}\ttfamily,
+	showspaces=false,
+	showtabs=false,
+	xleftmargin=17pt,
+	framexleftmargin=17pt,
+	framexrightmargin=5pt,
+	framexbottommargin=4pt,
+	commentstyle=\color{green},
+	morecomment=[l]{//}, %use comment-line-style!
+	morecomment=[s]{/*}{*/}, %for multiline comments
+	showstringspaces=false,
+	morekeywords={ abstract, event, new, struct,
+		as, explicit, null, switch,
+		base, extern, object, this,
+		bool, false, operator, throw,
+		break, finally, out, true,
+		byte, fixed, override, try,
+		case, float, params, typeof,
+		catch, for, private, uint,
+		char, foreach, protected, ulong,
+		checked, goto, public, unchecked,
+		class, if, readonly, unsafe,
+		const, implicit, ref, ushort,
+		continue, in, return, using,
+		decimal, int, sbyte, virtual,
+		default, interface, sealed, volatile,
+		delegate, internal, short, void,
+		do, is, sizeof, while,
+		double, lock, stackalloc,
+		else, long, static,
+		enum, namespace, string},
+	keywordstyle=\color{cyan},
+	identifierstyle=\color{red},
+	backgroundcolor=\color{cloudwhite},
+}
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{blue}{\parbox{\textwidth}{\hspace{15pt}#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}																			
+
+\usepackage[explicit]{titlesec}
+
+
+\usepackage[top=1.5cm, bottom=2.2cm, left=3cm, right=2cm, headsep=1.2cm, footskip=1cm, margin=1in, headheight=0.3cm, textheight=24.5cm, textwidth=16cm]{geometry}
+\usepackage{mathptmx}% http://ctan.org/pkg/mathptmx
+\usepackage{iftex}
+\ifXeTeX % Tectonic/XeLaTeX: use TeX Gyre Termes (Times) so the text matches the pdfLaTeX build
+  \usepackage{fontspec}
+  \setmainfont{texgyretermes}[Extension=.otf, UprightFont=*-regular, BoldFont=*-bold, ItalicFont=*-italic, BoldItalicFont=*-bolditalic]
+\fi
+
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{float}
+
+\usepackage{listings}
+\textwidth 6.5in
+\textheight 9.5in
+
+\renewcommand{\arraystretch}{1.5}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\pagenumbering{roman}
+
+
+\usepackage{subfigure}
+\usepackage[toc,page]{appendix}
+% ---- additions for the Sentinel report ----
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{etoolbox}
+\usepackage[shortlabels]{enumitem}
+\setlist{itemsep=2pt, topsep=4pt}
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
+\counterwithin{algorithm}{chapter}
+\graphicspath{{Images/}}
+\AtBeginEnvironment{algorithmic}{\setstretch{1.08}}
+\AtBeginEnvironment{tabular}{\setstretch{1.0}}
+\AtBeginEnvironment{longtable}{\setstretch{1.0}}
+\captionsetup[figure]{skip=4pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\renewcommand{\topfraction}{0.88}
+\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.82}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
+
+\setlength{\headheight}{15pt}
+\lstdefinestyle{py}{language=Python, literate={“}{{``}}1 {”}{{''}}1 {’}{{'}}1 {≤}{{$\le$}}1 {–}{{--}}1 {—}{{---}}1 {→}{{$\to$}}1 {…}{{...}}1, basicstyle=\footnotesize\ttfamily\setstretch{1.0}, keywordstyle=\color{blue}\bfseries,
+  identifierstyle=\color{black}, stringstyle=\color{red}\ttfamily, commentstyle=\color{gray}\itshape,
+  morekeywords={self,True,False,None}, backgroundcolor=\color{cloudwhite}}
+\lstdefinestyle{js}{literate={“}{{``}}1 {”}{{''}}1 {’}{{'}}1 {≤}{{$\le$}}1 {–}{{--}}1 {—}{{---}}1 {→}{{$\to$}}1 {…}{{...}}1, basicstyle=\footnotesize\ttfamily\setstretch{1.0}, identifierstyle=\color{black}, keywordstyle=\color{blue}\bfseries,
+  stringstyle=\color{red}\ttfamily, backgroundcolor=\color{cloudwhite}, morekeywords={const,let,await,async,function,return,try,catch}}
+\lstdefinestyle{json}{literate={“}{{``}}1 {”}{{''}}1 {’}{{'}}1 {≤}{{$\le$}}1 {–}{{--}}1 {—}{{---}}1 {→}{{$\to$}}1 {…}{{...}}1, basicstyle=\scriptsize\ttfamily\setstretch{1.0}, identifierstyle=\color{black}, keywordstyle=\color{black},
+  stringstyle=\color{black}, backgroundcolor=\color{cloudwhite}, numbers=none}
+% thebibliography should not start its own unnumbered chapter (References is Chapter 7)
+\patchcmd{\thebibliography}{\chapter*{\bibname}}{}{}{}
+\usepackage[hidelinks]{hyperref}
+\begin{document}
+
+\pagenumbering{roman}
+
+\input{Sections/Front-Pages/1-initial-page}
+\input{Sections/Front-Pages/2-certificate-A}
+\input{Sections/Front-Pages/4-approval}
+\input{Sections/Front-Pages/5-declaration}
+\input{Sections/Front-Pages/6-abstract}
+\input{Sections/Front-Pages/7-abbreviations}
+
+{\setstretch{1.05}\tableofcontents}
+{\setstretch{1.05}\listoffigures}
+{\setstretch{1.05}\listoftables}
+\pagebreak
+
+\pagenumbering{arabic}
+
+\input{Sections/Main-Content/chp-1-Introduction}
+\input{Sections/Main-Content/chp-2-Lit-Review}
+\input{Sections/Main-Content/chp-3-Proposed-System}
+\input{Sections/Main-Content/chp-4-Implementation}
+\input{Sections/Main-Content/chp-5-Results}
+\input{Sections/Main-Content/chp-6-Conclusion}
+\input{Sections/Back-Pages/2-bibliography}
+\input{Sections/Back-Pages/1-appendix}
+\input{Sections/Back-Pages/3-acknowledgements}
+
+
+
+\end{document}

@@ -1,0 +1,12 @@
+% Signed Certificate, Project Approval and Declaration (scanned).
+% The typed versions are kept in 2-certificate-A.tex, 4-approval.tex and 5-declaration.tex.
+\newgeometry{margin=1.5cm}
+\newcommand{\signedpage}[1]{%
+  \newpage\thispagestyle{empty}%
+  \vspace*{\fill}%
+  \begin{center}\includegraphics[width=\textwidth,height=0.95\textheight,keepaspectratio]{#1}\end{center}%
+  \vspace*{\fill}}
+\signedpage{Images/signed/certificate.jpg}
+\signedpage{Images/signed/approval.jpg}
+\signedpage{Images/signed/declaration.jpg}
+\restoregeometry

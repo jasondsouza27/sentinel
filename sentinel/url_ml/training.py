@@ -56,6 +56,17 @@ def candidate_grid(config):
         raise DatasetError("candidate_budget_exceeded")
     return grid
 
+def _own_peak_bytes(psutil):
+    """This process's lifetime peak memory. psutil reports it only on Windows (peak_wset);
+    on macOS/Linux use getrusage (ru_maxrss is bytes on macOS, kilobytes on Linux)."""
+    info=psutil.Process().memory_info()
+    peak=getattr(info,"peak_rss",None) or getattr(info,"peak_wset",None)
+    if peak is None and os.name=="posix":
+        import resource,sys
+        maxrss=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        peak=maxrss if sys.platform=="darwin" else maxrss*1024
+    return peak
+
 def _fit_worker(connection,rows,branch,params,parser,native_threads,pipeline_factory=None):
     import psutil
     import warnings
@@ -69,8 +80,7 @@ def _fit_worker(connection,rows,branch,params,parser,native_threads,pipeline_fac
             else:
                 model=pipeline_factory(branch,params,parser)
                 model.fit([r.url for r in rows],[r.label for r in rows])
-        info=psutil.Process().memory_info()
-        peak=getattr(info,"peak_rss",None) or getattr(info,"peak_wset",None)
+        peak=_own_peak_bytes(psutil)
         if peak is None: raise DatasetError("peak_memory_field_unavailable")
         convergence=any(issubclass(w.category,ConvergenceWarning) for w in captured)
         record={"status":"convergence_failure" if convergence else "ok","pid":os.getpid(),
@@ -79,8 +89,7 @@ def _fit_worker(connection,rows,branch,params,parser,native_threads,pipeline_fac
         connection.send((None if convergence else model,record))
     except Exception as error:
         try:
-            info=psutil.Process().memory_info()
-            peak=getattr(info,"peak_rss",None) or getattr(info,"peak_wset",None)
+            peak=_own_peak_bytes(psutil)
         except psutil.Error: peak=None
         connection.send((None,{"status":"fit_failed","error":getattr(error,"reason",type(error).__name__),
                               "error_type":type(error).__name__,"error_message":str(error)[:2048],
@@ -133,7 +142,9 @@ def fit_candidate(rows,branch,params,parser,native_threads=4,max_peak_bytes=8*10
         except psutil.NoSuchProcess: pass
         targets=[]
         for identity,member in reversed(list(known.items())):
-            if not include_worker and member.pid==process.pid: continue
+            # The worker itself is stopped through multiprocessing below: waiting on it with
+            # psutil would reap it on POSIX and leave multiprocessing unable to close it.
+            if member.pid==process.pid: continue
             try:
                 if member.create_time()!=identity[1] or not member.is_running(): continue
                 member.terminate(); targets.append(member)
@@ -143,7 +154,10 @@ def fit_candidate(rows,branch,params,parser,native_threads=4,max_peak_bytes=8*10
             try: member.kill()
             except psutil.NoSuchProcess: pass
         _,alive=psutil.wait_procs(alive,timeout=3)
-        return not alive
+        if include_worker and process.is_alive():
+            process.terminate(); process.join(3)
+            if process.is_alive(): process.kill(); process.join(3)
+        return not alive and not (include_worker and process.is_alive())
     try:
         while True:
             try: measured=sample()

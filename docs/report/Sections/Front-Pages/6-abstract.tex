@@ -1,0 +1,16 @@
+\newpage
+\thispagestyle{plain}
+\begin{center}
+\textbf {{\Large Abstract}} \\
+\vspace{2pc}
+\end{center}
+\onehalfspacing
+{\itshape
+\noindent Social media users often receive scam messages, fake links, threats and bullying, and contact from fake or automated accounts. Most protection depends on platform moderation or tools that give a verdict without explaining it. This project presents \textbf{Sentinel}, a safety assistant that runs on the user's own computer. Through a web app or a Chrome extension, a user can check a message, a link, a chat or a social-media account, or let the extension scan the pages they choose. For each kind of threat, Sentinel shows what it found, what it could not check and what to do next.
+
+\vspace{0.5pc}
+\noindent Sentinel combines clear rules with machine-learning models that are used only after passing a fair test on unseen data. A rule engine detects threats, self-harm, harassment and other harmful language in English and Hinglish. A scam-text model built from DistilBERT and TF-IDF reached a macro-F1 of 0.897 with no genuine messages wrongly flagged on 870 test SMS, and cut false alarms on genuine Indian messages from 17 of 24 to 2 of 24. A community network lets users warn each other by sharing only message fingerprints; in a simulation of 10,000 users it raised protection from 78.2\% to 99.7\%. Bot detection uses only official APIs or data from the user; one trained model passed its test and is used, while another failed and was kept out. This report covers the work completed in Major Project Part 1 (Semester VII).
+}
+
+\vspace{1pc}
+\noindent{\bf Keywords}: {\it phishing, scam detection, harmful language, bot detection, browser extension, machine learning, privacy}

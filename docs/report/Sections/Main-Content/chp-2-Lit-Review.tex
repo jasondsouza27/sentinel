@@ -1,0 +1,49 @@
+\titleformat{\chapter}[display]{\bfseries\centering}{\huge Chapter \thechapter}{1em}{\Huge #1}
+\newgeometry{top=3cm, bottom=2.2cm, left=3cm, right=2cm, headsep=1.2cm, footskip=1cm, headheight=0.3cm, textheight=24.5cm, textwidth=16cm}
+\onehalfspacing
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\thepage}
+\chapter{Literature Survey}
+
+\section{Survey of Existing systems}
+\noindent\textbf{[1] Detecting Fake Profiles on Social Networks: A Systematic Investigation (2023):} This study reviews machine-learning and deep-learning methods for finding fake accounts and the profile details they use, such as follower counts, bio and posting activity \cite{lit1}. It is a useful overview of profile features. However, it looks only at profiles and does not consider the links or messages that such accounts send.\\
+
+\noindent\textbf{[2] Heterogeneous Social Media Analysis for Deep Learning Fake-Profile Identification (2023):} This study combines posts, images, activity and login behaviour from several platforms, using Word2Vec and convolutional neural networks with feature optimisation \cite{lit2}. It reports 93.5\% accuracy at login and signup and gains of 8.3\% in accuracy over earlier methods. However, it needs platform-side data, such as login behaviour, that an ordinary user cannot see.\\
+
+\noindent\textbf{[3] Techniques to Detect Fake Profiles Using New Age Algorithms -- A Survey (2024):} This survey groups fake-profile techniques by profile pictures, shared content and bot-versus-human behaviour, and links fake profiles to phishing, misinformation and cyberbullying \cite{lit3}. As a survey, it does not report new experiments.\\
+
+\noindent\textbf{[4] Cyberbullying Detection and Abuser Profile Identification for Roman Urdu (2024):} This study detects bullying in Roman Urdu tweets with a GRU model over word embeddings and also tracks each user's bullying over time \cite{lit4}. It reaches 97\% accuracy and 97\% F1. However, it covers one language and one platform, and does not address phishing or fake accounts.\\
+
+\noindent\textbf{[5] Adaptive Cyberbullying-Related Hate Speech Detection with Uncertainty (2024):} This study adds neutrosophic logic to a neural network so that it can handle bullying categories that overlap and are hard to separate \cite{lit5}. It improves results on ambiguous short texts, but checks only text, not links or accounts.\\
+
+\noindent\textbf{Social Bot Detection: The Paradigm-Shift of Social Spambots (2017) and Scalable Social Bot Detection through Data Selection (2020):} Cresci et al. show that newer ``social spambots'' imitate humans so well that existing detectors and even human annotators struggle to spot them \cite{cresci2017}. Yang et al. show that a bot detector trained on one dataset often fails on another, and suggest testing on datasets kept out of training \cite{yang2020}. These works guided how Sentinel tests its bot models.\\
+
+\noindent\textbf{Public Datasets and Reputation Services:} PhiUSIIL (235,795 labelled URLs) \cite{phiusiil}, the Contextual Abuse Dataset (Reddit abuse with thread context) \cite{cad} and an SMS phishing dataset of 5,971 messages labelled genuine, spam or smishing \cite{smsdata} are used in Sentinel's studies. PhishTank \cite{phishtank} and Google Safe Browsing \cite{safebrowsing} keep lists of known bad URLs; they are accurate for known links but cannot judge a new link and do not explain their answer.
+
+\section{Limitations of Existing systems or research gaps}
+\noindent Based on the surveyed systems, the following research gaps were identified:
+\begin{enumerate}
+\item \textbf{One Threat at a Time:} fake profiles, abusive text and phishing links are studied separately, although one suspicious post often combines all three.
+\item \textbf{Need for Platform Data:} many methods need login behaviour or full activity histories that an individual user cannot see.
+\item \textbf{Verdicts Without Explanation:} list services and moderation give an answer but do not say what they observed or what they could not check.
+\item \textbf{Optimistic Evaluation:} high accuracy on one dataset often does not hold on new data; bot detectors in particular fail on datasets they have not seen \cite{yang2020}.
+\item \textbf{Missed Hinglish and Disguises:} English-only models and keyword lists miss Hinglish, leetspeak and spaced-out words.
+\item \textbf{No Help Against New Campaigns:} the same scam is reworded and resent many times, so each user's own filter keeps missing it.
+\item \textbf{Privacy Concerns:} cloud-based checking sends personal messages to third-party servers.
+\end{enumerate}
+
+\section{Scope of the proposed system}
+\noindent The proposed Sentinel system aims to address the identified gaps. Its scope is outlined below:
+\begin{enumerate}
+\item \textbf{Multi-Threat Checking:} Sentinel checks scam messages, phishing links, harmful language and suspicious accounts together, and reports each separately.
+\item \textbf{Explainable Results:} every result shows the evidence, the checks that could not be done and a suggested next step.
+\item \textbf{Hinglish Support:} harmful-language rules work for English and Hinglish and undo common disguises.
+\item \textbf{Learned Scam Detection:} a calibrated scam-text model highlights the words that raised its score.
+\item \textbf{Opt-In Auto-Scan:} the Chrome extension scans visible text, and text inside images, only on sites the user switches on.
+\item \textbf{Community Warnings:} users can warn each other about new scams by sharing only anonymous fingerprints.
+\item \textbf{Bot Detection Without Scraping:} accounts are checked using only official APIs or data the user provides.
+\item \textbf{Fair Model Testing:} a learned model is used only after it passes a test on data it has never seen.
+\item \textbf{Out of Scope:} automatic blocking, scraping, opening suspicious links, identity verification, deepfakes, mobile apps and paid cloud services.
+\end{enumerate}

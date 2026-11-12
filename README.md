@@ -8,20 +8,27 @@ The [approved year-long design](docs/superpowers/specs/2026-10-05-sentinel-year-
 
 ## Current status
 
-Updated **2026-10-14**. The conversation/harm software milestone is implemented, independently reviewed and integrated into the repository's default branch, `codex/sentinel`.
+Updated **2026-11-06**. For a full walkthrough of the architecture, modules, algorithms and results, see the [viva guide](docs/viva-guide.md).
 
-| Area | Implemented | Current research/release status |
+| Area | Implemented | Live in the app? / release status |
 |---|---|---|
-| Web app and extension | Explicit content checks through one shared API; evidence, uncertainty and suggested actions | Local application available; actual Chrome toolbar/context-menu testing remains pending |
-| Conversation investigation | Ordered linear/reply turns, target selection, preceding-context coverage, signed assessment saving, reopen, feedback, export and deletion | Later turns are excluded from the selected target's context; edits require another check before saving |
-| URL detection | Audited URL-v1/v2/v3 studies, CPU classifiers, calibration and protected evaluation | URL-v3 measured; its false-positive results block live learned warnings |
-| Paired message–link detection | Evidence-bound two-reviewer workflow, group splits, CPU branch/fusion training and single-use evaluation | Real intake remains empty; no paired phishing performance is claimed |
-| English directed-abuse detection | Verified CAD admission, protected cohorts, CPU/conditional encoder tooling, calibration and final-evaluation controls | Fixed CAD allocation fails three support gates; no real harm model or final score |
-| Profile assessment | Indicators from supplied profile facts | Bot likelihood and identity remain unestimated; no trained profile model |
+| Web app (4 pages) | Content checks (`/`), bot accounts (`/bot`), community network (`/network`) and an auto-scan demo (`/demo`) on one shared API; evidence, uncertainty and suggested actions | **Live** |
+| Chrome extension | Explicit checks (popup, context menu) plus **opt-in auto-scan** of visible page text on sites you turn on, and optional **text and QR codes in images** (on-device OCR) | **Live**; Chrome end-to-end checks recorded in [autoscan-extension.md](docs/autoscan-extension.md) |
+| Fraud and link evidence rules | Payment, credential and urgency wording; URL structure; optional reputation feed | **Live** (rules) |
+| Harmful-language detection | 26 rules in 11 categories (threats, self-harm, sextortion, stalking, hate, slurs, harassment/bullying) in English and Hinglish, with normalisation and quote/negation/idiom handling ([harm_rules.py](sentinel/harm_rules.py)) | **Live** (rules) |
+| Learned scam-text model | `text-ml-v2`: DistilBERT averaged with TF-IDF, calibrated, with word-level explanations ([model card](output/research/text-ml-v2/model-card.md)) | **Live**, experimental; added training data is synthetic |
+| Community scam network | Anonymous MinHash fingerprints, a k-anonymous hub with poisoning defences, and a 10,000-user simulation ([docs](docs/community-network.md), [results](output/research/network-v1/results.md)) | **Live** prototype (loopback) |
+| Bot account detection | 25-signal weighted heuristic over official APIs (YouTube, Reddit) or uploaded data ([docs](docs/bot-detection.md)) | **Live** |
+| Bot ML models | Profile model `bot-ml-v1`; activity model `bot-ml-activity-v1` ([model card](output/research/bot-ml-v1/model-card.md)) | Profile model **withheld** (failed its release gate); activity model **live** for X accounts with ≥ 20 posts |
+| Conversation investigation | Ordered linear/reply turns, target selection, preceding-context coverage, signed assessment saving, reopen, feedback, export and deletion | **Live**; later turns are excluded from the selected target's context |
+| URL detection | Audited URL-v1/v2/v3 studies, CPU classifiers, calibration and protected evaluation | Research only: URL-v3 false-positive results block live warnings |
+| Paired message–link detection | Evidence-bound two-reviewer workflow, group splits, CPU branch/fusion training and single-use evaluation | Research only: real intake is empty; no paired phishing performance is claimed |
+| Context-aware directed-abuse model | Verified CAD admission, protected cohorts, CPU/conditional encoder tooling, calibration and final-evaluation controls | Research only: fixed CAD allocation fails three support gates; no real harm model or final score |
+| Profile indicators (main check) | Indicators from supplied profile facts | Live; the main check still doesn't estimate bot likelihood (that's the separate bot module) |
 
-The local app currently provides rule observations and explicitly marks unavailable learned checks. The research models have not been released as live warnings.
+Learned models are loaded only from checksum-verified artifacts, and a model is used live only after passing a release gate fixed before its evaluation. Models that failed are kept out of the live app.
 
-**Recorded verification:** 477 Python tests and 61 client tests passed with zero skips. One independent review found three Important issues, all corrected with failing-then-passing regressions: absolute download deadlines, shared training admission across processes/model families, and verification of the encoder runtime actually executing each worker. The same reviewer cleared the delivery records. The primary-folder HTTP check verified signed save, reopen and deletion.
+**Recorded verification (2026-11-06, macOS):** 112 app and model tests and 68 JavaScript tests pass. In the pinned Python 3.11 research environment, 518 of 569 tests pass; the remaining 43 are Windows-only `context_harm` tests that need Windows job objects or the CUDA runtime. See [testing.md](docs/testing.md). Earlier record (2026-10-14, Windows): 477 Python tests and 61 client tests passed with zero skips. One independent review found three Important issues, all corrected with failing-then-passing regressions: absolute download deadlines, shared training admission across processes/model families, and verification of the encoder runtime actually executing each worker.
 
 Clean-clone source/admission reproduction passed with all 17 pinned ML/data packages. It reused checksum-verified acquisition bytes after the fresh download failed; a second fresh-download success and actual CUDA performance remain unverified. Details and report hashes are in the [delivery record](docs/context-harm-delivery-record.md) and [aggregate verification](output/research/context-harm-v1/verification.json).
 
@@ -77,13 +84,13 @@ the Python standard library and no cloud account. Run commands from your project
 checkout; keep private research data outside OneDrive. Research environments and
 the full test suite have additional requirements described below.
 
-On Windows, double-click [start-sentinel.cmd](start-sentinel.cmd). It uses the bundled Python available on this computer, or a separately installed Python if present.
+On Windows, double-click [start-sentinel.cmd](start-sentinel.cmd). It uses the bundled Python available on this computer, or a separately installed Python if present. On macOS or Linux, run [start-sentinel.sh](start-sentinel.sh). It turns on the learned scam-text model and the bot models when `.venv-text-ml` and the `models/` artifacts exist (see the [text-model guide](docs/text-ml-workflow.md)); set `SENTINEL_RULES_ONLY=1` to use rules only.
 
 ```powershell
 python -m sentinel.server
 ```
 
-Open [http://127.0.0.1:8787](http://127.0.0.1:8787). The server listens only on your own computer.
+Open [http://127.0.0.1:8787](http://127.0.0.1:8787). The server listens only on your own computer. Pages: content checks (`/`), bot accounts (`/bot`), the community network dashboard (`/network`, needs a running hub, see [community-network.md](docs/community-network.md)) and the auto-scan demo (`/demo`).
 
 The web app can analyze a message alone, a URL alone, or both together. Enable the
 conversation editor to add ordered turns, select a target and specify replies.
@@ -107,6 +114,8 @@ python -m venv .venv-ml
 & .\.venv-ml\Scripts\python.exe -m pip check
 & .\.venv-ml\Scripts\python.exe -m unittest discover -s tests -v
 ```
+
+On macOS, use CPython 3.11 for `.venv-ml` and `.venv-text-ml` (CPython 3.13) for the app and model tests; [testing.md](docs/testing.md) lists the commands and the expected results.
 
 On the development computer, the existing `.venv-url-v2-check` environment
 already supplies those dependencies and can be used instead. These CPU locks
@@ -133,9 +142,11 @@ behaviour; their scores are not findings about real detection quality.
 2. Open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select the `extension` directory.
 3. Select text and click the Sentinel toolbar button, then **Use selected text** and **Check with Sentinel**. You can also right-click selected text or a link and choose a Sentinel action.
 
-The extension checks content only when you invoke it. Its permissions cover the active tab after a user action and the local API at `127.0.0.1:8787`. If the context menu cannot open the popup automatically, click the toolbar button; the selected text or link will be waiting there.
+4. Optional **auto-scan:** in the popup, turn on **Auto-scan this site**. Chrome asks for access to that one site. Sentinel then reads visible text and links as they appear, sends them only to the local app, and marks risky items in an overlay without changing the page. Turn it off to stop scanning and give the access back. A second switch, **Read text in images**, also reads text and QR codes in pictures on those sites. Chrome asks for access to all sites so the extension can take screenshots, but they are taken only on auto-scan sites and read on your computer with the bundled Tesseract.js. See [autoscan-extension.md](docs/autoscan-extension.md).
 
-Before a college demonstration, complete the [extension smoke test](docs/extension-smoke-test.md) in Chrome and record the result.
+Explicit checks use the active tab after a user action and the local API at `127.0.0.1:8787`; auto-scan adds access only to sites you turn on. If the context menu cannot open the popup automatically, click the toolbar button; the selected text or link will be waiting there.
+
+Before a college demonstration, complete the [extension smoke test](docs/extension-smoke-test.md) and the [auto-scan demo checklist](docs/autoscan-extension.md) in Chrome and record the results.
 
 ## Reputation data and research model
 
@@ -167,14 +178,20 @@ The private local review batch at `data/curation/legitimate_sms_candidates.csv` 
 ## Scope and privacy
 
 - Message and URL rules are indicators, not proof. Low observed concern never means confirmed safe.
-- Harmful-content results flag phrases for human review. A single message cannot establish cyberbullying, speaker intent, or a repeated pattern.
-- Profile checks use only supplied facts. High posting volume or an unusual follow ratio alone cannot establish a fake or automated account. Bot likelihood remains unestimated until an appropriate model is trained and validated on obtainable features.
+- Harmful-content results come from explainable rules: threats, self-harm and similar dangerous language are marked high; insults are marked for review. Rules match wording, not intent, and a single message cannot establish cyberbullying or a repeated pattern. Self-harm results show support resources rather than a report action.
+- The main check's profile indicators use only supplied facts and don't estimate bot likelihood. The separate bot-account module shows a heuristic bot-likeness score (not a probability). A trained model's estimate is shown only when that model has passed its release gate.
+- The community network shares only anonymous fingerprints, and only if you turn sharing on. The hub never stores message text.
 - Saved cases stay in a local SQLite file at `data/cases.db`. Use **Delete** to remove a case or **Export JSON** to get a report. Feedback is stored locally and is never fed into training automatically.
 - The app accepts browser requests from its own local origin and Chrome extension origins. It is designed for a personal laptop demo, not public internet hosting or multi-user accounts.
 
 ## Project layout
 
 - `sentinel/analysis.py` — assessment rules and explanations.
+- `sentinel/harm_rules.py` — harmful and dangerous language rules (English and Hinglish).
+- `sentinel/scan.py` — batch checks for the extension's auto-scan.
+- `sentinel/text_ml/` — learned scam-text model: data audit, splits, training, calibration and ONNX inference with explanations.
+- `sentinel/network/` — community scam network: fingerprints, hub, client, simulation and experiments.
+- `sentinel/bot_detection/` — bot account detection: platform parsing, API and upload adapters, features, scoring and trained models (`ml/`).
 - `sentinel/research.py` — paired-data baseline training and evaluation.
 - `sentinel/curation.py` — local collection, independent review, adjudication, and locked test split.
 - `sentinel/url_ml/`, `sentinel/url_v2/` and `sentinel/url_v3/` — URL research, source admission, protected studies and guarded inference.
@@ -190,8 +207,10 @@ The private local review batch at `data/curation/legitimate_sms_candidates.csv` 
 The proposed twelve-month schedule is in the year-long design. The original
 implementation plan and presentation describe the starting prototype. URL
 research, the paired-study software path and conversation/harm research tooling
-are implemented. Remaining work includes supported real harm training and
+are implemented, along with the scam-text model, auto-scan, the community network
+and bot detection. Remaining work includes supported real harm training and
 evaluation under a revised protocol, permissioned paired/challenge collection,
-reviewed release decisions, profile ML, team investigation workflows, dashboard
-expansion and the voluntary user pilot. No paired phishing performance, trained
-harm quality or user-study result is claimed here.
+validating `text-ml-v2` on real consented Indian SMS, retraining the bot models
+with more varied data (for example TwiBot-22), team investigation workflows and
+the voluntary user pilot. No paired phishing performance, trained harm-model
+quality or user-study result is claimed here.

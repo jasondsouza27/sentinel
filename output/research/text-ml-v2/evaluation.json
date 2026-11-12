@@ -1,0 +1,936 @@
+{
+  "model_version": "text-ml-v2",
+  "test_rows": 1171,
+  "results": {
+    "transformer": {
+      "uncalibrated": {
+        "accuracy": 0.9778,
+        "macro_f1": 0.9196,
+        "per_class": {
+          "ham": {
+            "precision": 0.9943,
+            "recall": 0.9977,
+            "f1": 0.996,
+            "support": 875
+          },
+          "spam": {
+            "precision": 0.8254,
+            "recall": 0.7879,
+            "f1": 0.8062,
+            "support": 66
+          },
+          "smishing": {
+            "precision": 0.9565,
+            "recall": 0.9565,
+            "f1": 0.9565,
+            "support": 230
+          }
+        },
+        "confusion_matrix": {
+          "rows_true_cols_predicted": [
+            "ham",
+            "spam",
+            "smishing"
+          ],
+          "counts": [
+            [
+              873,
+              1,
+              1
+            ],
+            [
+              5,
+              52,
+              9
+            ],
+            [
+              0,
+              10,
+              220
+            ]
+          ]
+        },
+        "scam_vs_ham": {
+          "threshold": 0.5462,
+          "precision": 0.9932,
+          "recall": 0.9831,
+          "f1": 0.9881,
+          "false_positive_rate": 0.0023,
+          "counts": {
+            "tp": 291,
+            "fp": 2,
+            "fn": 5,
+            "tn": 873
+          }
+        },
+        "ece": 0.0153
+      },
+      "calibrated": {
+        "accuracy": 0.9778,
+        "macro_f1": 0.9196,
+        "per_class": {
+          "ham": {
+            "precision": 0.9943,
+            "recall": 0.9977,
+            "f1": 0.996,
+            "support": 875
+          },
+          "spam": {
+            "precision": 0.8254,
+            "recall": 0.7879,
+            "f1": 0.8062,
+            "support": 66
+          },
+          "smishing": {
+            "precision": 0.9565,
+            "recall": 0.9565,
+            "f1": 0.9565,
+            "support": 230
+          }
+        },
+        "confusion_matrix": {
+          "rows_true_cols_predicted": [
+            "ham",
+            "spam",
+            "smishing"
+          ],
+          "counts": [
+            [
+              873,
+              1,
+              1
+            ],
+            [
+              5,
+              52,
+              9
+            ],
+            [
+              0,
+              10,
+              220
+            ]
+          ]
+        },
+        "scam_vs_ham": {
+          "threshold": 0.5462,
+          "precision": 0.9932,
+          "recall": 0.9831,
+          "f1": 0.9881,
+          "false_positive_rate": 0.0023,
+          "counts": {
+            "tp": 291,
+            "fp": 2,
+            "fn": 5,
+            "tn": 873
+          }
+        },
+        "ece": 0.0071
+      },
+      "latency_ms_per_message_cpu_batch": 11.73
+    },
+    "baseline_tfidf_logistic_regression": {
+      "accuracy": 0.9718,
+      "macro_f1": 0.9098,
+      "per_class": {
+        "ham": {
+          "precision": 0.9909,
+          "recall": 0.9931,
+          "f1": 0.992,
+          "support": 875
+        },
+        "spam": {
+          "precision": 0.7606,
+          "recall": 0.8182,
+          "f1": 0.7883,
+          "support": 66
+        },
+        "smishing": {
+          "precision": 0.9641,
+          "recall": 0.9348,
+          "f1": 0.9492,
+          "support": 230
+        }
+      },
+      "confusion_matrix": {
+        "rows_true_cols_predicted": [
+          "ham",
+          "spam",
+          "smishing"
+        ],
+        "counts": [
+          [
+            869,
+            4,
+            2
+          ],
+          [
+            6,
+            54,
+            6
+          ],
+          [
+            2,
+            13,
+            215
+          ]
+        ]
+      },
+      "scam_vs_ham": {
+        "threshold": 0.3045,
+        "precision": 0.9733,
+        "recall": 0.9865,
+        "f1": 0.9799,
+        "false_positive_rate": 0.0091,
+        "counts": {
+          "tp": 292,
+          "fp": 8,
+          "fn": 4,
+          "tn": 867
+        }
+      },
+      "ece": 0.0189
+    },
+    "by_source": {
+      "india14": {
+        "rows": 301,
+        "transformer": {
+          "accuracy": 0.9967,
+          "macro_f1": 0.6645,
+          "per_class": {
+            "ham": {
+              "precision": 1.0,
+              "recall": 0.9933,
+              "f1": 0.9967,
+              "support": 150
+            },
+            "spam": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "smishing": {
+              "precision": 0.9934,
+              "recall": 1.0,
+              "f1": 0.9967,
+              "support": 151
+            }
+          },
+          "confusion_matrix": {
+            "rows_true_cols_predicted": [
+              "ham",
+              "spam",
+              "smishing"
+            ],
+            "counts": [
+              [
+                149,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                151
+              ]
+            ]
+          },
+          "scam_vs_ham": {
+            "threshold": 0.5462,
+            "precision": 0.9934,
+            "recall": 1.0,
+            "f1": 0.9967,
+            "false_positive_rate": 0.0067,
+            "counts": {
+              "tp": 151,
+              "fp": 1,
+              "fn": 0,
+              "tn": 149
+            }
+          },
+          "ece": 0.0122
+        },
+        "baseline": {
+          "accuracy": 0.9934,
+          "macro_f1": 0.6622,
+          "per_class": {
+            "ham": {
+              "precision": 1.0,
+              "recall": 0.9867,
+              "f1": 0.9933,
+              "support": 150
+            },
+            "spam": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "smishing": {
+              "precision": 0.9869,
+              "recall": 1.0,
+              "f1": 0.9934,
+              "support": 151
+            }
+          },
+          "confusion_matrix": {
+            "rows_true_cols_predicted": [
+              "ham",
+              "spam",
+              "smishing"
+            ],
+            "counts": [
+              [
+                148,
+                0,
+                2
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                151
+              ]
+            ]
+          },
+          "scam_vs_ham": {
+            "threshold": 0.3045,
+            "precision": 0.9869,
+            "recall": 1.0,
+            "f1": 0.9934,
+            "false_positive_rate": 0.0133,
+            "counts": {
+              "tp": 151,
+              "fp": 2,
+              "fn": 0,
+              "tn": 148
+            }
+          },
+          "ece": 0.0366
+        }
+      },
+      "mendeley": {
+        "rows": 870,
+        "transformer": {
+          "accuracy": 0.9713,
+          "macro_f1": 0.8937,
+          "per_class": {
+            "ham": {
+              "precision": 0.9931,
+              "recall": 0.9986,
+              "f1": 0.9959,
+              "support": 725
+            },
+            "spam": {
+              "precision": 0.8254,
+              "recall": 0.7879,
+              "f1": 0.8062,
+              "support": 66
+            },
+            "smishing": {
+              "precision": 0.8846,
+              "recall": 0.8734,
+              "f1": 0.879,
+              "support": 79
+            }
+          },
+          "confusion_matrix": {
+            "rows_true_cols_predicted": [
+              "ham",
+              "spam",
+              "smishing"
+            ],
+            "counts": [
+              [
+                724,
+                1,
+                0
+              ],
+              [
+                5,
+                52,
+                9
+              ],
+              [
+                0,
+                10,
+                69
+              ]
+            ]
+          },
+          "scam_vs_ham": {
+            "threshold": 0.5462,
+            "precision": 0.9929,
+            "recall": 0.9655,
+            "f1": 0.979,
+            "false_positive_rate": 0.0014,
+            "counts": {
+              "tp": 140,
+              "fp": 1,
+              "fn": 5,
+              "tn": 724
+            }
+          },
+          "ece": 0.0128
+        },
+        "baseline": {
+          "accuracy": 0.9644,
+          "macro_f1": 0.8797,
+          "per_class": {
+            "ham": {
+              "precision": 0.989,
+              "recall": 0.9945,
+              "f1": 0.9917,
+              "support": 725
+            },
+            "spam": {
+              "precision": 0.7606,
+              "recall": 0.8182,
+              "f1": 0.7883,
+              "support": 66
+            },
+            "smishing": {
+              "precision": 0.9143,
+              "recall": 0.8101,
+              "f1": 0.8591,
+              "support": 79
+            }
+          },
+          "confusion_matrix": {
+            "rows_true_cols_predicted": [
+              "ham",
+              "spam",
+              "smishing"
+            ],
+            "counts": [
+              [
+                721,
+                4,
+                0
+              ],
+              [
+                6,
+                54,
+                6
+              ],
+              [
+                2,
+                13,
+                64
+              ]
+            ]
+          },
+          "scam_vs_ham": {
+            "threshold": 0.3045,
+            "precision": 0.9592,
+            "recall": 0.9724,
+            "f1": 0.9658,
+            "false_positive_rate": 0.0083,
+            "counts": {
+              "tp": 141,
+              "fp": 6,
+              "fn": 4,
+              "tn": 719
+            }
+          },
+          "ece": 0.0169
+        }
+      }
+    },
+    "challenge_set": {
+      "transformer": {
+        "genuine_flagged": "4/24",
+        "genuine_false_alarm_rate": 0.1667,
+        "scams_caught": "13/20",
+        "scam_recall": 0.65
+      },
+      "baseline": {
+        "genuine_flagged": "4/24",
+        "genuine_false_alarm_rate": 0.1667,
+        "scams_caught": "17/20",
+        "scam_recall": 0.85
+      }
+    }
+  },
+  "robustness": {
+    "leetspeak": {
+      "transformer_scam_recall": 0.9797,
+      "baseline_scam_recall": 0.9831
+    },
+    "homoglyph": {
+      "transformer_scam_recall": 0.9764,
+      "baseline_scam_recall": 0.9865
+    },
+    "spacing": {
+      "transformer_scam_recall": 0.8345,
+      "baseline_scam_recall": 0.9696
+    },
+    "clean": {
+      "transformer_scam_recall": 0.9831,
+      "baseline_scam_recall": 0.9865
+    }
+  },
+  "manifest_files": {
+    "model.onnx": "0f9293d9e3eafad9b3abc8b817a1d05d0d4107750ba64f5200963d529f7db39f",
+    "tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66"
+  },
+  "data": {
+    "dataset_sha256": "87720c44eddeda6cb3cff5ba859b8ec03750f3926cca38b6504ea07447cee41c",
+    "splits_sha256": "e8cfbdcd31a828d6700f34fa83bdb8ca82d1ba48b9101c8f3fa3c178f34bd045"
+  },
+  "training": {
+    "base_model": "distilbert-base-uncased",
+    "max_length": 128,
+    "epochs": 4,
+    "batch_size": 32,
+    "learning_rate": 3e-05,
+    "weight_decay": 0.01,
+    "warmup_fraction": 0.1,
+    "seed": 13,
+    "target_ham_fpr": 0.01,
+    "best_epoch": 4,
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.4292,
+        "calibration_macro_f1": 0.8594
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.1262,
+        "calibration_macro_f1": 0.9229
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.0733,
+        "calibration_macro_f1": 0.9256
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.0404,
+        "calibration_macro_f1": 0.9299
+      }
+    ],
+    "train_seconds": 483.6,
+    "device": "mps",
+    "torch": "2.15.0",
+    "python": "3.13.7"
+  },
+  "temperature": 1.2916,
+  "scam_threshold": 0.610837,
+  "onnx_parity_max_abs_logit_difference": 3e-06,
+  "model_selection": {
+    "chosen": "average",
+    "candidates": {
+      "transformer": {
+        "threshold": 0.846227,
+        "calibration": {
+          "accuracy": 0.9795,
+          "macro_f1": 0.9299,
+          "per_class": {
+            "ham": {
+              "precision": 0.9954,
+              "recall": 0.9931,
+              "f1": 0.9943,
+              "support": 875
+            },
+            "spam": {
+              "precision": 0.7917,
+              "recall": 0.8636,
+              "f1": 0.8261,
+              "support": 66
+            },
+            "smishing": {
+              "precision": 0.978,
+              "recall": 0.961,
+              "f1": 0.9694,
+              "support": 231
+            }
+          },
+          "confusion_matrix": {
+            "rows_true_cols_predicted": [
+              "ham",
+              "spam",
+              "smishing"
+            ],
+            "counts": [
+              [
+                869,
+                6,
+                0
+              ],
+              [
+                4,
+                57,
+                5
+              ],
+              [
+                0,
+                9,
+                222
+              ]
+            ]
+          },
+          "scam_vs_ham": {
+            "threshold": 0.8462,
+            "precision": 0.9832,
+            "recall": 0.9865,
+            "f1": 0.9849,
+            "false_positive_rate": 0.0057,
+            "counts": {
+              "tp": 293,
+              "fp": 5,
+              "fn": 4,
+              "tn": 870
+            }
+          },
+          "ece": 0.006
+        },
+        "test": {
+          "accuracy": 0.9778,
+          "macro_f1": 0.9196,
+          "per_class": {
+            "ham": {
+              "precision": 0.9943,
+              "recall": 0.9977,
+              "f1": 0.996,
+              "support": 875
+            },
+            "spam": {
+              "precision": 0.8254,
+              "recall": 0.7879,
+              "f1": 0.8062,
+              "support": 66
+            },
+            "smishing": {
+              "precision": 0.9565,
+              "recall": 0.9565,
+              "f1": 0.9565,
+              "support": 230
+            }
+          },
+          "confusion_matrix": {
+            "rows_true_cols_predicted": [
+              "ham",
+              "spam",
+              "smishing"
+            ],
+            "counts": [
+              [
+                873,
+                1,
+                1
+              ],
+              [
+                5,
+                52,
+                9
+              ],
+              [
+                0,
+                10,
+                220
+              ]
+            ]
+          },
+          "scam_vs_ham": {
+            "threshold": 0.8462,
+            "precision": 1.0,
+            "recall": 0.9764,
+            "f1": 0.988,
+            "false_positive_rate": 0.0,
+            "counts": {
+              "tp": 289,
+              "fp": 0,
+              "fn": 7,
+              "tn": 875
+            }
+          },
+          "ece": 0.0071
+        },
+        "challenge_set": {
+          "genuine_flagged": "3/24",
+          "genuine_false_alarm_rate": 0.125,
+          "scams_caught": "11/20",
+          "scam_recall": 0.55
+        }
+      },
+      "baseline": {
+        "threshold": 0.304539,
+        "calibration": {
+          "accuracy": 0.9778,
+          "macro_f1": 0.9312,
+          "per_class": {
+            "ham": {
+              "precision": 0.9864,
+              "recall": 0.9966,
+              "f1": 0.9915,
+              "support": 875
+            },
+            "spam": {
+              "precision": 0.8571,
+              "recall": 0.8182,
+              "f1": 0.8372,
+              "support": 66
+            },
+            "smishing": {
+              "precision": 0.9778,
+              "recall": 0.9524,
+              "f1": 0.9649,
+              "support": 231
+            }
+          },
+          "confusion_matrix": {
+            "rows_true_cols_predicted": [
+              "ham",
+              "spam",
+              "smishing"
+            ],
+            "counts": [
+              [
+                872,
+                2,
+                1
+              ],
+              [
+                8,
+                54,
+                4
+              ],
+              [
+                4,
+                7,
+                220
+              ]
+            ]
+          },
+          "scam_vs_ham": {
+            "threshold": 0.3045,
+            "precision": 0.9832,
+            "recall": 0.9832,
+            "f1": 0.9832,
+            "false_positive_rate": 0.0057,
+            "counts": {
+              "tp": 292,
+              "fp": 5,
+              "fn": 5,
+              "tn": 870
+            }
+          },
+          "ece": 0.0165
+        },
+        "test": {
+          "accuracy": 0.9718,
+          "macro_f1": 0.9098,
+          "per_class": {
+            "ham": {
+              "precision": 0.9909,
+              "recall": 0.9931,
+              "f1": 0.992,
+              "support": 875
+            },
+            "spam": {
+              "precision": 0.7606,
+              "recall": 0.8182,
+              "f1": 0.7883,
+              "support": 66
+            },
+            "smishing": {
+              "precision": 0.9641,
+              "recall": 0.9348,
+              "f1": 0.9492,
+              "support": 230
+            }
+          },
+          "confusion_matrix": {
+            "rows_true_cols_predicted": [
+              "ham",
+              "spam",
+              "smishing"
+            ],
+            "counts": [
+              [
+                869,
+                4,
+                2
+              ],
+              [
+                6,
+                54,
+                6
+              ],
+              [
+                2,
+                13,
+                215
+              ]
+            ]
+          },
+          "scam_vs_ham": {
+            "threshold": 0.3045,
+            "precision": 0.9733,
+            "recall": 0.9865,
+            "f1": 0.9799,
+            "false_positive_rate": 0.0091,
+            "counts": {
+              "tp": 292,
+              "fp": 8,
+              "fn": 4,
+              "tn": 867
+            }
+          },
+          "ece": 0.0189
+        },
+        "challenge_set": {
+          "genuine_flagged": "4/24",
+          "genuine_false_alarm_rate": 0.1667,
+          "scams_caught": "17/20",
+          "scam_recall": 0.85
+        }
+      },
+      "average": {
+        "threshold": 0.610837,
+        "calibration": {
+          "accuracy": 0.9812,
+          "macro_f1": 0.933,
+          "per_class": {
+            "ham": {
+              "precision": 0.9954,
+              "recall": 0.9966,
+              "f1": 0.996,
+              "support": 875
+            },
+            "spam": {
+              "precision": 0.8235,
+              "recall": 0.8485,
+              "f1": 0.8358,
+              "support": 66
+            },
+            "smishing": {
+              "precision": 0.9737,
+              "recall": 0.961,
+              "f1": 0.9673,
+              "support": 231
+            }
+          },
+          "confusion_matrix": {
+            "rows_true_cols_predicted": [
+              "ham",
+              "spam",
+              "smishing"
+            ],
+            "counts": [
+              [
+                872,
+                3,
+                0
+              ],
+              [
+                4,
+                56,
+                6
+              ],
+              [
+                0,
+                9,
+                222
+              ]
+            ]
+          },
+          "scam_vs_ham": {
+            "threshold": 0.6108,
+            "precision": 0.9899,
+            "recall": 0.9865,
+            "f1": 0.9882,
+            "false_positive_rate": 0.0034,
+            "counts": {
+              "tp": 293,
+              "fp": 3,
+              "fn": 4,
+              "tn": 872
+            }
+          },
+          "ece": 0.0135
+        },
+        "test": {
+          "accuracy": 0.9795,
+          "macro_f1": 0.9245,
+          "per_class": {
+            "ham": {
+              "precision": 0.9943,
+              "recall": 1.0,
+              "f1": 0.9972,
+              "support": 875
+            },
+            "spam": {
+              "precision": 0.8182,
+              "recall": 0.8182,
+              "f1": 0.8182,
+              "support": 66
+            },
+            "smishing": {
+              "precision": 0.9689,
+              "recall": 0.9478,
+              "f1": 0.9582,
+              "support": 230
+            }
+          },
+          "confusion_matrix": {
+            "rows_true_cols_predicted": [
+              "ham",
+              "spam",
+              "smishing"
+            ],
+            "counts": [
+              [
+                875,
+                0,
+                0
+              ],
+              [
+                5,
+                54,
+                7
+              ],
+              [
+                0,
+                12,
+                218
+              ]
+            ]
+          },
+          "scam_vs_ham": {
+            "threshold": 0.6108,
+            "precision": 1.0,
+            "recall": 0.9831,
+            "f1": 0.9915,
+            "false_positive_rate": 0.0,
+            "counts": {
+              "tp": 291,
+              "fp": 0,
+              "fn": 5,
+              "tn": 875
+            }
+          },
+          "ece": 0.0141
+        },
+        "challenge_set": {
+          "genuine_flagged": "2/24",
+          "genuine_false_alarm_rate": 0.0833,
+          "scams_caught": "14/20",
+          "scam_recall": 0.7
+        }
+      }
+    }
+  }
+}

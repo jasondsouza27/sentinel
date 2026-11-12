@@ -1,0 +1,114 @@
+\titleformat{\chapter}[display]{\bfseries\centering}{\huge Chapter \thechapter}{1em}{\Huge #1}
+\newgeometry{top=3cm, bottom=2.2cm, left=3cm, right=2cm, headsep=1.2cm, footskip=1cm, headheight=0.3cm, textheight=24.5cm, textwidth=16cm}
+\onehalfspacing
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\lhead{Chapter 4}
+\rhead{Implementation Plan and Experimental Setup}
+\cfoot{\thepage}
+\chapter{Implementation Plan and Experimental Setup}
+
+\section{Implementation Plan}
+\noindent The project follows a twelve-month plan with a working milestone at each step (Table~\ref{tab:plan}). Work is divided into four areas: URL, message and fusion models; harmful content; profile features, data and versioning; and application, integration and deployment. Each milestone has a written plan and a delivery record in the repository \cite{repo}.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\caption{Implementation plan and status}
+\label{tab:plan}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}p{8.6cm}|>{\raggedright\arraybackslash}p{2.9cm}|}
+\hline
+\textbf{Phase} & \textbf{Work} & \textbf{Status} \\ \hline
+Base application & Local server, web app, extension, fraud rules, saved cases & Done (Sem VII) \\ \hline
+URL studies v1--v3 & Three URL models on PhiUSIIL, PhreshPhish and Mendeley data & Done; kept in research \\ \hline
+Auto-scan & Opt-in page scanning, markers, badge; text in images (OCR) & Done; live \\ \hline
+Scam-text model & DistilBERT + TF-IDF model, versions 1 and 2 & Done; v2 live \\ \hline
+Harm rules & 19 rules for English and Hinglish & Done; live \\ \hline
+Community network & Fingerprints, hub, matching, 10,000-user simulation & Done; prototype \\ \hline
+Bot detection & APIs and uploads, 25-signal score, two trained models & Done; one model live \\ \hline
+Research studies & Message+link study and context-aware abuse study & Software done; waiting for data \\ \hline
+Semester VIII & Test on real Indian SMS; newer bot data; secure online hub; usability study with 15--20 people; final report & Planned \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Experimental Setup}
+\subsection{Input Data and Datasets}
+\noindent The application receives JSON requests from the web app or extension. The research pipeline uses public datasets, each pinned by version and checksum (Table~\ref{tab:datasets}). Raw data is kept on the team's computers and is not shared.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\caption{Datasets used}
+\label{tab:datasets}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{4.3cm}|>{\raggedright\arraybackslash}p{5.4cm}|>{\raggedright\arraybackslash}p{4.6cm}|}
+\hline
+\textbf{Dataset} & \textbf{Size} & \textbf{Used for} \\ \hline
+PhiUSIIL \cite{phiusiil} & 235,795 URLs & URL study 1 \\ \hline
+PhreshPhish \cite{phreshphish}, Mendeley web pages \cite{mendeley} & 666,315 and 11,430 URLs & URL studies 2 and 3 \\ \hline
+SMS Phishing Dataset \cite{smsdata} & 5,971 SMS (5,790 after cleaning) & Scam-text model \\ \hline
+UCI SMS Spam \cite{ucisms} & 4,908 overlapping SMS & Label cross-check only \\ \hline
+Indian Scam \& Ham SMS \cite{india14} & 2,000 English/Hinglish rows (synthetic) & Scam-text model v2 \\ \hline
+Bot Repository \cite{botrepo} & 13 datasets, 111,168 Twitter accounts & Profile bot model \\ \hline
+cresci-2015/2017 \cite{cresci2015,cresci2017} & 10,422 accounts with post history & Activity bot model \\ \hline
+CAD \cite{cad}, SpamAssassin \cite{champa} & 26,550 Reddit posts; 1,912 emails & Research studies \\ \hline
+Challenge set (our own) & 44 messages written before training & Independent test \\ \hline
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Sample input.} A request to check content looks like this:
+\begin{lstlisting}[style=json]
+{ "message": "You are shortlisted for the campus internship. Pay the registration fee immediately and share the OTP to confirm your seat.",
+  "url": "http://192.168.10.5/secure-login/verify" }
+\end{lstlisting}
+
+\subsection{Test Cases}
+\noindent Table~\ref{tab:tests} lists the main test cases, run through the web app, the extension or the API on 30 October and 6 November 2026.
+
+\begin{footnotesize}
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{|l|>{\raggedright\arraybackslash}p{5.0cm}|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}p{4.4cm}|}
+\caption{Functional test cases}\label{tab:tests}\\
+\hline
+\textbf{ID} & \textbf{Input} & \textbf{Expected} & \textbf{Observed} \\ \hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Input} & \textbf{Expected} & \textbf{Observed} \\ \hline
+\endhead
+TC-01 & Fake internship asking for fee and OTP, IP-address link & Fraud High & High, 4 pieces of evidence (Pass) \\ \hline
+TC-02 & ``I will kill you tomorrow after school'' & Harm High (threat) & High, threat of violence (Pass) \\ \hline
+TC-03 & Someone wrote ``you are stupid'' (quoted) & Harm Review & Review, asks for human review (Pass) \\ \hline
+TC-04 & ``tu pagal hai kya, chal nikal bewakoof'' (Hinglish) & Harm Review & Review, Hinglish insult (Pass) \\ \hline
+TC-05 & ``This movie killed it''; ``I would never hurt you'' & Not flagged & Low concern for both (Pass) \\ \hline
+TC-06 & ``i want to end my life tonight'' & Harm High with helpline & High; Tele-MANAS 14416 shown (Pass) \\ \hline
+TC-07 & ``k.y.s loser'' (disguised) & Harm High & High, self-harm encouragement (Pass) \\ \hline
+TC-08 & Parcel-fee scam with IP-address link & Fraud High; model flags & High; model 98.4\% smishing (Pass) \\ \hline
+TC-09 & Genuine OTP message; genuine UPI debit alert & Model does not flag & OTP: not flagged (Pass); debit alert: flagged 72\% (Fail) \\ \hline
+TC-10 & Auto-scan: taunt, insult, lunch message, scam & high, review, none, high & Exactly as expected (Pass) \\ \hline
+TC-11 & Bot check of \texttt{x.com@evil.com} & Rejected & 400 error, no network access (Pass) \\ \hline
+TC-12 & Uploaded bot-like and human-like accounts & Bot / human & 82/100 bot; 4/100 human (Pass) \\ \hline
+TC-13 & YouTube check with no API key & Clear error & ``Set YOUTUBE\_API\_KEY'' (Pass) \\ \hline
+TC-14 & Empty request; body over 200 KB; wrong content type & Error 400 & 400 with a clear message (Pass) \\ \hline
+TC-15 & Request from another website & Error 403 & 403 (Pass) \\ \hline
+TC-16 & Save with a forged receipt & Rejected & ``Recheck this content'' (Pass) \\ \hline
+TC-17 & Save, give feedback, delete twice & Saved; then 404 & Saved; second delete 404 (Pass) \\ \hline
+\end{longtable}
+\end{footnotesize}
+
+\noindent\textbf{Automated tests.} On 6 November 2026, 112 Python application tests and 76 JavaScript tests passed. The full research suite ran 569 tests: 519 passed, 7 were skipped and 43 failed; all 43 need Windows-only features and pass in the project's Windows setup.
+
+\subsection{Performance Evaluation Parameters}
+\noindent With $TP$, $FP$, $TN$ and $FN$ the counts of true and false positives and negatives:
+\begin{align}
+\text{Precision} &= \frac{TP}{TP+FP}, &
+\text{Recall} &= \frac{TP}{TP+FN}, &
+F_1 &= \frac{2TP}{2TP+FP+FN}, &
+\text{FPR} &= \frac{FP}{FP+TN}.
+\end{align}
+\textbf{Precision} is how many warnings were right; \textbf{recall} is how many scams were caught; \textbf{FPR} (false-positive rate) is how many genuine items were wrongly flagged. \textbf{Macro-F1} averages $F_1$ over the classes. \textbf{ROC AUC} is the chance that a random bot scores higher than a random human (0.5 = guessing, 1 = perfect). \textbf{Calibration error (ECE)} measures how far the stated probabilities are from reality. For bots, the release test uses the \emph{worst} score over datasets the model never saw.
+
+\section{Partial Code}
+\noindent\textbf{Fraud level} (\texttt{sentinel/analysis.py}):
+\lstinputlisting[style=py, firstline=107, lastline=122, firstnumber=107]{Code/analysis.py}

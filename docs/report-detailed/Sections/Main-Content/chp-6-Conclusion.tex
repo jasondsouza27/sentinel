@@ -1,0 +1,50 @@
+\titleformat{\chapter}[display]{\bfseries\centering}{\huge Chapter \thechapter}{1em}{\Huge #1}
+\newgeometry{top=3cm, bottom=2.2cm, left=3cm, right=2cm, headsep=1.2cm, footskip=1cm, headheight=0.3cm, textheight=24.5cm, textwidth=16cm}
+\onehalfspacing
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\lhead{Chapter 6}
+\rhead{Conclusion}
+\cfoot{\thepage}
+\chapter{Conclusion}
+
+\section{Summary of Work Completed in Major Project Part 1 (Semester VII)}
+\noindent Sentinel set out to help an ordinary social-media user judge a suspicious post before acting on it, covering the common threats (scam messages, phishing links, harmful language and fake or automated accounts) without exposing the user's data or overstating certainty. In Semester VII the team completed the following:
+\begin{enumerate}
+\item \textbf{A working local application.} A standard-library Python API bound to the loopback address, a web client with an ordered conversation editor and profile fields, and a Manifest V3 Chrome extension that share the same API. The application returns separate fraud, harmful-content and profile assessments with evidence, missing checks, uncertainty and a suggested action, never visits submitted links, and stores cases only on request with signed receipts, feedback, JSON export and deletion. 
+\item \textbf{A reproducible ML research pipeline.} Checksum-pinned data acquisition, URL canonicalisation with the Public Suffix List, audits, grouped and connected-component splits, data-support gates, memory-capped model training, validation-only selection, calibration, single-use final evaluation and published model cards.
+\item \textbf{Three URL studies.} URL-v1 reached 97.07\% F1, 99.80\% recall and 4.35\% FPR on 23,534 domain-held-out URLs, but a format audit showed source bias. URL-v2 correctly stopped at its legitimate-query gate. URL-v3 reached 92.71\% F1 at 5.76\% FPR on 166,369 PhreshPhish URLs and 83.88\% F1 on a supplemental Mendeley track, with false positives on legitimate query URLs that keep learned warnings disabled.
+\item \textbf{A live harmful-language engine.} 19 rules in 10 categories for English and Hinglish, with normalisation against disguises, idiom, negation and quoted-speech handling, and advice by priority, including Tele-MANAS 14416 for self-harm.
+\item \textbf{A released scam-text model.} text-ml-v2, a calibrated and explained DistilBERT and TF-IDF ensemble, reached macro-F1 0.897 with no genuine messages flagged on the unchanged test set and cut false alarms on genuine Indian messages from 17 of 24 to 2 of 24.
+\item \textbf{Auto-scan.} An opt-in, per-site content script that marks risky visible text in a shadow-DOM overlay, backed by a batch scan endpoint.
+\item \textbf{A community scam network.} Anonymous MinHash fingerprints, $k=5$ publishing and layered defences; in a 10,000-user simulation it raised protection from 78.2\% to 99.7\% while keeping wrong warnings on genuine messages at 2.4\%, and it exposed the bias that led to text-ml-v2.
+\item \textbf{Bot-account detection.} Official APIs or user data only, an explainable 25-signal heuristic, a profile model withheld after failing its cross-dataset gate (worst AUC 0.600) and an activity model released after passing it (worst AUC 0.849).
+\item \textbf{Testing.} 28 of 29 functional test cases passed (the exception is a documented false positive), together with 112 application and model tests and 68 JavaScript tests.
+\item \textbf{Paired and harm study software.} An evidence-gated, two-reviewer paired message--link workflow with fusion models, and a contextual directed-abuse workflow on CAD v1.1. The paired study awaits admitted data; the CAD allocation failed its predeclared gates, so no harm model was trained.
+\end{enumerate}
+
+\noindent The main lesson of Semester VII is that a careful evaluation protocol is as important as the model: it turned an impressive but format-biased score into a correctly qualified research result, stopped two experiments before they could produce misleading models, kept a bot model that only looked good on mixed data out of the application, and let a simulation reveal a bias that the scam-text model's own test set could not.
+
+\section{Limitations}
+\begin{itemize}
+\item The harm and fraud rules match wording, not intent; they miss unfamiliar slang and cannot prove that content is safe or fraudulent.
+\item text-ml-v2's added training data is synthetic; it has not been validated on real recent Indian SMS, still misses many conversational scams and flags some genuine bank alerts.
+\item The activity bot model learned from two Twitter datasets of about 2009--2017; uploaded posts cannot be verified, and newer or LLM-written bots are out of distribution.
+\item The community network is a single-machine prototype without production authentication, and its simulation rests on assumed user behaviour and invented modern scams.
+\item URL benchmarks use historical labels; no independent-source or chronological validation is available yet.
+\item A single message cannot establish cyberbullying, intent or a repeated pattern, and profile checks use only facts the user supplies.
+\item Auto-scan reads text only; images, screenshots and voice messages are not analysed.
+\end{itemize}
+
+\section{Future Work (Major Project Part 2, Semester VIII)}
+\begin{enumerate}
+\item Collect diverse legitimate URL paths and queries with independent and time-based held-out sets, and repeat the URL evaluation under a new protocol version.
+\item Build a permissioned, two-reviewer social-media message--link dataset and run the paired fusion study to answer the research question.
+\item Approve a revised CAD data protocol that meets training and component support without touching the protected test, then train and evaluate the target-only, context-aware and DistilBERT models.
+\item Evaluate the scam-text model on real, consented and redacted Indian SMS and chat messages, and add modern conversational scams to its training data.
+\item Add newer bot data such as TwiBot-22, choose bot models by nested cross-dataset validation, and extend activity features to YouTube and Reddit.
+\item Move the community hub to an authenticated service (FastAPI and PostgreSQL) with device attestation, and model coordinated fake-account attacks on it.
+\item Add OCR for screenshots and site adapters for common chat applications; extend the application with saved assessment versions and a reviewer workflow.
+\item Run a voluntary 15--20 person usability pilot and a release review before enabling any learned warning.
+\end{enumerate}

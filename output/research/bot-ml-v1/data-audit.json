@@ -1,0 +1,183 @@
+{
+  "datasets": {
+    "gilani-2017": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/gilani-2017/gilani-2017.tar.gz",
+      "sha256": "98ce982074b4e611c58f6aa88bedbaaeca0aff9ecbe95e017f1be99e48af60ea",
+      "licence": "not stated (Bot Repository: academic research only)",
+      "rows": 2484,
+      "labels": {
+        "human": 1413,
+        "bot": 1071
+      },
+      "excluded": {
+        "no_label": 10,
+        "labels_without_profile": 149
+      }
+    },
+    "cresci-rtbust-2019": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/cresci-rtbust-2019/cresci-rtbust-2019.tar.gz",
+      "sha256": "0462f9844e77c7ad16fe81a09319df4a1b933d88aee13478e735700325641ed0",
+      "licence": "not stated (Bot Repository: academic research only)",
+      "rows": 693,
+      "labels": {
+        "bot": 353,
+        "human": 340
+      },
+      "excluded": {
+        "labels_without_profile": 66
+      }
+    },
+    "cresci-stock-2018": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/cresci-stock-2018/cresci-stock-2018.tar.gz",
+      "sha256": "91b202a17596fe03371e18b42854b4f20231fbf93956e5e733f5f498ba0b452c",
+      "licence": "not stated (Bot Repository: academic research only)",
+      "rows": 13276,
+      "labels": {
+        "bot": 7102,
+        "human": 6174
+      },
+      "excluded": {
+        "labels_without_profile": 12711
+      }
+    },
+    "midterm-2018": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/midterm-2018/midterm-2018.tar.gz",
+      "sha256": "c7788b852b4aee15816230457c18f1d8487757574b1e918799d21a72bc8c4f64",
+      "licence": "CC BY-NC-ND 4.0",
+      "rows": 50538,
+      "labels": {
+        "human": 8092,
+        "bot": 42446
+      },
+      "excluded": {
+        "labels_without_profile": 0
+      }
+    },
+    "botwiki-2019": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/botwiki-2019/botwiki-2019.tar.gz",
+      "sha256": "9120919c72a176d779e7f19c48c6a47ba518c8e0ead2b1afc9f4815c30330e8a",
+      "licence": "CC BY-NC-ND 4.0",
+      "rows": 698,
+      "labels": {
+        "bot": 698
+      },
+      "excluded": {
+        "labels_without_profile": 6
+      }
+    },
+    "verified-2019": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/verified-2019/verified-2019.tar.gz",
+      "sha256": "f0e897883f33feef26e15bf4fe44cc2c69727ba6620f07a6cb7ef2ad3f0c2a52",
+      "licence": "CC BY-NC-ND 4.0",
+      "rows": 1987,
+      "labels": {
+        "human": 1987
+      },
+      "excluded": {
+        "labels_without_profile": 13
+      }
+    },
+    "pronbots-2019": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/pronbots-2019/pronbots-2019.tar.gz",
+      "sha256": "4960434af710685f978cecb6a5ebdcb0e99efd93d2340093a37c5298ada6003e",
+      "licence": "CC BY-NC-ND 4.0",
+      "rows": 17882,
+      "labels": {
+        "bot": 17882
+      },
+      "excluded": {
+        "labels_without_profile": 4082
+      }
+    },
+    "political-bots-2019": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/political-bots-2019/political-bots-2019.tar.gz",
+      "sha256": "e175aaba996aa3f2fdb007416e63d3a7aa5212ac2fbe45d7ef81f6f5ba152bd5",
+      "licence": "CC BY-NC-ND 4.0",
+      "rows": 62,
+      "labels": {
+        "bot": 62
+      },
+      "excluded": {
+        "labels_without_profile": 0
+      }
+    },
+    "vendor-purchased-2019": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/vendor-purchased-2019/vendor-purchased-2019.tar.gz",
+      "sha256": "6758cc640a8ba07e2b660d4f400b34be61efc8b00ee7408b50bdd3c429ddb44f",
+      "licence": "CC BY-NC-ND 4.0",
+      "rows": 1087,
+      "labels": {
+        "bot": 1087
+      },
+      "excluded": {
+        "no_label": 1,
+        "labels_without_profile": 1
+      }
+    },
+    "celebrity-2019": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/celebrity-2019/celebrity-2019.tar.gz",
+      "sha256": "8990daab49aa45a4536ecb93f7a8bb2ff947bde477ae50b8075f3330bf64c3de",
+      "licence": "CC BY-NC-ND 4.0",
+      "rows": 5918,
+      "labels": {
+        "human": 5918
+      },
+      "excluded": {
+        "no_label": 15065,
+        "labels_without_profile": 52
+      }
+    },
+    "botometer-feedback-2019": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/botometer-feedback-2019/botometer-feedback-2019.tar.gz",
+      "sha256": "36e8160f0d903c9e4a3d8a882c71352670b85b0c80ff99f78fb66b1c65a88a0f",
+      "licence": "CC BY-NC-ND 4.0",
+      "rows": 518,
+      "labels": {
+        "human": 379,
+        "bot": 139
+      },
+      "excluded": {
+        "labels_without_profile": 10
+      }
+    },
+    "cresci-2015": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/cresci-2015/cresci-2015.csv.tar.gz",
+      "sha256": "c6ee52e7feb96b7b071a625af563c5be8b793c4cfe900096a45029ad81d75fb6",
+      "licence": "For research purposes only; no redistribution without the IIT-CNR disclaimer",
+      "rows": 5301,
+      "labels": {
+        "human": 1950,
+        "bot": 3351
+      },
+      "excluded": {}
+    },
+    "cresci-2017": {
+      "url": "https://botometer.osome.iu.edu/bot-repository/datasets/cresci-2017/cresci-2017.csv.zip",
+      "sha256": "f80ad99dce3be884c88f1e544a7ff418b8220b444f2ecff26f7dc84317f11c3e",
+      "licence": "For research purposes only; no redistribution without the IIT-CNR disclaimer",
+      "rows": 14368,
+      "labels": {
+        "human": 3474,
+        "bot": 10894
+      },
+      "excluded": {}
+    }
+  },
+  "rows": 111168,
+  "labels": {
+    "human": 29476,
+    "bot": 81692
+  },
+  "cross_dataset_duplicates_removed": 3574,
+  "conflicting_label_rows_removed": 70,
+  "accounts_sha256": "cdbc99ad818ad2fdc3b8ae4159ed148ed7b9a910936db8a59b99bd1521da6795",
+  "excluded_fields": [
+    "favourites_count",
+    "listed_count",
+    "verified",
+    "lang",
+    "geo_enabled",
+    "profile colours"
+  ],
+  "note": "astroturf was not used: it has labels but no profile objects. cresci-2017 (465 MB) not used."
+}

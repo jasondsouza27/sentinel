@@ -1,10 +1,31 @@
 {
   "manifest_version": 3,
   "name": "Sentinel Safety Assistant",
-  "version": "0.1.0",
-  "description": "User-initiated checks of selected text and links with the local Sentinel app.",
-  "permissions": ["activeTab", "scripting", "contextMenus", "storage"],
-  "host_permissions": ["http://127.0.0.1:8787/*"],
-  "background": { "service_worker": "background.js" },
-  "action": { "default_popup": "popup.html", "default_title": "Check with Sentinel" }
+  "version": "0.3.0",
+  "description": "Checks text, links and images on sites you turn on, with the local Sentinel app. Images are read on your computer.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "contextMenus",
+    "storage",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8787/*"
+  ],
+  "optional_host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Check with Sentinel"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
 }

@@ -4,11 +4,38 @@ import ipaddress
 import re
 from urllib.parse import urlsplit
 
+from .harm_rules import assessment as harm_assessment
+
 
 URL_RE = re.compile(r"https?://[^\s<>\"']+", re.IGNORECASE)
 PAYMENT_RE = re.compile(r"\b(pay|payment|registration fee|processing fee|send money|upi)\b", re.IGNORECASE)
 SECRET_RE = re.compile(r"\b(password|one.time password|otp|verification code|login details)\b", re.IGNORECASE)
 URGENCY_RE = re.compile(r"\b(act now|immediately|urgent|within \d+ (?:minute|hour)|limited time)\b", re.IGNORECASE)
+# The checks above match *mentions* and stay as they are: the paired and bot models were trained on them.
+# Fraud evidence uses *requests*, so a bank alert that reports a UPI payment, or an email saying
+# "never share your OTP", is not read as asking for money or a code.
+PAYMENT_REQUEST_RE = re.compile(
+    r"\b(?:(?:pay|send|transfer|deposit)\s+(?:(?:the|a|an|your|us|me|rs\.?|inr|usd|₹|\$)\s*)*"
+    r"(?:\d|fee|fees|money|amount|charges?|deposit|now|immediately|today|token)"
+    r"|(?:registration|processing|clearance|customs|redelivery|activation|verification|joining|release|handling)\s+(?:fee|charges?|amount)"
+    r"|send\s+money|pay\s+(?:\w+\s+){0,3}(?:fee|fees|charges?))", re.IGNORECASE)
+SECRET_REQUEST_RE = re.compile(
+    r"\b(?:share|send|enter|provide|confirm|reply\s+with|give|tell|update|verify|submit)\s+(?:me\s+|us\s+)?(?:your\s+|the\s+)?"
+    r"(?:one.time\s+password|otp|password|passcode|pin|upi\s+pin|cvv|card\s+(?:details|number)|bank\s+details|login\s+details|"
+    r"verification\s+code|security\s+code|credentials)", re.IGNORECASE)
+NEGATED_REQUEST_RE = re.compile(r"\b(?:never|don'?t|do\s+not|not|no\s+one\s+will|we\s+will\s+never|won'?t)\s+(?:\w+\s+){0,4}$", re.IGNORECASE)
+
+
+def _asks(pattern, text):
+    """A request that is not negated ("never share your OTP" is advice, not a request)."""
+    return any(not NEGATED_REQUEST_RE.search(text[max(0, m.start() - 30):m.start()]) for m in pattern.finditer(text))
+
+
+PRIZE_RE = re.compile(
+    r"\b(?:you(?:'ve|\s+have)?\s+(?:won|been\s+selected\s+for\s+a\s+(?:prize|reward|gift))|claim\s+(?:your|the|a)?\s*(?:prize|reward|gift|cash|winnings)"
+    r"|lucky\s+draw|lottery|jackpot|(?:cash\s+)?prize\s+of)\b", re.IGNORECASE)
+# Original three-phrase rule, kept only as the frozen baseline used by research evaluation
+# (sentinel/context_harm/evaluation.py). Live detection uses sentinel/harm_rules.py.
 ABUSE_RE = re.compile(r"\b(you are (?:stupid|an idiot|worthless)|kill yourself|i will hurt you)\b", re.IGNORECASE)
 
 
@@ -86,7 +113,7 @@ def _profile_assessment(profile):
 
 
 def analyze(payload, known_phishing=None, model=None, url_model=None, paired_model=None,
-            harm_model=None, optional_budget=None):
+            harm_model=None, optional_budget=None, text_model=None, network=None):
     """Assess submitted data without fetching URLs or scraping profiles."""
     if not isinstance(payload, dict):
         raise ValueError("Request must be a JSON object")
@@ -107,10 +134,12 @@ def analyze(payload, known_phishing=None, model=None, url_model=None, paired_mod
     match = URL_RE.search(message)
     url = supplied_url or (match.group(0).rstrip(".,);]") if match else "")
     evidence = []
-    if message and PAYMENT_RE.search(message):
+    if message and _asks(PAYMENT_REQUEST_RE, message):
         evidence.append("The message asks for payment or a fee.")
-    if message and SECRET_RE.search(message):
-        evidence.append("The message asks for a password or verification code.")
+    if message and _asks(SECRET_REQUEST_RE, message):
+        evidence.append("The message asks for a password, code or card details.")
+    if message and PRIZE_RE.search(message):
+        evidence.append("The message announces a prize or win, a common scam opener.")
     if message and URGENCY_RE.search(message):
         evidence.append("The message uses urgency to push a quick response.")
     url_evidence = _url_indicators(url)
@@ -118,7 +147,7 @@ def analyze(payload, known_phishing=None, model=None, url_model=None, paired_mod
     known = known_phishing is not None and url in known_phishing
     if known:
         evidence.insert(0, "The exact submitted URL appears in the supplied verified phishing feed.")
-    message_warning = bool(message and (PAYMENT_RE.search(message) or SECRET_RE.search(message)))
+    message_warning = bool(message and (_asks(PAYMENT_REQUEST_RE, message) or _asks(SECRET_REQUEST_RE, message)))
     level = "high" if known or (message_warning and url_evidence) else "review" if evidence else "low_observed_concern"
     unavailable = []
     if known_phishing is None:
@@ -148,14 +177,7 @@ def analyze(payload, known_phishing=None, model=None, url_model=None, paired_mod
         fraud["model_votes"] = votes
         fraud["model_note"] = "Research model output is not calibrated and is separate from observed evidence."
     content = "\n".join(part for part in (message, conversation) if part)
-    abuse = bool(ABUSE_RE.search(content))
-    quoted_or_reported = bool(re.search(r"[\"“”]|\b(reported|quoted|someone wrote|someone said)\b", content, re.IGNORECASE))
-    harmful = {
-        "level": "review" if abuse else "low_observed_concern" if content else "not_assessed",
-        "evidence": ["A direct insult or threat phrase appears in the submitted text." if not quoted_or_reported else "An insult or threat phrase appears in quoted or reported context; human review is needed."] if abuse else [],
-        "uncertainty": "One text sample cannot establish a pattern of cyberbullying or the speaker's intent.",
-        "action": "Review the surrounding conversation and preserve evidence before reporting abuse." if abuse else "Review the full context before drawing conclusions.",
-    }
+    harmful = harm_assessment(content)
     result = {"fraud": fraud, "harmful_content": harmful, "profile": _profile_assessment(profile)}
     if url_model is not None:
         def url_unavailable():
@@ -180,6 +202,21 @@ def analyze(payload, known_phishing=None, model=None, url_model=None, paired_mod
             from .paired.service import unavailable
             result["paired_assessment"] = unavailable(
                 "inference_unavailable", "The paired model could not assess this input.")
+    if text_model is not None:
+        try:
+            result["text_model"] = text_model.assess(message)
+        except Exception:
+            result["text_model"] = {"state": "unavailable", "reason": "inference_failed", "model_version": None}
+    if network is not None and message:
+        try:
+            match = network.match(message)
+            learned = result.get("text_model") or {}
+            if learned.get("flagged") and learned.get("calibrated_probability", 0) >= 0.9:
+                network.report(message, learned["category"], learned["calibrated_probability"])
+            result["community"] = {"state": "matched" if match else "no_match", "match": match,
+                                   "note": "Compared with campaigns other Sentinel users flagged; only anonymous fingerprints are shared."}
+        except Exception:
+            result["community"] = {"state": "unavailable", "match": None}
     if harm_model is not None:
         from .context_harm.service import unavailable
         try:

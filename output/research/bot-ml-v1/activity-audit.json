@@ -1,0 +1,27 @@
+{
+  "rows": 10422,
+  "posts_per_account": 100,
+  "min_posts": 20,
+  "by_subset": {
+    "cresci-2015/E13/human": 1456,
+    "cresci-2015/FSF/bot": 604,
+    "cresci-2015/INT/bot": 1162,
+    "cresci-2015/TFP/human": 425,
+    "cresci-2015/TWT/bot": 325,
+    "cresci-2017/genuine_accounts/human": 1079,
+    "cresci-2017/social_spambots_1/bot": 991,
+    "cresci-2017/social_spambots_2/bot": 3457,
+    "cresci-2017/social_spambots_3/bot": 464,
+    "cresci-2017/traditional_spambots_1/bot": 459
+  },
+  "excluded": {
+    "duplicate_account": 2091
+  },
+  "parts_without_post_history": [
+    "datasets_full.csv/traditional_spambots_2.csv.zip",
+    "datasets_full.csv/traditional_spambots_3.csv.zip",
+    "datasets_full.csv/traditional_spambots_4.csv.zip"
+  ],
+  "activity_sha256": "50898b62176a1d308387a4209570205b47ca91d35285a0b3d822d0ef79d831d5",
+  "note": "Numeric features only; no post text is stored."
+}

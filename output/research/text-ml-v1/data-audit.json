@@ -1,0 +1,44 @@
+{
+  "sources": {
+    "mendeley": {
+      "file": "mendeley-smishing.zip",
+      "sha256": "9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3",
+      "url": "https://data.mendeley.com/public-files/datasets/f45bkkt8pr/files/edb361de-918d-469f-9106-e84823830665/file_downloaded",
+      "citation": "Mishra, S. & Soni, D. (2022). SMS Phishing Dataset for Machine Learning and Pattern Recognition. Mendeley Data, V1. doi:10.17632/f45bkkt8pr.1",
+      "license": "CC BY 4.0"
+    },
+    "uci": {
+      "file": "uci-sms.zip",
+      "sha256": "1587ea43e58e82b14ff1f5425c88e17f8496bfcdb67a583dbff9eefaf9963ce3",
+      "url": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip",
+      "citation": "Almeida, T. & Hidalgo, J. (2011). SMS Spam Collection. UCI Machine Learning Repository. doi:10.24432/C5CC84",
+      "license": "CC BY 4.0"
+    }
+  },
+  "rows_read": 5971,
+  "rows_kept": 5790,
+  "label_counts": {
+    "ham": 4829,
+    "smishing": 527,
+    "spam": 434
+  },
+  "template_groups": 5666,
+  "excluded": {
+    "conflicting_duplicate_labels": 70,
+    "exact_duplicate": 111
+  },
+  "conflicting_duplicate_keys": 35,
+  "truncated_rows": 0,
+  "uci_cross_check": {
+    "label_pairs": {
+      "ham->ham": 4366,
+      "ham->absent": 463,
+      "smishing->absent": 276,
+      "spam->spam": 291,
+      "spam->absent": 143,
+      "smishing->spam": 251
+    },
+    "ham_spam_conflicts": 0
+  },
+  "dataset_sha256": "6a311a08120f9893231aade18bdd2282da496c89a7d46cec6651c4c6cb55d8c9"
+}

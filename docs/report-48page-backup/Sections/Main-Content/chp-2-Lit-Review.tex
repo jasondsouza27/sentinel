@@ -1,0 +1,86 @@
+\titleformat{\chapter}[display]{\bfseries\centering}{\huge Chapter \thechapter}{1em}{\Huge #1}
+
+\newgeometry{top=3cm, bottom=2.2cm, left=3cm, right=2cm, headsep=1.2cm, footskip=1cm, headheight=0.3cm, textheight=24.5cm, textwidth=16cm}
+\onehalfspacing
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\lhead{Chapter 2}
+\rhead{Literature Survey}
+\cfoot{\thepage}
+\chapter{Literature Survey}
+
+\section{Survey of Existing Systems}
+\noindent We studied four groups of work: fake-profile and bot detection, cyberbullying and hate-speech detection, SMS scam datasets, and phishing-URL tools.
+
+\subsection{Research Papers}
+\begin{itemize}
+\item \textbf{Fake profiles \cite{lit1,lit2,lit3}:} these papers use profile details, posts, images and even login behaviour to find fake accounts. Aditya and Mohanty \cite{lit2} report 93.5\% accuracy, but need platform data that a normal user cannot see.
+\item \textbf{Cyberbullying \cite{lit4,lit5}:} Atif et al. \cite{lit4} detect bullying in Roman Urdu tweets (97\% F1); Ibrahim et al. \cite{lit5} handle overlapping hate-speech classes. Neither checks links or accounts.
+\item \textbf{Social bots \cite{cresci2015,cresci2017,yang2020}:} Cresci et al. built datasets of fake followers and human-like ``social spambots'' that are hard to spot. Yang et al. showed that a bot detector trained on one dataset often fails on another, which is why Sentinel tests its bot models on whole datasets they have never seen.
+\item \textbf{Datasets \cite{phiusiil,cad,smsdata}:} PhiUSIIL (235,795 URLs), CAD (Reddit abuse with context) and an SMS phishing dataset (5,971 messages labelled ham, spam or smishing) are used in Sentinel's studies.
+\end{itemize}
+
+\subsection{Real-Time Systems}
+\noindent \textbf{PhishTank} \cite{phishtank} and \textbf{Google Safe Browsing} \cite{safebrowsing} keep lists of known bad URLs. They are accurate for known links, but cannot judge a new link, do not explain their answer and do not look at message text, harmful language or accounts. \textbf{Platform moderation} acts only after users report, and rarely explains itself.
+
+\subsection{Summary of the Survey}
+\begin{footnotesize}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}p{4.1cm}|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{3.3cm}|}
+\caption{Summary of the literature survey}\label{tab:lit}\\
+\hline
+\textbf{Work} & \textbf{Method} & \textbf{Result} & \textbf{Drawback} \\ \hline
+\endfirsthead
+\hline
+\textbf{Work} & \textbf{Method} & \textbf{Result} & \textbf{Drawback} \\ \hline
+\endhead
+Bhambulkar et al. \cite{lit1} & Review of ML/DL fake-profile methods & Lists useful profile features & Profiles only; no links or messages \\ \hline
+Aditya and Mohanty \cite{lit2} & Word2Vec + CNN on posts, media, logins & 93.5\% accuracy & Needs platform-side data \\ \hline
+Habib et al. \cite{lit3} & Survey of fake-profile techniques & Overview for future work & No new experiments \\ \hline
+Atif et al. \cite{lit4} & GRU for Roman Urdu bullying & 97\% F1 & One language; no phishing \\ \hline
+Ibrahim et al. \cite{lit5} & Neutrosophic MLP for hate speech & Better on mixed classes & Text only \\ \hline
+Cresci et al. \cite{cresci2015,cresci2017} & Fake-follower and spambot datasets & Human-like bots are hard to spot & Twitter only, up to 2017 \\ \hline
+Yang et al. \cite{yang2020} & Cross-dataset bot testing & One-dataset models generalise poorly & Needs platform data \\ \hline
+PhiUSIIL \cite{phiusiil}, CAD \cite{cad}, SMS set \cite{smsdata} & Public datasets & Benchmarks for URLs, abuse, SMS & Each covers one threat \\ \hline
+PhishTank, Safe Browsing & Lists of known bad URLs & Accurate for known links & No new links; no reasons \\ \hline
+\end{longtable}
+\end{footnotesize}
+
+\section{Limitations of Existing Systems and Research Gap}
+\begin{enumerate}
+\item They handle \textbf{one threat at a time}, though one post often mixes a scam message, a link and a fake account.
+\item They need \textbf{platform data} that ordinary users cannot see.
+\item They give a \textbf{verdict without a reason} and do not say what they could not check.
+\item Their \textbf{test results are often optimistic}: models that score highly on one dataset fail on new data.
+\item They miss \textbf{Hinglish and disguised words}, and cloud tools send private messages to a server.
+\end{enumerate}
+
+\noindent\textbf{Research gap.} There is no simple tool that runs on the user's own computer, checks scam messages, links, harmful language and accounts together, explains every result, lets users warn each other without sharing text, and uses a learned model only after a fair test on unseen data.
+
+\section{Scope of the Proposed System}
+\noindent\textbf{In scope:} a local web app and Chrome extension (with opt-in auto-scan); fraud rules; English and Hinglish harm rules; a learned scam-text model; a community scam network with a simulation; bot detection from official APIs or user data; saving cases; and research pipelines for URL, SMS and bot models.\\
+
+\noindent\textbf{Out of scope:} automatic blocking, scraping, opening suspicious links, identity verification, deepfakes, mobile apps and paid cloud services.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\caption{Feature comparison of Sentinel with existing systems (``--'': not described)}
+\label{tab:features}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{4.2cm}|c|c|c|c|c|}
+\hline
+\textbf{Feature} & \textbf{Sentinel} & \textbf{[2]} & \textbf{[4]} & \textbf{PhishTank} & \textbf{Safe Browsing} \\ \hline
+Phishing link check & Yes & No & No & Yes (list) & Yes (list) \\ \hline
+Message text check & Yes & No & -- & No & No \\ \hline
+Harmful-language check & Yes & No & Yes & No & No \\ \hline
+Fake / bot account check & Yes & Yes & Partly & No & No \\ \hline
+Hinglish or code-mixed text & Yes & No & Roman Urdu & No & No \\ \hline
+Community warnings & Yes & No & No & URLs & No \\ \hline
+Works on user-visible data only & Yes & No & Partly & Yes & Yes \\ \hline
+Explains evidence and missing checks & Yes & No & No & No & No \\ \hline
+Runs locally, no cloud & Yes & No & -- & Feed download & No \\ \hline
+\end{tabular}
+\end{table}

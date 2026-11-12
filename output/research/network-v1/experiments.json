@@ -1,0 +1,5817 @@
+{
+ "generated_seconds": 202.4,
+ "users": 10000,
+ "seed": 7,
+ "runs": {
+  "baseline_real_model": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "model",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.8602,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.9679,
+     "combined": 0.9928
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.4526,
+     "combined": 0.6956
+    }
+   },
+   "model_plus_network_protection": 0.9307,
+   "network_only_saves": 1280,
+   "protection_after_publication": 0.9989,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.94,
+   "median_exposures_before_publish": 8.5,
+   "legit_false_alert_model": 0.1349,
+   "legit_false_alert_network": 0.0,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": false,
+   "legit_templates_ever_published": [],
+   "clusters": {
+    "collecting": 12,
+    "held_for_review": 1,
+    "published": 37
+   },
+   "reports": {
+    "sent": 11345,
+    "rejected": {},
+    "manual": 72
+   },
+   "published_cluster_origins": {
+    "scam": 37
+   },
+   "privacy_passed": true,
+   "seconds": 20.8
+  },
+  "real_model_v1": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "model",
+    "model_artifact": "v1",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.8529,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.9676,
+     "combined": 0.9783
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.4186,
+     "combined": 0.6546
+    }
+   },
+   "model_plus_network_protection": 0.9106,
+   "network_only_saves": 1049,
+   "protection_after_publication": 0.9988,
+   "campaigns_newly_published": 25,
+   "campaigns_never_published": 1,
+   "median_hours_to_publish": 2.01,
+   "median_exposures_before_publish": 9,
+   "legit_false_alert_model": 0.9837,
+   "legit_false_alert_network": 0.5407,
+   "legit_templates_published": [
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy"
+   ],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": true,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy"
+   ],
+   "clusters": {
+    "collecting": 7,
+    "held_for_review": 7,
+    "published": 40
+   },
+   "reports": {
+    "sent": 23329,
+    "rejected": {},
+    "manual": 61,
+    "disputes": 417
+   },
+   "published_cluster_origins": {
+    "scam": 36,
+    "legit": 4
+   },
+   "privacy_passed": true,
+   "seconds": 32.3
+  },
+  "real_model_v1_undefended": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": false,
+    "detector": "model",
+    "model_artifact": "v1",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.8529,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.9676,
+     "combined": 0.9773
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.4186,
+     "combined": 0.6609
+    }
+   },
+   "model_plus_network_protection": 0.9112,
+   "network_only_saves": 1059,
+   "protection_after_publication": 0.9988,
+   "campaigns_newly_published": 25,
+   "campaigns_never_published": 1,
+   "median_hours_to_publish": 2.01,
+   "median_exposures_before_publish": 9,
+   "legit_false_alert_model": 0.9837,
+   "legit_false_alert_network": 0.979,
+   "legit_templates_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy",
+    "salary",
+    "telecom"
+   ],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": true,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy",
+    "salary",
+    "telecom"
+   ],
+   "clusters": {
+    "collecting": 13,
+    "published": 47
+   },
+   "reports": {
+    "sent": 23333,
+    "rejected": {},
+    "manual": 65,
+    "disputes": 744
+   },
+   "published_cluster_origins": {
+    "scam": 36,
+    "legit": 11
+   },
+   "privacy_passed": true,
+   "seconds": 11.4
+  },
+  "real_model_no_user_reports": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "model",
+    "model_artifact": "v2",
+    "user_report_rate": 0.0
+   },
+   "model_only_protection": 0.8602,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.9679,
+     "combined": 0.9679
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.4526,
+     "combined": 0.6056
+    }
+   },
+   "model_plus_network_protection": 0.8922,
+   "network_only_saves": 581,
+   "protection_after_publication": 0.9988,
+   "campaigns_newly_published": 24,
+   "campaigns_never_published": 2,
+   "median_hours_to_publish": 1.85,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.1349,
+   "legit_false_alert_network": 0.0,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": false,
+   "legit_templates_ever_published": [],
+   "clusters": {
+    "held_for_review": 1,
+    "published": 35
+   },
+   "reports": {
+    "sent": 11273,
+    "rejected": {}
+   },
+   "published_cluster_origins": {
+    "scam": 35
+   },
+   "privacy_passed": true,
+   "seconds": 6.1
+  },
+  "real_model_undefended": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": false,
+    "detector": "model",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.8602,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.9679,
+     "combined": 0.9869
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.4526,
+     "combined": 0.6996
+    }
+   },
+   "model_plus_network_protection": 0.9268,
+   "network_only_saves": 1210,
+   "protection_after_publication": 0.9989,
+   "campaigns_newly_published": 25,
+   "campaigns_never_published": 1,
+   "median_hours_to_publish": 1.87,
+   "median_exposures_before_publish": 8,
+   "legit_false_alert_model": 0.1349,
+   "legit_false_alert_network": 0.1341,
+   "legit_templates_published": [
+    "bank_alert"
+   ],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": false,
+   "legit_templates_ever_published": [
+    "bank_alert"
+   ],
+   "clusters": {
+    "collecting": 14,
+    "published": 37
+   },
+   "reports": {
+    "sent": 11344,
+    "rejected": {},
+    "manual": 71,
+    "disputes": 101
+   },
+   "published_cluster_origins": {
+    "scam": 36,
+    "legit": 1
+   },
+   "privacy_passed": true,
+   "seconds": 6.3
+  },
+  "baseline_rates_detector": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.782,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7761,
+     "combined": 0.9961
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.8041,
+     "combined": 0.9987
+    }
+   },
+   "model_plus_network_protection": 0.9966,
+   "network_only_saves": 3901,
+   "protection_after_publication": 0.9975,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.48,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0043,
+   "legit_false_alert_network": 0.0244,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "clusters": {
+    "collecting": 37,
+    "disputed": 3,
+    "held_for_review": 3,
+    "published": 38
+   },
+   "reports": {
+    "sent": 8707,
+    "rejected": {},
+    "manual": 89,
+    "disputes": 21
+   },
+   "published_cluster_origins": {
+    "scam": 38
+   },
+   "privacy_passed": true,
+   "seconds": 5.3
+  },
+  "rates_undefended_no_attack": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": false,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7778,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7733,
+     "combined": 0.9958
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7949,
+     "combined": 0.9997
+    }
+   },
+   "model_plus_network_protection": 0.9966,
+   "network_only_saves": 3977,
+   "protection_after_publication": 0.9973,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.54,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0046,
+   "legit_false_alert_network": 0.5442,
+   "legit_templates_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "pharmacy",
+    "telecom"
+   ],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": true,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "pharmacy",
+    "telecom"
+   ],
+   "clusters": {
+    "collecting": 38,
+    "published": 46
+   },
+   "reports": {
+    "sent": 8728,
+    "rejected": {},
+    "manual": 90,
+    "disputes": 391
+   },
+   "published_cluster_origins": {
+    "scam": 40,
+    "legit": 6
+   },
+   "privacy_passed": true,
+   "seconds": 5.4
+  },
+  "rates_no_disputes": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7772,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7735,
+     "combined": 0.9964
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7909,
+     "combined": 0.9987
+    }
+   },
+   "model_plus_network_protection": 0.9969,
+   "network_only_saves": 3992,
+   "protection_after_publication": 0.9978,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.48,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0044,
+   "legit_false_alert_network": 0.3673,
+   "legit_templates_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": true,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "clusters": {
+    "collecting": 42,
+    "held_for_review": 4,
+    "published": 41
+   },
+   "reports": {
+    "sent": 8737,
+    "rejected": {},
+    "manual": 95
+   },
+   "published_cluster_origins": {
+    "scam": 38,
+    "legit": 3
+   },
+   "privacy_passed": true,
+   "seconds": 5.3
+  },
+  "rates_full_allowlist": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.779,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7735,
+     "combined": 0.9962
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7996,
+     "combined": 0.9992
+    }
+   },
+   "model_plus_network_protection": 0.9969,
+   "network_only_saves": 3959,
+   "protection_after_publication": 0.9975,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.48,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0041,
+   "legit_false_alert_network": 0.0,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": false,
+   "legit_templates_ever_published": [],
+   "clusters": {
+    "collecting": 41,
+    "held_for_review": 5,
+    "published": 37
+   },
+   "reports": {
+    "sent": 8702,
+    "rejected": {},
+    "manual": 95
+   },
+   "published_cluster_origins": {
+    "scam": 37
+   },
+   "privacy_passed": true,
+   "seconds": 5.6
+  },
+  "k_3": {
+   "config": {
+    "users": 10000,
+    "k": 3,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7804,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7767,
+     "combined": 0.9957
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7946,
+     "combined": 0.9997
+    }
+   },
+   "model_plus_network_protection": 0.9965,
+   "network_only_saves": 3927,
+   "protection_after_publication": 0.9972,
+   "campaigns_newly_published": 25,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 0.95,
+   "median_exposures_before_publish": 4,
+   "legit_false_alert_model": 0.0041,
+   "legit_false_alert_network": 0.0156,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "clusters": {
+    "collecting": 40,
+    "disputed": 3,
+    "held_for_review": 4,
+    "published": 40
+   },
+   "reports": {
+    "sent": 8712,
+    "rejected": {},
+    "manual": 89,
+    "disputes": 14
+   },
+   "published_cluster_origins": {
+    "scam": 40
+   },
+   "privacy_passed": true,
+   "seconds": 7.5
+  },
+  "k_5": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.782,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7761,
+     "combined": 0.9961
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.8041,
+     "combined": 0.9987
+    }
+   },
+   "model_plus_network_protection": 0.9966,
+   "network_only_saves": 3901,
+   "protection_after_publication": 0.9975,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.48,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0043,
+   "legit_false_alert_network": 0.0244,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "clusters": {
+    "collecting": 37,
+    "disputed": 3,
+    "held_for_review": 3,
+    "published": 38
+   },
+   "reports": {
+    "sent": 8707,
+    "rejected": {},
+    "manual": 89,
+    "disputes": 21
+   },
+   "published_cluster_origins": {
+    "scam": 38
+   },
+   "privacy_passed": true,
+   "seconds": 5.3
+  },
+  "k_10": {
+   "config": {
+    "users": 10000,
+    "k": 10,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.78,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.774,
+     "combined": 0.9935
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.8031,
+     "combined": 0.9984
+    }
+   },
+   "model_plus_network_protection": 0.9946,
+   "network_only_saves": 3898,
+   "protection_after_publication": 0.9962,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 2.74,
+   "median_exposures_before_publish": 16.5,
+   "legit_false_alert_model": 0.0041,
+   "legit_false_alert_network": 0.0298,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": false,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery"
+   ],
+   "clusters": {
+    "collecting": 46,
+    "disputed": 2,
+    "published": 35
+   },
+   "reports": {
+    "sent": 8687,
+    "rejected": {},
+    "manual": 96,
+    "disputes": 21
+   },
+   "published_cluster_origins": {
+    "scam": 35
+   },
+   "privacy_passed": true,
+   "seconds": 5.5
+  },
+  "k_20": {
+   "config": {
+    "users": 10000,
+    "k": 20,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7797,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7744,
+     "combined": 0.9891
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7996,
+     "combined": 0.9974
+    }
+   },
+   "model_plus_network_protection": 0.9909,
+   "network_only_saves": 3837,
+   "protection_after_publication": 0.9954,
+   "campaigns_newly_published": 27,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 3.85,
+   "median_exposures_before_publish": 34,
+   "legit_false_alert_model": 0.004,
+   "legit_false_alert_network": 0.012,
+   "legit_templates_published": [
+    "college"
+   ],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": false,
+   "legit_templates_ever_published": [
+    "college"
+   ],
+   "clusters": {
+    "collecting": 52,
+    "published": 32
+   },
+   "reports": {
+    "sent": 8713,
+    "rejected": {},
+    "manual": 98,
+    "disputes": 7
+   },
+   "published_cluster_origins": {
+    "scam": 31,
+    "legit": 1
+   },
+   "privacy_passed": true,
+   "seconds": 5.3
+  },
+  "share_0.1": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.1,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7804,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7758,
+     "combined": 0.9855
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7975,
+     "combined": 0.9932
+    }
+   },
+   "model_plus_network_protection": 0.9871,
+   "network_only_saves": 3757,
+   "protection_after_publication": 0.9939,
+   "campaigns_newly_published": 27,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 4.65,
+   "median_exposures_before_publish": 45,
+   "legit_false_alert_model": 0.0039,
+   "legit_false_alert_network": 0.0,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": false,
+   "legit_templates_ever_published": [],
+   "clusters": {
+    "collecting": 19,
+    "published": 28
+   },
+   "reports": {
+    "sent": 1409,
+    "rejected": {},
+    "manual": 18
+   },
+   "published_cluster_origins": {
+    "scam": 28
+   },
+   "privacy_passed": true,
+   "seconds": 2.3
+  },
+  "share_0.3": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.3,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.777,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7698,
+     "combined": 0.9928
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.8041,
+     "combined": 0.9984
+    }
+   },
+   "model_plus_network_protection": 0.9939,
+   "network_only_saves": 3942,
+   "protection_after_publication": 0.9951,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 2.48,
+   "median_exposures_before_publish": 16.5,
+   "legit_false_alert_model": 0.0034,
+   "legit_false_alert_network": 0.0207,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": false,
+   "legit_templates_ever_published": [
+    "delivery"
+   ],
+   "clusters": {
+    "collecting": 27,
+    "disputed": 1,
+    "held_for_review": 1,
+    "published": 34
+   },
+   "reports": {
+    "sent": 4321,
+    "rejected": {},
+    "manual": 57,
+    "disputes": 5
+   },
+   "published_cluster_origins": {
+    "scam": 34
+   },
+   "privacy_passed": true,
+   "seconds": 3.7
+  },
+  "share_0.6": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.782,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7761,
+     "combined": 0.9961
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.8041,
+     "combined": 0.9987
+    }
+   },
+   "model_plus_network_protection": 0.9966,
+   "network_only_saves": 3901,
+   "protection_after_publication": 0.9975,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.48,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0043,
+   "legit_false_alert_network": 0.0244,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "clusters": {
+    "collecting": 37,
+    "disputed": 3,
+    "held_for_review": 3,
+    "published": 38
+   },
+   "reports": {
+    "sent": 8707,
+    "rejected": {},
+    "manual": 89,
+    "disputes": 21
+   },
+   "published_cluster_origins": {
+    "scam": 38
+   },
+   "privacy_passed": true,
+   "seconds": 5.8
+  },
+  "no_mutation_rates": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": false,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7759,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 21066,
+     "model": 0.7807,
+     "combined": 0.9995
+    },
+    "modern": {
+     "exposures": 10787,
+     "model": 0.7664,
+     "combined": 0.9999
+    }
+   },
+   "model_plus_network_protection": 0.9997,
+   "network_only_saves": 7128,
+   "protection_after_publication": 1.0,
+   "campaigns_newly_published": 27,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 0.86,
+   "median_exposures_before_publish": 7,
+   "legit_false_alert_model": 0.0044,
+   "legit_false_alert_network": 0.0191,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": false,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery"
+   ],
+   "clusters": {
+    "collecting": 27,
+    "disputed": 2,
+    "held_for_review": 4,
+    "published": 27
+   },
+   "reports": {
+    "sent": 15229,
+    "rejected": {},
+    "manual": 147,
+    "disputes": 12
+   },
+   "published_cluster_origins": {
+    "scam": 27
+   },
+   "privacy_passed": true,
+   "seconds": 8.0
+  },
+  "no_user_reports_rates": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 0,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.0
+   },
+   "model_only_protection": 0.78,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7757,
+     "combined": 0.9959
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7962,
+     "combined": 0.9987
+    }
+   },
+   "model_plus_network_protection": 0.9965,
+   "network_only_saves": 3934,
+   "protection_after_publication": 0.9974,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.48,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0042,
+   "legit_false_alert_network": 0.0204,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "clusters": {
+    "collecting": 32,
+    "disputed": 3,
+    "held_for_review": 3,
+    "published": 37
+   },
+   "reports": {
+    "sent": 8604,
+    "rejected": {},
+    "disputes": 21
+   },
+   "published_cluster_origins": {
+    "scam": 37
+   },
+   "privacy_passed": true,
+   "seconds": 6.2
+  },
+  "attack_5_undefended": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 5,
+    "defences": false,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7757,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7705,
+     "combined": 0.996
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7954,
+     "combined": 0.9992
+    }
+   },
+   "model_plus_network_protection": 0.9966,
+   "network_only_saves": 4015,
+   "protection_after_publication": 0.9973,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.75,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0042,
+   "legit_false_alert_network": 0.6682,
+   "legit_templates_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy",
+    "salary",
+    "telecom"
+   ],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": true,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy",
+    "salary",
+    "telecom"
+   ],
+   "clusters": {
+    "collecting": 37,
+    "published": 45
+   },
+   "reports": {
+    "sent": 8689,
+    "rejected": {},
+    "manual": 99,
+    "disputes": 496
+   },
+   "published_cluster_origins": {
+    "scam": 37,
+    "legit": 8
+   },
+   "privacy_passed": true,
+   "seconds": 5.8
+  },
+  "attack_10_undefended": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 10,
+    "defences": false,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7757,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7705,
+     "combined": 0.996
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7954,
+     "combined": 0.9992
+    }
+   },
+   "model_plus_network_protection": 0.9966,
+   "network_only_saves": 4015,
+   "protection_after_publication": 0.9973,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.75,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0042,
+   "legit_false_alert_network": 0.6682,
+   "legit_templates_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy",
+    "salary",
+    "telecom"
+   ],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": true,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy",
+    "salary",
+    "telecom"
+   ],
+   "clusters": {
+    "collecting": 37,
+    "published": 45
+   },
+   "reports": {
+    "sent": 8689,
+    "rejected": {},
+    "manual": 99,
+    "disputes": 496
+   },
+   "published_cluster_origins": {
+    "scam": 37,
+    "legit": 8
+   },
+   "privacy_passed": true,
+   "seconds": 6.6
+  },
+  "attack_25_undefended": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 25,
+    "defences": false,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7757,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7705,
+     "combined": 0.996
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7954,
+     "combined": 0.9992
+    }
+   },
+   "model_plus_network_protection": 0.9966,
+   "network_only_saves": 4015,
+   "protection_after_publication": 0.9973,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.75,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0042,
+   "legit_false_alert_network": 0.6682,
+   "legit_templates_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy",
+    "salary",
+    "telecom"
+   ],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": true,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy",
+    "salary",
+    "telecom"
+   ],
+   "clusters": {
+    "collecting": 37,
+    "published": 45
+   },
+   "reports": {
+    "sent": 8689,
+    "rejected": {},
+    "manual": 99,
+    "disputes": 496
+   },
+   "published_cluster_origins": {
+    "scam": 37,
+    "legit": 8
+   },
+   "privacy_passed": true,
+   "seconds": 6.7
+  },
+  "attack_50_undefended": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 50,
+    "defences": false,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7757,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7705,
+     "combined": 0.996
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7954,
+     "combined": 0.9992
+    }
+   },
+   "model_plus_network_protection": 0.9966,
+   "network_only_saves": 4015,
+   "protection_after_publication": 0.9973,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.75,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0042,
+   "legit_false_alert_network": 0.6682,
+   "legit_templates_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy",
+    "salary",
+    "telecom"
+   ],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": true,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "bank_alert",
+    "bank_otp",
+    "college",
+    "delivery",
+    "electricity",
+    "pharmacy",
+    "salary",
+    "telecom"
+   ],
+   "clusters": {
+    "collecting": 37,
+    "published": 45
+   },
+   "reports": {
+    "sent": 8689,
+    "rejected": {},
+    "manual": 99,
+    "disputes": 496
+   },
+   "published_cluster_origins": {
+    "scam": 37,
+    "legit": 8
+   },
+   "privacy_passed": true,
+   "seconds": 8.4
+  },
+  "attack_5_defended": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 5,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7793,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7746,
+     "combined": 0.9967
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.797,
+     "combined": 0.9989
+    }
+   },
+   "model_plus_network_protection": 0.9972,
+   "network_only_saves": 3960,
+   "protection_after_publication": 0.9981,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.75,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0047,
+   "legit_false_alert_network": 0.0329,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "clusters": {
+    "collecting": 40,
+    "disputed": 3,
+    "held_for_review": 4,
+    "published": 38
+   },
+   "reports": {
+    "sent": 8737,
+    "rejected": {},
+    "manual": 85,
+    "disputes": 19
+   },
+   "published_cluster_origins": {
+    "scam": 38
+   },
+   "privacy_passed": true,
+   "seconds": 5.8
+  },
+  "attack_10_defended": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 10,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7777,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7722,
+     "combined": 0.996
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7986,
+     "combined": 0.9989
+    }
+   },
+   "model_plus_network_protection": 0.9966,
+   "network_only_saves": 3978,
+   "protection_after_publication": 0.9976,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.75,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0043,
+   "legit_false_alert_network": 0.0372,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "clusters": {
+    "collecting": 38,
+    "disputed": 3,
+    "held_for_review": 4,
+    "published": 37
+   },
+   "reports": {
+    "sent": 8730,
+    "rejected": {},
+    "manual": 95,
+    "disputes": 22
+   },
+   "published_cluster_origins": {
+    "scam": 37
+   },
+   "privacy_passed": true,
+   "seconds": 6.1
+  },
+  "attack_25_defended": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 25,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7772,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7721,
+     "combined": 0.9965
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7967,
+     "combined": 0.9989
+    }
+   },
+   "model_plus_network_protection": 0.997,
+   "network_only_saves": 3994,
+   "protection_after_publication": 0.998,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.75,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0048,
+   "legit_false_alert_network": 0.0445,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "clusters": {
+    "collecting": 42,
+    "disputed": 3,
+    "held_for_review": 4,
+    "published": 38
+   },
+   "reports": {
+    "sent": 8723,
+    "rejected": {},
+    "manual": 99,
+    "disputes": 28
+   },
+   "published_cluster_origins": {
+    "scam": 38
+   },
+   "privacy_passed": true,
+   "seconds": 7.5
+  },
+  "attack_50_defended": {
+   "config": {
+    "users": 10000,
+    "k": 5,
+    "share_rate": 0.6,
+    "mutation": true,
+    "attackers": 50,
+    "defences": true,
+    "detector": "rates",
+    "model_artifact": "v2",
+    "user_report_rate": 0.03
+   },
+   "model_only_protection": 0.7789,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.774,
+     "combined": 0.9966
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.7975,
+     "combined": 0.9989
+    }
+   },
+   "model_plus_network_protection": 0.9971,
+   "network_only_saves": 3964,
+   "protection_after_publication": 0.998,
+   "campaigns_newly_published": 26,
+   "campaigns_never_published": 0,
+   "median_hours_to_publish": 1.75,
+   "median_exposures_before_publish": 8.0,
+   "legit_false_alert_model": 0.0045,
+   "legit_false_alert_network": 0.0604,
+   "legit_templates_published": [],
+   "ham_false_alert_network": 0.0,
+   "poisoning_target_published_at_end": false,
+   "poisoning_target_ever_published": true,
+   "legit_templates_ever_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "clusters": {
+    "collecting": 41,
+    "disputed": 3,
+    "held_for_review": 4,
+    "published": 38
+   },
+   "reports": {
+    "sent": 8731,
+    "rejected": {},
+    "manual": 100,
+    "disputes": 44
+   },
+   "published_cluster_origins": {
+    "scam": 38
+   },
+   "privacy_passed": true,
+   "seconds": 7.5
+  }
+ },
+ "baseline_real_model": {
+  "scam": {
+   "exposures": 18171,
+   "model_only_protection": 0.8602,
+   "model_plus_network_protection": 0.9307,
+   "network_only_saves": 1280,
+   "by_mutation_level": [
+    {
+     "level": 0,
+     "exposures": 2849,
+     "model": 0.8371,
+     "combined": 0.8371
+    },
+    {
+     "level": 1,
+     "exposures": 7699,
+     "model": 0.8296,
+     "combined": 0.9022
+    },
+    {
+     "level": 2,
+     "exposures": 4880,
+     "model": 0.9289,
+     "combined": 0.9951
+    },
+    {
+     "level": 3,
+     "exposures": 2743,
+     "model": 0.848,
+     "combined": 0.9931
+    }
+   ],
+   "protection_after_publication": 0.9989,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.9679,
+     "combined": 0.9928
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.4526,
+     "combined": 0.6956
+    }
+   }
+  },
+  "campaigns": {
+   "total": 30,
+   "newly_published": 26,
+   "already_covered_by_earlier_campaign": 4,
+   "never_published": 0,
+   "median_hours_to_publish": 1.94,
+   "median_exposures_before_publish": 8.5,
+   "detail": [
+    {
+     "campaign": 0,
+     "modern": true,
+     "size": 427,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 11.18,
+     "exposures_before_publish": 350,
+     "linked_sources": {
+      "scam:0": 18
+     },
+     "first_exposure": 21.45,
+     "published_hour": 32.63564913916479
+    },
+    {
+     "campaign": 1,
+     "modern": true,
+     "size": 1069,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.21,
+     "exposures_before_publish": 14,
+     "linked_sources": {
+      "scam:1": 661
+     },
+     "first_exposure": 32.84,
+     "published_hour": 34.052753476149434
+    },
+    {
+     "campaign": 2,
+     "modern": true,
+     "size": 469,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 11.88,
+     "exposures_before_publish": 207,
+     "linked_sources": {
+      "scam:2": 44
+     },
+     "first_exposure": 29.82,
+     "published_hour": 41.69449381186511
+    },
+    {
+     "campaign": 3,
+     "modern": true,
+     "size": 207,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.95,
+     "exposures_before_publish": 5,
+     "linked_sources": {
+      "scam:3": 122
+     },
+     "first_exposure": 47.99,
+     "published_hour": 48.94103653942487
+    },
+    {
+     "campaign": 4,
+     "modern": true,
+     "size": 549,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 5.68,
+     "exposures_before_publish": 61,
+     "linked_sources": {
+      "scam:4": 133
+     },
+     "first_exposure": 2.78,
+     "published_hour": 8.45821205641581
+    },
+    {
+     "campaign": 5,
+     "modern": true,
+     "size": 594,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 12.03,
+     "exposures_before_publish": 116,
+     "linked_sources": {
+      "scam:5": 82
+     },
+     "first_exposure": 6.7,
+     "published_hour": 18.727273725531855
+    },
+    {
+     "campaign": 6,
+     "modern": true,
+     "size": 237,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 12.73,
+     "exposures_before_publish": 217,
+     "linked_sources": {
+      "scam:6": 13
+     },
+     "first_exposure": 25.02,
+     "published_hour": 37.75272539262394
+    },
+    {
+     "campaign": 7,
+     "modern": true,
+     "size": 246,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 8.25,
+     "exposures_before_publish": 189,
+     "linked_sources": {
+      "scam:7": 6
+     },
+     "first_exposure": 21.71,
+     "published_hour": 29.95734243130444
+    },
+    {
+     "campaign": 8,
+     "modern": false,
+     "size": 222,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 2.98,
+     "exposures_before_publish": 12,
+     "linked_sources": {
+      "scam:8": 136,
+      "scam:19": 589
+     },
+     "first_exposure": 26.77,
+     "published_hour": 29.746574628562215
+    },
+    {
+     "campaign": 9,
+     "modern": false,
+     "size": 284,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.87,
+     "exposures_before_publish": 8,
+     "linked_sources": {
+      "scam:9": 147
+     },
+     "first_exposure": 6.5,
+     "published_hour": 8.365281597710116
+    },
+    {
+     "campaign": 10,
+     "modern": false,
+     "size": 696,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.95,
+     "exposures_before_publish": 8,
+     "linked_sources": {
+      "scam:10": 426
+     },
+     "first_exposure": 6.54,
+     "published_hour": 7.4907078731392485
+    },
+    {
+     "campaign": 11,
+     "modern": false,
+     "size": 315,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.82,
+     "exposures_before_publish": 9,
+     "linked_sources": {
+      "scam:11": 192
+     },
+     "first_exposure": 36.44,
+     "published_hour": 38.25914397156952
+    },
+    {
+     "campaign": 12,
+     "modern": false,
+     "size": 655,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.02,
+     "exposures_before_publish": 7,
+     "linked_sources": {
+      "scam:12": 394,
+      "scam:28": 184
+     },
+     "first_exposure": 9.06,
+     "published_hour": 10.080023324255647
+    },
+    {
+     "campaign": 13,
+     "modern": false,
+     "size": 564,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.5,
+     "exposures_before_publish": 4,
+     "linked_sources": {
+      "scam:13": 323
+     },
+     "first_exposure": 2.1,
+     "published_hour": 2.600137115899149
+    },
+    {
+     "campaign": 14,
+     "modern": false,
+     "size": 1683,
+     "published": true,
+     "already_covered": true,
+     "hours_to_publish": null,
+     "exposures_before_publish": 0,
+     "linked_sources": {
+      "scam:25": 59,
+      "scam:14": 730
+     },
+     "first_exposure": 29.33,
+     "published_hour": 18.266329404677016
+    },
+    {
+     "campaign": 15,
+     "modern": false,
+     "size": 1241,
+     "published": true,
+     "already_covered": true,
+     "hours_to_publish": null,
+     "exposures_before_publish": 0,
+     "linked_sources": {
+      "scam:17": 1149,
+      "scam:15": 728
+     },
+     "first_exposure": 14.82,
+     "published_hour": 5.9605181510412635
+    },
+    {
+     "campaign": 16,
+     "modern": false,
+     "size": 556,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.75,
+     "exposures_before_publish": 6,
+     "linked_sources": {
+      "scam:16": 315
+     },
+     "first_exposure": 45.89,
+     "published_hour": 46.645020119916694
+    },
+    {
+     "campaign": 17,
+     "modern": false,
+     "size": 1891,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.23,
+     "exposures_before_publish": 7,
+     "linked_sources": {
+      "scam:17": 1149,
+      "scam:15": 728
+     },
+     "first_exposure": 4.73,
+     "published_hour": 5.9605181510412635
+    },
+    {
+     "campaign": 18,
+     "modern": false,
+     "size": 1187,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.14,
+     "exposures_before_publish": 4,
+     "linked_sources": {
+      "scam:18": 726
+     },
+     "first_exposure": 27.18,
+     "published_hour": 28.31648691755564
+    },
+    {
+     "campaign": 19,
+     "modern": false,
+     "size": 959,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.09,
+     "exposures_before_publish": 1,
+     "linked_sources": {
+      "scam:8": 136,
+      "scam:19": 589
+     },
+     "first_exposure": 29.66,
+     "published_hour": 29.746574628562215
+    },
+    {
+     "campaign": 20,
+     "modern": false,
+     "size": 1494,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.52,
+     "exposures_before_publish": 5,
+     "linked_sources": {
+      "scam:20": 888
+     },
+     "first_exposure": 4.8,
+     "published_hour": 5.310484143363723
+    },
+    {
+     "campaign": 21,
+     "modern": false,
+     "size": 243,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 4.54,
+     "exposures_before_publish": 7,
+     "linked_sources": {
+      "scam:21": 45
+     },
+     "first_exposure": 7.35,
+     "published_hour": 11.891530002479186
+    },
+    {
+     "campaign": 22,
+     "modern": false,
+     "size": 264,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 2.02,
+     "exposures_before_publish": 10,
+     "linked_sources": {
+      "scam:22": 163
+     },
+     "first_exposure": 12.2,
+     "published_hour": 14.213146338092589
+    },
+    {
+     "campaign": 23,
+     "modern": false,
+     "size": 201,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.32,
+     "exposures_before_publish": 7,
+     "linked_sources": {
+      "scam:23": 114,
+      "scam:24": 198
+     },
+     "first_exposure": 26.07,
+     "published_hour": 27.39140080510333
+    },
+    {
+     "campaign": 24,
+     "modern": false,
+     "size": 347,
+     "published": true,
+     "already_covered": true,
+     "hours_to_publish": null,
+     "exposures_before_publish": 0,
+     "linked_sources": {
+      "scam:23": 114,
+      "scam:24": 198
+     },
+     "first_exposure": 35.06,
+     "published_hour": 27.39140080510333
+    },
+    {
+     "campaign": 25,
+     "modern": false,
+     "size": 307,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 2.37,
+     "exposures_before_publish": 9,
+     "linked_sources": {
+      "scam:25": 59,
+      "scam:14": 730
+     },
+     "first_exposure": 15.89,
+     "published_hour": 18.266329404677016
+    },
+    {
+     "campaign": 26,
+     "modern": false,
+     "size": 319,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 2.01,
+     "exposures_before_publish": 9,
+     "linked_sources": {
+      "scam:26": 53
+     },
+     "first_exposure": 40.57,
+     "published_hour": 42.575035276998804
+    },
+    {
+     "campaign": 27,
+     "modern": false,
+     "size": 209,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 3.61,
+     "exposures_before_publish": 6,
+     "linked_sources": {
+      "scam:27": 83
+     },
+     "first_exposure": 46.44,
+     "published_hour": 50.05873619809289
+    },
+    {
+     "campaign": 28,
+     "modern": false,
+     "size": 294,
+     "published": true,
+     "already_covered": true,
+     "hours_to_publish": null,
+     "exposures_before_publish": 0,
+     "linked_sources": {
+      "scam:12": 394,
+      "scam:28": 184
+     },
+     "first_exposure": 46.79,
+     "published_hour": 10.080023324255647
+    },
+    {
+     "campaign": 29,
+     "modern": false,
+     "size": 442,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 5.94,
+     "exposures_before_publish": 82,
+     "linked_sources": {
+      "scam:29": 17
+     },
+     "first_exposure": 37.68,
+     "published_hour": 43.62498857185001
+    }
+   ]
+  },
+  "legit": {
+   "exposures": 23343,
+   "model_alerts": 3148,
+   "network_alerts": 0,
+   "false_alert_rate_model": 0.1349,
+   "false_alert_rate_network": 0.0,
+   "templates_published_as_campaigns": [],
+   "templates_ever_published": [],
+   "templates_held_for_review": [
+    "bank_alert"
+   ]
+  },
+  "ham": {
+   "exposures": 10000,
+   "model_alerts": 0,
+   "network_alerts": 0,
+   "false_alert_rate_network": 0.0
+  },
+  "hub": {
+   "clusters": {
+    "collecting": 12,
+    "held_for_review": 1,
+    "published": 37
+   },
+   "reports": {
+    "sent": 11345,
+    "rejected": {},
+    "manual": 72
+   },
+   "published_cluster_origins": {
+    "scam": 37
+   }
+  },
+  "privacy": {
+   "columns": {
+    "meta": [
+     "key",
+     "value"
+    ],
+    "clients": [
+     "id",
+     "created_hour",
+     "reputation"
+    ],
+    "clusters": [
+     "id",
+     "signature",
+     "category",
+     "topics",
+     "domains",
+     "first_hour",
+     "last_hour",
+     "status",
+     "published_hour"
+    ],
+    "cluster_bands": [
+     "band",
+     "cluster_id"
+    ],
+    "reports": [
+     "cluster_id",
+     "client_id",
+     "hour",
+     "weight"
+    ],
+    "attempts": [
+     "client_id",
+     "hour"
+    ],
+    "disputes": [
+     "cluster_id",
+     "client_id",
+     "hour"
+    ],
+    "allowlist": [
+     "kind",
+     "value"
+    ]
+   },
+   "three_word_sequences_checked": 5054,
+   "found_in_hub_database": 0,
+   "passed": true
+  },
+  "series": [
+   {
+    "hour": 0.0,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 0.333,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 0.667,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 1.0,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 1.333,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 1.667,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 2.0,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 2.333,
+    "scam_exposures": 2,
+    "model": 2,
+    "combined": 2,
+    "published": 0
+   },
+   {
+    "hour": 2.667,
+    "scam_exposures": 6,
+    "model": 6,
+    "combined": 6,
+    "published": 1
+   },
+   {
+    "hour": 3.0,
+    "scam_exposures": 9,
+    "model": 8,
+    "combined": 8,
+    "published": 1
+   },
+   {
+    "hour": 3.333,
+    "scam_exposures": 13,
+    "model": 11,
+    "combined": 11,
+    "published": 1
+   },
+   {
+    "hour": 3.667,
+    "scam_exposures": 18,
+    "model": 15,
+    "combined": 15,
+    "published": 1
+   },
+   {
+    "hour": 4.0,
+    "scam_exposures": 22,
+    "model": 17,
+    "combined": 17,
+    "published": 1
+   },
+   {
+    "hour": 4.333,
+    "scam_exposures": 30,
+    "model": 24,
+    "combined": 24,
+    "published": 1
+   },
+   {
+    "hour": 4.667,
+    "scam_exposures": 36,
+    "model": 28,
+    "combined": 28,
+    "published": 1
+   },
+   {
+    "hour": 5.0,
+    "scam_exposures": 55,
+    "model": 42,
+    "combined": 42,
+    "published": 1
+   },
+   {
+    "hour": 5.333,
+    "scam_exposures": 68,
+    "model": 55,
+    "combined": 55,
+    "published": 2
+   },
+   {
+    "hour": 5.667,
+    "scam_exposures": 93,
+    "model": 78,
+    "combined": 78,
+    "published": 2
+   },
+   {
+    "hour": 6.0,
+    "scam_exposures": 112,
+    "model": 96,
+    "combined": 96,
+    "published": 3
+   },
+   {
+    "hour": 6.333,
+    "scam_exposures": 145,
+    "model": 124,
+    "combined": 124,
+    "published": 3
+   },
+   {
+    "hour": 6.667,
+    "scam_exposures": 183,
+    "model": 158,
+    "combined": 158,
+    "published": 3
+   },
+   {
+    "hour": 7.0,
+    "scam_exposures": 236,
+    "model": 206,
+    "combined": 206,
+    "published": 3
+   },
+   {
+    "hour": 7.333,
+    "scam_exposures": 280,
+    "model": 247,
+    "combined": 247,
+    "published": 3
+   },
+   {
+    "hour": 7.667,
+    "scam_exposures": 339,
+    "model": 301,
+    "combined": 301,
+    "published": 4
+   },
+   {
+    "hour": 8.0,
+    "scam_exposures": 411,
+    "model": 367,
+    "combined": 367,
+    "published": 4
+   },
+   {
+    "hour": 8.333,
+    "scam_exposures": 463,
+    "model": 405,
+    "combined": 405,
+    "published": 4
+   },
+   {
+    "hour": 8.667,
+    "scam_exposures": 534,
+    "model": 461,
+    "combined": 467,
+    "published": 6
+   },
+   {
+    "hour": 9.0,
+    "scam_exposures": 599,
+    "model": 513,
+    "combined": 532,
+    "published": 6
+   },
+   {
+    "hour": 9.333,
+    "scam_exposures": 694,
+    "model": 590,
+    "combined": 626,
+    "published": 6
+   },
+   {
+    "hour": 9.667,
+    "scam_exposures": 765,
+    "model": 646,
+    "combined": 695,
+    "published": 6
+   },
+   {
+    "hour": 10.0,
+    "scam_exposures": 834,
+    "model": 702,
+    "combined": 760,
+    "published": 6
+   },
+   {
+    "hour": 10.333,
+    "scam_exposures": 919,
+    "model": 767,
+    "combined": 844,
+    "published": 7
+   },
+   {
+    "hour": 10.667,
+    "scam_exposures": 1017,
+    "model": 848,
+    "combined": 939,
+    "published": 7
+   },
+   {
+    "hour": 11.0,
+    "scam_exposures": 1106,
+    "model": 916,
+    "combined": 1027,
+    "published": 7
+   },
+   {
+    "hour": 11.333,
+    "scam_exposures": 1197,
+    "model": 993,
+    "combined": 1117,
+    "published": 7
+   },
+   {
+    "hour": 11.667,
+    "scam_exposures": 1298,
+    "model": 1080,
+    "combined": 1217,
+    "published": 7
+   },
+   {
+    "hour": 12.0,
+    "scam_exposures": 1401,
+    "model": 1162,
+    "combined": 1315,
+    "published": 8
+   },
+   {
+    "hour": 12.333,
+    "scam_exposures": 1531,
+    "model": 1268,
+    "combined": 1442,
+    "published": 8
+   },
+   {
+    "hour": 12.667,
+    "scam_exposures": 1627,
+    "model": 1344,
+    "combined": 1534,
+    "published": 8
+   },
+   {
+    "hour": 13.0,
+    "scam_exposures": 1735,
+    "model": 1432,
+    "combined": 1638,
+    "published": 8
+   },
+   {
+    "hour": 13.333,
+    "scam_exposures": 1846,
+    "model": 1529,
+    "combined": 1746,
+    "published": 8
+   },
+   {
+    "hour": 13.667,
+    "scam_exposures": 1975,
+    "model": 1641,
+    "combined": 1873,
+    "published": 8
+   },
+   {
+    "hour": 14.0,
+    "scam_exposures": 2086,
+    "model": 1733,
+    "combined": 1983,
+    "published": 8
+   },
+   {
+    "hour": 14.333,
+    "scam_exposures": 2204,
+    "model": 1835,
+    "combined": 2098,
+    "published": 9
+   },
+   {
+    "hour": 14.667,
+    "scam_exposures": 2321,
+    "model": 1946,
+    "combined": 2209,
+    "published": 9
+   },
+   {
+    "hour": 15.0,
+    "scam_exposures": 2466,
+    "model": 2085,
+    "combined": 2348,
+    "published": 10
+   },
+   {
+    "hour": 15.333,
+    "scam_exposures": 2610,
+    "model": 2223,
+    "combined": 2486,
+    "published": 10
+   },
+   {
+    "hour": 15.667,
+    "scam_exposures": 2760,
+    "model": 2371,
+    "combined": 2634,
+    "published": 10
+   },
+   {
+    "hour": 16.0,
+    "scam_exposures": 2897,
+    "model": 2504,
+    "combined": 2767,
+    "published": 10
+   },
+   {
+    "hour": 16.333,
+    "scam_exposures": 3049,
+    "model": 2646,
+    "combined": 2909,
+    "published": 10
+   },
+   {
+    "hour": 16.667,
+    "scam_exposures": 3205,
+    "model": 2797,
+    "combined": 3060,
+    "published": 10
+   },
+   {
+    "hour": 17.0,
+    "scam_exposures": 3354,
+    "model": 2941,
+    "combined": 3204,
+    "published": 10
+   },
+   {
+    "hour": 17.333,
+    "scam_exposures": 3505,
+    "model": 3090,
+    "combined": 3353,
+    "published": 10
+   },
+   {
+    "hour": 17.667,
+    "scam_exposures": 3634,
+    "model": 3214,
+    "combined": 3477,
+    "published": 10
+   },
+   {
+    "hour": 18.0,
+    "scam_exposures": 3803,
+    "model": 3374,
+    "combined": 3637,
+    "published": 10
+   },
+   {
+    "hour": 18.333,
+    "scam_exposures": 3954,
+    "model": 3522,
+    "combined": 3785,
+    "published": 11
+   },
+   {
+    "hour": 18.667,
+    "scam_exposures": 4089,
+    "model": 3649,
+    "combined": 3912,
+    "published": 11
+   },
+   {
+    "hour": 19.0,
+    "scam_exposures": 4241,
+    "model": 3797,
+    "combined": 4060,
+    "published": 12
+   },
+   {
+    "hour": 19.333,
+    "scam_exposures": 4399,
+    "model": 3952,
+    "combined": 4217,
+    "published": 12
+   },
+   {
+    "hour": 19.667,
+    "scam_exposures": 4531,
+    "model": 4082,
+    "combined": 4349,
+    "published": 12
+   },
+   {
+    "hour": 20.0,
+    "scam_exposures": 4687,
+    "model": 4236,
+    "combined": 4505,
+    "published": 12
+   },
+   {
+    "hour": 20.333,
+    "scam_exposures": 4830,
+    "model": 4379,
+    "combined": 4648,
+    "published": 12
+   },
+   {
+    "hour": 20.667,
+    "scam_exposures": 4982,
+    "model": 4523,
+    "combined": 4800,
+    "published": 12
+   },
+   {
+    "hour": 21.0,
+    "scam_exposures": 5138,
+    "model": 4674,
+    "combined": 4956,
+    "published": 12
+   },
+   {
+    "hour": 21.333,
+    "scam_exposures": 5284,
+    "model": 4814,
+    "combined": 5102,
+    "published": 12
+   },
+   {
+    "hour": 21.667,
+    "scam_exposures": 5424,
+    "model": 4950,
+    "combined": 5240,
+    "published": 12
+   },
+   {
+    "hour": 22.0,
+    "scam_exposures": 5558,
+    "model": 5077,
+    "combined": 5368,
+    "published": 12
+   },
+   {
+    "hour": 22.333,
+    "scam_exposures": 5691,
+    "model": 5206,
+    "combined": 5499,
+    "published": 12
+   },
+   {
+    "hour": 22.667,
+    "scam_exposures": 5833,
+    "model": 5341,
+    "combined": 5639,
+    "published": 12
+   },
+   {
+    "hour": 23.0,
+    "scam_exposures": 5952,
+    "model": 5452,
+    "combined": 5751,
+    "published": 12
+   },
+   {
+    "hour": 23.333,
+    "scam_exposures": 6085,
+    "model": 5572,
+    "combined": 5878,
+    "published": 12
+   },
+   {
+    "hour": 23.667,
+    "scam_exposures": 6221,
+    "model": 5696,
+    "combined": 6006,
+    "published": 12
+   },
+   {
+    "hour": 24.0,
+    "scam_exposures": 6340,
+    "model": 5803,
+    "combined": 6117,
+    "published": 12
+   },
+   {
+    "hour": 24.333,
+    "scam_exposures": 6469,
+    "model": 5918,
+    "combined": 6236,
+    "published": 12
+   },
+   {
+    "hour": 24.667,
+    "scam_exposures": 6590,
+    "model": 6024,
+    "combined": 6348,
+    "published": 12
+   },
+   {
+    "hour": 25.0,
+    "scam_exposures": 6729,
+    "model": 6142,
+    "combined": 6477,
+    "published": 12
+   },
+   {
+    "hour": 25.333,
+    "scam_exposures": 6865,
+    "model": 6246,
+    "combined": 6594,
+    "published": 12
+   },
+   {
+    "hour": 25.667,
+    "scam_exposures": 7000,
+    "model": 6351,
+    "combined": 6712,
+    "published": 12
+   },
+   {
+    "hour": 26.0,
+    "scam_exposures": 7124,
+    "model": 6440,
+    "combined": 6816,
+    "published": 12
+   },
+   {
+    "hour": 26.333,
+    "scam_exposures": 7233,
+    "model": 6521,
+    "combined": 6910,
+    "published": 12
+   },
+   {
+    "hour": 26.667,
+    "scam_exposures": 7365,
+    "model": 6621,
+    "combined": 7015,
+    "published": 12
+   },
+   {
+    "hour": 27.0,
+    "scam_exposures": 7491,
+    "model": 6708,
+    "combined": 7107,
+    "published": 12
+   },
+   {
+    "hour": 27.333,
+    "scam_exposures": 7607,
+    "model": 6794,
+    "combined": 7200,
+    "published": 12
+   },
+   {
+    "hour": 27.667,
+    "scam_exposures": 7741,
+    "model": 6886,
+    "combined": 7303,
+    "published": 13
+   },
+   {
+    "hour": 28.0,
+    "scam_exposures": 7868,
+    "model": 6957,
+    "combined": 7393,
+    "published": 13
+   },
+   {
+    "hour": 28.333,
+    "scam_exposures": 7986,
+    "model": 7045,
+    "combined": 7492,
+    "published": 14
+   },
+   {
+    "hour": 28.667,
+    "scam_exposures": 8105,
+    "model": 7119,
+    "combined": 7579,
+    "published": 14
+   },
+   {
+    "hour": 29.0,
+    "scam_exposures": 8224,
+    "model": 7193,
+    "combined": 7664,
+    "published": 14
+   },
+   {
+    "hour": 29.333,
+    "scam_exposures": 8329,
+    "model": 7256,
+    "combined": 7733,
+    "published": 14
+   },
+   {
+    "hour": 29.667,
+    "scam_exposures": 8433,
+    "model": 7321,
+    "combined": 7808,
+    "published": 15
+   },
+   {
+    "hour": 30.0,
+    "scam_exposures": 8553,
+    "model": 7397,
+    "combined": 7895,
+    "published": 17
+   },
+   {
+    "hour": 30.333,
+    "scam_exposures": 8661,
+    "model": 7466,
+    "combined": 7976,
+    "published": 18
+   },
+   {
+    "hour": 30.667,
+    "scam_exposures": 8769,
+    "model": 7536,
+    "combined": 8061,
+    "published": 18
+   },
+   {
+    "hour": 31.0,
+    "scam_exposures": 8865,
+    "model": 7594,
+    "combined": 8133,
+    "published": 18
+   },
+   {
+    "hour": 31.333,
+    "scam_exposures": 8956,
+    "model": 7658,
+    "combined": 8209,
+    "published": 18
+   },
+   {
+    "hour": 31.667,
+    "scam_exposures": 9072,
+    "model": 7739,
+    "combined": 8299,
+    "published": 18
+   },
+   {
+    "hour": 32.0,
+    "scam_exposures": 9179,
+    "model": 7811,
+    "combined": 8380,
+    "published": 18
+   },
+   {
+    "hour": 32.333,
+    "scam_exposures": 9284,
+    "model": 7885,
+    "combined": 8459,
+    "published": 18
+   },
+   {
+    "hour": 32.667,
+    "scam_exposures": 9392,
+    "model": 7963,
+    "combined": 8548,
+    "published": 19
+   },
+   {
+    "hour": 33.0,
+    "scam_exposures": 9489,
+    "model": 8036,
+    "combined": 8629,
+    "published": 19
+   },
+   {
+    "hour": 33.333,
+    "scam_exposures": 9622,
+    "model": 8137,
+    "combined": 8752,
+    "published": 19
+   },
+   {
+    "hour": 33.667,
+    "scam_exposures": 9724,
+    "model": 8222,
+    "combined": 8844,
+    "published": 19
+   },
+   {
+    "hour": 34.0,
+    "scam_exposures": 9846,
+    "model": 8322,
+    "combined": 8953,
+    "published": 19
+   },
+   {
+    "hour": 34.333,
+    "scam_exposures": 9979,
+    "model": 8430,
+    "combined": 9075,
+    "published": 20
+   },
+   {
+    "hour": 34.667,
+    "scam_exposures": 10086,
+    "model": 8518,
+    "combined": 9172,
+    "published": 20
+   },
+   {
+    "hour": 35.0,
+    "scam_exposures": 10215,
+    "model": 8626,
+    "combined": 9285,
+    "published": 20
+   },
+   {
+    "hour": 35.333,
+    "scam_exposures": 10356,
+    "model": 8742,
+    "combined": 9406,
+    "published": 20
+   },
+   {
+    "hour": 35.667,
+    "scam_exposures": 10492,
+    "model": 8856,
+    "combined": 9528,
+    "published": 21
+   },
+   {
+    "hour": 36.0,
+    "scam_exposures": 10616,
+    "model": 8969,
+    "combined": 9644,
+    "published": 21
+   },
+   {
+    "hour": 36.333,
+    "scam_exposures": 10764,
+    "model": 9098,
+    "combined": 9777,
+    "published": 21
+   },
+   {
+    "hour": 36.667,
+    "scam_exposures": 10904,
+    "model": 9222,
+    "combined": 9909,
+    "published": 21
+   },
+   {
+    "hour": 37.0,
+    "scam_exposures": 11052,
+    "model": 9360,
+    "combined": 10051,
+    "published": 21
+   },
+   {
+    "hour": 37.333,
+    "scam_exposures": 11210,
+    "model": 9505,
+    "combined": 10204,
+    "published": 21
+   },
+   {
+    "hour": 37.667,
+    "scam_exposures": 11355,
+    "model": 9639,
+    "combined": 10341,
+    "published": 21
+   },
+   {
+    "hour": 38.0,
+    "scam_exposures": 11521,
+    "model": 9787,
+    "combined": 10493,
+    "published": 22
+   },
+   {
+    "hour": 38.333,
+    "scam_exposures": 11683,
+    "model": 9938,
+    "combined": 10647,
+    "published": 23
+   },
+   {
+    "hour": 38.667,
+    "scam_exposures": 11838,
+    "model": 10083,
+    "combined": 10793,
+    "published": 23
+   },
+   {
+    "hour": 39.0,
+    "scam_exposures": 12017,
+    "model": 10249,
+    "combined": 10962,
+    "published": 23
+   },
+   {
+    "hour": 39.333,
+    "scam_exposures": 12179,
+    "model": 10391,
+    "combined": 11106,
+    "published": 23
+   },
+   {
+    "hour": 39.667,
+    "scam_exposures": 12357,
+    "model": 10551,
+    "combined": 11270,
+    "published": 23
+   },
+   {
+    "hour": 40.0,
+    "scam_exposures": 12499,
+    "model": 10676,
+    "combined": 11397,
+    "published": 23
+   },
+   {
+    "hour": 40.333,
+    "scam_exposures": 12655,
+    "model": 10818,
+    "combined": 11539,
+    "published": 23
+   },
+   {
+    "hour": 40.667,
+    "scam_exposures": 12816,
+    "model": 10965,
+    "combined": 11687,
+    "published": 23
+   },
+   {
+    "hour": 41.0,
+    "scam_exposures": 12981,
+    "model": 11108,
+    "combined": 11832,
+    "published": 23
+   },
+   {
+    "hour": 41.333,
+    "scam_exposures": 13149,
+    "model": 11260,
+    "combined": 11986,
+    "published": 23
+   },
+   {
+    "hour": 41.667,
+    "scam_exposures": 13305,
+    "model": 11402,
+    "combined": 12129,
+    "published": 23
+   },
+   {
+    "hour": 42.0,
+    "scam_exposures": 13485,
+    "model": 11565,
+    "combined": 12293,
+    "published": 24
+   },
+   {
+    "hour": 42.333,
+    "scam_exposures": 13631,
+    "model": 11694,
+    "combined": 12429,
+    "published": 24
+   },
+   {
+    "hour": 42.667,
+    "scam_exposures": 13791,
+    "model": 11835,
+    "combined": 12583,
+    "published": 25
+   },
+   {
+    "hour": 43.0,
+    "scam_exposures": 13937,
+    "model": 11963,
+    "combined": 12720,
+    "published": 25
+   },
+   {
+    "hour": 43.333,
+    "scam_exposures": 14087,
+    "model": 12089,
+    "combined": 12859,
+    "published": 25
+   },
+   {
+    "hour": 43.667,
+    "scam_exposures": 14232,
+    "model": 12212,
+    "combined": 12991,
+    "published": 26
+   },
+   {
+    "hour": 44.0,
+    "scam_exposures": 14379,
+    "model": 12337,
+    "combined": 13138,
+    "published": 26
+   },
+   {
+    "hour": 44.333,
+    "scam_exposures": 14513,
+    "model": 12451,
+    "combined": 13272,
+    "published": 26
+   },
+   {
+    "hour": 44.667,
+    "scam_exposures": 14662,
+    "model": 12586,
+    "combined": 13421,
+    "published": 26
+   },
+   {
+    "hour": 45.0,
+    "scam_exposures": 14783,
+    "model": 12690,
+    "combined": 13542,
+    "published": 26
+   },
+   {
+    "hour": 45.333,
+    "scam_exposures": 14908,
+    "model": 12784,
+    "combined": 13667,
+    "published": 26
+   },
+   {
+    "hour": 45.667,
+    "scam_exposures": 15035,
+    "model": 12887,
+    "combined": 13794,
+    "published": 26
+   },
+   {
+    "hour": 46.0,
+    "scam_exposures": 15147,
+    "model": 12975,
+    "combined": 13906,
+    "published": 26
+   },
+   {
+    "hour": 46.333,
+    "scam_exposures": 15247,
+    "model": 13052,
+    "combined": 14006,
+    "published": 26
+   },
+   {
+    "hour": 46.667,
+    "scam_exposures": 15359,
+    "model": 13138,
+    "combined": 14118,
+    "published": 27
+   },
+   {
+    "hour": 47.0,
+    "scam_exposures": 15462,
+    "model": 13219,
+    "combined": 14221,
+    "published": 28
+   },
+   {
+    "hour": 47.333,
+    "scam_exposures": 15551,
+    "model": 13293,
+    "combined": 14310,
+    "published": 28
+   },
+   {
+    "hour": 47.667,
+    "scam_exposures": 15651,
+    "model": 13369,
+    "combined": 14410,
+    "published": 28
+   },
+   {
+    "hour": 48.0,
+    "scam_exposures": 15749,
+    "model": 13446,
+    "combined": 14508,
+    "published": 28
+   },
+   {
+    "hour": 48.333,
+    "scam_exposures": 15825,
+    "model": 13507,
+    "combined": 14584,
+    "published": 28
+   },
+   {
+    "hour": 48.667,
+    "scam_exposures": 15914,
+    "model": 13578,
+    "combined": 14673,
+    "published": 28
+   },
+   {
+    "hour": 49.0,
+    "scam_exposures": 16002,
+    "model": 13646,
+    "combined": 14761,
+    "published": 29
+   },
+   {
+    "hour": 49.333,
+    "scam_exposures": 16086,
+    "model": 13716,
+    "combined": 14845,
+    "published": 29
+   },
+   {
+    "hour": 49.667,
+    "scam_exposures": 16160,
+    "model": 13777,
+    "combined": 14919,
+    "published": 29
+   },
+   {
+    "hour": 50.0,
+    "scam_exposures": 16243,
+    "model": 13843,
+    "combined": 15002,
+    "published": 29
+   },
+   {
+    "hour": 50.333,
+    "scam_exposures": 16329,
+    "model": 13917,
+    "combined": 15088,
+    "published": 30
+   },
+   {
+    "hour": 50.667,
+    "scam_exposures": 16410,
+    "model": 13980,
+    "combined": 15169,
+    "published": 30
+   },
+   {
+    "hour": 51.0,
+    "scam_exposures": 16486,
+    "model": 14045,
+    "combined": 15245,
+    "published": 30
+   },
+   {
+    "hour": 51.333,
+    "scam_exposures": 16539,
+    "model": 14092,
+    "combined": 15298,
+    "published": 30
+   },
+   {
+    "hour": 51.667,
+    "scam_exposures": 16599,
+    "model": 14144,
+    "combined": 15358,
+    "published": 30
+   },
+   {
+    "hour": 52.0,
+    "scam_exposures": 16659,
+    "model": 14199,
+    "combined": 15418,
+    "published": 30
+   },
+   {
+    "hour": 52.333,
+    "scam_exposures": 16718,
+    "model": 14254,
+    "combined": 15477,
+    "published": 30
+   },
+   {
+    "hour": 52.667,
+    "scam_exposures": 16785,
+    "model": 14313,
+    "combined": 15544,
+    "published": 30
+   },
+   {
+    "hour": 53.0,
+    "scam_exposures": 16843,
+    "model": 14367,
+    "combined": 15602,
+    "published": 30
+   },
+   {
+    "hour": 53.333,
+    "scam_exposures": 16902,
+    "model": 14421,
+    "combined": 15661,
+    "published": 30
+   },
+   {
+    "hour": 53.667,
+    "scam_exposures": 16968,
+    "model": 14484,
+    "combined": 15727,
+    "published": 30
+   },
+   {
+    "hour": 54.0,
+    "scam_exposures": 17027,
+    "model": 14537,
+    "combined": 15786,
+    "published": 30
+   },
+   {
+    "hour": 54.333,
+    "scam_exposures": 17088,
+    "model": 14591,
+    "combined": 15847,
+    "published": 30
+   },
+   {
+    "hour": 54.667,
+    "scam_exposures": 17149,
+    "model": 14648,
+    "combined": 15908,
+    "published": 30
+   },
+   {
+    "hour": 55.0,
+    "scam_exposures": 17198,
+    "model": 14697,
+    "combined": 15957,
+    "published": 30
+   },
+   {
+    "hour": 55.333,
+    "scam_exposures": 17251,
+    "model": 14747,
+    "combined": 16010,
+    "published": 30
+   },
+   {
+    "hour": 55.667,
+    "scam_exposures": 17289,
+    "model": 14784,
+    "combined": 16048,
+    "published": 30
+   },
+   {
+    "hour": 56.0,
+    "scam_exposures": 17326,
+    "model": 14818,
+    "combined": 16085,
+    "published": 30
+   },
+   {
+    "hour": 56.333,
+    "scam_exposures": 17383,
+    "model": 14872,
+    "combined": 16142,
+    "published": 30
+   },
+   {
+    "hour": 56.667,
+    "scam_exposures": 17424,
+    "model": 14911,
+    "combined": 16183,
+    "published": 30
+   },
+   {
+    "hour": 57.0,
+    "scam_exposures": 17470,
+    "model": 14953,
+    "combined": 16229,
+    "published": 30
+   },
+   {
+    "hour": 57.333,
+    "scam_exposures": 17515,
+    "model": 14998,
+    "combined": 16274,
+    "published": 30
+   },
+   {
+    "hour": 57.667,
+    "scam_exposures": 17557,
+    "model": 15039,
+    "combined": 16316,
+    "published": 30
+   },
+   {
+    "hour": 58.0,
+    "scam_exposures": 17591,
+    "model": 15072,
+    "combined": 16350,
+    "published": 30
+   },
+   {
+    "hour": 58.333,
+    "scam_exposures": 17618,
+    "model": 15099,
+    "combined": 16377,
+    "published": 30
+   },
+   {
+    "hour": 58.667,
+    "scam_exposures": 17644,
+    "model": 15125,
+    "combined": 16403,
+    "published": 30
+   },
+   {
+    "hour": 59.0,
+    "scam_exposures": 17674,
+    "model": 15155,
+    "combined": 16433,
+    "published": 30
+   },
+   {
+    "hour": 59.333,
+    "scam_exposures": 17698,
+    "model": 15179,
+    "combined": 16457,
+    "published": 30
+   },
+   {
+    "hour": 59.667,
+    "scam_exposures": 17720,
+    "model": 15201,
+    "combined": 16479,
+    "published": 30
+   },
+   {
+    "hour": 60.0,
+    "scam_exposures": 17747,
+    "model": 15228,
+    "combined": 16506,
+    "published": 30
+   },
+   {
+    "hour": 60.333,
+    "scam_exposures": 17764,
+    "model": 15245,
+    "combined": 16523,
+    "published": 30
+   },
+   {
+    "hour": 60.667,
+    "scam_exposures": 17783,
+    "model": 15264,
+    "combined": 16542,
+    "published": 30
+   },
+   {
+    "hour": 61.0,
+    "scam_exposures": 17809,
+    "model": 15290,
+    "combined": 16568,
+    "published": 30
+   },
+   {
+    "hour": 61.333,
+    "scam_exposures": 17824,
+    "model": 15305,
+    "combined": 16583,
+    "published": 30
+   },
+   {
+    "hour": 61.667,
+    "scam_exposures": 17839,
+    "model": 15320,
+    "combined": 16598,
+    "published": 30
+   },
+   {
+    "hour": 62.0,
+    "scam_exposures": 17854,
+    "model": 15335,
+    "combined": 16613,
+    "published": 30
+   },
+   {
+    "hour": 62.333,
+    "scam_exposures": 17872,
+    "model": 15352,
+    "combined": 16631,
+    "published": 30
+   },
+   {
+    "hour": 62.667,
+    "scam_exposures": 17894,
+    "model": 15374,
+    "combined": 16653,
+    "published": 30
+   },
+   {
+    "hour": 63.0,
+    "scam_exposures": 17917,
+    "model": 15397,
+    "combined": 16676,
+    "published": 30
+   },
+   {
+    "hour": 63.333,
+    "scam_exposures": 17930,
+    "model": 15410,
+    "combined": 16689,
+    "published": 30
+   },
+   {
+    "hour": 63.667,
+    "scam_exposures": 17946,
+    "model": 15426,
+    "combined": 16705,
+    "published": 30
+   },
+   {
+    "hour": 64.0,
+    "scam_exposures": 17957,
+    "model": 15436,
+    "combined": 16716,
+    "published": 30
+   },
+   {
+    "hour": 64.333,
+    "scam_exposures": 17969,
+    "model": 15447,
+    "combined": 16727,
+    "published": 30
+   },
+   {
+    "hour": 64.667,
+    "scam_exposures": 17983,
+    "model": 15460,
+    "combined": 16740,
+    "published": 30
+   },
+   {
+    "hour": 65.0,
+    "scam_exposures": 17996,
+    "model": 15473,
+    "combined": 16753,
+    "published": 30
+   },
+   {
+    "hour": 65.333,
+    "scam_exposures": 18007,
+    "model": 15482,
+    "combined": 16762,
+    "published": 30
+   },
+   {
+    "hour": 65.667,
+    "scam_exposures": 18019,
+    "model": 15494,
+    "combined": 16774,
+    "published": 30
+   },
+   {
+    "hour": 66.0,
+    "scam_exposures": 18030,
+    "model": 15503,
+    "combined": 16783,
+    "published": 30
+   },
+   {
+    "hour": 66.333,
+    "scam_exposures": 18037,
+    "model": 15508,
+    "combined": 16788,
+    "published": 30
+   },
+   {
+    "hour": 66.667,
+    "scam_exposures": 18049,
+    "model": 15520,
+    "combined": 16800,
+    "published": 30
+   },
+   {
+    "hour": 67.0,
+    "scam_exposures": 18063,
+    "model": 15534,
+    "combined": 16814,
+    "published": 30
+   },
+   {
+    "hour": 67.333,
+    "scam_exposures": 18073,
+    "model": 15544,
+    "combined": 16824,
+    "published": 30
+   },
+   {
+    "hour": 67.667,
+    "scam_exposures": 18084,
+    "model": 15553,
+    "combined": 16833,
+    "published": 30
+   },
+   {
+    "hour": 68.0,
+    "scam_exposures": 18088,
+    "model": 15557,
+    "combined": 16837,
+    "published": 30
+   },
+   {
+    "hour": 68.333,
+    "scam_exposures": 18094,
+    "model": 15562,
+    "combined": 16842,
+    "published": 30
+   },
+   {
+    "hour": 68.667,
+    "scam_exposures": 18103,
+    "model": 15571,
+    "combined": 16851,
+    "published": 30
+   },
+   {
+    "hour": 69.0,
+    "scam_exposures": 18108,
+    "model": 15576,
+    "combined": 16856,
+    "published": 30
+   },
+   {
+    "hour": 69.333,
+    "scam_exposures": 18121,
+    "model": 15588,
+    "combined": 16868,
+    "published": 30
+   },
+   {
+    "hour": 69.667,
+    "scam_exposures": 18129,
+    "model": 15595,
+    "combined": 16875,
+    "published": 30
+   },
+   {
+    "hour": 70.0,
+    "scam_exposures": 18135,
+    "model": 15601,
+    "combined": 16881,
+    "published": 30
+   },
+   {
+    "hour": 70.333,
+    "scam_exposures": 18140,
+    "model": 15606,
+    "combined": 16886,
+    "published": 30
+   },
+   {
+    "hour": 70.667,
+    "scam_exposures": 18143,
+    "model": 15608,
+    "combined": 16888,
+    "published": 30
+   },
+   {
+    "hour": 71.0,
+    "scam_exposures": 18152,
+    "model": 15616,
+    "combined": 16896,
+    "published": 30
+   },
+   {
+    "hour": 71.333,
+    "scam_exposures": 18158,
+    "model": 15621,
+    "combined": 16901,
+    "published": 30
+   },
+   {
+    "hour": 71.667,
+    "scam_exposures": 18165,
+    "model": 15628,
+    "combined": 16908,
+    "published": 30
+   }
+  ]
+ },
+ "baseline_rates_detector": {
+  "scam": {
+   "exposures": 18171,
+   "model_only_protection": 0.782,
+   "model_plus_network_protection": 0.9966,
+   "network_only_saves": 3901,
+   "by_mutation_level": [
+    {
+     "level": 0,
+     "exposures": 2849,
+     "model": 0.9589,
+     "combined": 0.994
+    },
+    {
+     "level": 1,
+     "exposures": 7699,
+     "model": 0.8578,
+     "combined": 0.9986
+    },
+    {
+     "level": 2,
+     "exposures": 4880,
+     "model": 0.6922,
+     "combined": 0.998
+    },
+    {
+     "level": 3,
+     "exposures": 2743,
+     "model": 0.545,
+     "combined": 0.9916
+    }
+   ],
+   "protection_after_publication": 0.9975,
+   "by_campaign_origin": {
+    "sms_test_split": {
+     "exposures": 14373,
+     "model": 0.7761,
+     "combined": 0.9961
+    },
+    "modern": {
+     "exposures": 3798,
+     "model": 0.8041,
+     "combined": 0.9987
+    }
+   }
+  },
+  "campaigns": {
+   "total": 30,
+   "newly_published": 26,
+   "already_covered_by_earlier_campaign": 4,
+   "never_published": 0,
+   "median_hours_to_publish": 1.48,
+   "median_exposures_before_publish": 8.0,
+   "detail": [
+    {
+     "campaign": 0,
+     "modern": true,
+     "size": 427,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.64,
+     "exposures_before_publish": 8,
+     "linked_sources": {
+      "scam:0": 211
+     },
+     "first_exposure": 21.45,
+     "published_hour": 23.08899770895707
+    },
+    {
+     "campaign": 1,
+     "modern": true,
+     "size": 1069,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.21,
+     "exposures_before_publish": 14,
+     "linked_sources": {
+      "scam:1": 573
+     },
+     "first_exposure": 32.84,
+     "published_hour": 34.052753476149434
+    },
+    {
+     "campaign": 2,
+     "modern": true,
+     "size": 469,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.0,
+     "exposures_before_publish": 7,
+     "linked_sources": {
+      "scam:2": 203
+     },
+     "first_exposure": 29.82,
+     "published_hour": 30.823401531747617
+    },
+    {
+     "campaign": 3,
+     "modern": true,
+     "size": 207,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.95,
+     "exposures_before_publish": 5,
+     "linked_sources": {
+      "scam:3": 110
+     },
+     "first_exposure": 47.99,
+     "published_hour": 48.94103653942487
+    },
+    {
+     "campaign": 4,
+     "modern": true,
+     "size": 549,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.76,
+     "exposures_before_publish": 6,
+     "linked_sources": {
+      "scam:4": 269
+     },
+     "first_exposure": 2.78,
+     "published_hour": 4.535121148573618
+    },
+    {
+     "campaign": 5,
+     "modern": true,
+     "size": 594,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 3.29,
+     "exposures_before_publish": 10,
+     "linked_sources": {
+      "scam:5": 240
+     },
+     "first_exposure": 6.7,
+     "published_hour": 9.98717779931429
+    },
+    {
+     "campaign": 6,
+     "modern": true,
+     "size": 237,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 2.3,
+     "exposures_before_publish": 8,
+     "linked_sources": {
+      "scam:6": 112
+     },
+     "first_exposure": 25.02,
+     "published_hour": 27.32133343304952
+    },
+    {
+     "campaign": 7,
+     "modern": true,
+     "size": 246,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.1,
+     "exposures_before_publish": 8,
+     "linked_sources": {
+      "scam:7": 143
+     },
+     "first_exposure": 21.71,
+     "published_hour": 22.800433614330753
+    },
+    {
+     "campaign": 8,
+     "modern": false,
+     "size": 222,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 3.07,
+     "exposures_before_publish": 13,
+     "linked_sources": {
+      "scam:8": 120,
+      "scam:19": 420
+     },
+     "first_exposure": 26.77,
+     "published_hour": 29.8362076509226
+    },
+    {
+     "campaign": 9,
+     "modern": false,
+     "size": 284,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.87,
+     "exposures_before_publish": 8,
+     "linked_sources": {
+      "scam:9": 136
+     },
+     "first_exposure": 6.5,
+     "published_hour": 8.365281597710116
+    },
+    {
+     "campaign": 10,
+     "modern": false,
+     "size": 696,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.99,
+     "exposures_before_publish": 9,
+     "linked_sources": {
+      "scam:10": 348
+     },
+     "first_exposure": 6.54,
+     "published_hour": 7.534035320729609
+    },
+    {
+     "campaign": 11,
+     "modern": false,
+     "size": 315,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.82,
+     "exposures_before_publish": 9,
+     "linked_sources": {
+      "scam:11": 173
+     },
+     "first_exposure": 36.44,
+     "published_hour": 38.25914397156952
+    },
+    {
+     "campaign": 12,
+     "modern": false,
+     "size": 655,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.16,
+     "exposures_before_publish": 8,
+     "linked_sources": {
+      "scam:12": 304,
+      "scam:28": 126
+     },
+     "first_exposure": 9.06,
+     "published_hour": 10.2174643141464
+    },
+    {
+     "campaign": 13,
+     "modern": false,
+     "size": 564,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.5,
+     "exposures_before_publish": 4,
+     "linked_sources": {
+      "scam:13": 292
+     },
+     "first_exposure": 2.1,
+     "published_hour": 2.600137115899149
+    },
+    {
+     "campaign": 14,
+     "modern": false,
+     "size": 1683,
+     "published": true,
+     "already_covered": true,
+     "hours_to_publish": null,
+     "exposures_before_publish": 0,
+     "linked_sources": {
+      "scam:25": 40,
+      "scam:14": 652
+     },
+     "first_exposure": 29.33,
+     "published_hour": 18.266329404677016
+    },
+    {
+     "campaign": 15,
+     "modern": false,
+     "size": 1241,
+     "published": true,
+     "already_covered": true,
+     "hours_to_publish": null,
+     "exposures_before_publish": 0,
+     "linked_sources": {
+      "scam:17": 815,
+      "scam:15": 565
+     },
+     "first_exposure": 14.82,
+     "published_hour": 5.996461602366624
+    },
+    {
+     "campaign": 16,
+     "modern": false,
+     "size": 556,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.75,
+     "exposures_before_publish": 6,
+     "linked_sources": {
+      "scam:16": 271
+     },
+     "first_exposure": 45.89,
+     "published_hour": 46.645020119916694
+    },
+    {
+     "campaign": 17,
+     "modern": false,
+     "size": 1891,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.26,
+     "exposures_before_publish": 8,
+     "linked_sources": {
+      "scam:17": 815,
+      "scam:15": 565
+     },
+     "first_exposure": 4.73,
+     "published_hour": 5.996461602366624
+    },
+    {
+     "campaign": 18,
+     "modern": false,
+     "size": 1187,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.14,
+     "exposures_before_publish": 4,
+     "linked_sources": {
+      "scam:18": 465
+     },
+     "first_exposure": 27.18,
+     "published_hour": 28.31648691755564
+    },
+    {
+     "campaign": 19,
+     "modern": false,
+     "size": 959,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.18,
+     "exposures_before_publish": 2,
+     "linked_sources": {
+      "scam:8": 120,
+      "scam:19": 420
+     },
+     "first_exposure": 29.66,
+     "published_hour": 29.8362076509226
+    },
+    {
+     "campaign": 20,
+     "modern": false,
+     "size": 1494,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 0.52,
+     "exposures_before_publish": 5,
+     "linked_sources": {
+      "scam:20": 699
+     },
+     "first_exposure": 4.8,
+     "published_hour": 5.310484143363723
+    },
+    {
+     "campaign": 21,
+     "modern": false,
+     "size": 243,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 4.98,
+     "exposures_before_publish": 11,
+     "linked_sources": {
+      "scam:21": 26
+     },
+     "first_exposure": 7.35,
+     "published_hour": 12.333448816605813
+    },
+    {
+     "campaign": 22,
+     "modern": false,
+     "size": 264,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 2.02,
+     "exposures_before_publish": 10,
+     "linked_sources": {
+      "scam:22": 132
+     },
+     "first_exposure": 12.2,
+     "published_hour": 14.213146338092589
+    },
+    {
+     "campaign": 23,
+     "modern": false,
+     "size": 201,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 1.32,
+     "exposures_before_publish": 7,
+     "linked_sources": {
+      "scam:23": 85,
+      "scam:24": 163
+     },
+     "first_exposure": 26.07,
+     "published_hour": 27.39140080510333
+    },
+    {
+     "campaign": 24,
+     "modern": false,
+     "size": 347,
+     "published": true,
+     "already_covered": true,
+     "hours_to_publish": null,
+     "exposures_before_publish": 0,
+     "linked_sources": {
+      "scam:23": 85,
+      "scam:24": 163
+     },
+     "first_exposure": 35.06,
+     "published_hour": 27.39140080510333
+    },
+    {
+     "campaign": 25,
+     "modern": false,
+     "size": 307,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 2.37,
+     "exposures_before_publish": 9,
+     "linked_sources": {
+      "scam:25": 40,
+      "scam:14": 652
+     },
+     "first_exposure": 15.89,
+     "published_hour": 18.266329404677016
+    },
+    {
+     "campaign": 26,
+     "modern": false,
+     "size": 319,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 2.01,
+     "exposures_before_publish": 9,
+     "linked_sources": {
+      "scam:26": 48
+     },
+     "first_exposure": 40.57,
+     "published_hour": 42.575035276998804
+    },
+    {
+     "campaign": 27,
+     "modern": false,
+     "size": 209,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 3.61,
+     "exposures_before_publish": 6,
+     "linked_sources": {
+      "scam:27": 71
+     },
+     "first_exposure": 46.44,
+     "published_hour": 50.05873619809289
+    },
+    {
+     "campaign": 28,
+     "modern": false,
+     "size": 294,
+     "published": true,
+     "already_covered": true,
+     "hours_to_publish": null,
+     "exposures_before_publish": 0,
+     "linked_sources": {
+      "scam:12": 304,
+      "scam:28": 126
+     },
+     "first_exposure": 46.79,
+     "published_hour": 10.2174643141464
+    },
+    {
+     "campaign": 29,
+     "modern": false,
+     "size": 442,
+     "published": true,
+     "already_covered": false,
+     "hours_to_publish": 2.4,
+     "exposures_before_publish": 11,
+     "linked_sources": {
+      "scam:29": 217
+     },
+     "first_exposure": 37.68,
+     "published_hour": 40.08211525999413
+    }
+   ]
+  },
+  "legit": {
+   "exposures": 23343,
+   "model_alerts": 101,
+   "network_alerts": 570,
+   "false_alert_rate_model": 0.0043,
+   "false_alert_rate_network": 0.0244,
+   "templates_published_as_campaigns": [],
+   "templates_ever_published": [
+    "college",
+    "delivery",
+    "pharmacy"
+   ],
+   "templates_held_for_review": [
+    "bank_alert",
+    "bank_otp",
+    "telecom"
+   ]
+  },
+  "ham": {
+   "exposures": 10000,
+   "model_alerts": 60,
+   "network_alerts": 0,
+   "false_alert_rate_network": 0.0
+  },
+  "hub": {
+   "clusters": {
+    "collecting": 37,
+    "disputed": 3,
+    "held_for_review": 3,
+    "published": 38
+   },
+   "reports": {
+    "sent": 8707,
+    "rejected": {},
+    "manual": 89,
+    "disputes": 21
+   },
+   "published_cluster_origins": {
+    "scam": 38
+   }
+  },
+  "privacy": {
+   "columns": {
+    "meta": [
+     "key",
+     "value"
+    ],
+    "clients": [
+     "id",
+     "created_hour",
+     "reputation"
+    ],
+    "clusters": [
+     "id",
+     "signature",
+     "category",
+     "topics",
+     "domains",
+     "first_hour",
+     "last_hour",
+     "status",
+     "published_hour"
+    ],
+    "cluster_bands": [
+     "band",
+     "cluster_id"
+    ],
+    "reports": [
+     "cluster_id",
+     "client_id",
+     "hour",
+     "weight"
+    ],
+    "attempts": [
+     "client_id",
+     "hour"
+    ],
+    "disputes": [
+     "cluster_id",
+     "client_id",
+     "hour"
+    ],
+    "allowlist": [
+     "kind",
+     "value"
+    ]
+   },
+   "three_word_sequences_checked": 5054,
+   "found_in_hub_database": 0,
+   "passed": true
+  },
+  "series": [
+   {
+    "hour": 0.0,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 0.333,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 0.667,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 1.0,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 1.333,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 1.667,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 2.0,
+    "scam_exposures": 0,
+    "model": 0,
+    "combined": 0,
+    "published": 0
+   },
+   {
+    "hour": 2.333,
+    "scam_exposures": 2,
+    "model": 2,
+    "combined": 2,
+    "published": 0
+   },
+   {
+    "hour": 2.667,
+    "scam_exposures": 6,
+    "model": 6,
+    "combined": 6,
+    "published": 1
+   },
+   {
+    "hour": 3.0,
+    "scam_exposures": 9,
+    "model": 9,
+    "combined": 9,
+    "published": 1
+   },
+   {
+    "hour": 3.333,
+    "scam_exposures": 13,
+    "model": 13,
+    "combined": 13,
+    "published": 1
+   },
+   {
+    "hour": 3.667,
+    "scam_exposures": 18,
+    "model": 18,
+    "combined": 18,
+    "published": 1
+   },
+   {
+    "hour": 4.0,
+    "scam_exposures": 22,
+    "model": 22,
+    "combined": 22,
+    "published": 1
+   },
+   {
+    "hour": 4.333,
+    "scam_exposures": 30,
+    "model": 30,
+    "combined": 30,
+    "published": 1
+   },
+   {
+    "hour": 4.667,
+    "scam_exposures": 36,
+    "model": 36,
+    "combined": 36,
+    "published": 2
+   },
+   {
+    "hour": 5.0,
+    "scam_exposures": 55,
+    "model": 53,
+    "combined": 55,
+    "published": 2
+   },
+   {
+    "hour": 5.333,
+    "scam_exposures": 68,
+    "model": 65,
+    "combined": 67,
+    "published": 3
+   },
+   {
+    "hour": 5.667,
+    "scam_exposures": 93,
+    "model": 88,
+    "combined": 92,
+    "published": 3
+   },
+   {
+    "hour": 6.0,
+    "scam_exposures": 112,
+    "model": 106,
+    "combined": 111,
+    "published": 4
+   },
+   {
+    "hour": 6.333,
+    "scam_exposures": 145,
+    "model": 138,
+    "combined": 144,
+    "published": 4
+   },
+   {
+    "hour": 6.667,
+    "scam_exposures": 183,
+    "model": 175,
+    "combined": 182,
+    "published": 4
+   },
+   {
+    "hour": 7.0,
+    "scam_exposures": 236,
+    "model": 223,
+    "combined": 234,
+    "published": 4
+   },
+   {
+    "hour": 7.333,
+    "scam_exposures": 280,
+    "model": 267,
+    "combined": 278,
+    "published": 4
+   },
+   {
+    "hour": 7.667,
+    "scam_exposures": 339,
+    "model": 325,
+    "combined": 337,
+    "published": 5
+   },
+   {
+    "hour": 8.0,
+    "scam_exposures": 411,
+    "model": 394,
+    "combined": 408,
+    "published": 5
+   },
+   {
+    "hour": 8.333,
+    "scam_exposures": 463,
+    "model": 438,
+    "combined": 460,
+    "published": 5
+   },
+   {
+    "hour": 8.667,
+    "scam_exposures": 534,
+    "model": 497,
+    "combined": 531,
+    "published": 6
+   },
+   {
+    "hour": 9.0,
+    "scam_exposures": 599,
+    "model": 555,
+    "combined": 596,
+    "published": 6
+   },
+   {
+    "hour": 9.333,
+    "scam_exposures": 694,
+    "model": 637,
+    "combined": 690,
+    "published": 6
+   },
+   {
+    "hour": 9.667,
+    "scam_exposures": 765,
+    "model": 698,
+    "combined": 761,
+    "published": 6
+   },
+   {
+    "hour": 10.0,
+    "scam_exposures": 834,
+    "model": 762,
+    "combined": 829,
+    "published": 7
+   },
+   {
+    "hour": 10.333,
+    "scam_exposures": 919,
+    "model": 841,
+    "combined": 914,
+    "published": 8
+   },
+   {
+    "hour": 10.667,
+    "scam_exposures": 1017,
+    "model": 930,
+    "combined": 1012,
+    "published": 8
+   },
+   {
+    "hour": 11.0,
+    "scam_exposures": 1106,
+    "model": 1011,
+    "combined": 1101,
+    "published": 8
+   },
+   {
+    "hour": 11.333,
+    "scam_exposures": 1197,
+    "model": 1093,
+    "combined": 1192,
+    "published": 8
+   },
+   {
+    "hour": 11.667,
+    "scam_exposures": 1298,
+    "model": 1189,
+    "combined": 1293,
+    "published": 8
+   },
+   {
+    "hour": 12.0,
+    "scam_exposures": 1401,
+    "model": 1281,
+    "combined": 1396,
+    "published": 8
+   },
+   {
+    "hour": 12.333,
+    "scam_exposures": 1531,
+    "model": 1398,
+    "combined": 1526,
+    "published": 8
+   },
+   {
+    "hour": 12.667,
+    "scam_exposures": 1627,
+    "model": 1485,
+    "combined": 1621,
+    "published": 9
+   },
+   {
+    "hour": 13.0,
+    "scam_exposures": 1735,
+    "model": 1579,
+    "combined": 1728,
+    "published": 9
+   },
+   {
+    "hour": 13.333,
+    "scam_exposures": 1846,
+    "model": 1673,
+    "combined": 1839,
+    "published": 9
+   },
+   {
+    "hour": 13.667,
+    "scam_exposures": 1975,
+    "model": 1785,
+    "combined": 1967,
+    "published": 9
+   },
+   {
+    "hour": 14.0,
+    "scam_exposures": 2086,
+    "model": 1882,
+    "combined": 2078,
+    "published": 9
+   },
+   {
+    "hour": 14.333,
+    "scam_exposures": 2204,
+    "model": 1983,
+    "combined": 2195,
+    "published": 10
+   },
+   {
+    "hour": 14.667,
+    "scam_exposures": 2321,
+    "model": 2089,
+    "combined": 2311,
+    "published": 10
+   },
+   {
+    "hour": 15.0,
+    "scam_exposures": 2466,
+    "model": 2207,
+    "combined": 2456,
+    "published": 11
+   },
+   {
+    "hour": 15.333,
+    "scam_exposures": 2610,
+    "model": 2318,
+    "combined": 2600,
+    "published": 11
+   },
+   {
+    "hour": 15.667,
+    "scam_exposures": 2760,
+    "model": 2443,
+    "combined": 2750,
+    "published": 11
+   },
+   {
+    "hour": 16.0,
+    "scam_exposures": 2897,
+    "model": 2557,
+    "combined": 2887,
+    "published": 11
+   },
+   {
+    "hour": 16.333,
+    "scam_exposures": 3049,
+    "model": 2683,
+    "combined": 3039,
+    "published": 11
+   },
+   {
+    "hour": 16.667,
+    "scam_exposures": 3205,
+    "model": 2810,
+    "combined": 3195,
+    "published": 11
+   },
+   {
+    "hour": 17.0,
+    "scam_exposures": 3354,
+    "model": 2923,
+    "combined": 3343,
+    "published": 11
+   },
+   {
+    "hour": 17.333,
+    "scam_exposures": 3505,
+    "model": 3042,
+    "combined": 3494,
+    "published": 11
+   },
+   {
+    "hour": 17.667,
+    "scam_exposures": 3634,
+    "model": 3140,
+    "combined": 3621,
+    "published": 11
+   },
+   {
+    "hour": 18.0,
+    "scam_exposures": 3803,
+    "model": 3260,
+    "combined": 3789,
+    "published": 11
+   },
+   {
+    "hour": 18.333,
+    "scam_exposures": 3954,
+    "model": 3365,
+    "combined": 3940,
+    "published": 12
+   },
+   {
+    "hour": 18.667,
+    "scam_exposures": 4089,
+    "model": 3466,
+    "combined": 4075,
+    "published": 12
+   },
+   {
+    "hour": 19.0,
+    "scam_exposures": 4241,
+    "model": 3580,
+    "combined": 4227,
+    "published": 12
+   },
+   {
+    "hour": 19.333,
+    "scam_exposures": 4399,
+    "model": 3692,
+    "combined": 4382,
+    "published": 12
+   },
+   {
+    "hour": 19.667,
+    "scam_exposures": 4531,
+    "model": 3796,
+    "combined": 4512,
+    "published": 12
+   },
+   {
+    "hour": 20.0,
+    "scam_exposures": 4687,
+    "model": 3904,
+    "combined": 4667,
+    "published": 12
+   },
+   {
+    "hour": 20.333,
+    "scam_exposures": 4830,
+    "model": 4019,
+    "combined": 4809,
+    "published": 12
+   },
+   {
+    "hour": 20.667,
+    "scam_exposures": 4982,
+    "model": 4133,
+    "combined": 4960,
+    "published": 12
+   },
+   {
+    "hour": 21.0,
+    "scam_exposures": 5138,
+    "model": 4250,
+    "combined": 5115,
+    "published": 12
+   },
+   {
+    "hour": 21.333,
+    "scam_exposures": 5284,
+    "model": 4347,
+    "combined": 5261,
+    "published": 12
+   },
+   {
+    "hour": 21.667,
+    "scam_exposures": 5424,
+    "model": 4445,
+    "combined": 5401,
+    "published": 12
+   },
+   {
+    "hour": 22.0,
+    "scam_exposures": 5558,
+    "model": 4548,
+    "combined": 5534,
+    "published": 12
+   },
+   {
+    "hour": 22.333,
+    "scam_exposures": 5691,
+    "model": 4646,
+    "combined": 5667,
+    "published": 12
+   },
+   {
+    "hour": 22.667,
+    "scam_exposures": 5833,
+    "model": 4754,
+    "combined": 5808,
+    "published": 12
+   },
+   {
+    "hour": 23.0,
+    "scam_exposures": 5952,
+    "model": 4835,
+    "combined": 5927,
+    "published": 13
+   },
+   {
+    "hour": 23.333,
+    "scam_exposures": 6085,
+    "model": 4925,
+    "combined": 6060,
+    "published": 14
+   },
+   {
+    "hour": 23.667,
+    "scam_exposures": 6221,
+    "model": 5025,
+    "combined": 6195,
+    "published": 14
+   },
+   {
+    "hour": 24.0,
+    "scam_exposures": 6340,
+    "model": 5108,
+    "combined": 6314,
+    "published": 14
+   },
+   {
+    "hour": 24.333,
+    "scam_exposures": 6469,
+    "model": 5202,
+    "combined": 6443,
+    "published": 14
+   },
+   {
+    "hour": 24.667,
+    "scam_exposures": 6590,
+    "model": 5292,
+    "combined": 6564,
+    "published": 14
+   },
+   {
+    "hour": 25.0,
+    "scam_exposures": 6729,
+    "model": 5399,
+    "combined": 6702,
+    "published": 14
+   },
+   {
+    "hour": 25.333,
+    "scam_exposures": 6865,
+    "model": 5495,
+    "combined": 6838,
+    "published": 14
+   },
+   {
+    "hour": 25.667,
+    "scam_exposures": 7000,
+    "model": 5593,
+    "combined": 6973,
+    "published": 14
+   },
+   {
+    "hour": 26.0,
+    "scam_exposures": 7124,
+    "model": 5690,
+    "combined": 7096,
+    "published": 14
+   },
+   {
+    "hour": 26.333,
+    "scam_exposures": 7233,
+    "model": 5767,
+    "combined": 7204,
+    "published": 14
+   },
+   {
+    "hour": 26.667,
+    "scam_exposures": 7365,
+    "model": 5866,
+    "combined": 7332,
+    "published": 14
+   },
+   {
+    "hour": 27.0,
+    "scam_exposures": 7491,
+    "model": 5953,
+    "combined": 7457,
+    "published": 14
+   },
+   {
+    "hour": 27.333,
+    "scam_exposures": 7607,
+    "model": 6031,
+    "combined": 7573,
+    "published": 15
+   },
+   {
+    "hour": 27.667,
+    "scam_exposures": 7741,
+    "model": 6122,
+    "combined": 7706,
+    "published": 16
+   },
+   {
+    "hour": 28.0,
+    "scam_exposures": 7868,
+    "model": 6217,
+    "combined": 7833,
+    "published": 16
+   },
+   {
+    "hour": 28.333,
+    "scam_exposures": 7986,
+    "model": 6295,
+    "combined": 7951,
+    "published": 17
+   },
+   {
+    "hour": 28.667,
+    "scam_exposures": 8105,
+    "model": 6377,
+    "combined": 8069,
+    "published": 17
+   },
+   {
+    "hour": 29.0,
+    "scam_exposures": 8224,
+    "model": 6464,
+    "combined": 8188,
+    "published": 17
+   },
+   {
+    "hour": 29.333,
+    "scam_exposures": 8329,
+    "model": 6541,
+    "combined": 8293,
+    "published": 17
+   },
+   {
+    "hour": 29.667,
+    "scam_exposures": 8433,
+    "model": 6621,
+    "combined": 8396,
+    "published": 18
+   },
+   {
+    "hour": 30.0,
+    "scam_exposures": 8553,
+    "model": 6719,
+    "combined": 8516,
+    "published": 19
+   },
+   {
+    "hour": 30.333,
+    "scam_exposures": 8661,
+    "model": 6796,
+    "combined": 8624,
+    "published": 20
+   },
+   {
+    "hour": 30.667,
+    "scam_exposures": 8769,
+    "model": 6883,
+    "combined": 8732,
+    "published": 20
+   },
+   {
+    "hour": 31.0,
+    "scam_exposures": 8865,
+    "model": 6957,
+    "combined": 8828,
+    "published": 21
+   },
+   {
+    "hour": 31.333,
+    "scam_exposures": 8956,
+    "model": 7023,
+    "combined": 8919,
+    "published": 21
+   },
+   {
+    "hour": 31.667,
+    "scam_exposures": 9072,
+    "model": 7104,
+    "combined": 9035,
+    "published": 21
+   },
+   {
+    "hour": 32.0,
+    "scam_exposures": 9179,
+    "model": 7195,
+    "combined": 9142,
+    "published": 21
+   },
+   {
+    "hour": 32.333,
+    "scam_exposures": 9284,
+    "model": 7284,
+    "combined": 9247,
+    "published": 21
+   },
+   {
+    "hour": 32.667,
+    "scam_exposures": 9392,
+    "model": 7366,
+    "combined": 9355,
+    "published": 21
+   },
+   {
+    "hour": 33.0,
+    "scam_exposures": 9489,
+    "model": 7437,
+    "combined": 9452,
+    "published": 21
+   },
+   {
+    "hour": 33.333,
+    "scam_exposures": 9622,
+    "model": 7543,
+    "combined": 9585,
+    "published": 21
+   },
+   {
+    "hour": 33.667,
+    "scam_exposures": 9724,
+    "model": 7625,
+    "combined": 9687,
+    "published": 21
+   },
+   {
+    "hour": 34.0,
+    "scam_exposures": 9846,
+    "model": 7724,
+    "combined": 9807,
+    "published": 21
+   },
+   {
+    "hour": 34.333,
+    "scam_exposures": 9979,
+    "model": 7840,
+    "combined": 9939,
+    "published": 22
+   },
+   {
+    "hour": 34.667,
+    "scam_exposures": 10086,
+    "model": 7930,
+    "combined": 10045,
+    "published": 22
+   },
+   {
+    "hour": 35.0,
+    "scam_exposures": 10215,
+    "model": 8039,
+    "combined": 10174,
+    "published": 22
+   },
+   {
+    "hour": 35.333,
+    "scam_exposures": 10356,
+    "model": 8162,
+    "combined": 10314,
+    "published": 22
+   },
+   {
+    "hour": 35.667,
+    "scam_exposures": 10492,
+    "model": 8280,
+    "combined": 10450,
+    "published": 23
+   },
+   {
+    "hour": 36.0,
+    "scam_exposures": 10616,
+    "model": 8385,
+    "combined": 10574,
+    "published": 23
+   },
+   {
+    "hour": 36.333,
+    "scam_exposures": 10764,
+    "model": 8505,
+    "combined": 10722,
+    "published": 23
+   },
+   {
+    "hour": 36.667,
+    "scam_exposures": 10904,
+    "model": 8620,
+    "combined": 10860,
+    "published": 23
+   },
+   {
+    "hour": 37.0,
+    "scam_exposures": 11052,
+    "model": 8743,
+    "combined": 11008,
+    "published": 23
+   },
+   {
+    "hour": 37.333,
+    "scam_exposures": 11210,
+    "model": 8875,
+    "combined": 11166,
+    "published": 23
+   },
+   {
+    "hour": 37.667,
+    "scam_exposures": 11355,
+    "model": 8997,
+    "combined": 11311,
+    "published": 23
+   },
+   {
+    "hour": 38.0,
+    "scam_exposures": 11521,
+    "model": 9140,
+    "combined": 11477,
+    "published": 23
+   },
+   {
+    "hour": 38.333,
+    "scam_exposures": 11683,
+    "model": 9281,
+    "combined": 11639,
+    "published": 24
+   },
+   {
+    "hour": 38.667,
+    "scam_exposures": 11838,
+    "model": 9415,
+    "combined": 11794,
+    "published": 24
+   },
+   {
+    "hour": 39.0,
+    "scam_exposures": 12017,
+    "model": 9565,
+    "combined": 11973,
+    "published": 24
+   },
+   {
+    "hour": 39.333,
+    "scam_exposures": 12179,
+    "model": 9708,
+    "combined": 12135,
+    "published": 24
+   },
+   {
+    "hour": 39.667,
+    "scam_exposures": 12357,
+    "model": 9852,
+    "combined": 12313,
+    "published": 24
+   },
+   {
+    "hour": 40.0,
+    "scam_exposures": 12499,
+    "model": 9964,
+    "combined": 12455,
+    "published": 24
+   },
+   {
+    "hour": 40.333,
+    "scam_exposures": 12655,
+    "model": 10095,
+    "combined": 12611,
+    "published": 25
+   },
+   {
+    "hour": 40.667,
+    "scam_exposures": 12816,
+    "model": 10229,
+    "combined": 12771,
+    "published": 25
+   },
+   {
+    "hour": 41.0,
+    "scam_exposures": 12981,
+    "model": 10371,
+    "combined": 12936,
+    "published": 25
+   },
+   {
+    "hour": 41.333,
+    "scam_exposures": 13149,
+    "model": 10507,
+    "combined": 13104,
+    "published": 25
+   },
+   {
+    "hour": 41.667,
+    "scam_exposures": 13305,
+    "model": 10639,
+    "combined": 13260,
+    "published": 25
+   },
+   {
+    "hour": 42.0,
+    "scam_exposures": 13485,
+    "model": 10778,
+    "combined": 13440,
+    "published": 25
+   },
+   {
+    "hour": 42.333,
+    "scam_exposures": 13631,
+    "model": 10897,
+    "combined": 13586,
+    "published": 25
+   },
+   {
+    "hour": 42.667,
+    "scam_exposures": 13791,
+    "model": 11018,
+    "combined": 13746,
+    "published": 26
+   },
+   {
+    "hour": 43.0,
+    "scam_exposures": 13937,
+    "model": 11131,
+    "combined": 13892,
+    "published": 26
+   },
+   {
+    "hour": 43.333,
+    "scam_exposures": 14087,
+    "model": 11245,
+    "combined": 14042,
+    "published": 26
+   },
+   {
+    "hour": 43.667,
+    "scam_exposures": 14232,
+    "model": 11363,
+    "combined": 14187,
+    "published": 26
+   },
+   {
+    "hour": 44.0,
+    "scam_exposures": 14379,
+    "model": 11476,
+    "combined": 14334,
+    "published": 26
+   },
+   {
+    "hour": 44.333,
+    "scam_exposures": 14513,
+    "model": 11578,
+    "combined": 14468,
+    "published": 26
+   },
+   {
+    "hour": 44.667,
+    "scam_exposures": 14662,
+    "model": 11705,
+    "combined": 14617,
+    "published": 26
+   },
+   {
+    "hour": 45.0,
+    "scam_exposures": 14783,
+    "model": 11798,
+    "combined": 14738,
+    "published": 26
+   },
+   {
+    "hour": 45.333,
+    "scam_exposures": 14908,
+    "model": 11893,
+    "combined": 14863,
+    "published": 26
+   },
+   {
+    "hour": 45.667,
+    "scam_exposures": 15035,
+    "model": 11986,
+    "combined": 14990,
+    "published": 26
+   },
+   {
+    "hour": 46.0,
+    "scam_exposures": 15147,
+    "model": 12072,
+    "combined": 15102,
+    "published": 26
+   },
+   {
+    "hour": 46.333,
+    "scam_exposures": 15247,
+    "model": 12143,
+    "combined": 15201,
+    "published": 26
+   },
+   {
+    "hour": 46.667,
+    "scam_exposures": 15359,
+    "model": 12222,
+    "combined": 15311,
+    "published": 27
+   },
+   {
+    "hour": 47.0,
+    "scam_exposures": 15462,
+    "model": 12290,
+    "combined": 15414,
+    "published": 28
+   },
+   {
+    "hour": 47.333,
+    "scam_exposures": 15551,
+    "model": 12355,
+    "combined": 15503,
+    "published": 28
+   },
+   {
+    "hour": 47.667,
+    "scam_exposures": 15651,
+    "model": 12428,
+    "combined": 15603,
+    "published": 28
+   },
+   {
+    "hour": 48.0,
+    "scam_exposures": 15749,
+    "model": 12488,
+    "combined": 15701,
+    "published": 28
+   },
+   {
+    "hour": 48.333,
+    "scam_exposures": 15825,
+    "model": 12542,
+    "combined": 15777,
+    "published": 28
+   },
+   {
+    "hour": 48.667,
+    "scam_exposures": 15914,
+    "model": 12600,
+    "combined": 15866,
+    "published": 28
+   },
+   {
+    "hour": 49.0,
+    "scam_exposures": 16002,
+    "model": 12654,
+    "combined": 15953,
+    "published": 29
+   },
+   {
+    "hour": 49.333,
+    "scam_exposures": 16086,
+    "model": 12714,
+    "combined": 16037,
+    "published": 29
+   },
+   {
+    "hour": 49.667,
+    "scam_exposures": 16160,
+    "model": 12761,
+    "combined": 16111,
+    "published": 29
+   },
+   {
+    "hour": 50.0,
+    "scam_exposures": 16243,
+    "model": 12817,
+    "combined": 16194,
+    "published": 29
+   },
+   {
+    "hour": 50.333,
+    "scam_exposures": 16329,
+    "model": 12888,
+    "combined": 16280,
+    "published": 30
+   },
+   {
+    "hour": 50.667,
+    "scam_exposures": 16410,
+    "model": 12949,
+    "combined": 16361,
+    "published": 30
+   },
+   {
+    "hour": 51.0,
+    "scam_exposures": 16486,
+    "model": 13004,
+    "combined": 16437,
+    "published": 30
+   },
+   {
+    "hour": 51.333,
+    "scam_exposures": 16539,
+    "model": 13045,
+    "combined": 16490,
+    "published": 30
+   },
+   {
+    "hour": 51.667,
+    "scam_exposures": 16599,
+    "model": 13095,
+    "combined": 16550,
+    "published": 30
+   },
+   {
+    "hour": 52.0,
+    "scam_exposures": 16659,
+    "model": 13137,
+    "combined": 16610,
+    "published": 30
+   },
+   {
+    "hour": 52.333,
+    "scam_exposures": 16718,
+    "model": 13179,
+    "combined": 16669,
+    "published": 30
+   },
+   {
+    "hour": 52.667,
+    "scam_exposures": 16785,
+    "model": 13225,
+    "combined": 16736,
+    "published": 30
+   },
+   {
+    "hour": 53.0,
+    "scam_exposures": 16843,
+    "model": 13268,
+    "combined": 16794,
+    "published": 30
+   },
+   {
+    "hour": 53.333,
+    "scam_exposures": 16902,
+    "model": 13308,
+    "combined": 16853,
+    "published": 30
+   },
+   {
+    "hour": 53.667,
+    "scam_exposures": 16968,
+    "model": 13359,
+    "combined": 16919,
+    "published": 30
+   },
+   {
+    "hour": 54.0,
+    "scam_exposures": 17027,
+    "model": 13398,
+    "combined": 16978,
+    "published": 30
+   },
+   {
+    "hour": 54.333,
+    "scam_exposures": 17088,
+    "model": 13438,
+    "combined": 17039,
+    "published": 30
+   },
+   {
+    "hour": 54.667,
+    "scam_exposures": 17149,
+    "model": 13487,
+    "combined": 17100,
+    "published": 30
+   },
+   {
+    "hour": 55.0,
+    "scam_exposures": 17198,
+    "model": 13525,
+    "combined": 17149,
+    "published": 30
+   },
+   {
+    "hour": 55.333,
+    "scam_exposures": 17251,
+    "model": 13569,
+    "combined": 17202,
+    "published": 30
+   },
+   {
+    "hour": 55.667,
+    "scam_exposures": 17289,
+    "model": 13598,
+    "combined": 17240,
+    "published": 30
+   },
+   {
+    "hour": 56.0,
+    "scam_exposures": 17326,
+    "model": 13628,
+    "combined": 17277,
+    "published": 30
+   },
+   {
+    "hour": 56.333,
+    "scam_exposures": 17383,
+    "model": 13673,
+    "combined": 17334,
+    "published": 30
+   },
+   {
+    "hour": 56.667,
+    "scam_exposures": 17424,
+    "model": 13706,
+    "combined": 17375,
+    "published": 30
+   },
+   {
+    "hour": 57.0,
+    "scam_exposures": 17470,
+    "model": 13741,
+    "combined": 17421,
+    "published": 30
+   },
+   {
+    "hour": 57.333,
+    "scam_exposures": 17515,
+    "model": 13779,
+    "combined": 17466,
+    "published": 30
+   },
+   {
+    "hour": 57.667,
+    "scam_exposures": 17557,
+    "model": 13809,
+    "combined": 17508,
+    "published": 30
+   },
+   {
+    "hour": 58.0,
+    "scam_exposures": 17591,
+    "model": 13836,
+    "combined": 17542,
+    "published": 30
+   },
+   {
+    "hour": 58.333,
+    "scam_exposures": 17618,
+    "model": 13858,
+    "combined": 17569,
+    "published": 30
+   },
+   {
+    "hour": 58.667,
+    "scam_exposures": 17644,
+    "model": 13874,
+    "combined": 17595,
+    "published": 30
+   },
+   {
+    "hour": 59.0,
+    "scam_exposures": 17674,
+    "model": 13897,
+    "combined": 17625,
+    "published": 30
+   },
+   {
+    "hour": 59.333,
+    "scam_exposures": 17698,
+    "model": 13915,
+    "combined": 17649,
+    "published": 30
+   },
+   {
+    "hour": 59.667,
+    "scam_exposures": 17720,
+    "model": 13929,
+    "combined": 17670,
+    "published": 30
+   },
+   {
+    "hour": 60.0,
+    "scam_exposures": 17747,
+    "model": 13948,
+    "combined": 17697,
+    "published": 30
+   },
+   {
+    "hour": 60.333,
+    "scam_exposures": 17764,
+    "model": 13962,
+    "combined": 17714,
+    "published": 30
+   },
+   {
+    "hour": 60.667,
+    "scam_exposures": 17783,
+    "model": 13972,
+    "combined": 17733,
+    "published": 30
+   },
+   {
+    "hour": 61.0,
+    "scam_exposures": 17809,
+    "model": 13987,
+    "combined": 17759,
+    "published": 30
+   },
+   {
+    "hour": 61.333,
+    "scam_exposures": 17824,
+    "model": 13999,
+    "combined": 17774,
+    "published": 30
+   },
+   {
+    "hour": 61.667,
+    "scam_exposures": 17839,
+    "model": 14008,
+    "combined": 17789,
+    "published": 30
+   },
+   {
+    "hour": 62.0,
+    "scam_exposures": 17854,
+    "model": 14016,
+    "combined": 17804,
+    "published": 30
+   },
+   {
+    "hour": 62.333,
+    "scam_exposures": 17872,
+    "model": 14030,
+    "combined": 17822,
+    "published": 30
+   },
+   {
+    "hour": 62.667,
+    "scam_exposures": 17894,
+    "model": 14047,
+    "combined": 17844,
+    "published": 30
+   },
+   {
+    "hour": 63.0,
+    "scam_exposures": 17917,
+    "model": 14063,
+    "combined": 17867,
+    "published": 30
+   },
+   {
+    "hour": 63.333,
+    "scam_exposures": 17930,
+    "model": 14073,
+    "combined": 17880,
+    "published": 30
+   },
+   {
+    "hour": 63.667,
+    "scam_exposures": 17946,
+    "model": 14086,
+    "combined": 17896,
+    "published": 30
+   },
+   {
+    "hour": 64.0,
+    "scam_exposures": 17957,
+    "model": 14095,
+    "combined": 17907,
+    "published": 30
+   },
+   {
+    "hour": 64.333,
+    "scam_exposures": 17969,
+    "model": 14101,
+    "combined": 17919,
+    "published": 30
+   },
+   {
+    "hour": 64.667,
+    "scam_exposures": 17983,
+    "model": 14108,
+    "combined": 17932,
+    "published": 30
+   },
+   {
+    "hour": 65.0,
+    "scam_exposures": 17996,
+    "model": 14112,
+    "combined": 17945,
+    "published": 30
+   },
+   {
+    "hour": 65.333,
+    "scam_exposures": 18007,
+    "model": 14121,
+    "combined": 17956,
+    "published": 30
+   },
+   {
+    "hour": 65.667,
+    "scam_exposures": 18019,
+    "model": 14129,
+    "combined": 17968,
+    "published": 30
+   },
+   {
+    "hour": 66.0,
+    "scam_exposures": 18030,
+    "model": 14133,
+    "combined": 17978,
+    "published": 30
+   },
+   {
+    "hour": 66.333,
+    "scam_exposures": 18037,
+    "model": 14137,
+    "combined": 17983,
+    "published": 30
+   },
+   {
+    "hour": 66.667,
+    "scam_exposures": 18049,
+    "model": 14145,
+    "combined": 17995,
+    "published": 30
+   },
+   {
+    "hour": 67.0,
+    "scam_exposures": 18063,
+    "model": 14151,
+    "combined": 18009,
+    "published": 30
+   },
+   {
+    "hour": 67.333,
+    "scam_exposures": 18073,
+    "model": 14155,
+    "combined": 18019,
+    "published": 30
+   },
+   {
+    "hour": 67.667,
+    "scam_exposures": 18084,
+    "model": 14160,
+    "combined": 18029,
+    "published": 30
+   },
+   {
+    "hour": 68.0,
+    "scam_exposures": 18088,
+    "model": 14164,
+    "combined": 18033,
+    "published": 30
+   },
+   {
+    "hour": 68.333,
+    "scam_exposures": 18094,
+    "model": 14167,
+    "combined": 18039,
+    "published": 30
+   },
+   {
+    "hour": 68.667,
+    "scam_exposures": 18103,
+    "model": 14174,
+    "combined": 18048,
+    "published": 30
+   },
+   {
+    "hour": 69.0,
+    "scam_exposures": 18108,
+    "model": 14177,
+    "combined": 18053,
+    "published": 30
+   },
+   {
+    "hour": 69.333,
+    "scam_exposures": 18121,
+    "model": 14182,
+    "combined": 18065,
+    "published": 30
+   },
+   {
+    "hour": 69.667,
+    "scam_exposures": 18129,
+    "model": 14185,
+    "combined": 18072,
+    "published": 30
+   },
+   {
+    "hour": 70.0,
+    "scam_exposures": 18135,
+    "model": 14190,
+    "combined": 18078,
+    "published": 30
+   },
+   {
+    "hour": 70.333,
+    "scam_exposures": 18140,
+    "model": 14191,
+    "combined": 18083,
+    "published": 30
+   },
+   {
+    "hour": 70.667,
+    "scam_exposures": 18143,
+    "model": 14193,
+    "combined": 18085,
+    "published": 30
+   },
+   {
+    "hour": 71.0,
+    "scam_exposures": 18152,
+    "model": 14199,
+    "combined": 18094,
+    "published": 30
+   },
+   {
+    "hour": 71.333,
+    "scam_exposures": 18158,
+    "model": 14201,
+    "combined": 18099,
+    "published": 30
+   },
+   {
+    "hour": 71.667,
+    "scam_exposures": 18165,
+    "model": 14205,
+    "combined": 18106,
+    "published": 30
+   }
+  ]
+ }
+}

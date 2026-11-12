@@ -1,0 +1,106 @@
+\titleformat{\chapter}[display]{\bfseries\centering}{\huge Chapter \thechapter}{1em}{\Huge #1}
+
+\newgeometry{top=3cm, bottom=2.2cm, left=3cm, right=2cm, headsep=1.2cm, footskip=1cm, headheight=0.3cm, textheight=24.5cm, textwidth=16cm}
+\onehalfspacing
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\lhead{Chapter 2}
+\rhead{Literature Survey}
+\cfoot{\thepage}
+\chapter{Literature Survey}
+
+\section{Survey of Existing Systems}
+\noindent The survey covers four groups: research on fake-profile and social-bot detection, research on cyberbullying and hate-speech detection, datasets for SMS scams, and deployed systems and datasets for phishing-URL detection.
+
+\subsection{Research Papers}
+\noindent\textbf{[1] Detecting Fake Profiles on Social Networks: A Systematic Investigation (SCEECS 2023).} Bhambulkar, Choudhary and Pimpalkar \cite{lit1} review machine-learning and deep-learning methods for fake-account detection and the profile attributes they rely on. The analysis stays at profile level and does not consider the links or messages such accounts send.\\
+
+\noindent\textbf{[2] Heterogenous Social Media Analysis for Efficient Deep Learning Fake-Profile Identification (IEEE Access 2023).} Aditya and Mohanty \cite{lit2} combine posts, multimedia, activity and login behaviour from several platforms using Word2Vec with a binary CNN, 1D/2D transforms, Grey Wolf and Elephant Herding feature optimisation and boosted 1D-CNNs. They report gains of 8.3\% in accuracy, 5.9\% in precision and 6.5\% in recall over conventional methods and 93.5\% accuracy at login and signup, but the method needs platform-side data an ordinary user cannot access.\\
+
+\noindent\textbf{[3] Techniques to Detect Fake Profiles on Social Media Using the New Age Algorithms -- A Survey (CCWC 2024).} Habib et al. \cite{lit3} survey techniques based on profile pictures, shared content and bot-versus-human operation, and link fake profiles to phishing, misinformation and cyberbullying. As a survey it reports no new experiment.\\
+
+\noindent\textbf{[4] Cyberbullying Detection and Abuser Profile Identification on Social Media for Roman Urdu (IEEE Access 2024).} Atif et al. \cite{lit4} detect cyberbullying in Roman Urdu tweets with a GRU over word2vec embeddings and add a temporal analysis of each user's bullying tweets, reaching 97\% accuracy and 97\% F1. Phishing and fake accounts are not addressed.\\
+
+\noindent\textbf{[5] Social Media Forensics: An Adaptive Cyberbullying-Related Hate Speech Detection Approach Based on Neural Networks With Uncertainty (IEEE Access 2024).} Ibrahim, Essameldin and Saad \cite{lit5} integrate neutrosophic logic into a one-against-one multilayer perceptron to separate overlapping, ambiguous cyberbullying categories in short text. Links and account authenticity are not assessed.\\
+
+\noindent\textbf{[6] PhiUSIIL (Computers \& Security 2024)} \cite{phiusiil} releases 235,795 labelled URLs with URL and page features, and \textbf{[7] CAD (NAACL 2021)} \cite{cad} annotates Reddit content in its thread context with fine-grained abuse categories. Sentinel uses both datasets in its studies.\\
+
+\noindent\textbf{\cite{cresci2015} Fame for Sale: Efficient Detection of Fake Twitter Followers (Decision Support Systems 2015).} Cresci et al. build a baseline dataset of verified human accounts and purchased fake followers, and evaluate rule sets and feature sets proposed in earlier work together with machine-learning classifiers for fake-follower detection. The work is limited to one kind of fake account on one platform.\\
+
+\noindent\textbf{\cite{cresci2017} The Paradigm-Shift of Social Spambots (WWW Companion 2017).} Cresci et al. show that a newer generation of social spambots imitates human behaviour closely enough to be hard to recognise for existing detection approaches and for human annotators, and release the cresci-2017 dataset with genuine accounts, social spambots and traditional spambots. Sentinel's activity model is trained and tested on the cresci-2015 and cresci-2017 post histories.\\
+
+\noindent\textbf{\cite{yang2020} Scalable and Generalizable Social Bot Detection through Data Selection (AAAI 2020).} Yang et al. show that bot classifiers trained on one dataset generalise poorly to others, and propose choosing the training datasets by cross-dataset validation, using a lightweight model over profile metadata. Their finding motivates Sentinel's leave-one-dataset-out release gate.\\
+
+\noindent\textbf{\cite{smsdata} SMS Phishing Dataset for Machine Learning and Pattern Recognition (Mendeley Data 2022).} Mishra and Soni release 5,971 SMS messages labelled ham, spam or smishing. Sentinel's scam-text model is trained on it, cross-checked against the UCI SMS Spam Collection \cite{ucisms}. Like most public SMS corpora, it contains few genuine business messages, a bias that Sentinel's evaluation later exposed.
+
+\subsection{Real-Time Systems and Case Studies}
+\noindent\textbf{PhishTank} \cite{phishtank} is a community-verified database of phishing URLs whose data files list only verified, online phishes and are refreshed hourly. \textbf{Google Safe Browsing} \cite{safebrowsing} lets applications check URLs against regularly updated lists of phishing, malware and unwanted-software sites. Both are precise for known URLs but cannot recognise new ones, give a list verdict without explanation, and do not assess message wording, harmful content or accounts; an unlisted URL is not proven safe. \textbf{Platform moderation} relies on user reports and internal rules; it acts after exposure and rarely explains its decisions.
+
+\subsection{Summary of the Survey}
+\begin{footnotesize}
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{3.7cm}|>{\raggedright\arraybackslash}p{3.7cm}|>{\raggedright\arraybackslash}p{3.2cm}|}
+\caption{Summary of the literature survey}\label{tab:lit}\\
+\hline
+\textbf{Title of Paper} & \textbf{Methodology} & \textbf{Discussion of Results} & \textbf{Drawback} \\ \hline
+\endfirsthead
+\hline
+\textbf{Title of Paper} & \textbf{Methodology} & \textbf{Discussion of Results} & \textbf{Drawback} \\ \hline
+\endhead
+[1] Detecting Fake Profiles on Social Networks: A Systematic Investigation & Examines ML and DL methods and the user-profile attributes used to identify fake accounts & Summarises tested approaches and the profile aspects that help identify fake accounts & Profile-level only; links and abusive content not covered \\ \hline
+[2] Heterogenous Social Media Analysis for Efficient Deep Learning Fake-Profile Identification & Word2Vec + binary CNN; 1D/2D transforms for audio and image/video; GWO/EHO feature optimisation; boosted 1D-CNNs & +8.3\% accuracy, +5.9\% precision, +6.5\% recall over conventional methods; 93.5\% accuracy at login/signup & Needs posts, multimedia and login data an ordinary user cannot access \\ \hline
+[3] Techniques to Detect Fake Profiles on Social Media Using the New Age Algorithms -- A Survey & Surveys ML techniques using profile pictures, shared content and bot-versus-human operation & Compiles existing detection methods for future studies & Survey only; no new experimental results \\ \hline
+[4] Cyberbullying Detection and Abuser Profile Identification on Social Media for Roman Urdu & Roman Urdu tweet corpus with profile data; GRU + word2vec; temporal abusive-tweet analysis & GRU with lexical normalisation best: 97\% accuracy, 97\% F1 & Roman Urdu tweets only; no phishing or fake-account analysis \\ \hline
+[5] Social Media Forensics: Adaptive Cyberbullying-Related Hate Speech Detection with Uncertainty & Neutrosophic logic within a one-against-one multilayer perceptron & Handles ambiguous, overlapping categories; authors report improved performance & Text-only; links and accounts not assessed \\ \hline
+[6] PhiUSIIL phishing URL framework & Similarity index and incremental learning; 235,795-URL dataset & Provides a large labelled URL benchmark & URL and page features only; no message or account context \\ \hline
+[7] Introducing CAD: the Contextual Abuse Dataset & Reddit content annotated in thread context with fine-grained categories & Shows context changes abuse labels & Historical Reddit data; English only \\ \hline
+\cite{cresci2015} Fame for sale: efficient detection of fake Twitter followers & Baseline dataset of humans and bought followers; rule sets, feature sets and ML classifiers compared & Provides a reference fake-follower dataset and comparison & One account type, one platform \\ \hline
+\cite{cresci2017} The paradigm-shift of social spambots & New datasets of social and traditional spambots; tests existing detectors and human annotators & Human-like spambots are hard to recognise & Dataset only up to 2017; Twitter only \\ \hline
+\cite{yang2020} Scalable and generalizable social bot detection through data selection & Cross-dataset evaluation; training-set selection; profile-metadata model & Single-dataset training generalises poorly & Profile metadata only; needs platform data at scale \\ \hline
+\cite{smsdata} SMS phishing dataset for ML and pattern recognition & 5,971 SMS labelled ham, spam or smishing & Public three-class smishing corpus & Few genuine business messages; English only \\ \hline
+\end{longtable}
+\end{footnotesize}
+
+\section{Limitations of Existing Systems and Research Gaps}
+\begin{enumerate}
+\item \textbf{One threat at a time:} fake profiles, abusive text and URLs are studied separately, although one suspicious post often combines a message, a link and an account.
+\item \textbf{Platform-side data:} methods such as \cite{lit2} need login behaviour and activity histories that an individual user cannot see.
+\item \textbf{Verdicts without explanation:} list services and moderation do not state what was observed or which checks were impossible.
+\item \textbf{Optimistic evaluation:} reported accuracies rarely discuss grouped splitting, false-positive rates at realistic prevalence or class-collection bias; Section~\ref{sec:v1res} shows a format bias producing a 97\% F1 that does not transfer.
+\item \textbf{Generalisation of bot detectors:} bot classifiers that score well on mixed data degrade on datasets or bot types they have not seen \cite{yang2020}, and most need platform-side data or scraping.
+\item \textbf{Disguised and code-mixed text:} keyword lists and English-only models miss Hinglish, leetspeak and spaced-out words, and miss new campaigns that are reworded each time they are sent.
+\item \textbf{Context and privacy:} single-message classifiers cannot tell directed abuse from quoted abuse, and cloud checking sends personal messages to third parties.
+\end{enumerate}
+
+\noindent\textbf{Research gap.} There is no simple, local tool that checks scam messages, phishing links, harmful language and suspicious accounts together from what the user can see or supply, keeps the results separate, explains its evidence and missing checks, lets users warn each other about new campaigns without sharing message text, and releases learned models only after a leakage-aware, cross-dataset evaluation against a gate fixed in advance.
+
+\section{Scope of the Proposed System}
+\noindent\textbf{In scope (Semester VII):} a local four-page web application and a Chrome extension sharing one validated API; rule-based fraud checks for messages and URLs with an optional verified-feed lookup; a harmful-language rule engine for English and Hinglish; a calibrated, explained scam-text model; opt-in auto-scan of visible page text; a community scam network with a simulation of 10,000 users; bot-account detection from official APIs or user-supplied data, with a heuristic and gated ML models; optional case saving with signed receipts, feedback, JSON export and deletion; and reproducible research pipelines for URLs (three study versions), paired message--link data and contextual directed abuse, with explicit data-support gates.\\
+
+\noindent\textbf{Out of scope:} automatic blocking, scraping platforms or visiting submitted links, identity verification from a profile URL, deepfake detection, image and screenshot analysis, mobile applications and paid cloud services. A production community hub (authentication, hosting), learned URL warnings and a user pilot are planned for Semester VIII and are not claimed in this report.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\caption{Feature comparison of Sentinel with existing systems (``--'': not described in the paper)}
+\label{tab:features}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3.6cm}|c|c|c|c|c|c|}
+\hline
+\textbf{Feature} & \textbf{Sentinel} & \textbf{[2]} & \textbf{[4]} & \textbf{[5]} & \textbf{PhishTank} & \textbf{Safe Browsing} \\ \hline
+Phishing URL check & Yes & No & No & No & Yes (list) & Yes (list) \\ \hline
+Message wording check & Yes & No & -- & -- & No & No \\ \hline
+Harmful-content check & Yes & No & Yes & Yes & No & No \\ \hline
+Uses conversation context & Yes & No & Temporal & No & No & No \\ \hline
+Fake-account indicators & Yes & Yes & Abuser profile & No & No & No \\ \hline
+Bot detection from official or user data & Yes & No & No & No & No & No \\ \hline
+Handles code-mixed text & Hinglish & No & Roman Urdu & -- & No & No \\ \hline
+Community warnings & Yes & No & No & No & URLs & No \\ \hline
+Works on user-visible data only & Yes & No & Partly & Yes & Yes & Yes \\ \hline
+Explains evidence and missing checks & Yes & No & No & No & No & No \\ \hline
+Runs locally, no cloud & Yes & No & -- & -- & Feed download & No \\ \hline
+Browser extension with opt-in page scan & Yes & No & No & No & No & URLs only \\ \hline
+\end{tabular}
+\end{table}

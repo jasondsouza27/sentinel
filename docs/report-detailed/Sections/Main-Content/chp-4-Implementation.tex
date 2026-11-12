@@ -1,0 +1,165 @@
+\titleformat{\chapter}[display]{\bfseries\centering}{\huge Chapter \thechapter}{1em}{\Huge #1}
+\newgeometry{top=3cm, bottom=2.2cm, left=3cm, right=2cm, headsep=1.2cm, footskip=1cm, headheight=0.3cm, textheight=24.5cm, textwidth=16cm}
+\onehalfspacing
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\lhead{Chapter 4}
+\rhead{Implementation Plan and Experimental Setup}
+\cfoot{\thepage}
+\chapter{Implementation Plan and Experimental Setup}
+
+\section{Implementation Plan}
+\noindent The project follows a twelve-month plan in which a runnable milestone is delivered at each stage. Table~\ref{tab:plan} lists the work completed in Semester VII and the work planned for Semester VIII. Each research milestone was preceded by a written design specification and implementation plan, and was closed with an independent review and a delivery record in the repository (for the paired study, a verification record in its workflow document) \cite{repo}.
+
+\begin{table}[!htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\caption{Implementation plan and status}
+\label{tab:plan}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{2.3cm}|>{\raggedright\arraybackslash}p{8.9cm}|>{\raggedright\arraybackslash}p{3.0cm}|}
+\hline
+\textbf{Phase} & \textbf{Work} & \textbf{Status} \\ \hline
+Phase 0 & Local API, SQLite cases, web client, user-initiated extension, evidence rules, Naive Bayes paired baseline, two-reviewer collection tooling & Completed (Sem VII) \\ \hline
+Milestone A & URL-v1: PhiUSIIL audit, grouped splits, CPU models, calibration, frozen evaluation, model card & Completed (Sem VII) \\ \hline
+URL-v2 & PhreshPhish range import (666,315 observations), connected-component protocol, support gates & Completed; training stopped at gate \\ \hline
+URL-v3 & Mendeley source added, joint audit of 671,521 URLs, ten CPU fits, primary and supplemental frozen tracks & Completed (Sem VII) \\ \hline
+Paired study & Evidence ledger, blinded two-reviewer packets, 70/10/10/10 group lock, message/URL/fusion branches, single-use evaluation & Software completed; real intake empty \\ \hline
+Harm study & Ordered conversation editor, signed snapshot saving, CAD admission, protected cohorts, CPU and conditional encoder tooling & Software completed; data gates failed \\ \hline
+Auto-scan & Per-site opt-in content script, \texttt{/api/scan} batch endpoint, link-text mismatch check, shadow-DOM markers, badge, demo page & Completed (Sem VII); live \\ \hline
+Scam-text model & text-ml-v1: Mendeley SMS audit, template-grouped splits, DistilBERT fine-tuning, ONNX export, temperature scaling, explanations. text-ml-v2: synthetic Indian data, ensemble selection, challenge set & Completed (Sem VII); v2 live (experimental) \\ \hline
+Harm rules & Rule engine with normalisation, context checks and advice priority (19 rules, 10 categories, English and Hinglish) & Completed (Sem VII); live \\ \hline
+Community network & Fingerprints, hub with $k$-anonymous publishing and defences, client matching and reporting, dashboard, 10,000-user simulation & Completed (Sem VII); loopback prototype \\ \hline
+Bot detection & Platform allowlist, YouTube/Reddit/upload adapters, 25-signal heuristic, report page; bot-ml-v1 (profile) and bot-ml-activity-v1 (activity) & Completed (Sem VII); profile model withheld, activity model live \\ \hline
+Sem VIII (1) & Evaluate the text model on real, consented Indian SMS; add TwiBot-22 for bots; permissioned paired data collection; revised harm data protocol & Planned \\ \hline
+Sem VIII (2) & Authenticated community hub (FastAPI, PostgreSQL); OCR for screenshots; site adapters for chat apps; fusion and ablation study & Planned \\ \hline
+Sem VIII (3) & Frozen held-out evaluations, voluntary 15--20 person usability pilot, release review, final report and demonstration & Planned \\ \hline
+\end{tabular}
+\end{table}
+
+\noindent Responsibilities are divided as URL, message and fusion models; harmful content; profile features, data and versioning; and application, integration and deployment, with independent annotation shifts and cross-review of modules.
+
+\section{Experimental Setup}
+\subsection{Input Data and Datasets}
+\noindent Sentinel uses two kinds of input. The \textbf{application} receives user-supplied JSON requests from the web client or extension. The \textbf{research pipeline} uses public datasets, each pinned by version and SHA-256 checksum, with its original label meaning preserved (Table~\ref{tab:datasets}). Raw rows are kept in Git-ignored local storage; only aggregate counts are published.
+
+\begin{table}[!htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\caption{Datasets used in the research pipeline}
+\label{tab:datasets}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{2.7cm}|>{\raggedright\arraybackslash}p{1.9cm}|>{\raggedright\arraybackslash}p{5.1cm}|>{\raggedright\arraybackslash}p{4.2cm}|}
+\hline
+\textbf{Dataset} & \textbf{Licence} & \textbf{Size used} & \textbf{Use in Sentinel} \\ \hline
+PhiUSIIL (UCI) \cite{phiusiil} & CC BY 4.0 & 235,795 records; 235,343 after de-duplication and URL checks (100,493 phishing, 134,850 legitimate; 197,293 domain groups) & URL-v1 study; URL string only, source label 0 (phishing) mapped to 1 \\ \hline
+PhreshPhish \cite{phreshphish} & CC BY 4.0 & 666,315 observations; 660,130 canonical URLs (362,228 benign, 297,902 phish) & URL-v2 and URL-v3 primary track \\ \hline
+Mendeley Web page phishing detection V3 \cite{mendeley} & CC BY 4.0 & 11,430 observations (\texttt{dataset\_B\_05\_2020.csv}); URL and status columns only & URL-v3 development and supplemental track \\ \hline
+SpamAssassin (Seven Phishing Email Datasets) \cite{champa} & CC BY 4.0 & 5,809 messages; 1,912 single-link messages retained (1,546 ham, 366 spam; 308 domain groups) & Exploratory message--link baseline; spam is not treated as phishing \\ \hline
+CAD v1.1 \cite{cad} & CC BY 4.0 & 26,550 coalesced Reddit utterances; 14,408 context-available primary cases & Contextual directed-abuse study \\ \hline
+SMS Phishing Dataset (Mendeley) \cite{smsdata} & CC BY 4.0 & 5,971 rows; 5,790 kept (4,829 ham, 434 spam, 527 smishing) after removing 111 duplicates and 70 label conflicts & Scam-text model training, calibration and test (v1 and v2) \\ \hline
+UCI SMS Spam Collection \cite{ucisms} & CC BY 4.0 & 4,908 messages overlapping the Mendeley set & Label cross-check only; not used for training \\ \hline
+Indian Multilingual Scam \& Ham SMS \cite{india14} & MIT; synthetic & 2,000 English and Hinglish rows (1,000 ham, 1,000 scam) & Added in text-ml-v2 \\ \hline
+Bot Repository (OSoMe) \cite{botrepo}, incl. cresci-2015/2017 \cite{cresci2015,cresci2017} & Research use only; mostly CC BY-NC-ND 4.0 & 13 datasets, 111,168 Twitter accounts (81,692 bots, 29,476 humans) & Profile model bot-ml-v1 \\ \hline
+cresci-2015 and cresci-2017 post histories \cite{cresci2015,cresci2017} & Research use only & 10,422 accounts (2,960 humans, 7,462 bots), latest 100 posts each, stored as numeric features only & Activity model bot-ml-activity-v1 \\ \hline
+Challenge set (written by the team) & Project data & 44 messages (24 genuine Indian-style, 20 modern scams), written before v2 was trained & Independent check of the text model \\ \hline
+\end{tabular}
+\end{table}
+
+\noindent Raw files of the restricted datasets (the Bot Repository and cresci sets) are kept local and Git-ignored and nothing derived from them is redistributed; text-ml-v2's added Indian data is synthetic and is reported as such. For the URL studies, every URL is canonicalised and mapped to its registrable domain with a frozen snapshot of the Public Suffix List \cite{psl}. Only features derived from the URL string are used; web-page features shipped with the datasets are discarded, and submitted URLs are never visited.\\
+
+\noindent\textbf{Sample input.} The paired research CSV has the columns \texttt{case\_id}, \texttt{message}, \texttt{url}, \texttt{label}, \texttt{domain\_group} and optional \texttt{campaign\_group}; the repository's demonstration rows use invented \texttt{.example} cases only to test the software. A request to the application (\texttt{POST /api/analyze}) is a JSON object, for example (the message and link of test case TC-01 with the profile facts of TC-04):
+\begin{lstlisting}[style=json]
+{ "message": "You are shortlisted for the campus internship. Pay the registration fee immediately and share the OTP to confirm your seat.",
+  "url": "http://192.168.10.5/secure-login/verify",
+  "profile": { "posts_last_24h": 75, "followers_count": 12, "following_count": 1800,
+               "website_url": "https://placement-offers-desk.example",
+               "official_domain": "university.edu" } }
+\end{lstlisting}
+\noindent An auto-scan batch (\texttt{POST /api/scan}) and an account upload (\texttt{POST /api/bot/analyze}) look like this:
+\begin{lstlisting}[style=json]
+{ "items": [ { "id": "m1", "text": "go kill yourself loser, nobody wants you" },
+             { "id": "m2", "text": "see you at lunch near the library" } ] }
+{ "platform": "x", "source": "upload", "account": "@sample_bot",
+  "upload": { "format": "json", "profile": { "followers": 12, "following": 1800, ... },
+              "posts": [ { "timestamp": "2026-11-01T10:00:00Z", "text": "..." }, ... ] } }
+\end{lstlisting}
+
+\subsection{Test Cases}
+\noindent Table~\ref{tab:tests} lists the scenarios for which the application is designed. The ``Observed'' column was recorded by running the local application (through the web interface, the extension popup or direct API calls): TC-01 to TC-18 on 30 October 2026, and TC-02, TC-03 and TC-06 again, together with the new cases TC-19 to TC-29, on 6 November 2026 after the harmful-language engine, scam-text model, auto-scan and bot detection were added. The expected harm levels of TC-02 and TC-06 follow the new rule engine.
+
+\begin{footnotesize}
+\renewcommand{\arraystretch}{1.15}
+\setcounter{LTchunksize}{4}\begin{longtable}{|l|>{\raggedright\arraybackslash}p{4.6cm}|>{\raggedright\arraybackslash}p{4.3cm}|>{\raggedright\arraybackslash}p{4.4cm}|}
+\caption{Functional test cases}\label{tab:tests}\\
+\hline
+\textbf{ID} & \textbf{Scenario / input} & \textbf{Expected} & \textbf{Observed} \\ \hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Scenario / input} & \textbf{Expected} & \textbf{Observed} \\ \hline
+\endhead
+TC-01 & Fake internship message asking for a fee and OTP, with link \url{http://192.168.10.5/...} & Fraud: High; payment, secret, urgency and IP-host evidence & High with 4 observations; ``avoid entering credentials or paying'' action (Pass) \\ \hline
+TC-02 & Direct abuse: ``You are worthless ... I will hurt you after class.'' & Harm: High; threat of violence and directed insult & High; threat\_violence and harassment; ``Do not engage. Save the evidence\dots'' (Pass) \\ \hline
+TC-03 & Quoted abuse: ``Someone wrote "you are stupid" ...'' & Harm: Review; human review requested & Review; ``A directed insult. It appears in quoted or reported context, so human review is needed.'' (Pass) \\ \hline
+TC-04 & Profile: 75 posts/24 h, 12 followers, 1,800 following, website differs from official domain & Profile: Indicators for review; three indicators; bot likelihood not estimated & Indicators for review with all three indicators (Pass) \\ \hline
+TC-05 & Ordinary seminar reminder with \url{https://www.sfit.ac.in/} & Low observed concern; reputation feed reported unavailable & Low observed concern for fraud and harm (Pass) \\ \hline
+TC-06 & Three-turn linear conversation, third turn selected (``Nobody asked you. You are worthless.'') & Harm: Review for the selected turn & Review; ``A directed insult.'' (Pass) \\ \hline
+TC-07 & Extension popup: ``Verify your login details immediately'' with punycode host & Fraud: High; secret, urgency and punycode evidence & High with three observations (Pass) \\ \hline
+TC-08 & URL \url{http://paypal.com@login.secure.account.verify.example.net/x} & Review; ``@'' and long subdomain chain & Review with both observations (Pass) \\ \hline
+TC-09 & Empty request \texttt{\{\}} & HTTP 400 with explanation & ``Supply a message, URL, conversation, or profile details'' (Pass) \\ \hline
+TC-10 & URL longer than 2,048 characters & HTTP 400 & ``Input exceeds 2048 characters'' (Pass) \\ \hline
+TC-11 & Body larger than 200,000 bytes & HTTP 400 & ``JSON body must be between 1 and 200000 bytes'' (Pass) \\ \hline
+TC-12 & \texttt{Content-Type: text/plain} & HTTP 400 & ``Content-Type must be application/json'' (Pass) \\ \hline
+TC-13 & Request from origin \url{https://evil.example} or a foreign Host header & HTTP 403 & 403 ``Origin or host is not allowed'' (Pass) \\ \hline
+TC-14 & Negative follower count & HTTP 400 & ``followers\_count must be a non-negative whole number'' (Pass) \\ \hline
+TC-15 & Save with a forged receipt & Rejected; user asked to recheck & ``Recheck this content: the assessment receipt is invalid...'' (Pass) \\ \hline
+TC-16 & Save after a valid check & Case stored and listed & ``Saved locally''; case listed under Saved cases (Pass) \\ \hline
+TC-17 & Feedback ``maybe'', then ``correct'' & First rejected, second accepted & Error, then \texttt{\{"updated": true\}} (Pass) \\ \hline
+TC-18 & Delete a case twice & First deleted, second 404 & \texttt{\{"deleted": true\}}, then ``Case not found'' (Pass) \\ \hline
+TC-19 & Threat: ``I will kill you tomorrow after school'' & Harm: High, threat of violence & High; threat\_violence; advice to save evidence and report (Pass) \\ \hline
+TC-20 & Hinglish insult: ``tu pagal hai kya, chal nikal bewakoof'' & Harm: Review & Review; ``An insult aimed at someone (Hinglish).'' (Pass) \\ \hline
+TC-21 & Idioms and negation: ``This movie killed it, totally killer performance''; ``I would never hurt you'' & Harm: Low observed concern & Low observed concern for both (Pass) \\ \hline
+TC-22 & Self-harm risk: ``i want to end my life tonight'' & Harm: High; support numbers & High; self\_harm\_risk; Tele-MANAS 14416 advice (Pass) \\ \hline
+TC-23 & Disguised: ``k.y.s loser'' & Harm: High, self-harm encouragement & High; self\_harm\_encouragement (Pass) \\ \hline
+TC-24 & Parcel-fee scam with \url{http://192.0.2.7/track} & Fraud: High; text model flags it & Fraud High; text model smishing, 0.984 $\ge$ 0.611; top words: the link, ``URGENT:'', ``fee'' (Pass) \\ \hline
+TC-25 & Genuine OTP message; genuine UPI debit alert & Text model: not flagged & OTP: ham, not flagged (Pass). Debit alert: smishing 0.722, flagged (Fail: known false positive, Section~\ref{sec:textres}) \\ \hline
+TC-26 & \texttt{/api/scan} with a self-harm taunt, an insult, a lunch message and the TC-24 scam & high, review, none, high & high, review, none, high (Pass) \\ \hline
+TC-27 & Bot analysis of \url{https://x.com@evil.com/user} & HTTP 400 before any network access & 400 ``Profile URLs must not contain credentials or a port.'' (Pass) \\ \hline
+TC-28 & Upload of a scheduled, repetitive account (300 posts) and a human-like account (150 posts) & Bot: Likely automated; Human: Likely human & 82/100, ``Likely bot or automated account'', High confidence, activity model 1.00; 4/100, ``Likely human-operated'', High confidence (Pass) \\ \hline
+TC-29 & YouTube API source without \texttt{YOUTUBE\_API\_KEY} & Clear error, no request sent & 400 ``Set YOUTUBE\_API\_KEY to use the YouTube Data API.'' (Pass) \\ \hline
+\end{longtable}
+\end{footnotesize}
+
+\noindent In addition, the project's automated suites contain Python \texttt{unittest} tests for every module and Node.js tests for the web client, extension popup, auto-scan scanner and conversation editor. Run on 6 November 2026 on macOS: the 112 application and model tests (server, analysis, scan, harm rules, network, text model, artifacts, bot detection and bot ML) passed in the text-model environment; all 68 JavaScript tests passed; and in the pinned CPython 3.11 research environment the full suite ran 569 tests, of which 519 passed, 7 were skipped and 43 failed. All 43 failures are in the context-harm research pipeline, which needs Windows job objects, a Windows training mutex and a Windows CUDA runtime by design; that suite passes in the project's locked Windows environment, and live harm detection does not depend on it.
+
+\subsection{Performance Evaluation Parameters}\label{sec:metrics}
+\noindent With $TP$, $FP$, $TN$ and $FN$ the confusion counts (phishing or abuse as the positive class):
+\begin{align}
+\text{Precision} &= \frac{TP}{TP+FP}, &
+\text{Recall (TPR)} &= \frac{TP}{TP+FN},\\
+F_1 &= \frac{2TP}{2TP+FP+FN}, &
+\text{FPR} &= \frac{FP}{FP+TN}.
+\end{align}
+\noindent \textbf{Macro-F1} is the mean of the positive- and negative-class $F_1$; \textbf{average precision} $\mathrm{AP}=\sum_n (R_n-R_{n-1})P_n$ summarises the precision--recall curve; the \textbf{Brier score} $\mathrm{BS}=\frac{1}{N}\sum_i(\hat p_i-y_i)^2$ measures probability accuracy; and the \textbf{expected calibration error} over ten equal-width bins $B_m$ is
+\begin{equation}\mathrm{ECE}=\sum_{m=1}^{10}\frac{|B_m|}{N}\,\big|\overline{\hat p}(B_m)-\overline{y}(B_m)\big|.\end{equation}
+\textbf{Expected precision at prevalence $\pi$} shows how the measured rates behave when phishing is rare:
+\begin{equation}
+\text{Precision}(\pi)=\frac{\mathrm{TPR}\cdot\pi}{\mathrm{TPR}\cdot\pi+\mathrm{FPR}\cdot(1-\pi)}.
+\end{equation}
+For the three-class scam-text model, macro-F1 averages the ham, spam and smishing $F_1$, and the scam score treats spam and smishing together. For bot detection, the \textbf{ROC AUC} is the probability that a randomly chosen bot scores higher than a randomly chosen human, and it is reported per held-out dataset (leave one dataset out) or per held-out bot family; the release gate uses the \emph{worst} fold. For the community network, \textbf{protection} is the share of scam deliveries that were warned (by the user's own detector or by a published campaign), and the \textbf{wrong-warning rate} is the share of genuine bulk messages that received a network warning.\\
+
+\noindent\textbf{95\% confidence intervals} come from 1,000 bootstrap replicates that resample whole domain groups (or connected components) with seed 42. \textbf{Latency} is measured as cold load plus first prediction and as the warm median and 95th percentile per URL, and \textbf{resources} as peak process memory and fit time per configuration within the 8 GiB ceiling. The primary operating point is the threshold that gives the highest validation recall while keeping the validation FPR at or below 5\%. This budget is an experiment setting, not a claim that 5\% is acceptable in deployment.
+
+\subsection{Special Requirements}
+\noindent No cloud service or paid API is needed; the application contacts external servers only when the user chooses the optional YouTube or Reddit API source, and the community hub runs on loopback. Each training configuration runs in a separate process limited to four native threads and 8 GiB, so experiments fit on a 16 GiB laptop. The scam-text model was fine-tuned on an Apple M4 (MPS) in 305--415 seconds and is served on CPU through ONNX Runtime; the optional CAD DistilBERT encoder needs a CUDA GPU and a separate hash-pinned environment (not installed for the current results). The unpacked extension needs Chrome's Developer mode, and research data must stay outside synced folders and Git.
+
+\section{Partial Code}
+\noindent\textbf{Fraud level} (\texttt{sentinel/analysis.py}; the URL indicators follow Algorithm~\ref{alg:url}):
+\lstinputlisting[style=py, firstline=107, lastline=122, firstnumber=107]{Code/analysis.py}
+
+\noindent\textbf{Threshold selection under the FPR budget} (\texttt{sentinel/url\_ml/metrics.py}):
+\lstinputlisting[style=py, firstline=45, lastline=57, firstnumber=45]{Code/metrics.py}
+
+\noindent\textbf{Harmful-language detection with context checks} (\texttt{sentinel/harm\_rules.py}, Algorithm~\ref{alg:harm}):
+\lstinputlisting[style=py, firstline=107, lastline=134, firstnumber=107]{Code/harm_rules.py}

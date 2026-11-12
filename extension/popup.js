@@ -26,11 +26,19 @@ async function request(path, body) {
   return value;
 }
 
+// Colour family for a finding card; presentation only.
+function tone(category) {
+  if (['high', 'smishing'].includes(category)) return 'high';
+  if (['review', 'indicators_for_review', 'spam'].includes(category)) return 'review';
+  if (['low_observed_concern', 'not_flagged', 'ham'].includes(category)) return 'low';
+  return 'neutral';
+}
+
 function draw(name, item, profile = false, paired = false) {
   const div = document.createElement('div');
-  div.className = 'finding';
   const category = paired ? (item.state === 'available' ? item.category : item.state)
     : profile ? item.status : item.level;
+  div.className = `finding tone-${tone(category)}`;
   line(div, 'strong', `${name}: ${category.replaceAll('_', ' ')}`);
   if (item.evidence?.length) {
     const list = document.createElement('ul');
@@ -58,6 +66,35 @@ function drawHarm(item) {
   if (['complete', 'degraded'].includes(item.state) && typeof probability === 'number' && Number.isFinite(probability) && probability >= 0 && probability <= 1) {
     line(card, 'p', `Calibrated probability: ${(probability * 100).toFixed(1)}% on the evaluated distribution.`);
   }
+  return card;
+}
+
+function drawTextModel(item, message) {
+  const card = document.createElement('div');
+  card.className = 'finding';
+  if (item.state !== 'available') {
+    line(card, 'strong', 'Learned scam-text model: unavailable');
+    line(card, 'p', 'Rules still apply.');
+    return card;
+  }
+  card.className = `finding tone-${tone(item.category)}`;
+  line(card, 'strong', `Learned scam-text model: ${item.label}`);
+  line(card, 'p', `Scam probability ${(item.calibrated_probability * 100).toFixed(1)}% (calibrated; threshold ${(item.threshold * 100).toFixed(1)}%).`);
+  const marks = (item.explanation || []).filter(c => message.slice(c.start, c.end) === c.word).sort((a, b) => a.start - b.start);
+  if (marks.length) {
+    const text = document.createElement('p');
+    text.className = 'highlighted';
+    let cursor = 0;
+    for (const c of marks) {
+      if (c.start < cursor) continue;
+      line(text, 'span', message.slice(cursor, c.start));
+      line(text, 'mark', c.word);
+      cursor = c.end;
+    }
+    line(text, 'span', message.slice(cursor));
+    card.append(text);
+  }
+  line(card, 'p', item.action);
   return card;
 }
 
@@ -103,6 +140,8 @@ $('check').onclick = async () => {
       draw('Harmful content observations', result.harmful_content), draw('Profile', result.profile, true)];
     if (result.paired_assessment) cards.push(draw('Paired message–link model', result.paired_assessment, false, true));
     if (result.harm_assessment) cards.push(drawHarm(result.harm_assessment));
+    if (result.text_model) cards.splice(1, 0, drawTextModel(result.text_model, input.message));
+    if (result.harmful_content?.level === 'high' && result.fraud?.level !== 'high') cards.unshift(cards.splice(1 + (result.text_model ? 1 : 0), 1)[0]);
     $('findings').replaceChildren(...cards);
     $('result').hidden = false;
     const receipt = typeof assessment_receipt === 'string' && assessment_receipt ? assessment_receipt : null;

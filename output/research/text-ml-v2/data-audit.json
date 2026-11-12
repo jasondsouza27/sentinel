@@ -1,0 +1,49 @@
+{
+  "sources": {
+    "mendeley": {
+      "file": "mendeley-smishing.zip",
+      "sha256": "9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3",
+      "url": "https://data.mendeley.com/public-files/datasets/f45bkkt8pr/files/edb361de-918d-469f-9106-e84823830665/file_downloaded",
+      "citation": "Mishra, S. & Soni, D. (2022). SMS Phishing Dataset for Machine Learning and Pattern Recognition. Mendeley Data, V1. doi:10.17632/f45bkkt8pr.1",
+      "license": "CC BY 4.0"
+    },
+    "uci": {
+      "file": "uci-sms.zip",
+      "sha256": "1587ea43e58e82b14ff1f5425c88e17f8496bfcdb67a583dbff9eefaf9963ce3",
+      "url": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip",
+      "citation": "Almeida, T. & Hidalgo, J. (2011). SMS Spam Collection. UCI Machine Learning Repository. doi:10.24432/C5CC84",
+      "license": "CC BY 4.0"
+    },
+    "india14": {
+      "file": "india14.csv",
+      "sha256": "50b633a3a17be7b8622a99757295a73d78567f27c13d6f7b12935ba4f688d190",
+      "url": "https://huggingface.co/datasets/anmolshrivastav/scam_ham_india_14_languages/resolve/34e2c413aefd2e8f2a6e93177a155f29733290a5/scam_ham_india_14_languages.csv",
+      "citation": "anmolshrivastav (2026). Indian Multilingual Scam & Ham SMS Dataset (14 Languages). Hugging Face, revision 34e2c41. Tagged synthetic.",
+      "license": "MIT"
+    }
+  },
+  "india14": {
+    "rows_read": 14000,
+    "rows_added": 2000,
+    "excluded": {
+      "other_language": 12000
+    },
+    "label_counts": {
+      "ham": 1000,
+      "smishing": 1000
+    },
+    "language_counts": {
+      "Hinglish": 1000,
+      "English": 1000
+    },
+    "template_groups": 1427,
+    "note": "Synthetic, template-style data; used to add genuine transactional ham and modern scams."
+  },
+  "rows_total": 7790,
+  "label_counts": {
+    "ham": 5829,
+    "smishing": 1527,
+    "spam": 434
+  },
+  "dataset_sha256": "87720c44eddeda6cb3cff5ba859b8ec03750f3926cca38b6504ea07447cee41c"
+}

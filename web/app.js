@@ -118,15 +118,103 @@ function harmAssessment(item) {
   return card;
 }
 
+// Rebuild the checked message with the model's most influential words marked.
+function highlightedMessage(text, explanation) {
+  const paragraph = node('p', 'highlighted');
+  const marks = (explanation || []).filter(item => text.slice(item.start, item.end) === item.word)
+    .sort((a, b) => a.start - b.start);
+  if (!marks.length) return null;
+  const strongest = Math.max(...marks.map(item => item.weight));
+  let cursor = 0;
+  for (const item of marks) {
+    if (item.start < cursor) continue;
+    paragraph.append(document.createTextNode(text.slice(cursor, item.start)));
+    const mark = node('mark', item.weight >= strongest * 0.5 ? 'strong' : '', item.word);
+    mark.title = `Influence: removing this word lowers the scam log-odds by ${item.weight.toFixed(2)}`;
+    paragraph.append(mark);
+    cursor = item.end;
+  }
+  paragraph.append(document.createTextNode(text.slice(cursor)));
+  return paragraph;
+}
+
+function textModelAssessment(item, message) {
+  const card = node('section', 'assessment');
+  const head = node('div', 'assessment-head');
+  head.append(node('h4', '', 'Learned scam-text model'));
+  const level = item.state === 'available' ? item.category : item.state;
+  head.append(node('span', `badge ${level}`, item.state === 'available' ? item.label : level.replaceAll('_', ' ')));
+  card.append(head);
+  if (item.state !== 'available') {
+    card.append(node('p', '', item.state === 'not_assessed' ? 'No message text to assess.' : `Model unavailable (${String(item.reason).replaceAll('_', ' ')}); rules still apply.`));
+    return card;
+  }
+  const probability = item.calibrated_probability;
+  const meter = node('div', 'meter');
+  const fill = node('span', item.flagged ? 'over' : '');
+  fill.style.width = `${Math.round(probability * 100)}%`;
+  meter.append(fill);
+  card.append(meter);
+  card.append(node('p', '', `Scam probability ${(probability * 100).toFixed(1)}% (calibrated) · warning threshold ${(item.threshold * 100).toFixed(1)}% · ${item.model_version}, ${item.release}.`));
+  const highlighted = highlightedMessage(message, item.explanation);
+  if (highlighted) {
+    card.append(node('p', 'caption', 'Words that most raised the score:'));
+    card.append(highlighted);
+  }
+  card.append(node('p', '', item.uncertainty));
+  card.append(node('p', 'action', item.action));
+  return card;
+}
+
+function communityAssessment(item, message) {
+  const card = node('section', 'assessment');
+  const head = node('div', 'assessment-head');
+  head.append(node('h4', '', 'Community scam network'));
+  const level = item.state === 'matched' ? 'review' : item.state === 'no_match' ? 'low_observed_concern' : 'not_assessed';
+  head.append(node('span', `badge ${level}`, item.state.replaceAll('_', ' ')));
+  card.append(head);
+  if (item.match) {
+    card.append(node('p', '', `Matches an active scam campaign reported by ${item.match.reporters} Sentinel users${item.match.topics.length ? ` (about: ${item.match.topics.join(', ')})` : ''}.`));
+  } else if (item.state === 'no_match') {
+    card.append(node('p', '', 'No active community campaign matches this message. That does not show it is safe.'));
+  } else {
+    card.append(node('p', '', 'The community hub is unavailable; other checks still apply.'));
+  }
+  if (item.note) card.append(node('p', '', item.note));
+  const button = node('button', 'text-button', 'Report as scam to the community');
+  button.type = 'button';
+  const status = node('p', 'caption');
+  button.addEventListener('click', async () => {
+    button.disabled = true;
+    try {
+      const reply = await api('/api/community/report', { method: 'POST', body: JSON.stringify({ text: message }) });
+      status.textContent = reply.note;
+    } catch (error) {
+      status.textContent = error.message;
+      button.disabled = false;
+    }
+  });
+  card.append(button, status);
+  return card;
+}
+
 function renderResult(result) {
   const target = $('result-content');
+  const harmCard = assessment('Harmful content observations', result.harmful_content);
+  harmCard.dataset.kind = 'harm';
   const cards = [
     assessment('Message & link', result.fraud),
-    assessment('Harmful content observations', result.harmful_content),
+    harmCard,
     assessment('Profile indicators', result.profile, true),
   ];
   if (result.paired_assessment) cards.push(assessment('Paired message–link model', result.paired_assessment, false, true));
   if (result.harm_assessment) cards.push(harmAssessment(result.harm_assessment));
+  if (result.text_model) cards.splice(1, 0, textModelAssessment(result.text_model, $('message').value.trim()));
+  if (result.community) cards.splice(result.text_model ? 2 : 1, 0, communityAssessment(result.community, $('message').value.trim()));
+  // A high-severity harm finding (threat, self-harm, sextortion) leads the result so it is not missed.
+  if (result.harmful_content?.level === 'high' && result.fraud?.level !== 'high') {
+    cards.unshift(...cards.splice(cards.indexOf(harmCard), 1));
+  }
   target.replaceChildren(...cards);
   target.hidden = false;
   $('result-empty').hidden = true;

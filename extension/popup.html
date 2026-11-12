@@ -1,11 +1,15 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sentinel</title><link rel="stylesheet" href="popup.css"><script src="popup.js" defer></script></head>
-<body><main><header><div class="brand"><span>S</span><strong>Sentinel</strong></div><small>LOCAL SAFETY CHECK</small></header>
-  <p class="intro">Check selected text or a link before you act.</p>
-  <button id="selection" class="subtle" type="button">Use selected text</button>
+<title>Sentinel</title><meta name="color-scheme" content="dark"><link rel="stylesheet" href="popup.css"><script src="popup.js" defer></script><script src="autoscan.js" defer></script></head>
+<body><main>
+  <header><div class="brand"><span>S</span><strong>Sentinel</strong></div><small>Local safety check</small></header>
+  <section class="autoscan"><label class="switch"><span class="switch-text"><b>Auto-scan every website</b><span id="autoscan-all-status" role="status"></span></span><input id="autoscan-all" type="checkbox"></label>
+    <label class="switch sub"><span class="switch-text"><b>Auto-scan this site</b><span id="autoscan-status" role="status"></span></span><input id="autoscan" type="checkbox"></label>
+    <label class="switch sub"><span class="switch-text"><b>Read text in images</b><span id="ocr-status" role="status"></span></span><input id="ocr" type="checkbox"></label></section>
+  <p class="intro">Check selected text or a link <em>before</em> you act.</p>
+  <button id="selection" class="subtle wide" type="button">Use selected text</button>
   <label for="message">Message or selected text</label><textarea id="message" rows="4" placeholder="Select text on a page or paste it here…"></textarea>
   <label for="url">Link</label><input id="url" type="url" placeholder="https://example.com">
-  <div class="buttons"><button id="check" class="primary" type="button">Check with Sentinel →</button><button id="open" class="subtle" type="button">Open full app</button></div>
+  <div class="buttons"><button id="check" class="primary" type="button">Check with Sentinel <span aria-hidden="true">→</span></button><button id="open" class="subtle" type="button">Open app</button></div>
   <p id="error" role="status"></p><section id="result" hidden><h2>Assessment</h2><div id="findings"></div><button id="save" type="button" class="subtle">Save case locally</button><p id="save-status" role="status"></p></section>
-  <footer>No content is saved unless you choose Save case.</footer></main></body></html>
+  <footer>No content is saved unless you choose Save case. Auto-scan sends visible text only to Sentinel on this computer; images are read on this computer too.</footer></main></body></html>

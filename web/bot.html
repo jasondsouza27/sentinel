@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentinel — Bot account detection</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/bot.css">
+  <script src="/bot.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Sentinel home"><span class="brand-mark">S</span><span>Sentinel</span></a>
+      <nav aria-label="Main"><a href="/#check">Check content</a><a href="/bot" aria-current="page">Bot accounts</a><a href="/network">Community network</a><a href="/demo">Auto-scan demo</a><a href="/#history">Saved cases</a><a href="/#how">How it works</a></nav>
+      <span id="service-status" class="service-status">Checking local service…</span>
+    </header>
+
+    <main>
+      <section class="workbench bot-workbench" aria-labelledby="bot-title">
+        <div class="section-heading"><div><span class="section-kicker">04 / ACCOUNTS</span><h2 id="bot-title">Social media bot account detection</h2></div>
+          <p>Estimate whether an account behaves like a person, an automated bot, or part of a coordinated campaign. Sentinel uses only official APIs or data you provide, and stores nothing.</p></div>
+        <div class="notice"><span class="notice-icon">i</span><span>The score is a heuristic bot-likeness index, not a probability. No single signal proves an account is a bot, and automated accounts are not necessarily malicious.</span></div>
+
+        <div class="work-grid">
+          <form id="bot-form" class="panel input-panel" novalidate>
+            <div class="panel-title"><span class="step-num">01</span><div><h3>Which account?</h3><p>Choose the platform, then how Sentinel should get the account's data.</p></div></div>
+            <label for="platform">Platform</label>
+            <select id="platform" required><option value="">Loading platforms…</option></select>
+            <div id="platform-note" class="field-help"></div>
+
+            <label for="account">Profile URL or username</label>
+            <input id="account" maxlength="300" placeholder="https://x.com/username or @username" autocomplete="off" required>
+            <div class="field-help">The URL is only read to find the username. Sentinel never opens it.</div>
+
+            <fieldset class="source-choice">
+              <legend>Account data</legend>
+              <label class="choice"><input type="radio" name="source" value="api" id="source-api"> <span><b>Official API</b><small id="api-help">Public data from the platform's official API.</small></span></label>
+              <label class="choice"><input type="radio" name="source" value="upload" id="source-upload" checked> <span><b>Upload posts</b><small>A JSON or CSV export of the account's public posts.</small></span></label>
+              <label class="choice"><input type="radio" name="source" value="manual" id="source-manual"> <span><b>Enter details</b><small>Profile facts only. Activity can't be assessed.</small></span></label>
+            </fieldset>
+
+            <div id="upload-fields" class="source-fields">
+              <label for="upload-file">Posts file <span>JSON or CSV, up to 3,000 posts</span></label>
+              <input id="upload-file" type="file" accept=".json,.csv,application/json,text/csv">
+              <details class="format-help"><summary>Expected format</summary>
+                <p>CSV with a header row: <code>timestamp,text,is_repost,likes,replies,shares</code> (only <code>timestamp</code> is required).</p>
+                <p>JSON: <code>{"profile": {"created_at", "followers", "following", "bio", "has_profile_image", "verified"}, "posts": [{"timestamp", "text", "is_repost", "likes"}]}</code></p>
+              </details>
+            </div>
+
+            <div id="manual-fields" class="source-fields" hidden>
+              <div class="two-columns"><div><label for="m-age">Account age (days)</label><input id="m-age" type="number" min="0" step="1"></div>
+                <div><label for="m-posts">Total posts</label><input id="m-posts" type="number" min="0" step="1"></div></div>
+              <div class="two-columns"><div><label for="m-followers">Followers</label><input id="m-followers" type="number" min="0" step="1"></div>
+                <div><label for="m-following">Following</label><input id="m-following" type="number" min="0" step="1"></div></div>
+              <div class="two-columns"><div><label for="m-image">Profile picture</label><select id="m-image"><option value="">Unknown</option><option value="custom">Custom picture</option><option value="default">Default or none</option></select></div>
+                <div><label for="m-verified">Verified</label><select id="m-verified"><option value="">Unknown</option><option value="true">Yes</option><option value="false">No</option></select></div></div>
+              <label for="m-name">Display name</label><input id="m-name" maxlength="200">
+              <label for="m-bio">Bio</label><textarea id="m-bio" rows="2" maxlength="2000"></textarea>
+            </div>
+
+            <div class="form-actions"><button class="primary-button" type="submit" id="analyze-button">Analyze account <span aria-hidden="true">→</span></button><button class="text-button" id="reset-button" type="button">Clear</button></div>
+            <ol id="progress" class="progress" hidden aria-label="Analysis progress">
+              <li data-step="validate">Validating account</li><li data-step="collect">Collecting data</li><li data-step="features">Extracting behaviour and content features</li><li data-step="score">Scoring and explaining</li>
+            </ol>
+            <p id="form-message" class="form-message" role="alert"></p>
+          </form>
+
+          <section id="summary-panel" class="panel result-panel" aria-live="polite" aria-label="Bot detection result">
+            <div class="panel-title"><span class="step-num">02</span><div><h3>Assessment</h3><p>Score, classification and the signals behind it.</p></div></div>
+            <div id="summary-empty" class="result-empty"><div class="empty-icon">◎</div><h4>No account analysed yet</h4><p>Choose a platform and data source, then select Analyze account.</p></div>
+            <div id="summary" hidden>
+              <div class="gauge-row">
+                <svg id="gauge" viewBox="0 0 200 120" role="img" aria-label="Bot-likeness score gauge"></svg>
+                <div class="verdict"><span id="classification" class="badge"></span>
+                  <dl class="verdict-facts"><div><dt>Confidence</dt><dd id="confidence"></dd></div><div><dt>Risk level</dt><dd id="risk"></dd></div><div><dt>Signal coverage</dt><dd id="coverage"></dd></div></dl></div>
+              </div>
+              <p id="score-label" class="caption"></p>
+              <p id="explanation" class="explanation"></p>
+              <h4 class="sub">Suspicious indicators</h4><ul id="suspicious" class="indicator-list bad"></ul>
+              <h4 class="sub">Human-like indicators</h4><ul id="human" class="indicator-list good"></ul>
+              <div id="ml-card" class="ml-card" hidden><h4 class="sub">Machine-learning model</h4><p id="ml-state"></p><p id="ml-validation" class="caption"></p></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="report" class="bot-report" hidden aria-labelledby="report-title">
+        <div class="section-heading"><div><span class="section-kicker">DETAILED REPORT</span><h2 id="report-title">Account behaviour</h2></div><p id="analysed-at"></p></div>
+        <div class="report-grid">
+          <div class="panel"><h3>Account overview</h3><dl id="overview" class="facts"></dl></div>
+          <div class="panel"><h3>Signal breakdown</h3><p class="caption">Each bar is a signal's share of the score. Grey signals had no data.</p><div id="breakdown" class="breakdown"></div></div>
+          <div class="panel"><h3>Activity by hour of day (UTC)</h3><svg id="hours-chart" class="chart" viewBox="0 0 480 160" role="img" aria-label="Posts by hour of day"></svg><dl id="activity" class="facts compact"></dl></div>
+          <div class="panel"><h3>Posts per day</h3><svg id="days-chart" class="chart" viewBox="0 0 480 160" role="img" aria-label="Posts per day"></svg></div>
+          <div class="panel"><h3>Content repetition</h3><dl id="content" class="facts compact"></dl></div>
+          <div class="panel"><h3>Data limitations</h3><ul id="limitations" class="limit-list"></ul></div>
+        </div>
+      </section>
+    </main>
+    <footer><span>Sentinel · College major project prototype</span><span>Official APIs or your data only · Nothing stored</span></footer>
+  </div>
+</body>
+</html>

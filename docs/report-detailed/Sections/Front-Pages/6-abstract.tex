@@ -1,0 +1,14 @@
+\newpage
+\thispagestyle{plain}
+\begin{center}
+\textbf {{\Large Abstract}} \\
+\vspace{2pc}
+\end{center}
+\onehalfspacing
+\noindent Social media users are routinely exposed to scam messages, phishing links, abusive or threatening language and fake or automated accounts. Most protection depends on platform moderation, manual reporting or separate security tools that rarely explain their decisions and often need data that an ordinary user cannot see. This project presents \textbf{Sentinel}, an explainable social-media safety assistant that runs entirely on the user's computer. A user can check a message, a URL, an ordered conversation, profile facts or a social-media account through one local API shared by a four-page web application and a Chrome extension. The extension can also scan the visible text of sites the user opts in to and mark risky items on the page. Sentinel returns separate fraud, harmful-content, learned-model, community and account assessments, each with the observed evidence, the checks that could not be performed, an uncertainty statement and a suggested action.
+
+\vspace{0.5pc}
+\noindent The live application combines transparent rules with learned models that were released only after passing release gates fixed in advance. A rule engine with 19 rules in 10 categories detects threats, self-harm risk, sextortion, harassment and other harmful language in English and Hinglish, undoing simple disguises and handling quoted speech, negation and idioms. A DistilBERT scam-text model averaged with a TF-IDF classifier (text-ml-v2) reached a macro-F1 of 0.897 with no genuine messages flagged on 870 held-out SMS, and reduced false alarms on an independent set of genuine Indian messages from 17 of 24 to 2 of 24. A community network shares only MinHash fingerprints of flagged scams and publishes a campaign after five distinct reporters; in a simulation of 10,000 users it raised protection from 78.2\% to 99.7\%. Bot detection uses only official APIs or user-supplied data with a 25-signal explainable heuristic; a profile-metadata model failed its cross-dataset gate (worst AUC 0.600) and is withheld, while an activity model passed (worst AUC 0.849) and is shown for X accounts. Earlier URL studies reached 97.07\% F1 on PhiUSIIL and 92.71\% F1 on PhreshPhish, but source bias and false positives keep learned URL warnings disabled. This report documents the design, implementation, experiments and results completed as Major Project Part 1 (Semester VII).
+\\
+\\
+\noindent{\bf Keywords}: {\it phishing detection, smishing, harmful-language detection, social bot detection, MinHash, explainable security, browser extension, machine learning}
